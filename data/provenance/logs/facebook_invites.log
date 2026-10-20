@@ -592,3 +592,8 @@
 [06:40:03] [25/32] facebook/pagcor.ph  https://www.facebook.com/pagcor.ph
 [06:40:14]   error: no post permalinks found on the account page
 [06:40:24] [26/32] facebook/pidsgovph  https://www.facebook.com/pidsgovph
+[06:41:40] === worker: facebook on tab 2, 5 posts, mode=invites ===
+[06:41:41] tab [2] ea46f37d-8caf-477b-b124-26f99a2c5f6d  https://www.facebook.com/pidsgovph/posts/pfbid0A4PjzdBaYzmKYsukSqSXVi7Shi544CNHm8wQ7dP7bnWR4455nCEj8nEinWgrXX6bl
+[06:41:41] 32 registered facebook accounts
+[06:41:41] [1/32] facebook/dost_pagasa: the last attempt was empty, retrying
+[06:41:41] [1/32] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH

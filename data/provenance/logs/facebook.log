@@ -4553,3 +4553,8 @@
 [06:35:38] [7/32] facebook/ndrrmc: already collected (5 post(s)), skipping
 [06:35:38] [8/32] facebook/bfp: topping up (4 of 5 posts)
 [06:35:38] [8/32] facebook/bfp  https://www.facebook.com/DILGBFP
+[06:41:32] === worker: facebook on tab 0, 5 posts, mode=recent ===
+[06:41:33] tab [0] 295e07c8-3787-44b8-83f2-b12d86b27a9c  https://www.facebook.com/DILGBFP/posts/pfbid0nfSM9isRtkDSR2bXsfTEXD25yFNooPi2RkSxY6m2U9f3zBzc6LYk4qsxCRVUfppfl
+[06:41:33] 32 registered facebook accounts
+[06:41:33] [1/32] facebook/dost_pagasa: topping up (3 of 5 posts)
+[06:41:33] [1/32] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH

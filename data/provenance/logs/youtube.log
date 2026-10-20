@@ -566,3 +566,9 @@
 [06:38:06] [4/10] youtube/dswd_yt: the last attempt was empty, retrying
 [06:38:06] [4/10] youtube/dswd_yt  https://www.youtube.com/@dswdserves
 [06:40:16]        0 comments  https://www.youtube.com/watch?v=Yy6-4ROkKok
+[06:41:46] === worker: youtube on tab 1, 5 posts, mode=recent ===
+[06:41:46] tab [1] 0bb3746c-9947-48f1-a1bd-70e31c58aaed  https://www.youtube.com/watch?v=WDatQr_qxKg
+[06:41:46] 10 registered youtube accounts
+[06:41:46] [1/10] youtube/dost_pagasa_yt: already collected (5 post(s)), skipping
+[06:41:46] [2/10] youtube/deped_yt: the last attempt was empty, retrying
+[06:41:46] [2/10] youtube/deped_yt  https://www.youtube.com/@DepEd_PH

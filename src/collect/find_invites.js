@@ -5,7 +5,7 @@
 // bulletins and programme notices, where citizens react rather than ask. The
 // posts that actually draw requests are the ones that invite them.
 //
-// A post qualifies when its text contains an invitation marker.
+// A post qualifies when its caption contains an invitation marker.
 //
 // Returns JSON: { urls: [...], matched: [{url, text, markers}] }
 
@@ -35,7 +35,12 @@
   const results = [];
   const seen = new Set();
 
-  for (const a of document.querySelectorAll('a[href*="/posts/"], a[href*="/reel/"], a[href*="/photo/"]')) {
+  // The same permalink forms the collector accepts: a post is not always a
+  // /posts/ link, and a page of photo posts has no /posts/ links at all.
+  const SEL = 'a[href*="/posts/"], a[href*="/reel/"], a[href*="/photo/"], '
+            + 'a[href*="permalink.php"], a[href*="story_fbid"]';
+
+  for (const a of document.querySelectorAll(SEL)) {
     let href = a.getAttribute('href') || '';
     if (!href) continue;
     if (href.indexOf('l.php?u=') !== -1) {
@@ -44,20 +49,36 @@
     if (href.indexOf('//') === 0) { href = location.protocol + href; }
     else if (href.charAt(0) === '/') { href = location.origin + href; }
     if (href.indexOf('facebook.com') === -1) continue;
+    href = href.split('?')[0];
     if (seen.has(href)) continue;
     seen.add(href);
 
-    // walk up to the post card that holds this link
+    // The caption of the post this link belongs to. A link can sit inside a
+    // comment as well, so the walk has to skip comment nodes.
+    const COMMENT_SEL = 'div[role="article"][aria-label^="Comment by"]';
     let card = a;
-    for (let i = 0; i < 8 && card; i++, card = card.parentElement) {
-      const txt = clean(card.innerText || '');
-      if (txt.length > 40 && txt.length < 6000) {
-        const hits = PATTERNS.filter(re => re.test(txt)).map(re => re.source);
-        if (hits.length) {
-          results.push({url: href, text: txt.slice(0, 260), markers: hits});
-        }
-        break;
-      }
+    let txt = '';
+    for (let i = 0; i < 10 && card; i++, card = card.parentElement) {
+      if (card.closest && card.closest(COMMENT_SEL)) continue;
+      // the message container is the caption, when Facebook marks it
+      const msg = card.querySelector
+        ? card.querySelector('[data-ad-comet-preview]')
+        : null;
+      const cand = msg
+        ? clean(msg.innerText)
+        : clean(Array.from(card.querySelectorAll
+            ? card.querySelectorAll('div[dir="auto"]')
+            : [])
+            .filter(x => !x.closest(COMMENT_SEL))
+            .map(x => x.innerText || '')
+            .join(' '));
+      if (cand && cand.length > 20) { txt = cand; break; }
+    }
+
+    if (!txt) continue;
+    const hits = PATTERNS.filter(re => re.test(txt)).map(re => re.source);
+    if (hits.length) {
+      results.push({url: href, text: txt.slice(0, 260), markers: hits});
     }
   }
 
