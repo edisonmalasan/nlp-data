@@ -85,7 +85,8 @@ nlp-data/
 │   ├── clean/                   ← normalize, dedup, spam filter, PII scrub
 │   └── annotate/                ← labeling tool setup, agreement computation
 └── tools/
-    └── validate_dataset.py      ← acceptance test (V-01…V-16)
+    ├── validate_dataset.py      ← acceptance test (V-01…V-17)
+    └── build_release.py        ← assembles data/final/ + zip
 ```
 
 ---
@@ -196,27 +197,51 @@ Full rules in [`docs/ANNOTATION_GUIDELINES.md`](docs/ANNOTATION_GUIDELINES.md). 
 > **Does the comment identify a concrete action the agency could take or the commenter proposes it take?**
 > Yes → `actionable` (1). No → `other` (0).
 
+**Labeling is automated, with human verification.** `src/annotate/auto_annotator.py` runs
+three auditable stages:
+
+1. **Cue extraction** — request markers, action verbs, strong request frames, action
+   objects, complaint markers, gratitude, reaction, information questions, refusals.
+2. **Heuristic scoring** — a suggested label, a confidence, and the rule that fired.
+3. **Adjudication** — every row scoring below **0.85** goes to an adjudicator, plus a
+   **random 10% audit sample** of the rows it *could* decide (fixed seed `42`).
+
 - **Never label by politeness markers.** `please` / `dapat` / `sana` / `paki-` are evidence,
-  not the definition. Labeling by marker would make the dataset unable to distinguish a
-  text-only model from a marker-aware one.
+  not the definition. The engine encodes this — a marker only counts alongside an action.
 - **Always read the post context** (post text, date, agency, and parent comment for replies).
-  Many replies are unlabelable without it.
-- **20% blinded re-label pass** after a ≥ 7 day washout; **Cohen's κ ≥ 0.60** required. This is *intra-annotator* reliability — one annotator, so it is not inter-annotator agreement.
-- **Auto-annotation assistant is optional and gated**: macro-F1 ≥ 0.80 **and** κ ≥ 0.60 on a
-  120-row self-labeled gold set. Draft labels only, every one human-confirmed, and
-  assistant labels excluded from the κ computation.
+  Every adjudicated row carries it.
+- **The most disputed class is never auto-decided** — *"Sana maayos ang kalsada"* always
+  goes to adjudication.
+- **Human verification is required**: ≥ 100 random rows reviewed without seeing the
+  engine's label, and the agreement reported.
+- **Reliability**: a **20% blinded re-label pass** after a ≥ 7 day washout;
+  **Cohen's κ ≥ 0.60**. This is *intra-annotator* reliability — one annotator, so it
+  is not inter-annotator agreement.
+
+Describe this in the write-up as **LLM-assisted annotation with human verification** — not
+as manual annotation.
 
 ### 4. Split
 
 70/15/15, stratified by label, **grouped by `post_id`** so the same post's comments never
 straddle two splits, seed `42`. Split files are authoritative; join on `comment_id`.
 
-### 5. Validate
+### 5. Validate & release
 
-`tools/validate_dataset.py` must pass with **0 errors** — 16 checks covering schema, label
+`tools/validate_dataset.py` must pass with **0 errors** — 17 checks covering schema, label
 encoding, ID uniqueness, agency-registry integrity, post-field consistency, PII leakage,
-duplicate leakage, split integrity, class balance, lineage reconciliation, and metadata
-completeness.
+duplicate leakage, split integrity, class balance, lineage reconciliation, annotation
+completeness, and metadata completeness.
+
+Then assemble the release package:
+
+```bash
+python tools/build_release.py --check           # is it ready?
+python tools/build_release.py --build --zip     # assemble data/final/ and zip it
+```
+
+`data/final/` is the single artifact the modeling stage receives — one folder, one zip,
+one manifest with checksums. See [`data/final/README.md`](data/final/README.md).
 
 ---
 
@@ -304,6 +329,8 @@ dataset are denormalized copies that must match the registry exactly (check V-16
 | Duplicate handling | Exact (`dedup_key`) and near (Jaccard ≥ 0.90) — **before** the split |
 | Target size | ≥ 1,000 usable comments combined; ≥ 600 in the Facebook-only primary set |
 | Reliability target | Cohen's κ ≥ 0.60 on the 20% blinded re-label subset (intra-annotator) |
+| Human verification | ≥ 100 random rows, reviewed blind to the engine's label |
+| Release package | `data/final/` — build with `tools/build_release.py --build --zip` |
 | Missing values | Empty string (never `NA` / `null` / `None`) |
 | `comment_id` | `<platform>_<source_page>_<seq4>`, e.g. `fb_dost_pagasa_0001` — never reused or renumbered |
 
@@ -319,9 +346,12 @@ dataset are denormalized copies that must match the registry exactly (check V-16
 | Collection pilot | ⬜ | raw snapshot + yield estimate |
 | Full collection | ⬜ | raw snapshots, `collection_log.csv` |
 | Cleaning, dedup, PII scrub | ⬜ | candidate pool + exclusion ledger |
+| Automated annotation + adjudication | ⬜ | labeled dataset, `auto_annotator.py` |
+| Human verification (≥ 100 rows) | ⬜ | agreement rate, κ |
 | Reliability measurement | ⬜ | 20% blinded re-label, κ |
 | Full annotation + resolution | ⬜ | labeled dataset |
 | Splits + metadata + validation | ⬜ | splits, metadata, `validation_report.txt` |
+| Release package | ⬜ | `data/final/` + zip + `MANIFEST.json` |
 
 🔶 in progress · ⬜ not started · ✅ complete
 

@@ -141,8 +141,10 @@ get IP-blocked and lose collection time.
 
 **Goal:** every comment labeled `1` (actionable) or `0` (other), with measured agreement.
 
-**You are the only annotator.** Everything below is designed for one person. The reliability
-number comes from re-labeling a subset of your own work **blind**, after a washout.
+**Labeling is automated** by `src/annotate/auto_annotator.py`, with human verification of
+≥ 100 rows and a blinded re-label pass for the reliability number. You are not
+hand-labeling a thousand comments — you are adjudicating the ambiguous ones and
+verifying a sample.
 
 **3a — Guidelines**
 - [ ] Read `docs/ANNOTATION_GUIDELINES.md` §2 (the core rule) and §5 (the example bank) end
@@ -152,9 +154,12 @@ number comes from re-labeling a subset of your own work **blind**, after a washo
       guideline is wrong → amend it and bump `guideline_version`.
 
 **3b — Production pass**
-- [ ] Label **100%** of the pool as `annotator_id = A1`. Batches of 50–100, with breaks.
-- [ ] Set `label`, `label_str`, and `language` on every row.
-- [ ] FLAG anything unclear rather than guessing.
+- [ ] Run `python src/annotate/auto_annotator.py score` on the pool → confident rows are
+      labeled automatically, the rest are exported for adjudication.
+- [ ] Work the review batches (every low-confidence row + a 10% audit sample of the rest).
+      Each batch carries the comment, the post context and the parent's text.
+- [ ] Merge the decisions back with `auto_annotator.py apply`.
+- [ ] Set `label`, `label_str`, `language`, and `verification` on every row.
 
 **3c — Washout**
 - [ ] Leave the data alone for **≥ 7 days**. Don't look at your labels.
@@ -172,7 +177,14 @@ number comes from re-labeling a subset of your own work **blind**, after a washo
       keeping whichever you wrote first), amend the guidelines if they were unclear, bump the
       version, re-annotate the affected rows, and re-measure.
 
-**3f — Auto-annotator (optional)**
+**3f — Human verification (required)**
+- [ ] Verify **≥ 100 random rows** that the engine labeled, **without seeing its label
+      first**.
+- [ ] Record the agreement rate and Cohen's κ between your reading and the engine's.
+- [ ] Set `verification = human_verified` on those rows.
+- [ ] Report both numbers in the write-up.
+
+**3g — Auto-annotator audit**
 - [ ] Evaluate a candidate assistant against a **120-row self-labeled gold set**.
 - [ ] Gate: **macro-F1 ≥ 0.80 AND κ ≥ 0.60** against your gold set. Below that, don't
       use it — record the attempt as a negative result.
@@ -238,6 +250,7 @@ number comes from re-labeling a subset of your own work **blind**, after a washo
 | `data/processed/posts_v1.csv` | Post context master. |
 | `data/processed/dataset_v1.metadata.json` | Counts, class distribution, per-agency counts, provenance, κ, lineage. |
 | `data/provenance/government_agencies.csv` | Which government agency every row came from. |
+| `data/final/` | **The release package.** Assembled by `tools/build_release.py` — one folder, one zip, one manifest. |
 
 The 35 columns, in order: `comment_id`, `platform`, `source_page`, `source_page_name`,
 `agency_id`, `agency`, `agency_abbr`, `post_id`, `post_url`, `post_date`, `post_text`,
@@ -362,3 +375,4 @@ If you only remember one thing:
 - [ ] **Stage 3** — guidelines calibration, 100% labeling, washout, blinded re-label, κ
 - [ ] **Stage 4** — split
 - [ ] **Stage 5** — validate, metadata, data card, hand-off
+- [ ] **Release** — `python tools/build_release.py --build --zip`

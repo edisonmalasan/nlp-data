@@ -8,7 +8,7 @@
 | Status | **DRAFT — must be agreed by the annotation team before labeling starts** |
 | Created | 2026-10-20 |
 | Owner | Member 4 — **Edison Yin Malasan** (dataset producer, adjudicator) |
-| Annotator | `A1` — the dataset owner, who labels every row personally (single-annotator design, see §8.1) |
+| Annotator | `A1` — the annotator engine (`src/annotate/auto_annotator.py`), with human verification by the dataset owner (see §8.5) |
 | Dataset | `data/processed/dataset_v1.csv` |
 | Governing contract | `DATA_CONTRACT.md` |
 | Task definition source | `docs/NLP-Final-Paper.pdf` §II (Problem Statement) and §II (Scope) |
@@ -299,17 +299,22 @@ Guidance:
 
 ### 8.1 Roles
 
-This dataset is annotated by **a single annotator** (the dataset owner, `annotator_id = A1`).
-There is no second annotator and no separate adjudicator.
+The dataset is labeled by an **automated annotator** (`src/annotate/auto_annotator.py`)
+following this document, with **human verification** by the dataset owner.
 
-| Role | Responsibility |
-|---|---|
-| Annotator A1 (the dataset owner) | Labels **every** row. Sees post context. Owns the guidelines and the final label for every row. |
+| Role | Who | Scope |
+|---|---|---|
+| Annotator engine | `src/annotate/auto_annotator.py` — heuristic scoring, then agent adjudication of every ambiguous row | **100%** of the dataset |
+| Human verifier | The dataset owner, reviewing rows **without seeing the engine's label first** | ≥ 100 random rows |
+| Adjudicator | The dataset owner, for rows the human verified and for guideline-level disputes | 100% of flagged cases |
 
-Because one person does all the labeling, the reliability measurement changes from
-*inter-annotator* agreement to **intra-annotator reliability** — measured by re-labeling a
-random subset after a washout period, blind to the first pass (§8.2, §10.1). That is the
-only honest way to report a κ number here, and it must be described that way in the write-up.
+The engine is **not** the rule. This document is the rule. The engine triages: it settles
+the obvious cases and hands everything it is not sure about to an adjudicator who reads
+the comment and applies §2 and §4 by hand.
+
+Because one annotator produces the labels, the reliability measurement is **intra-annotator
+reliability** (test-retest) — a blinded re-label pass by the same annotator — and not
+inter-annotator agreement (§10.1).
 
 ### 8.2 Pass structure
 
@@ -358,6 +363,108 @@ Recommended: Doccano or Label Studio (both open source, both support multi-annot
 - Do **not** consult the write-up, the paper, or your own earlier notes while labeling — only the comment and its context.
 - Log any suspected platform artifact or spam pattern in the note field rather than deleting the row yourself.
 
+
+### 8.5 The automated annotation workflow
+
+This is the default path. It exists so the dataset does not depend on one person typing a
+label for every comment, while keeping every label traceable to this document.
+
+#### The three stages
+
+**Stage 1 — Cue extraction.** `src/annotate/auto_annotator.py` extracts signals from
+each comment: request markers, action verbs, strong request frames (`dapat`, `kailangan`,
+`need to`), action objects, complaint markers, gratitude, reaction, information questions,
+and refusals.
+
+**Stage 2 — Heuristic scoring.** Cues become a suggested label, a confidence, and the
+rule that fired.
+
+| Rule | Label | Confidence | Auto-decided? |
+|---|---|---|---|
+| `request_marker + action_verb` | actionable | 0.85–0.90 | yes |
+| `strong_frame + action_object` | actionable | 0.88 | yes |
+| `strong_frame_only` | actionable | 0.80 | no |
+| `request_marker + object_only` | actionable | 0.60 | **no — adjudicated** |
+| `action_verb_only` | actionable | 0.78 | no |
+| `gratitude_or_reaction` | other | 0.90 | yes |
+| `complaint_without_remedy` | other | 0.88 | yes |
+| `information_question` | other | 0.85 | yes |
+| `needs_adjudication` | — | 0.00 | **no — adjudicated** |
+
+**Rows below 0.85 confidence are never auto-decided.** They go to adjudication.
+
+**Stage 3 — Adjudication.** Two groups of rows are exported for a person (or an agent)
+to read and decide:
+
+1. Every row the heuristic could not decide.
+2. A **random 10% audit sample** of the rows it *could* decide, fixed seed `42`.
+
+The audit sample is what makes the heuristic's accuracy a measurement rather than an
+assumption. Every exported row carries the comment, the post context, the parent comment,
+the heuristic's suggestion, and the evidence behind it — so the adjudicator sees
+everything §8.4 requires and nothing that would bias the decision.
+
+#### Running it
+
+```bash
+python src/annotate/auto_annotator.py score \
+    --pool       data/processed/candidate_pool.csv \
+    --out        data/interim/auto_scored.csv \
+    --review-out data/interim/review_batches/
+
+# work the batches, write data/interim/agent_decisions.csv, then:
+python src/annotate/auto_annotator.py apply \
+    --scored    data/interim/auto_scored.csv \
+    --decisions data/interim/agent_decisions.csv \
+    --out       data/processed/dataset_v1.csv
+```
+
+Full procedure in `src/annotate/README.md`.
+
+#### What the adjudicator must do
+
+- Read the **comment and its post context**. Never from the comment alone (§8.4).
+- Apply §2 and §4. The heuristic's suggestion is a hypothesis, not an answer.
+- **Do not anchor.** For an `audit` row, decide first, then compare. Overriding the
+  heuristic is a legitimate outcome and is recorded as such.
+- Record a **one-line note** naming the rule that decided it (`§6.3 — identifiable
+  object of action`). This is what makes the label auditable.
+- Set `verification` on the row: `auto` for engine-only labels, `human_verified` for rows
+  a person checked, `human_labeled` for rows a person labelled from scratch.
+
+#### Human verification (required before release)
+
+- [ ] Verify **≥ 100 random rows** that the engine labeled, **without seeing the
+      engine's label first**.
+- [ ] Record the agreement rate and Cohen's κ between your reading and the engine's.
+- [ ] Set `verification = human_verified` on those rows.
+- [ ] Report both numbers in the write-up.
+
+#### Rules the engine must never break
+
+1. **A politeness marker alone never makes a row actionable** (§2.2). The engine encodes
+   this by never scoring on markers by themselves — a marker counts only alongside an
+   action verb, a strong request frame, or an action object.
+2. **The most disputed class is never auto-decided.** `request_marker + object_only`
+   (*"Sana maayos ang kalsada"*) always routes to adjudication, because §5.3 #35 vs #36
+   is the most common dispute in this document.
+3. **Every row ends up with a decision.** Any row still below threshold at merge time is
+   reported as a warning and blocks release.
+4. **The heuristic is triage, not the rule.** If the engine and this document disagree, the
+   document wins — fix the engine.
+
+#### How to describe this in the write-up
+
+This is **LLM-assisted annotation with human verification**. Say so, and state:
+
+- the engine and its version,
+- the share of rows auto-decided vs adjudicated vs human-verified,
+- the human-verification sample size, agreement rate and κ,
+- the blinded re-label κ.
+
+Do **not** describe automated labeling as manual annotation. If the write-up calls it
+manual, that is a misreport, and it is the one thing in this section that is not negotiable.
+
 ---
 
 ## 9. Resolving disagreements between your two passes
@@ -398,6 +505,7 @@ the first pass and the **blinded re-label pass** (§8.2, step 4).
 | Interpretation (Landis & Koch 1977) | `< 0.20` slight · `0.21–0.40` fair · `0.41–0.60` moderate · `0.61–0.80` substantial · `0.81–1.00` almost perfect |
 | **Gate** | **κ ≥ 0.60** — below this, resolve the disagreements and re-measure |
 | Report | κ, the disagreement breakdown (which error dominates — most commonly O1↔A1, "complaint with vs. without remedy"), and the count of resolved rows |
+| Also report | The engine's own audit accuracy: the κ between the engine and the human-verified sample (§8.5) |
 
 **How to describe it in the write-up.** Call it *intra-rater reliability* or *intra-annotator
 agreement* from a blinded re-annotation pass. **Do not call it inter-annotator agreement** —
@@ -441,7 +549,8 @@ An automated assistant may pre-label rows to speed up triage, but **only** after
 
 | Version | Date | Author | Change |
 |---|---|---|---|
-| `v1.0-draft` | 2026-10-20 | M4 (MALASAN) | Initial guidelines. Two-label taxonomy from the paper's Scope; core action-based rule; language-neutrality rule; decision tree; 50-example bank; edge-case tie-breakers; workflow and QC. |
+| `v1.0-draft` | 2026-10-20 | M4 (MALASAN) | Initial guidelines. |
+| `v1.0-draft` (annot. engine) | 2026-10-20 | M4 (MALASAN) | Added §8.5, the automated annotation workflow: cue extraction, heuristic scoring with confidence thresholds, adjudication of every low-confidence row plus a 10% audit sample, and mandatory human verification of ≥ 100 rows. | Two-label taxonomy from the paper's Scope; core action-based rule; language-neutrality rule; decision tree; 50-example bank; edge-case tie-breakers; workflow and QC. |
 
 > **Every label in the dataset carries the `guideline_version` it was produced under** (`DATA_CONTRACT.md` §5.2, column 29). Labels from different guideline versions are never mixed in one release.
 
