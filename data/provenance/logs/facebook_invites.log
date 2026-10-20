@@ -523,3 +523,32 @@
 [06:27:09] [1/32] facebook/dost_pagasa: the last attempt was empty, retrying
 [06:27:09] [1/32] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
 [06:27:20]   error: no post permalinks found on the account page
+[06:27:30] [2/32] facebook/doh: topping up (1 of 5 posts)
+[06:27:30] [2/32] facebook/doh  https://www.facebook.com/DOHgovPH
+[06:27:41]   error: no post permalinks found on the account page
+[06:27:51] [3/32] facebook/dswd: topping up (1 of 5 posts)
+[06:27:51] [3/32] facebook/dswd  https://www.facebook.com/dswdserves
+[06:28:35]       11 comments  xFaHhZp4R2QvBM824oky1SyqemTd3xKtkiyAKFQ5r6C2Hl
+[06:28:35]   SNAPSHOT facebook_dswd_2026-10-21T06-28.json  1 post(s), 11 comment(s)
+[06:28:35]   ok: 1 post(s), 11 comment(s)
+[06:28:45] [4/32] facebook/deped: topping up (1 of 5 posts)
+[06:28:45] [4/32] facebook/deped  https://www.facebook.com/DepartmentOfEducation.PH
+[06:28:56]   error: no post permalinks found on the account page
+[06:29:06] [5/32] facebook/dpwh: topping up (1 of 5 posts)
+[06:29:06] [5/32] facebook/dpwh  https://www.facebook.com/dpwhph
+[06:29:18]   error: no post permalinks found on the account page
+[06:29:28] [6/32] facebook/dilg: the last attempt was empty, retrying
+[06:29:28] [6/32] facebook/dilg  https://www.facebook.com/dilg.philippines
+[06:29:39]   error: no post permalinks found on the account page
+[06:29:49] [7/32] facebook/ndrrmc  https://www.facebook.com/NDRRMC
+[06:30:00]   error: no post permalinks found on the account page
+[06:30:10] [8/32] facebook/bfp  https://www.facebook.com/DILGBFP
+[06:30:21]   error: no post permalinks found on the account page
+[06:30:31] [9/32] facebook/dti  https://www.facebook.com/DTI.Philippines
+[06:31:16]       14 comments  ZqN7sDR1DQ8zjiBpPgVdxyU5ehngUpM4FmNxGRP1cmkGfl
+[06:31:16]   SNAPSHOT facebook_dti_2026-10-21T06-31.json  1 post(s), 14 comment(s)
+[06:31:16]   ok: 1 post(s), 14 comment(s)
+[06:31:26] [10/32] facebook/denr  https://www.facebook.com/DENROfficial
+[06:31:39]   error: no post permalinks found on the account page
+[06:31:49] [11/32] facebook/dacentralphilippines  https://www.facebook.com/dacentralphilippines
+[06:32:00]   error: no post permalinks found on the account page

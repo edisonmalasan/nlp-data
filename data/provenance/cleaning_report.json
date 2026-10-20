@@ -1,0 +1,11 @@
+{
+  "n_loaded": 1621,
+  "n_kept": 1408,
+  "n_excluded": 213,
+  "excluded_by_reason": {
+    "X_OFFICIAL": 35,
+    "X_LANG": 1,
+    "X_DUP_EXACT": 131,
+    "X_SPAM": 46
+  }
+}

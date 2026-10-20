@@ -17,27 +17,48 @@
   const clean = s => (s || '').replace(/\u00a0/g, ' ').replace(/[ \t]+/g, ' ').trim();
 
   const all = Array.from(document.querySelectorAll('div[role="article"]'));
-  const isComment = a => /^Comment by/.test(a.getAttribute('aria-label') || '');
+  // A comment is not only the article whose label starts with "Comment by".
+  // A comment also contains nested articles - the author's own article, for
+  // one - and those have no label at all, so a label test alone classifies
+  // them as posts. The caption then comes from a comment, which is how the
+  // post text ended up being somebody else's remark.
+  const COMMENT_SEL = 'div[role="article"][aria-label^="Comment by"]';
+  const isComment = a => /^Comment by/.test(a.getAttribute('aria-label') || '')
+                          || !!a.closest(COMMENT_SEL);
 
   const commentNodes = all.filter(isComment);
   const postNodes = all.filter(a => !isComment(a));
 
   // ---- the post itself ----------------------------------------------------
   let post = { post_text: '', post_url: location.href, post_date: '' };
+
+  // The caption lives in the message container, which Facebook marks with
+  // data-ad-comet-preview. That is the reliable place to read it from.
   for (const p of postNodes) {
-    const label = p.getAttribute('aria-label') || '';
-    if (/^Post by|Shared with Public/i.test(label) || p.querySelector('[data-ad-comet-preview]')) {
+    const msg = p.querySelector('[data-ad-comet-preview]');
+    if (!msg) continue;
+    const txt = clean(msg.innerText);
+    if (txt) { post.post_text = txt.slice(0, 4000); break; }
+  }
+
+  if (!post.post_text) {
+    // The label of the post's own article, when the layout provides one.
+    for (const p of postNodes) {
+      const label = p.getAttribute('aria-label') || '';
+      if (!/^Post by|Shared with Public/i.test(label)) continue;
       const parts = Array.from(p.querySelectorAll('div[dir="auto"]'))
         .map(x => clean(x.innerText)).filter(Boolean);
-      if (parts.length) {
-        post.post_text = parts[0].slice(0, 4000);
-        break;
-      }
+      if (parts.length) { post.post_text = parts[0].slice(0, 4000); break; }
     }
   }
+
   if (!post.post_text) {
-    // fall back: the first article that has a caption and is not a comment
+    // The last resort: the first piece of text in an article that is not
+    // a comment and does not contain one. The comment test has to be
+    // applied again here, because a comment's own nested article has no
+    // label and would otherwise look like the post.
     for (const p of postNodes) {
+      if (p.querySelector(COMMENT_SEL)) continue;
       const parts = Array.from(p.querySelectorAll('div[dir="auto"]'))
         .map(x => clean(x.innerText)).filter(Boolean);
       if (parts.length) { post.post_text = parts[0].slice(0, 4000); break; }

@@ -9,18 +9,60 @@
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:23:19"
+    "updated_at": "2026-10-21T06:27:41"
   },
   "facebook/dswd": {
-    "posts": 1,
-    "comments": 11,
+    "posts": 2,
+    "comments": 22,
     "last_error": "",
-    "updated_at": "2026-10-21T06:24:02"
+    "updated_at": "2026-10-21T06:28:35"
   },
   "facebook/deped": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:24:23"
+    "updated_at": "2026-10-21T06:28:56"
+  },
+  "facebook/dpwh": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-21T06:29:18"
+  },
+  "facebook/dilg": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-21T06:29:39"
+  },
+  "facebook/ndrrmc": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-21T06:30:00"
+  },
+  "facebook/bfp": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-21T06:30:21"
+  },
+  "facebook/dti": {
+    "posts": 1,
+    "comments": 14,
+    "last_error": "",
+    "updated_at": "2026-10-21T06:31:16"
+  },
+  "facebook/denr": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-21T06:31:39"
+  },
+  "facebook/dacentralphilippines": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-21T06:32:00"
   }
 }
