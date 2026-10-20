@@ -127,6 +127,7 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 | `tools/validate_dataset.py` | **The acceptance test**, V-01…V-17. Reads the expected schema from the contract. |
 | `tools/split_dataset.py` | **The splitter.** 70/15/15, stratified by label, grouped by `post_id`, seed 42. |
 | `tools/build_release.py` | Assembles `data/final/`, writes `MANIFEST.json`, produces the zip. |
+| `tests/` | The test suite. `run_all.py` runs every module; `fb_fixture.html` is a saved page for the extractor. |
 
 ---
 
@@ -216,6 +217,7 @@ authoritative; the `split` column is only a mirror.
 ```bash
 pip install -r requirements.txt
 playwright install chromium                      # for the Facebook headless scraper
+python tests/run_all.py                         # run the test suite
 
 # Stage 3 — annotate
 python src/annotate/auto_annotator.py score \

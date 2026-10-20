@@ -94,6 +94,8 @@ nlp-data/
     ├── split_dataset.py         ← 70/15/15, grouped by post_id
     ├── validate_dataset.py      ← acceptance test (V-01…V-17)
     └── build_release.py        ← assembles data/final/ + zip
+tests/
+    └── run_all.py               ← the test suite
 ```
 
 ---
@@ -110,6 +112,7 @@ python -m venv .venv
 
 pip install -r requirements.txt
 playwright install chromium      # only needed for the Facebook headless scraper
+python tests/run_all.py                         # run the test suite
 ```
 
 **No credentials, keys, tokens, or `.env` file are needed.** There is nothing to configure

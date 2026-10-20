@@ -45,6 +45,9 @@ tools/
   validate_dataset.py          acceptance test V-01..V-17
   split_dataset.py             70/15/15, grouped by post_id, seed 42
   build_release.py             assembles data/final/ + zip
+tests/
+  run_all.py                   the test suite
+  fb_fixture.html              a saved page for the extractor tests
 ```
 
 ---
@@ -243,6 +246,7 @@ manual annotation by a human researcher.
 
 - [ ] The contract's §5.2 table and the CSV headers still match, column for column, in
       order.
+- [ ] `python tests/run_all.py` passes.
 - [ ] `python src/annotate/auto_annotator.py score` and `apply` still run end to end.
 - [ ] The annotator unit expectations still pass, and the disputed examples still route to
       adjudication.
@@ -276,6 +280,7 @@ description.
 | I need to… | Command / file |
 |---|---|
 | Know what to do next | `docs/STAGES.md` |
+| Run the tests | `python tests/run_all.py` |
 | Look up a column | `DATA_CONTRACT.md` §5.2 |
 | Label a comment | `docs/ANNOTATION_GUIDELINES.md` §2 and §5 |
 | Run the annotator | `src/annotate/README.md` |

@@ -80,7 +80,8 @@
 
 - [x] Build the Facebook scraper in `src/collect/facebook.py` — headless browser (Playwright),
       open the public permalink, scroll the comment thread, read the rendered DOM.
-      *Built. `--dump-dom` saves the rendered HTML so selectors can be fixed offline.*
+      *Built and tested against a saved fixture. `--dump-dom` saves the rendered HTML so
+      selectors can be fixed offline instead of by re-scraping.*
 - [ ] Build the YouTube parser in `src/collect/youtube.py` — `requests` + `ytInitialData`
       continuation tokens. *(not started)*
 - [ ] Build the Reddit fetcher in `src/collect/reddit.py` — public `.json` endpoints.
