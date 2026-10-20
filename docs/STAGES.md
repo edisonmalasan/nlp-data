@@ -53,7 +53,7 @@
 
 **Goal:** a frozen, defensible list of official Philippine government accounts to read.
 
-- [x] Pick the agencies — **10 agencies across 38 policy domains**, pre-filled in
+- [x] Pick the agencies — **32 Facebook accounts across 38 policy domains**, pre-filled in
       `data/provenance/government_agencies.csv`: DOST-PAGASA, DOH, DSWD, DepEd, DPWH, DILG,
       NDRRMC, BFP, DTI, DENR. 10 Facebook rows + 6 YouTube rows, 136 posts planned.
 - [x] Official accounts confirmed against each agency's own website — every row carries
@@ -259,7 +259,7 @@ layer, so the working layer stays the source of truth:
 
 | Working layer (`data/processed/`) | Released as (`data/final/`) |
 |---|---|
-| `dataset_v1.csv` — 39 columns, labeled, **Facebook only** | `dataset_v1.csv` |
+| `dataset_v1.csv` — 40 columns, labeled, **Facebook only** | `dataset_v1.csv` |
 | `dataset_v1_ext.csv` — same schema, all platforms | `dataset_v1_ext.csv` |
 | `splits/{train,dev,test}.csv` — **authoritative** | `train.csv`, `dev.csv`, `test.csv` |
 | `posts_v1.csv` — post context master | `posts_v1.csv` |
@@ -289,7 +289,7 @@ The 40 columns, in order: `comment_id`, `platform`, `source_page`, `source_page_
 
 ```
 data/final/
-  dataset_v1.csv              ← the labeled dataset (39 columns)
+  dataset_v1.csv              ← the labeled dataset (40 columns)
   train.csv                   ← authoritative
   dev.csv                     ← authoritative
   test.csv                    ← authoritative  ← the held-out set, used ONCE
@@ -334,7 +334,7 @@ change accordingly (§3a–§3g).
 
 | Task item | Stage | Covered? |
 |---|---|---|
-| Identify official government pages | **0** | ✅ `government_agencies.csv` — 10 agencies, 38 domains |
+| Identify official government pages | **0** | ✅ `government_agencies.csv` — 32 Facebook accounts, 38 domains |
 | Collect comments using an authorized method | **1** | ✅ `data/raw/` — public HTML/DOM, no credentials |
 | Clean the dataset (remove exact duplicates and spam) | **2b, 2d** | ✅ `X_DUP_EXACT`, `X_DUP_NEAR`, `X_SPAM` |
 | Anonymize data | **2e** | ✅ PII scrub, `X_PII` |

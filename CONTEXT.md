@@ -11,7 +11,7 @@ then `DATA_CONTRACT.md` for the binding rules.
 | Academic year | 2026–2027 · CSE 30-9712 Special Topics 1 |
 | Owner | Member 4 (MALASAN) — the dataset producer |
 | Contract version | `1.5-draft` — see `DATA_CONTRACT.md` §17 |
-| Dataset schema | **39 columns** — see `DATA_CONTRACT.md` §5.2 |
+| Dataset schema | **40 columns** — see `DATA_CONTRACT.md` §5.2 |
 | Validation | **17 checks**, V-01…V-17 — see `DATA_CONTRACT.md` §14 |
 
 ---
@@ -112,7 +112,7 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 
 | File | Grain | What it is |
 |---|---|---|
-| `government_agencies.csv` | one row per (agency, platform) | **The canonical registry.** Pre-filled: 10 agencies, 16 rows, 38 policy domains, official accounts confirmed against each agency's own website. |
+| `government_agencies.csv` | one row per (agency, platform) | **The canonical registry.** Pre-filled: 32 Facebook accounts, 10 YouTube channels, 5 X accounts - 47 rows, 38 policy domains, official accounts confirmed against each agency's own website. |
 | `collection_log.csv` | one row per collection run | Audit trail: tool, user agent, delay, counts, errors. |
 
 ### `src/` and `tools/`

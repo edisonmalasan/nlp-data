@@ -19,7 +19,7 @@ When it is done, `data/final/` contains a folder you can compress and hand over 
 
 | File | What it is |
 |---|---|
-| `dataset_v1.csv` | **The dataset.** One row per usable comment, 39 columns, labeled. Facebook-only — matches the study's framing. |
+| `dataset_v1.csv` | **The dataset.** One row per usable comment, 40 columns, labeled. Facebook-only — matches the study's framing. |
 | `dataset_v1_ext.csv` | The same schema across all platforms. Optional extension. |
 | `posts_v1.csv` | Post context master. Join on `post_id`. |
 | `train.csv` · `dev.csv` · `test.csv` | **Authoritative** split assignment. Join on `comment_id`. |

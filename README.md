@@ -375,7 +375,7 @@ dataset are denormalized copies that must match the registry exactly (check V-16
 |---|---|---|
 | Dataset contract v1.0 | 🔶 Draft — awaiting sign-off | `DATA_CONTRACT.md` |
 | Annotation guidelines v1.0 | 🔶 Draft — awaiting team agreement | `docs/ANNOTATION_GUIDELINES.md` |
-| Source list & collection protocol | ✅ Done — 10 agencies, 16 rows | `data/provenance/government_agencies.csv` |
+| Source list & collection protocol | ✅ Done — 47 rows: 32 Facebook accounts, 10 YouTube channels, 5 X accounts | `data/provenance/government_agencies.csv` |
 | Collection pilot | ⬜ | raw snapshot + yield estimate |
 | Full collection | ⬜ | raw snapshots, `collection_log.csv` |
 | Cleaning, dedup, PII scrub | ⬜ | candidate pool + exclusion ledger |
