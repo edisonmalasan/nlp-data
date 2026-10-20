@@ -275,6 +275,13 @@ pilot's four posts were all fresh, so they yielded 3, 1, 4 and 4.
 ### Running the pilot
 
 ```bash
+# the whole collection
+python src/collect/collect_all.py --posts 12
+
+# or one platform
+python src/collect/run_all.py --platform youtube --posts 8
+
+# or a single account
 python src/collect/orca_browser.py \
     --account https://www.facebook.com/PAGASA.DOST.GOV.PH \
     --source-page dost_pagasa --agency-id dost_pagasa \

@@ -124,6 +124,9 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 | `src/collect/extract_facebook.js` | The DOM extractor that pulls a post and its comment threads out of the page. |
 | `src/collect/alt_text.py` | Strips Facebook's generated image descriptions out of captured comments. |
 | `src/collect/facebook.py` | The scripted fallback scraper. Headless DOM reader, no credentials. |
+| `src/collect/collect_all.py` | **The whole collection.** Facebook → YouTube → X → Reddit → interim → clean, one platform at a time. |
+| `src/collect/run_all.py` | One platform, every account. Resumable. |
+| `src/collect/discover_links.py` | Reads each agency's Facebook page to find its official X, YouTube and Reddit accounts. |
 | `src/collect/to_interim.py` | **The capture hand-off.** Validates a raw snapshot and writes the interim files the cleaning pipeline consumes. |
 | `src/annotate/README.md` | How to run the annotation loop, and how to tune the cue lists. |
 | `src/collect/` | Platform scrapers. *(pending — Stage 1)* |
@@ -224,6 +227,9 @@ playwright install chromium                      # only for the scripted fallbac
 python tests/run_all.py                         # run the test suite
 
 # Stage 1 - collect (the primary route, through the signed-in browser)
+python src/collect/collect_all.py --posts 12
+
+# or a single account
 python src/collect/orca_browser.py \
     --account https://www.facebook.com/dswdserves \
     --source-page dswd --agency-id dswd \
