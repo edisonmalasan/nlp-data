@@ -1,1 +1,1 @@
-run_id,platform,source_page,collection_method,api_version,tool,post_ids_collected,comments_collected,collected_at,raw_snapshot_id,notes
+run_id,platform,source_page,collection_method,tool,version,user_agent,delay_seconds,post_ids_collected,comments_collected,collected_at,raw_snapshot_id,notes
