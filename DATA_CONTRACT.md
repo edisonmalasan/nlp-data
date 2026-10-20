@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Contract version | `1.7-draft` |
+| Contract version | `1.8-draft` |
 | Status | **DRAFT — awaiting adviser + team sign-off** |
 | Created | 2026-10-20 |
 | Owner / Producer | Member 4 — **Edison Yin Malasan** (data collection, scraping, annotation) |
@@ -118,7 +118,7 @@ A source account is eligible if:
 |---|---|---|
 | S1 | It is the **official** account of a Philippine **national** government agency (or a clearly identified national-government program/body). | Matches the paper's scope ("selected Philippine national government agencies"). |
 | S2 | It is a **verified** / official account, not a fan page, advocacy group, or personal account of an official. | Prevents partisan or unofficial commentary from being labeled as agency content. |
-| S3 | Comments are **enabled** and publicly visible without login or request. | Collection feasibility. |
+| S3 | Comments are **enabled** and render in the collection session. | Collection feasibility. |
 | S4 | It has **enough publicly visible comment volume** to yield a meaningful share of comments. | Practical yield. |
 | S5 | It publishes in a domain where the agency plausibly receives **citizen requests** (services, infrastructure, weather/warnings, health, education, disaster response, announcements requiring compliance). | The task needs actionable content to exist; a page that only posts memes would not. |
 | S6 | It is **not** a page whose content is predominantly non-text (e.g., video-only reposts of unrelated viral content). | Annotation feasibility. |
@@ -156,7 +156,7 @@ government body, and the same agency is spelled identically everywhere.
 | `domains` | string | `;`-separated policy domains, e.g. `weather;disaster_preparedness`. Used for stratification and reporting. |
 | `eligibility_s1` … `eligibility_s6` | bool | One column per source criterion in §3.1. **All six must be `true`** for the row to be collected from. |
 | `n_posts_planned` | int | How many posts of this account are planned for collection. |
-| `collection_method` | enum | `dom_headless` \| `html_parse` \| `json_endpoint` \| `manual_capture`. |
+| `collection_method` | enum | `browser_dom_session` \| `dom_headless` \| `html_parse` \| `json_endpoint` \| `manual_capture`. |
 | `notes` | string | Free text. |
 
 **Rules**
@@ -172,25 +172,46 @@ government body, and the same agency is spelled identically everywhere.
 
 ### 3.2 Platforms and collection routes
 
-Comments are collected by **reading the publicly visible HTML/DOM** of each post page. **No API keys, access tokens, OAuth apps, or account credentials are required, and none are stored in this repository.** Every route below is keyless.
+Comments are collected by reading the **rendered DOM** of each post in a browser session.
+**No API key, access token, OAuth app, or account credential is required or stored.** The
+collection runs in the researcher's own browser, already signed in to the platform, driven
+by a computer-use agent; the agent reads the DOM and writes a raw snapshot.
 
 | Platform | Route | What is read | Viability | Role |
 |---|---|---|---|---|
-| **Facebook** | Headless browser (Playwright) that opens the public post permalink, scrolls the comment thread, and reads the rendered DOM | `div[aria-label]` / `data-testid` comment nodes, author handle, timestamp, and the parent post caption | **High** | **Primary.** Matches the paper title/abstract exactly. |
-| Facebook (fast path) | `requests` fetch of the public permalink, parsing the HTML/embedded JSON already present in the page source | Same fields where the server returns them without client-side rendering | Medium | Faster per post; falls back to the headless browser when the comment list is not in the source. |
-| **YouTube** | `requests` fetch of the watch page, parsing `ytInitialData` / `ytInitialData` continuation tokens from the HTML | Comment text, author, timestamp, reply threads | **High** | Secondary. Agency channels (DSWD, PAGASA, DepEd, DOH) have active videos with heavy comment volume. |
-| **Reddit** | Public keyless JSON endpoints (`/comments/<id>.json`, `/r/<sub>/comments.json`) | Comment body, author, score, created time | Medium-Low | Optional. Government-specific threads are sparse; yield unpredictable. |
-| **X / Twitter** | Public page HTML / embedded JSON | Replies under agency posts | Low | Optional. Mostly client-rendered; lowest yield of the four. |
+| **Facebook** | Rendered DOM of the public post permalink, scrolled to the end of the comment thread | Comment text, display name, relative timestamp, reply parent, and the post caption | **High** | **Primary.** Matches the paper title and abstract exactly. |
+| **YouTube** | Rendered DOM of the watch page, including the comment thread and its continuation | Comment text, author, timestamp, reply parent, video title and caption | **High** | Secondary. |
+| **Reddit** | Rendered DOM of the post page under the agency's own subreddit or thread | Comment body, author, score, created time | Medium-Low | Optional. Government-specific threads are sparse. |
+| **X** | Rendered DOM of the post page and its replies | Reply text, author, timestamp | Low | Optional. Least accessible of the four. |
 | TikTok / others | — | — | **Not viable** | Out of scope. Do not attempt. |
 
 **Practical notes per platform**
 
-- **Facebook**: the comment list is client-rendered, so a plain `requests` fetch often returns the post shell without comments. The headless browser (scroll-to-bottom, wait for the thread to grow) is the reliable route; the raw HTML route is only a shortcut when the comments happen to be in the page source.
-- **YouTube**: the watch page embeds the first page of comments in `ytInitialData`; further pages come from continuation tokens in the same payload. No key needed.
-- **Reddit**: the `.json` endpoints are public and keyless. Send a descriptive `User-Agent` header or the requests get throttled.
-- **X**: replies are the least accessible of the four and are frequently behind a login wall. Treat as optional.
+- **Facebook** and **YouTube** both load comments lazily. A thread that is not scrolled to
+  the end is a **truncated thread**, and the missing comments are silently absent from the
+  dataset. Each snapshot records `scrolled_to_end` so a partial capture is visible.
+- **YouTube** carries the highest comment volume of the four on the weather channel
+  (live briefings), but the vocabulary is narrower than Facebook's.
+- **Reddit** and **X** have the least predictable yield. Treat them as optional extras.
 
-**Rate behavior (operational, not policy).** Send requests slowly with a fixed delay between them and rotate a realistic `User-Agent`. Going too fast gets the client IP temporarily blocked, which costs data collection time — the delay is a throughput decision, not a formality. When a request returns a block or a consent interstitial, log it in `collection_log.csv` and stop that source for the run rather than retrying in a loop.
+**Collection method values**
+
+| Value | Meaning |
+|---|---|
+| `browser_dom_session` | The method used here — a computer-use agent reading the rendered DOM of the researcher's signed-in browser. |
+| `dom_headless` | The scripted fallback in `src/collect/facebook.py`, which launches its own headless browser. |
+| `manual_capture` | A person reading and transcribing the thread by hand. |
+
+**Sampling note.** Reading the DOM in a signed-in session shows what a signed-in visitor
+sees, which includes the full thread and its replies. The dataset therefore covers the
+comments **visible to the collection session**. For public government pages this is
+effectively the public thread. The display name is captured only so the cleaning stage can
+identify agency-authored comments (`X_OFFICIAL`); it is removed before anything is
+published.
+
+**The hand-off.** A capture is a raw snapshot JSON. `src/collect/to_interim.py` validates
+it and writes the interim files the cleaning pipeline consumes. The format and the full
+procedure are in `docs/COLLECTION_PROTOCOL.md`.
 
 ### 3.3 Collection parameters (recorded per source, per run)
 
@@ -202,7 +223,7 @@ Every collection run is logged to `data/provenance/collection_log.csv`:
 | `platform` | `facebook` / `youtube` / `reddit` / `x` |
 | `source_page` | slug of the source account |
 | `collection_method` | `dom_headless` / `html_parse` / `json_endpoint` / `manual_capture` |
-| `tool` / `version` | e.g. `playwright 1.47` / `beautifulsoup4 4.12` / `requests 2.32` |
+| `tool` / `version` | e.g. `orca-computer-use 1.0` / `playwright 1.47` / `beautifulsoup4 4.12` |
 | `user_agent` | the `User-Agent` string used for the run |
 | `delay_seconds` | fixed delay between requests for this run |
 | `post_ids_collected` | count of posts touched |
@@ -865,6 +886,7 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 | Version | Date | Author | Change |
 |---|---|---|---|
 | `1.0-draft` | 2026-10-20 | M4 (MALASAN) | Initial contract drafted from `NLP-PLAN.pdf` and `NLP-Final-Paper.pdf`. Schema, dedup/spam/PII rules, annotation interface, splits, validation, schedule. |
+| `1.8-draft` | 2026-10-20 | M4 (MALASAN) | Collection method switched to a computer-use agent reading the rendered DOM in the researcher's own signed-in browser. Section 3.2 rewritten around that route, with the `collection_method` values, the lazy-loading warning that truncated threads silently lose comments, and the sampling note. The source registry is pre-filled with 10 agencies across 38 policy domains. |
 | `1.7-draft` | 2026-10-20 | M4 (MALASAN) | Corrected the §5.6 reconciliation identity. It was written as a single linear chain, which made `n_candidate_pool + Σ exclusions = n_labeled` — that would make the labeled set larger than the pool it came from. The cleaning branch and the labeling branch are two separate equalities now. |
 | `1.6-draft` | 2026-10-20 | M4 (MALASAN) | Fixed the §6.2 normalization order: the email rule now runs before the URL and mention rules, so `juan@dept.gov.ph` becomes `<EMAIL>` instead of being mangled. Zero-width removal now also covers `U+2060`. |
 | `1.5-draft` | 2026-10-20 | M4 (MALASAN) | Added the annotation provenance columns `annotation_rule` (37), `annotation_evidence` (38) and `annotation_confidence` (39), so every label in the delivered dataset records the rule that produced it, the evidence behind it, and the engine's confidence. Schema is now 39 columns. |

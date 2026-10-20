@@ -71,7 +71,7 @@ nlp-data/
 │   ├── NLP-Final-Paper.pdf      ← source: scope, objectives, label definitions
 │   ├── ANNOTATION_GUIDELINES.md ← labeling rules, decision tree, example bank
 │   ├── STAGES.md               ← the step-by-step path through this scope
-│   ├── COLLECTION_PROTOCOL.md   ← (pending) per-source collection detail
+│   ├── COLLECTION_PROTOCOL.md   ← the collection procedure + snapshot format
 │   └── DATA_CARD.md             ← (pending) dataset card for the write-up
 ├── data/
 │   ├── README.md                ← layer rules, label encoding, join instructions
@@ -87,7 +87,7 @@ nlp-data/
 │       ├── government_agencies.csv
 │       └── collection_log.csv
 ├── src/
-│   ├── collect/                 ← facebook.py — headless DOM scraper
+│   ├── collect/                 ← facebook.py, to_interim.py
 │   ├── clean/                   ← normalize, dedup, spam, PII, pipeline
 │   └── annotate/                ← labeling tool setup, agreement computation
 └── tools/
@@ -163,17 +163,22 @@ by the instructor. Record the approval in `docs/COLLECTION_PROTOCOL.md` and log 
 
 ### 1. Collect
 
-Comments are read straight from the **publicly visible HTML/DOM** of each post page.
-**No API keys, access tokens, OAuth apps, or account credentials are required** — there is
-nothing to sign up for and no `.env` file in this project.
+Comments are read from the **rendered DOM** of each post page, in **your own signed-in
+Chrome**, driven by a computer-use agent. **No API keys, access tokens, OAuth apps, or
+account credentials are required** — there is nothing to sign up for and no `.env` file in
+this project.
 
 | Platform | How the comments are read | Role |
 |---|---|---|
-| **Facebook** | Headless browser (Playwright) opens the public permalink, scrolls the thread, reads the rendered DOM | **Primary** — matches the study's framing |
-| Facebook (fast path) | `requests` fetch of the permalink, parsing the HTML already in the page source | Shortcut when the comments are server-rendered |
-| **YouTube** | `requests` fetch of the watch page, parsing `ytInitialData` and its continuation tokens | Secondary — agency channels have heavy comment volume |
-| **Reddit** | Public keyless JSON endpoints (`/comments/<id>.json`) | Optional — sparse, unpredictable yield |
-| **X** | Public page HTML / embedded JSON | Optional — least accessible of the four |
+| **Facebook** | Rendered DOM of the public post permalink, scrolled to the end of the thread | **Primary** — matches the study's framing |
+| **YouTube** | Rendered DOM of the watch page, including the comment continuation | Secondary — the weather channel has the most comments of any source |
+| **Reddit** | Rendered DOM of the post page | Optional — sparse, unpredictable yield |
+| **X** | Rendered DOM of the post page and its replies | Optional — least accessible of the four |
+| Facebook (fallback) | `src/collect/facebook.py` — its own headless browser | Scripted alternative if the agent route stalls |
+
+`src/collect/to_interim.py` turns a raw capture into the pipeline's input. The full
+procedure, including the raw snapshot format, is in
+**[`docs/COLLECTION_PROTOCOL.md`](docs/COLLECTION_PROTOCOL.md)**.
 
 **Practical notes**
 
@@ -301,6 +306,26 @@ is the number that fills the paper's `<number>` placeholder.
 `data/provenance/government_agencies.csv` is the canonical list of the Philippine
 government entities in the study — one row per **(agency, platform)** pair.
 
+**Pre-filled: 10 agencies, 16 rows, 38 policy domains, 136 posts planned.**
+
+| Agency | Abbr | Facebook | YouTube |
+|---|---|---|---|
+| DOST-PAGASA | DOST-PAGASA | `PAGASA.DOST.GOV.PH` (8.1M) | `@DOST_PAGASA` (1.18M) |
+| Department of Health | DOH | `DOHgovPH` (8.19M) | `UChZQaAATaHjT_wG-kac3qfA` |
+| Social Welfare and Development | DSWD | `dswdserves` | `@dswdserves` |
+| Education | DepEd | `DepartmentOfEducation.PH` | `@DepEd_PH` (151K) |
+| Public Works and Highways | DPWH | `dpwhph` (580K) | `UCVuowoLBD9zXS6Gnjgh-umQ` |
+| Interior and Local Government | DILG | `dilg.philippines` (2M) | — |
+| Disaster Risk Reduction and Management | NDRRMC | `NDRRMC` | — |
+| Bureau of Fire Protection | BFP | `DILGBFP` (492K) | — |
+| Trade and Industry | DTI | `DTI.Philippines` | `@dti_philippines` (62.2K) |
+| Environment and Natural Resources | DENR | `DENROfficial` (446K) | — |
+
+Every account was confirmed against the agency's own website, and every row carries
+`official_verified = true` with a `verification_basis`. The domain spread is deliberate —
+weather, health, welfare, education, infrastructure, local government, disaster response,
+fire safety, trade and environment — so the dataset is not one agency's complaints.
+
 | Column | Meaning |
 |---|---|
 | `agency_id` | Canonical ID, e.g. `dost_pagasa`. The only agency identifier used in the dataset. |
@@ -350,7 +375,7 @@ dataset are denormalized copies that must match the registry exactly (check V-16
 |---|---|---|
 | Dataset contract v1.0 | 🔶 Draft — awaiting sign-off | `DATA_CONTRACT.md` |
 | Annotation guidelines v1.0 | 🔶 Draft — awaiting team agreement | `docs/ANNOTATION_GUIDELINES.md` |
-| Source list & collection protocol | ⬜ Blocked on instructor approval | `data/provenance/government_agencies.csv` |
+| Source list & collection protocol | ✅ Done — 10 agencies, 16 rows | `data/provenance/government_agencies.csv` |
 | Collection pilot | ⬜ | raw snapshot + yield estimate |
 | Full collection | ⬜ | raw snapshots, `collection_log.csv` |
 | Cleaning, dedup, PII scrub | ⬜ | candidate pool + exclusion ledger |
@@ -409,6 +434,7 @@ as the gold set exists; do not wait for collection to be "complete."
 | `DATA_CONTRACT.md` | Schema, dedup/spam/PII rules, splits, validation |
 | `docs/ANNOTATION_GUIDELINES.md` | The labeling rules and example bank |
 | `docs/STAGES.md` | The step-by-step path through this scope |
+| `docs/COLLECTION_PROTOCOL.md` | The collection procedure and raw snapshot format |
 | `CONTEXT.md` | Repo mapper: file inventory, schema, thresholds |
 | `AGENTS.md` | Operating rules for an agent or new teammate |
 

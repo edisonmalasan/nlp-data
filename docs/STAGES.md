@@ -53,19 +53,15 @@
 
 **Goal:** a frozen, defensible list of official Philippine government accounts to read.
 
-- [ ] Pick the agencies. 4–6 across at least 2 policy domains (e.g. `DOST-PAGASA`, `DSWD`,
-      `DPWH`, `DepEd`, `DOH`). The paper says "selected national government agencies" —
-      pick a spread, not 6 agencies from one domain.
-- [ ] For each, find the **official** account. Verify it, don't assume: check the agency's own
-      website links to it, or that it carries official/verified status.
-- [ ] Confirm **comments are enabled** and publicly visible without logging in.
-- [ ] Record the **platform account ID** (numeric page ID / channel ID) from the page source —
-      the scraper uses it to match a captured page back to your registry row.
-- [ ] Note the **policy domains** the agency covers (e.g. `weather;disaster_preparedness`).
-- [ ] Fill in `data/provenance/government_agencies.csv` — every row needs all six
-      `eligibility_s1`…`s6` set to `true`.
-- [ ] Fill in `n_posts_planned` (8–12 per account) and `collection_method`.
-- [ ] Write up `docs/COLLECTION_PROTOCOL.md`.
+- [x] Pick the agencies — **10 agencies across 38 policy domains**, pre-filled in
+      `data/provenance/government_agencies.csv`: DOST-PAGASA, DOH, DSWD, DepEd, DPWH, DILG,
+      NDRRMC, BFP, DTI, DENR. 10 Facebook rows + 6 YouTube rows, 136 posts planned.
+- [x] Official accounts confirmed against each agency's own website — every row carries
+      `official_verified = true` and a `verification_basis`.
+- [x] All six `eligibility_s1`…`s6` set to `true` on every row.
+- [x] `n_posts_planned` and `collection_method` filled.
+- [x] Write up `docs/COLLECTION_PROTOCOL.md` — the raw snapshot format and the procedure
+      for the computer-use agent driving your signed-in Chrome.
 
 **Done when:** `government_agencies.csv` has ≥ 4 rows, every `eligibility_s*` is `true`, and
 `COLLECTION_PROTOCOL.md` exists.
@@ -80,8 +76,10 @@
 
 - [x] Build the Facebook scraper in `src/collect/facebook.py` — headless browser (Playwright),
       open the public permalink, scroll the comment thread, read the rendered DOM.
-      *Built and tested against a saved fixture. `--dump-dom` saves the rendered HTML so
-      selectors can be fixed offline instead of by re-scraping.*
+      *Built and tested against a saved fixture. Kept as the scripted fallback; the
+      primary route is the computer-use agent reading your signed-in browser.*
+- [x] Build `src/collect/to_interim.py` — validates a raw capture and writes the interim
+      files the cleaning pipeline consumes. *Built.*
 - [ ] Build the YouTube parser in `src/collect/youtube.py` — `requests` + `ytInitialData`
       continuation tokens. *(not started)*
 - [ ] Build the Reddit fetcher in `src/collect/reddit.py` — public `.json` endpoints.
@@ -336,7 +334,7 @@ change accordingly (§3a–§3g).
 
 | Task item | Stage | Covered? |
 |---|---|---|
-| Identify official government pages | **0** | ✅ `government_agencies.csv` |
+| Identify official government pages | **0** | ✅ `government_agencies.csv` — 10 agencies, 38 domains |
 | Collect comments using an authorized method | **1** | ✅ `data/raw/` — public HTML/DOM, no credentials |
 | Clean the dataset (remove exact duplicates and spam) | **2b, 2d** | ✅ `X_DUP_EXACT`, `X_DUP_NEAR`, `X_SPAM` |
 | Anonymize data | **2e** | ✅ PII scrub, `X_PII` |
@@ -398,7 +396,7 @@ If you only remember one thing:
 - [x] Create the `data/` tree and every schema file
 - [x] Create `tools/` placeholder and `src/` structure
 - [x] Decide the collection method (public HTML/DOM, no credentials)
-- [ ] **Stage 0** — pick the agencies, fill `government_agencies.csv`
+- [x] **Stage 0** — agencies picked and `government_agencies.csv` filled
 - [ ] **Stage 1** — build the scrapers, pilot, full collection
 - [ ] **Stage 2** — extract, filter, normalize, dedup, anonymize
 - [ ] **Stage 3** — guidelines calibration, 100% labeling, washout, blinded re-label, κ

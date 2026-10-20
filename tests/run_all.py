@@ -19,7 +19,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "src"))
 
-MODULES = ["test_clean", "test_scraper", "test_split_validate"]
+MODULES = ["test_clean", "test_to_interim", "test_scraper", "test_split_validate"]
 
 
 def main() -> int:

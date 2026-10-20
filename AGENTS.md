@@ -39,7 +39,8 @@ data/
   provenance/[committed]   source registry + collection log
 src/
   annotate/auto_annotator.py   the annotator engine
-  collect/facebook.py          the headless DOM scraper
+  collect/facebook.py          the scripted fallback scraper
+  collect/to_interim.py        raw capture -> interim CSV
   clean/                       normalize, dedup, spam, pii, pipeline
 tools/
   validate_dataset.py          acceptance test V-01..V-17

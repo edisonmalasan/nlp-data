@@ -84,7 +84,7 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 | `ANNOTATION_GUIDELINES.md` | The labeling rules, decision tree, 50-example bank, automated workflow. |
 | `NLP-PLAN.pdf` | Source: task assignment and proposed research. |
 | `NLP-Final-Paper.pdf` | Source: scope, objectives, label definitions, limitations. |
-| `COLLECTION_PROTOCOL.md` | Per-source collection detail. *(pending — written at Stage 0)* |
+| `COLLECTION_PROTOCOL.md` | The collection procedure, the raw snapshot format, and the pilot plan. |
 | `DATA_CARD.md` | Dataset card for the write-up. *(pending — written at Stage 5)* |
 
 ### `data/` — the four layers
@@ -112,7 +112,7 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 
 | File | Grain | What it is |
 |---|---|---|
-| `government_agencies.csv` | one row per (agency, platform) | **The canonical registry.** Philippine government entities, their official accounts, the six eligibility criteria. |
+| `government_agencies.csv` | one row per (agency, platform) | **The canonical registry.** Pre-filled: 10 agencies, 16 rows, 38 policy domains, official accounts confirmed against each agency's own website. |
 | `collection_log.csv` | one row per collection run | Audit trail: tool, user agent, delay, counts, errors. |
 
 ### `src/` and `tools/`
@@ -120,7 +120,8 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 | Path | What it is |
 |---|---|
 | `src/annotate/auto_annotator.py` | **The annotator engine.** Cue extraction → heuristic scoring → adjudication batches → merge. |
-| `src/collect/facebook.py` | **The Facebook scraper.** Headless DOM reader, no credentials. `--dump-dom` saves the HTML for offline selector work. |
+| `src/collect/facebook.py` | **The scripted fallback scraper.** Headless DOM reader, no credentials. `--dump-dom` saves the HTML for offline selector work. |
+| `src/collect/to_interim.py` | **The capture hand-off.** Validates a raw snapshot and writes the interim files the cleaning pipeline consumes. |
 | `src/annotate/README.md` | How to run the annotation loop, and how to tune the cue lists. |
 | `src/collect/` | Platform scrapers. *(pending — Stage 1)* |
 | `src/clean/` | **The cleaning package.** `normalize.py`, `dedup.py`, `spam.py`, `pii.py`, `pipeline.py` (the chain + exclusion ledger). |
