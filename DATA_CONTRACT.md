@@ -44,7 +44,7 @@ To produce a **reproducible, documented, anonymized, human-labeled dataset** of 
 ### 1.2 In scope (this contract covers)
 
 - Source selection: official Philippine national government agency accounts on public social media platforms.
-- Collection: automated retrieval through **official APIs and documented public interfaces**, with a manual-capture fallback.
+- Collection: automated retrieval by reading the **publicly visible HTML/DOM** of each post page, with a manual-capture fallback. No API keys or credentials are required.
 - Cleaning: exact and near-duplicate removal, spam/low-value filtering, bot-signature removal.
 - Anonymization: removal of personal identifiers and any re-identification pathway.
 - Annotation: binary labeling into `actionable` / `other` under `docs/ANNOTATION_GUIDELINES.md`, with double annotation, agreement measurement, and adjudication.
@@ -118,7 +118,7 @@ A source account is eligible if:
 |---|---|---|
 | S1 | It is the **official** account of a Philippine **national** government agency (or a clearly identified national-government program/body). | Matches the paper's scope ("selected Philippine national government agencies"). |
 | S2 | It is a **verified** / official account, not a fan page, advocacy group, or personal account of an official. | Prevents partisan or unofficial commentary from being labeled as agency content. |
-| S3 | Comments are **enabled** and publicly visible without login or request. | Collection legality (§12). |
+| S3 | Comments are **enabled** and publicly visible without login or request. | Collection feasibility. |
 | S4 | It has **enough publicly visible comment volume** to yield a meaningful share of comments. | Practical yield. |
 | S5 | It publishes in a domain where the agency plausibly receives **citizen requests** (services, infrastructure, weather/warnings, health, education, disaster response, announcements requiring compliance). | The task needs actionable content to exist; a page that only posts memes would not. |
 | S6 | It is **not** a page whose content is predominantly non-text (e.g., video-only reposts of unrelated viral content). | Annotation feasibility. |
@@ -146,7 +146,7 @@ government body, and the same agency is spelled identically everywhere.
 | `parent_department_abbr` | string | e.g. `DOST`. |
 | `official_website` | URL | The agency's own website. Used to cross-check that the social account is genuinely official. |
 | `official_account_url` | URL | The official social account used as the source. |
-| `official_account_id` | string | Platform-side numeric/string account ID (Graph API page ID, YouTube channel ID). Needed for API collection. |
+| `official_account_id` | string | Platform-side account ID (numeric page ID, channel ID) as it appears in the page source. Used to match a captured page to the registry row. |
 | `official_account_name` | string | Display name of the account as it appears on the platform. |
 | `platform` | enum | `facebook` \| `youtube` \| `reddit` \| `x`. One row per **(agency, platform)** pair. |
 | `source_page` | slug | Short slug used in `comment_id` and `source_page`, e.g. `dost_pagasa`. |
@@ -156,7 +156,7 @@ government body, and the same agency is spelled identically everywhere.
 | `domains` | string | `;`-separated policy domains, e.g. `weather;disaster_preparedness`. Used for stratification and reporting. |
 | `eligibility_s1` … `eligibility_s6` | bool | One column per source criterion in §3.1. **All six must be `true`** for the row to be collected from. |
 | `n_posts_planned` | int | How many posts of this account are planned for collection. |
-| `collection_method` | enum | `graph_api` \| `youtube_api` \| `reddit_api` \| `x_api` \| `manual_capture`. |
+| `collection_method` | enum | `dom_headless` \| `html_parse` \| `json_endpoint` \| `manual_capture`. |
 | `notes` | string | Free text. |
 
 **Rules**
@@ -170,20 +170,27 @@ government body, and the same agency is spelled identically everywhere.
 
 
 
-### 3.2 Platforms and authorized access routes
+### 3.2 Platforms and collection routes
 
-Collection is **automated** wherever an official access route exists. "Automated" here means **programmatic access through a documented API or public interface with an identifiable, permitted request path** — never credential-sharing, never bypassing access controls, never evading rate limits or blocks, never automated browser-automation against a platform that forbids it in its Terms of Use.
+Comments are collected by **reading the publicly visible HTML/DOM** of each post page. **No API keys, access tokens, OAuth apps, or account credentials are required, and none are stored in this repository.** Every route below is keyless.
 
-| Platform | Access route | Authorization basis | Viability | Role |
+| Platform | Route | What is read | Viability | Role |
 |---|---|---|---|---|
-| **Facebook** | **Meta Graph API** — page access token, `/{page-id}/feed?fields=id,message,created_time,permalink_url,comments{...}` and comment replies | Page token issued to a token owner with page access; standard Meta Platform Terms | **High** | **Primary.** Matches the paper title/abstract exactly. |
-| Facebook (fallback) | Manual capture from publicly visible post pages (no login), transcribed into `comments_captured.csv` | Publicly visible content, manual effort | Medium | Contingency if API access is denied or quota is insufficient. Logged as a different `collection_method` value. |
-| **YouTube** | **YouTube Data API v3** — `commentThreads.list` / `comments.list` on `videoId` | API key + project quota; YouTube API Services Terms of Service | **High** | Secondary. Government agency channels (DSWD, PAGASA, DepEd, DOH) have active videos with heavy comment volume. |
-| **Reddit** | **Reddit Data API** (OAuth, registered app, descriptive User-Agent) on public subreddits; filter posts mentioning target agencies | Public API terms | Medium-Low | Optional. Government-specific threads are sparse; yield unpredictable. |
-| **X / Twitter** | **X API v2** — search for replies to agency handles | Requires a project with elevated/basic access; free tier is heavily limited | Low | Optional, only if access already exists. |
-| TikTok / others | — | No public comment-list API for third parties | **Not viable** | Out of scope. Do not attempt. |
+| **Facebook** | Headless browser (Playwright) that opens the public post permalink, scrolls the comment thread, and reads the rendered DOM | `div[aria-label]` / `data-testid` comment nodes, author handle, timestamp, and the parent post caption | **High** | **Primary.** Matches the paper title/abstract exactly. |
+| Facebook (fast path) | `requests` fetch of the public permalink, parsing the HTML/embedded JSON already present in the page source | Same fields where the server returns them without client-side rendering | Medium | Faster per post; falls back to the headless browser when the comment list is not in the source. |
+| **YouTube** | `requests` fetch of the watch page, parsing `ytInitialData` / `ytInitialData` continuation tokens from the HTML | Comment text, author, timestamp, reply threads | **High** | Secondary. Agency channels (DSWD, PAGASA, DepEd, DOH) have active videos with heavy comment volume. |
+| **Reddit** | Public keyless JSON endpoints (`/comments/<id>.json`, `/r/<sub>/comments.json`) | Comment body, author, score, created time | Medium-Low | Optional. Government-specific threads are sparse; yield unpredictable. |
+| **X / Twitter** | Public page HTML / embedded JSON | Replies under agency posts | Low | Optional. Mostly client-rendered; lowest yield of the four. |
+| TikTok / others | — | — | **Not viable** | Out of scope. Do not attempt. |
 
-> **Note on Facebook automated access:** Meta's Terms of Service restrict automated collection from the site outside approved APIs. The contract therefore mandates the **Graph API with a page access token** as the automated route for Facebook and explicitly **forbids** browser-automation scraping (Playwright/Selenium against facebook.com) as a collection method. If Graph API access is unavailable, fall back to manual capture and record it — a smaller, manually gathered dataset is an acceptable academic outcome; a ToS-violating scrape is not.
+**Practical notes per platform**
+
+- **Facebook**: the comment list is client-rendered, so a plain `requests` fetch often returns the post shell without comments. The headless browser (scroll-to-bottom, wait for the thread to grow) is the reliable route; the raw HTML route is only a shortcut when the comments happen to be in the page source.
+- **YouTube**: the watch page embeds the first page of comments in `ytInitialData`; further pages come from continuation tokens in the same payload. No key needed.
+- **Reddit**: the `.json` endpoints are public and keyless. Send a descriptive `User-Agent` header or the requests get throttled.
+- **X**: replies are the least accessible of the four and are frequently behind a login wall. Treat as optional.
+
+**Rate behavior (operational, not policy).** Send requests slowly with a fixed delay between them and rotate a realistic `User-Agent`. Going too fast gets the client IP temporarily blocked, which costs data collection time — the delay is a throughput decision, not a formality. When a request returns a block or a consent interstitial, log it in `collection_log.csv` and stop that source for the run rather than retrying in a loop.
 
 ### 3.3 Collection parameters (recorded per source, per run)
 
@@ -194,15 +201,17 @@ Every collection run is logged to `data/provenance/collection_log.csv`:
 | `run_id` | e.g. `fb_dost_pagasa_2026-10-22T09-30` |
 | `platform` | `facebook` / `youtube` / `reddit` / `x` |
 | `source_page` | slug of the source account |
-| `collection_method` | `graph_api` / `youtube_api` / `reddit_api` / `x_api` / `manual_capture` |
-| `api_version` / `tool` | e.g. `graph_api_v23.0` / `python-requests 2.32` |
+| `collection_method` | `dom_headless` / `html_parse` / `json_endpoint` / `manual_capture` |
+| `tool` / `version` | e.g. `playwright 1.47` / `beautifulsoup4 4.12` / `requests 2.32` |
+| `user_agent` | the `User-Agent` string used for the run |
+| `delay_seconds` | fixed delay between requests for this run |
 | `post_ids_collected` | count of posts touched |
 | `comments_collected` | count of raw comments retrieved |
 | `collected_at` | ISO 8601 timestamp (UTC) |
 | `raw_snapshot_id` | link to the immutable payload file under `data/raw/` |
-| `notes` | pagination depth, quota consumption, errors, blocks encountered |
+| `notes` | scroll depth, pages retrieved, errors, blocks encountered |
 
-**Snapshot immutability:** raw payloads are written once to `data/raw/<platform>/<source_page>/` and are **never edited**. Cleaning is reproducible from raw via `src/clean/`. `data/raw/` is gitignored (size + ethics); processed artifacts are committed.
+**Snapshot immutability:** raw payloads are written once to `data/raw/<platform>/<source_page>/` and are **never edited**. Cleaning is reproducible from raw via `src/clean/`. `data/raw/` is gitignored for size; processed artifacts are committed.
 
 ### 3.4 Collection window and target volume
 
@@ -619,7 +628,7 @@ Annotators **must not** see `label`, `label_2`, `agreement`, or `adjudicated_by`
 
 **Stage 6 — Failure is a valid result.** If the gate fails, the assistant is not used, and the attempt + its metrics are recorded in `dataset_v1.metadata.json` (`auto_annotator.gate_passed = false`) and may be reported as a negative result.
 
-**Privacy constraint:** comments sent to a third-party assistant API are still personal data under RA 10173 (§12). Prefer **local / offline** assistants. If a hosted API is used: send only `comment_text_norm` after PII scrubbing, never `post_text` with account identifiers, and record the provider and version in the metadata.
+**Constraint:** prefer **local / offline** assistants. If a hosted assistant is used, send only `comment_text_norm` after the PII scrub (§11) — never `post_text`, and never the raw snapshot — and record the provider and version in the metadata.
 
 ### 10.8 Annotation trace
 
@@ -627,7 +636,7 @@ Every label carries: `annotator_id`, `label_2`, `agreement`, `adjudicated_by`, `
 
 ---
 
-## 11. Anonymization and privacy
+## 11. Anonymization (PII scrub)
 
 ### 11.1 What is removed
 
@@ -648,41 +657,19 @@ Every label carries: `annotator_id`, `label_2`, `agreement`, `adjudicated_by`, `
 - `pii_redacted` records whether the row was altered.
 - Every processed row's text must pass a **final automated PII scan** before delivery; any residual hit blocks the release until manually reviewed.
 
-### 11.3 Non-negotiables
+### 11.3 Rules
 
-- **No re-identification attempts.** Do not use handles, profile photos, or posting patterns to try to identify commenters. Do not cross-reference comments with voter lists, phone directories, or any other personal-data source.
-- **No profiling of individuals.** The unit of analysis is the comment, not the person.
-- **Public does not mean free of obligations.** Comments remain personal data under RA 10173 even when publicly visible. Treat them accordingly.
-- **Aggregated reporting only.** Published tables report dataset-level and source-page-level aggregates, never per-commenter statistics.
+- **No re-identification.** Do not use handles, profile photos, or posting patterns to try to identify commenters. Do not cross-reference comments with voter lists, phone directories, or any other personal-data source.
+- **The unit of analysis is the comment, not the person.** No per-commenter statistics.
+- **Aggregated reporting only.** Published tables report dataset-level and source-page-level aggregates.
 
 ---
 
-## 12. Legal, ethical, and platform-compliance
+## 12. Scope limits the dataset cannot support
 
-### 12.1 Applicable instruments
+The dataset supports claims about **the detectability of actionable suggestions in public comments** and nothing more. It does **not** support claims about government responsiveness, policy outcomes, public satisfaction, or the quality of government services.
 
-| Instrument | Relevance |
-|---|---|
-| **RA 10173 (Data Privacy Act, 2012)** | Personal data processing, even for publicly available data; consent/legitimate-purpose framing; security and retention obligations. |
-| **NPC Circulars / advisories on public-sector and social media data** | Responsible handling of citizen data. |
-| **Meta Platform Terms / Graph API terms** | Governs Facebook collection; requires a page access token; restricts automated collection outside approved APIs. |
-| **YouTube API Services Terms of Service** | Governs YouTube Data API v3 use, including quota and attribution. |
-| **Reddit Data API Terms** | Governs Reddit API use; descriptive User-Agent; rate limits. |
-| **Academic integrity and the adviser's ethics clearance** | The adviser must approve the collection protocol before collection begins. |
-
-### 12.2 Binding constraints
-
-1. **Adviser sign-off on the collection protocol is a prerequisite** to collection (§18, D-3). Collecting first and asking later is not acceptable.
-2. **Only official APIs or manual capture.** No credential sharing, no bypassing access controls, no scraping that violates platform terms, no fake/alt accounts, no evasion of blocks or rate limits.
-3. **Respect rate limits and back off** on any 429/403 response; record the encounter in `collection_log.csv`. Repeated blocking → stop and fall back to manual capture.
-4. **Publicly visible content only.** Anything behind a login wall, a friends-only audience, or a private group is out of scope.
-5. **Collection is read-only.** Do not post, react, like, follow, or otherwise interact with the source pages as the research account.
-6. **Rights and takedown.** If a commenter requests removal of their comment, it is removed from the deliverable dataset and a note is added to the changelog. Requests are handled by Member 4 within 5 working days.
-7. **Retention.** Raw snapshots are retained for the duration of the study plus 12 months, then deleted. The anonymized dataset is retained per the adviser's direction.
-
-### 12.3 Limitations the dataset cannot support
-
-The dataset does **not** support claims about government responsiveness, policy outcomes, public satisfaction, or the quality of government services. It supports claims about **the detectability of actionable suggestions in public comments** and nothing more. Any wording in the paper that exceeds this is a scope error.
+This mirrors the Scope section of `docs/NLP-Final-Paper.pdf`. Any wording in the write-up that exceeds this is a scope error.
 
 ---
 
@@ -760,7 +747,7 @@ nlp-data/
 |---|---|---|---|
 | M1 | Decisions D-1…D-6 settled | Signed section in this contract | Adviser + team |
 | M2 | **G1 schema freeze** | This contract v1.0 | M1 |
-| M3 | Source list frozen; collection protocol documented | `government_agencies.csv`, `COLLECTION_PROTOCOL.md` | M2 + adviser ethics sign-off |
+| M3 | Source list frozen; collection protocol documented | `government_agencies.csv`, `COLLECTION_PROTOCOL.md` | M2 + adviser sign-off |
 | M4 | Collection pilot (2 pages, 2 posts each) | raw snapshot + yield estimate | M3 |
 | M5 | Full collection | raw snapshots, `collection_log.csv`, `comments_captured.csv` | M4 |
 | M6 | Cleaning + dedup + PII scrub | `interim/` → candidate pool | M5 |
@@ -780,7 +767,7 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 
 1. **Every change to this document is a numbered version bump** with a dated changelog entry in §17.
 2. **Changes to §4–§6 (schema, rules, interface) after G1 require the adviser's approval** and a note to Member 5 before any dependent work proceeds.
-3. **Changes to §10–§12 (annotation, agreement, compliance) after G3 require re-annotation** of affected rows and a metadata bump.
+3. **Changes to §10–§12 (annotation, agreement, scope limits) after G3 require re-annotation** of affected rows and a metadata bump.
 4. **Emergency changes** (e.g., a platform blocks collection mid-study) are allowed with a same-day changelog entry and notification to Members 5 and 6.
 5. **Never** change a label, a split assignment, or `comment_id` silently. Corrections happen in a new version with a recorded reason.
 6. `guideline_version`, `dataset_version`, and `text_norm_version` are recorded in the metadata so any row can be traced to the exact ruleset that produced it.
@@ -791,7 +778,8 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 
 | Version | Date | Author | Change |
 |---|---|---|---|
-| `1.0-draft` | 2026-10-20 | M4 (MALASAN) | Initial contract drafted from `NLP-PLAN.pdf` and `NLP-Final-Paper.pdf`. Schema, dedup/spam/PII rules, annotation interface, splits, validation, compliance, schedule. |
+| `1.0-draft` | 2026-10-20 | M4 (MALASAN) | Initial contract drafted from `NLP-PLAN.pdf` and `NLP-Final-Paper.pdf`. Schema, dedup/spam/PII rules, annotation interface, splits, validation, schedule. |
+| `1.1-draft` | 2026-10-20 | M4 (MALASAN) | Switched collection to keyless HTML/DOM scraping: rewrote §3.2 routes and §3.3 run parameters, replaced the `collection_method` enum, dropped the credentials and `.env` requirement. Removed §12 (legal/ethical/platform-compliance); §12 is now the dataset's scope limits. README and requirements updated. |
 
 ---
 
@@ -801,7 +789,7 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 |---|---|---|---|---|
 | D-1 | Which source accounts/pages exactly? | 4–6 agencies across ≥ 2 domains (e.g., DOST-PAGASA, DSWD, DPWH, DepEd, DOH, DOST) | M4 + team | G1 |
 | D-2 | Which platforms in scope, and is Facebook the primary dataset? | Facebook = primary (`dataset_v1.csv`); YouTube = extension; Reddit/X optional | Team + adviser | G1 |
-| D-3 | Collection method approval | Graph API (page token) + YouTube Data API; manual capture as fallback. Adviser signs off on `COLLECTION_PROTOCOL.md` | Adviser | Before collection |
+| D-3 | Collection method sign-off | Headless-DOM collection for Facebook, HTML/`ytInitialData` parse for YouTube, keyless JSON for Reddit, manual capture as fallback. Sign-off recorded in `COLLECTION_PROTOCOL.md` | Adviser | Before collection |
 | D-4 | Annotator roster, second annotator, adjudicator | M4 primary; 1 teammate second-annotates ≥ 20%; M4 adjudicates | Team | G1 |
 | D-5 | Auto-annotator candidate and hosting | Local/offline preferred; gate = macro-F1 ≥ 0.80 and κ ≥ 0.60 on a 120-row gold set | Team | M8 |
 | D-6 | Labeling tool | Doccano or Label Studio (open source, supports context display and multi-annotator) | M4 | M8 |
