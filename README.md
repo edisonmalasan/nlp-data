@@ -306,7 +306,7 @@ is the number that fills the paper's `<number>` placeholder.
 `data/provenance/government_agencies.csv` is the canonical list of the Philippine
 government entities in the study — one row per **(agency, platform)** pair.
 
-**Pre-filled: 10 agencies, 16 rows, 38 policy domains, 136 posts planned.**
+**Pre-filled: 32 Facebook accounts, 10 YouTube channels, 5 X accounts - 47 rows across 38 policy domains.**
 
 | Agency | Abbr | Facebook | YouTube |
 |---|---|---|---|

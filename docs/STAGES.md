@@ -270,7 +270,7 @@ layer, so the working layer stays the source of truth:
 | — | `MANIFEST.json` — counts + SHA-256 per file |
 | — | `nlp-actionable-comments-v1.zip` |
 
-The 39 columns, in order: `comment_id`, `platform`, `source_page`, `source_page_name`,
+The 40 columns, in order: `comment_id`, `platform`, `source_page`, `source_page_name`,
 `agency_id`, `agency`, `agency_abbr`, `post_id`, `post_url`, `post_date`, `post_text`,
 `post_media_type`, `post_topic`, `is_reply`, `parent_comment_id`, `parent_comment_text`,
 `comment_text`, `comment_text_norm`, `context_text_norm`, `dedup_key`, `n_tokens`, `language`,

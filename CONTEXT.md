@@ -101,7 +101,7 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 
 | File | Grain | What it is |
 |---|---|---|
-| `dataset_v1.csv` | one row per usable comment | **The dataset.** 39 columns, labeled, Facebook-only. |
+| `dataset_v1.csv` | one row per usable comment | **The dataset.** 40 columns, labeled, Facebook-only. |
 | `dataset_v1_ext.csv` | one row per usable comment | Same schema across all platforms. Optional extension. |
 | `posts_v1.csv` | one row per source post | Post context master. Join on `post_id`. |
 | `splits/train.csv` `dev.csv` `test.csv` | one row per comment | **Authoritative** split assignment. Join on `comment_id`. |
@@ -138,7 +138,7 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 
 ---
 
-## 4. The dataset schema (39 columns)
+## 4. The dataset schema (40 columns)
 
 | # | Column | Notes |
 |---|---|---|
