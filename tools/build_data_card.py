@@ -96,13 +96,16 @@ def main(argv=None) -> int:
     top = per_post.most_common(10)
     top10 = sum(c for _, c in top)
 
+    # the actionability of each large post: the biggest posts are not
+    # necessarily the most useful ones
+    post_label = defaultdict(Counter)
+    for r in ds:
+        post_label[r.get("post_id")][r.get("label")] += 1
+
     # how many agencies carry each label
     by_agency = defaultdict(Counter)
     for r in ds:
         by_agency[r.get("source_page")][r.get("label")] += 1
-
-    label_counts = {r.get("annotation_rule", ""): c for r, c in
-                    Counter({(r.get("annotation_rule", ""),) for r in ds}).items()}
 
     L = []
     A = L.append
@@ -207,8 +210,14 @@ def main(argv=None) -> int:
     A("the comments, because a post on a high-traffic account draws far more comments")
     A("than the rest.")
     A("")
-    A(table(["Post", "Comments"],
-            [[p, c] for p, c in top]))
+    A("### The largest posts")
+    A("")
+    rows = []
+    for pid, c in top:
+        lab = post_label.get(pid, Counter())
+        one = lab.get("1", 0)
+        rows.append([pid[-18:], c, one, pct(one, c) if c else "n/a"])
+    A(table(["Post", "Comments", "actionable", "actionable %"], rows))
     A("")
     A(f"The ten largest posts hold **{top10:,} of {n:,} rows ({pct(top10, n)})**.")
     A("A random-split classifier can therefore score well by recognising *which post a")

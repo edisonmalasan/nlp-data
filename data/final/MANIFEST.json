@@ -1,0 +1,86 @@
+{
+  "package": "nlp-actionable-comments-v1",
+  "built_at": "2026-10-20T23:03:50.040332+00:00",
+  "builder": "tools/build_release.py",
+  "dataset_version": "1.0",
+  "guideline_version": "1.0-draft",
+  "label_encoding": {
+    "1": "actionable",
+    "0": "other"
+  },
+  "counts": {
+    "n_rows": 1250,
+    "actionable": 242,
+    "other": 1008,
+    "actionable_rate": 0.1936,
+    "n_human_verified": 0,
+    "human_verified_rate": 0.0
+  },
+  "split_counts": {
+    "train": 876,
+    "dev": 187,
+    "test": 187
+  },
+  "files": [
+    {
+      "source": "data/final/README.md",
+      "packaged_as": "README.md",
+      "bytes": 4474,
+      "sha256": "fbe826e638ce896c4e58c34cc88a3c9de4afe3e964e87e75e4ab80a65d7210e9"
+    },
+    {
+      "source": "data/processed/dataset_v1.csv",
+      "packaged_as": "dataset_v1.csv",
+      "bytes": 1130053,
+      "sha256": "0d38fe7fbecb7c760a0a36ab82823bb33f9bd9c37409040d97344276f0472950"
+    },
+    {
+      "source": "data/processed/dataset_v1_ext.csv",
+      "packaged_as": "dataset_v1_ext.csv",
+      "bytes": 1286017,
+      "sha256": "76d63125f4a002a67320643c6a0e57bebe9c51b474e20132ac6e48884fe0fe09"
+    },
+    {
+      "source": "data/processed/posts_v1.csv",
+      "packaged_as": "posts_v1.csv",
+      "bytes": 32988,
+      "sha256": "3cfc772fdf0e643723da81903932e05456770fbfb493870ad5f347f5546a068a"
+    },
+    {
+      "source": "data/processed/dataset_v1.metadata.json",
+      "packaged_as": "dataset_v1.metadata.json",
+      "bytes": 6570,
+      "sha256": "faa80f8b3ebe29141c4c50278684066128f4e6b2e96f62404740401a3444bf8f"
+    },
+    {
+      "source": "data/processed/splits/train.csv",
+      "packaged_as": "train.csv",
+      "bytes": 56333,
+      "sha256": "f38f9d91ea82b6ea3e322b6fd6517a6f7a93b687ba32ad9c7d12e4cb8a3d3a0e"
+    },
+    {
+      "source": "data/processed/splits/dev.csv",
+      "packaged_as": "dev.csv",
+      "bytes": 15106,
+      "sha256": "af4b21d87d7d54e83023a01c701217d819180a31ebb081b5a3c5374ce613e6f7"
+    },
+    {
+      "source": "data/processed/splits/test.csv",
+      "packaged_as": "test.csv",
+      "bytes": 13970,
+      "sha256": "6228bac73a306b688c96d54306f3d42afd7f89c56c1136f4d694bc4c5215abd3"
+    },
+    {
+      "source": "data/provenance/government_agencies.csv",
+      "packaged_as": "government_agencies.csv",
+      "bytes": 18185,
+      "sha256": "7ee8c4574adda7924407ec16ec4ae4b516330e849354b238e3f47d810f71ff2d"
+    },
+    {
+      "source": "docs/ANNOTATION_GUIDELINES.md",
+      "packaged_as": "ANNOTATION_GUIDELINES.md",
+      "bytes": 36379,
+      "sha256": "a36b85b0507edfc22757dfce0c993d503694a904bad10c766c9bfe1784552ae1"
+    }
+  ]
+}
