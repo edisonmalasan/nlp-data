@@ -97,9 +97,13 @@ def run_one(page, row, posts, notes):
 
     extract_js = ob.load_extract_js(EXTRACTORS[platform])
 
-    if platform == "facebook":
-        urls = ob.discover_facebook_posts(page, limit=posts)
-    else:
+    if platform == "youtube":
+        # the channel's videos tab is what lists the videos
+        ob.goto(page, url.rstrip("/") + "/videos", settle=5.0)
+        time.sleep(2.0)
+
+    urls = ob.discover_posts(page, platform, limit=posts)
+    if not urls:
         urls = [url]
 
     if not urls:
@@ -108,7 +112,7 @@ def run_one(page, row, posts, notes):
     entries = []
     for u in urls[:posts]:
         try:
-            data = ob.capture_facebook_post(page, u, extract_js)
+            data = ob.capture_post(page, u, extract_js, platform)
         except ob.OrcaError as e:
             log(f"    post failed: {e}")
             continue

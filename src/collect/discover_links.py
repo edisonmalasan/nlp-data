@@ -34,9 +34,15 @@ LINKS_JS = r"""
 (() => {
   const out = [];
   for (const a of document.querySelectorAll('a[href]')) {
-    const href = a.href || '';
+    let href = a.href || '';
     const txt = (a.innerText || '').trim();
     if (!href) continue;
+    // Facebook wraps every outbound link in l.php?u=<encoded>, and that
+    // wrapper is itself a facebook.com link. Unwrap it FIRST, or the filter
+    // below throws away every official link the page declares.
+    if (href.indexOf('l.php?u=') !== -1) {
+      try { href = decodeURIComponent(href.split('u=')[1].split('&')[0]); } catch (e) {}
+    }
     if (/facebook\.com/i.test(href)) continue;
     out.push({href: href.split('?')[0], text: txt.slice(0, 80)});
   }
@@ -49,11 +55,15 @@ X_RE = re.compile(r"https?://(?:www\.|mobile\.)?(?:twitter|x)\.com/([A-Za-z0-9_]
 YT_RE = re.compile(r"https?://(?:www\.)?youtube\.com/(?:@|c/|user/)([A-Za-z0-9_.-]+)", re.I)
 RD_RE = re.compile(r"https?://(?:www\.)?reddit\.com/r/([A-Za-z0-9_-]+)", re.I)
 # a facebook link whose path is the page's own "links" list
-FB_LINK_RE = re.compile(r"facebook\.com/l\.php\?u=([^&\"]+)", re.I)
+FB_LINK_RE = re.compile(r"(?:^|\.)facebook\.com/l\.php\?u=([^&\"]+)", re.I)
 
 
 def unwrap(href: str) -> str:
-    """Facebook wraps outbound links in l.php?u=<encoded>."""
+    """Facebook wraps outbound links in l.php?u=<encoded>.
+
+    The wrapper host is l.facebook.com, so the pattern has to allow the
+    leading label.
+    """
     m = FB_LINK_RE.search(href or "")
     if m:
         from urllib.parse import unquote

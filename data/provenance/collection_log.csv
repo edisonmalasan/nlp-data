@@ -7,3 +7,9 @@ fb_dost_pagasa_2026-10-20T20-42,facebook,dost_pagasa,browser_dom_session,orca-co
 fb_dswd_2026-10-20T21-04,facebook,dswd,browser_dom_session,orca-computer-use,1.0,,3,2,25,2026-10-20T13:04:06.855141+00:00,fb_dswd_2026-10-20T21-04,pilot via orca computer-use
 facebook_dost_pagasa_2026-10-20T21-46,facebook,dost_pagasa,browser_dom_session,orca-cli,1.0,,3,2,7,2026-10-20T13:46:22.804787+00:00,facebook_dost_pagasa_2026-10-20T21-46,pilot via orca built-in browser
 facebook_dswd_2026-10-20T21-45,facebook,dswd,browser_dom_session,orca-cli,1.0,,3,2,5,2026-10-20T13:45:00.951607+00:00,facebook_dswd_2026-10-20T21-45,pilot via orca built-in browser
+facebook_dost_pagasa_2026-10-20T21-46,facebook,dost_pagasa,browser_dom_session,orca-cli,1.0,,3,2,7,2026-10-20T13:46:22.804787+00:00,facebook_dost_pagasa_2026-10-20T21-46,pilot via orca built-in browser
+facebook_doh_2026-10-20T22-02,facebook,doh,browser_dom_session,orca-cli,1.0,,3,12,72,2026-10-20T14:02:19.659030+00:00,facebook_doh_2026-10-20T22-02,full collection run via orca built-in browser
+facebook_dswd_2026-10-20T21-45,facebook,dswd,browser_dom_session,orca-cli,1.0,,3,2,5,2026-10-20T13:45:00.951607+00:00,facebook_dswd_2026-10-20T21-45,pilot via orca built-in browser
+facebook_deped_2026-10-20T22-09,facebook,deped,browser_dom_session,orca-cli,1.0,,3,12,272,2026-10-20T14:09:15.873988+00:00,facebook_deped_2026-10-20T22-09,full collection run via orca built-in browser
+facebook_dpwh_2026-10-20T22-17,facebook,dpwh,browser_dom_session,orca-cli,1.0,,3,12,511,2026-10-20T14:17:38.065203+00:00,facebook_dpwh_2026-10-20T22-17,full collection run via orca built-in browser
+facebook_dilg_2026-10-20T22-25,facebook,dilg,browser_dom_session,orca-cli,1.0,,3,12,173,2026-10-20T14:25:42.406783+00:00,facebook_dilg_2026-10-20T22-25,full collection run via orca built-in browser
