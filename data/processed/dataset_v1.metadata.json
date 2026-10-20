@@ -1,5 +1,5 @@
 {
-  "_status": "DRAFT — populated at G3 (label freeze). All zero/empty values below are placeholders, not measurements.",
+  "_status": "DRAFT - populated at G3 (label freeze). All zero/empty values below are placeholders, not measurements. 'lineage' must satisfy the reconciliation identity in DATA_CONTRACT.md 5.6.",
   "dataset_version": "v1",
   "created_at": "",
   "producer": "M4",
@@ -10,6 +10,17 @@
     "end": ""
   },
   "sources": [],
+  "agencies": [],
+  "counts_by_agency": {},
+  "lineage": {
+    "n_raw_captured": 0,
+    "n_extracted_to_interim": 0,
+    "n_excluded_by_reason": {},
+    "n_candidate_pool": 0,
+    "n_labeled": 0,
+    "n_usable_final": 0,
+    "reconciles": false
+  },
   "n_raw_captured": 0,
   "n_excluded_by_reason": {},
   "n_usable": 0,
