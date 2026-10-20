@@ -200,7 +200,8 @@ REPLIES_JS = r"""
 def scroll_to_bottom(page: str, platform: str = "facebook"):
     """Scroll the comment thread to its end. The comment list lazy-loads as it goes."""
     sel = COMMENT_SELECTOR.get(platform, COMMENT_SELECTOR["facebook"])
-    js = SCROLL_JS.replace("__SEL__", sel)
+    # the selector has to be a quoted JS string, not a bare token
+    js = SCROLL_JS.replace("__SEL__", json.dumps(sel))
     orca("eval", "--page", page, "--expression", js)
     time.sleep(SCROLL_PAUSE)
 

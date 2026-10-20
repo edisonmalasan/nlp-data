@@ -40,7 +40,13 @@ data/
 src/
   annotate/auto_annotator.py   the annotator engine
   collect/orca_browser.py      the primary collector (Orca's built-in browser)
-  collect/extract_facebook.js  the DOM extractor
+  collect/extract_facebook.js  the DOM extractor, per platform
+  collect/extract_youtube.js
+  collect/extract_x.js
+  collect/extract_reddit.js
+  collect/collect_all.py       the whole collection, one platform at a time
+  collect/run_all.py          one platform, every account
+  collect/discover_links.py   finds each agency's other official accounts
   collect/alt_text.py          strips generated image descriptions
   collect/facebook.py          the scripted fallback scraper
   collect/to_interim.py        raw capture -> interim CSV
@@ -164,6 +170,13 @@ train/dev/test split. Otherwise the model is tested on text it has already seen.
 
 The same post's comments never straddle two splits. Otherwise the model is scored on its
 own vocabulary.
+
+### 4.6 The browser allows one driven tab at a time
+
+`orca tab switch` fails with `browser_owner_unavailable` while another page is being
+driven. The platforms therefore run **in sequence**, not in parallel: Facebook, then
+YouTube, then X, then Reddit. `collect_all.py` does this. Do not start a second
+collector while one is running.
 
 ### 4.7 The cleaning order is fixed
 
