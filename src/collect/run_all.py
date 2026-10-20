@@ -84,11 +84,30 @@ def log(msg):
     print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
 
 
-def existing_snapshots(platform, source_page):
+def existing_snapshots(platform, source_page, mode="recent"):
+    """The snapshots already collected for this account and this stratum.
+
+    The two strata share a directory, so a snapshot collected under the other
+    stratum does not count: without this, collecting stratum B would make
+    stratum A look already collected and it would be skipped.
+    """
     d = os.path.join(RAW, platform, source_page)
     if not os.path.isdir(d):
         return []
-    return [os.path.join(d, f) for f in sorted(os.listdir(d)) if f.endswith(".json")]
+    want_invites = (mode == "invites")
+    out = []
+    for f in sorted(os.listdir(d)):
+        if not f.endswith(".json"):
+            continue
+        path = os.path.join(d, f)
+        try:
+            snap = json.load(io.open(path, encoding="utf-8"))
+        except Exception:
+            continue
+        is_invites = "stratum=invites" in (snap.get("notes") or "")
+        if is_invites == want_invites:
+            out.append(path)
+    return out
 
 
 def run_one(page, row, posts, notes, mode="recent"):
@@ -160,7 +179,8 @@ def main(argv=None) -> int:
         for r in registry:
             k = f"{r['platform']}/{r['source_page']}"
             p = progress.get(k, {})
-            snaps = existing_snapshots(r["platform"], r["source_page"])
+            snaps = (existing_snapshots(r["platform"], r["source_page"], "recent")
+                     + existing_snapshots(r["platform"], r["source_page"], "invites"))
             log(f"{k:32} posts={p.get('posts', 0):>3} comments={p.get('comments', 0):>5} "
                 f"snapshots={len(snaps)}")
         return 0
@@ -188,7 +208,7 @@ def main(argv=None) -> int:
 
     for i, row in enumerate(registry, 1):
         key = f"{row['platform']}/{row['source_page']}"
-        snaps = existing_snapshots(row["platform"], row["source_page"])
+        snaps = existing_snapshots(row["platform"], row["source_page"], args.mode)
         if snaps and not args.force:
             log(f"[{i}/{len(registry)}] {key}: already collected, skipping")
             continue
