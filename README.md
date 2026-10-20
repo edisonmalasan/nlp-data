@@ -136,7 +136,7 @@ by the instructor. Record the approval in `docs/COLLECTION_PROTOCOL.md` and log 
                ▼
         ┌──────────────┐
         │  3. ANNOTATE │  guidelines v1.0 → gold set (120, κ≥0.60) → 100% pass
-        │              │  → 20% double-annotated → adjudication → labels frozen
+        │              │  → 20% blinded re-label → resolve → labels frozen
         └──────┬───────┘
                ▼
         ┌──────────────┐
@@ -201,9 +201,9 @@ Full rules in [`docs/ANNOTATION_GUIDELINES.md`](docs/ANNOTATION_GUIDELINES.md). 
   text-only model from a marker-aware one.
 - **Always read the post context** (post text, date, agency, and parent comment for replies).
   Many replies are unlabelable without it.
-- **20% double-annotated**, adjudicated by the dataset owner; **Cohen's κ ≥ 0.60** required.
+- **20% blinded re-label pass** after a ≥ 7 day washout; **Cohen's κ ≥ 0.60** required. This is *intra-annotator* reliability — one annotator, so it is not inter-annotator agreement.
 - **Auto-annotation assistant is optional and gated**: macro-F1 ≥ 0.80 **and** κ ≥ 0.60 on a
-  120-row human-adjudicated gold set. Draft labels only, every one human-confirmed, and
+  120-row self-labeled gold set. Draft labels only, every one human-confirmed, and
   assistant labels excluded from the κ computation.
 
 ### 4. Split
@@ -231,7 +231,7 @@ count at every step is recorded.
 | 0 | **Capture** | `data/raw/<platform>/<page>/<run_id>.json` | The platform API response, stored **exactly as returned**. Nothing filtered, renamed, or reformatted. | `n_raw_captured` |
 | 1 | **Extract** | `data/interim/comments_captured.csv` | Each payload flattened into one row per comment and one row per post. Verbatim text. `agency_id` and `post_id` attached. **No filtering yet.** | `n_extracted_to_interim` |
 | 2 | **Clean** | `data/processed/` | Exclusion rules → normalization → dedup → spam filters → PII scrub. Every removal is written to the **exclusion ledger** with a reason code. | `n_candidate_pool` |
-| 3 | **Annotate** | `data/processed/dataset_v1.csv` | Labeling under the guidelines. 100% single-pass + 20% double-annotated + adjudication. | `n_labeled` |
+| 3 | **Annotate** | `data/processed/dataset_v1.csv` | Labeling under the guidelines. 100% first pass + a 20% blinded re-label pass after a ≥ 7 day washout. | `n_labeled` |
 | 4 | **Split** | `data/processed/splits/` | Stratified by label, grouped by `post_id`, seed 42. | train / dev / test |
 | 5 | **Validate & freeze** | `dataset_v1.metadata.json` | Validation script runs; lineage reconciliation written; metadata finalised. | **final deliverable** |
 
@@ -271,17 +271,20 @@ government entities in the study — one row per **(agency, platform)** pair.
 | Column | Meaning |
 |---|---|
 | `agency_id` | Canonical ID, e.g. `dost_pagasa`. The only agency identifier used in the dataset. |
-| `agency_name` / `agency_abbr` | Official full name and abbreviation. |
+| `agency_name` / `agency_abbr` | Official full name and abbreviation, e.g. *Philippine Atmospheric, Geophysical and Astronomical Services Administration* / `DOST-PAGASA`. |
 | `agency_type` | `national_government_agency`, `government_owned_and_controlled_corporation`, `government_corporation`, or `local_government_unit`. LGUs are out of scope. |
-| `parent_department` / `parent_department_abbr` | Supervising department, e.g. `DOST`. |
-| `official_website` | Used to cross-check that the account is genuinely official. |
-| `official_account_url` / `official_account_id` / `official_account_name` | The account itself. The platform-side ID is what the API collector needs. |
+| `parent_department` / `parent_department_abbr` | Supervising department, e.g. *Department of Science and Technology* / `DOST`. |
+| `official_website` | The agency's own site. Used to cross-check that the account is genuinely official. |
+| `official_account_url` / `official_account_id` / `official_account_name` | The official account itself. The platform-side ID is what the collector matches against. |
 | `platform` / `source_page` | Platform and the short slug used in `comment_id`. |
-| `official_verified` / `verification_basis` | Whether the account is official, and how that was established. |
+| `official_verified` / `verification_basis` | Whether the account is official, and how that was established (e.g. `linked_from_official_website`). |
 | `comments_enabled` | Whether comments were publicly visible at collection time. |
 | `domains` | Policy domains, e.g. `weather;disaster_preparedness`. |
-| `eligibility_s1` … `eligibility_s6` | One column per source criterion. **All six must be `true`** to collect from. |
+| `eligibility_s1` … `eligibility_s6` | One column per source criterion in the contract. **All six must be `true`** to collect from. |
 | `n_posts_planned` / `collection_method` | Collection plan for this account. |
+
+One row per **(agency, platform)** pair — an agency with both a Facebook page and a YouTube
+channel has two rows sharing one `agency_id`.
 
 `agency_id` is **stable** across dataset versions, and `agency` / `agency_abbr` in the
 dataset are denormalized copies that must match the registry exactly (check V-16).
@@ -296,11 +299,11 @@ dataset are denormalized copies that must match the registry exactly (check V-16
 | Extended dataset | `data/processed/dataset_v1_ext.csv` — all platforms; `dataset_v1` is exactly its `platform == "facebook"` subset |
 | Modeling text field | `comment_text_norm` (comment only, no post context) |
 | Label encoding | `1` = actionable, `0` = other — **use `pos_label=1`** |
-| Government source | `agency_id` → `data/provenance/government_agencies.csv` |
+| Government source | `agency_id` → `data/provenance/government_agencies.csv` — the canonical registry of Philippine government agencies and their official accounts |
 | Split strategy | 70/15/15, stratified by label, grouped by `post_id`, seed `42` |
 | Duplicate handling | Exact (`dedup_key`) and near (Jaccard ≥ 0.90) — **before** the split |
 | Target size | ≥ 1,000 usable comments combined; ≥ 600 in the Facebook-only primary set |
-| Agreement target | Cohen's κ ≥ 0.60 on the double-annotated subset |
+| Reliability target | Cohen's κ ≥ 0.60 on the 20% blinded re-label subset (intra-annotator) |
 | Missing values | Empty string (never `NA` / `null` / `None`) |
 | `comment_id` | `<platform>_<source_page>_<seq4>`, e.g. `fb_dost_pagasa_0001` — never reused or renumbered |
 
@@ -316,8 +319,8 @@ dataset are denormalized copies that must match the registry exactly (check V-16
 | Collection pilot | ⬜ | raw snapshot + yield estimate |
 | Full collection | ⬜ | raw snapshots, `collection_log.csv` |
 | Cleaning, dedup, PII scrub | ⬜ | candidate pool + exclusion ledger |
-| Gold set + agreement measurement | ⬜ | 120-row gold set, κ |
-| Full annotation + adjudication | ⬜ | labeled dataset |
+| Reliability measurement | ⬜ | 20% blinded re-label, κ |
+| Full annotation + resolution | ⬜ | labeled dataset |
 | Splits + metadata + validation | ⬜ | splits, metadata, `validation_report.txt` |
 
 🔶 in progress · ⬜ not started · ✅ complete
@@ -335,7 +338,7 @@ dataset are denormalized copies that must match the registry exactly (check V-16
 | M5 | Full collection | raw snapshots, `collection_log.csv` | M4 |
 | M6 | Cleaning, dedup, PII scrub | candidate pool + exclusion ledger | M5 |
 | M7 | **G2 — data freeze** | pool size and exclusion counts known | M6 |
-| M8 | Gold set (120 rows) double-annotated, κ computed | gold set, κ | M7 + guidelines v1.0 |
+| M8 | Gold set (120 rows) labeled, κ computed against it | gold set, κ | M7 + guidelines v1.0 |
 | M9 | Auto-annotator gate test (optional) | gate metrics | M8 |
 | M10 | Full annotation + adjudication | labeled dataset | M8 / M9 |
 | M11 | **G3 — label freeze** | splits, metadata | M10 |

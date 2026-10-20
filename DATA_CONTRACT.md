@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Contract version | `1.0-draft` |
+| Contract version | `1.3-draft` |
 | Status | **DRAFT — awaiting adviser + team sign-off** |
 | Created | 2026-10-20 |
 | Owner / Producer | Member 4 — **Edison Yin Malasan** (data collection, scraping, annotation) |
@@ -47,7 +47,7 @@ To produce a **reproducible, documented, anonymized, human-labeled dataset** of 
 - Collection: automated retrieval by reading the **publicly visible HTML/DOM** of each post page, with a manual-capture fallback. No API keys or credentials are required.
 - Cleaning: exact and near-duplicate removal, spam/low-value filtering, bot-signature removal.
 - Anonymization: removal of personal identifiers and any re-identification pathway.
-- Annotation: binary labeling into `actionable` / `other` under `docs/ANNOTATION_GUIDELINES.md`, with double annotation, agreement measurement, and adjudication.
+- Annotation: binary labeling into `actionable` / `other` under `docs/ANNOTATION_GUIDELINES.md`, by a single annotator, with intra-annotator reliability measured by a blinded re-label pass.
 - Delivery: dataset files, split files, metadata, provenance records, and a validation script.
 
 ### 1.3 Out of scope (explicitly not delivered)
@@ -134,7 +134,7 @@ agency is recorded once, in a canonical registry, and referenced by `agency_id` 
 else. This keeps the dataset self-describing: any row can be traced to a real, named
 government body, and the same agency is spelled identically everywhere.
 
-**File:** `data/provenance/government_agencies.csv` — one row per agency.
+**File:** `data/provenance/government_agencies.csv` — one row per **(agency, platform)** pair.
 
 | Column | Type | Description |
 |---|---|---|
@@ -313,10 +313,10 @@ CSV encoding `utf-8` (no BOM), `,` delimiter, `"` quoting, `\n` line endings, he
 | 22 | `language` | enum | yes | `fil` \| `eng` \| `mixed` | Language of the comment. `other` is **excluded** (X_LANG), not labeled. |
 | 23 | `label` | int | yes | `1` \| `0` | **1 = actionable suggestion/request, 0 = other comment.** (§10.1) |
 | 24 | `label_str` | string | yes | `actionable` \| `other` | Human-readable mirror of `label`. Must always agree with `label`. |
-| 25 | `annotator_id` | string | yes | `A1`–`A6` | Pseudonymous annotator. No names. |
-| 26 | `label_2` | int | no | `1` \| `0` \| empty | Second annotator's label, when double-annotated. |
+| 25 | `annotator_id` | string | yes | `A1` | Pseudonymous annotator. This dataset has a single annotator, so the value is always `A1`. No names. |
+| 26 | `label_2` | int | no | `1` \| `0` \| empty | The **blinded re-label pass** reading, on the 20% re-labeled subset. Empty elsewhere. |
 | 27 | `agreement` | bool | no | `true` \| `false` \| empty | `label == label_2`. Empty when `label_2` is empty. |
-| 28 | `adjudicated_by` | string | no | `A1`–`A6` \| `ADVISOR` | Who resolved a disagreement. Empty if no disagreement. |
+| 28 | `adjudicated_by` | string | no | `A1` \| `ADVISOR` | Who resolved a pass-1 vs pass-2 disagreement. Empty if no disagreement. |
 | 29 | `adjudication_note` | string | no | free text | One-line rationale for the resolution. Feeds the guidelines' edge-case bank. |
 | 30 | `guideline_version` | string | yes | `v1.x` | Version of the annotation rules the label was produced under. |
 | 31 | `source_snapshot` | string | yes | run id | `run_id` of the collection run that produced the row (§3.3). |
@@ -395,7 +395,7 @@ it, and the row count at every step is recorded.
 | 0 | **Capture** | `data/raw/<platform>/<source_page>/<run_id>.json` | Live platform API | Retrieve post + comment payloads **exactly as returned**. Nothing is filtered, renamed, or reformatted here. | Immutable raw snapshots | — |
 | 1 | **Extract** | `data/interim/comments_captured.csv`, `posts_captured.csv` | Raw snapshots | Flatten each payload into one row per comment / one row per post. Verbatim text. Attach `agency_id` via the registry (§3.1b) and `post_id`. **No filtering at this stage.** | `n_extracted_to_interim` rows | — |
 | 2 | **Clean** | `data/processed/` (candidate pool) | `interim/` | Exclusion rules (§4.2) → normalization (§6.2) → dedup (§7) → spam filters (§8) → PII scrub (§11). Every removal is written to the **exclusion ledger** with a reason code. | `n_candidate_pool` rows | **G2 — data freeze** |
-| 3 | **Annotate** | `data/processed/dataset_v1.csv` | Candidate pool | Labeling under `docs/ANNOTATION_GUIDELINES.md`. 100% single-pass + 20% double-annotated + adjudication. Labels and `guideline_version` attached. | `n_labeled` rows | — |
+| 3 | **Annotate** | `data/processed/dataset_v1.csv` | Candidate pool | Labeling under `docs/ANNOTATION_GUIDELINES.md`. 100% first pass + a 20% blinded re-label pass after a ≥ 7 day washout. Labels and `guideline_version` attached. | `n_labeled` rows | — |
 | 4 | **Split** | `data/processed/splits/` | Labeled dataset | Stratified by label, grouped by `post_id`, seed 42. 70/15/15. | `train` / `dev` / `test` | — |
 | 5 | **Validate & freeze** | `dataset_v1.metadata.json`, `validation_report.txt` | Everything above | Run `tools/validate_dataset.py` (V-01…V-16). Write the lineage reconciliation and the metadata file. | **Final deliverable** | **G3 — label freeze** |
 
@@ -574,12 +574,20 @@ A comment proposing three actions is still **one** comment with `label = 1`. The
 
 ### 10.3 Who annotates
 
+This dataset is annotated by **a single annotator** — Member 4, the dataset owner
+(`annotator_id = A1`), who labels every row personally.
+
 | Role | Who | Scope |
 |---|---|---|
-| Primary annotator | Member 4 (M4) + assigned teammates | 100% of the dataset |
-| Second annotator | ≥ 1 teammate, not the primary annotator of that row | **20% minimum of rows, stratified by class and source page** (≥ 200 rows for a 1,000-row dataset) |
-| Adjudicator | Member 4, escalating to the adviser | 100% of disagreements |
-| Gold-set annotators | 2 annotators + adjudication | 120 rows (see §10.6) |
+| Annotator (only) | Member 4 (M4), `annotator_id = A1` | **100% of the dataset** |
+| Blinded re-label pass | Member 4, same person, ≥ 7 days after the first pass | **20% minimum of rows** (≥ 200 for a 1,000-row dataset), stratified by class and source page |
+| Resolution of disagreements | Member 4, escalating guideline-level disputes to the adviser | 100% of pass-1 vs pass-2 disagreements |
+
+**Consequence for the reported statistic.** With one annotator there is no inter-annotator
+agreement to compute. The reliability figure is therefore **intra-annotator reliability**
+(test-retest), measured between the first pass and the blinded re-label pass. It must be
+described that way in the write-up — calling it inter-annotator agreement would be a
+misreport (§10.6).
 
 ### 10.4 Language tagging
 
@@ -595,24 +603,32 @@ Annotators work in a labeling tool (Label Studio / Doccano / a local CSV viewer 
 
 This is mandatory: a large fraction of replies ("Aba! Tama yan.", "Same, please fix ours too.") are unlabelable without the post. The labeling interface must show context; annotators must not label from the comment alone.
 
-Annotators **must not** see `label`, `label_2`, `agreement`, or `adjudicated_by` while labeling (the tool hides annotation columns).
+The annotator **must not** see `label`, `label_2`, `agreement`, or `adjudicated_by` while labeling (the tool hides annotation columns). During the
+blinded re-label pass (§10.3), the `label` column must be hidden as well — a pass where the
+earlier answer is visible is not a reliability measurement.
 
-### 10.6 Agreement measurement
+### 10.6 Reliability measurement (intra-annotator)
 
-- Compute **Cohen's kappa** on the double-annotated subset (20% minimum).
+- Metric: **Cohen's kappa** between `label` (first pass) and `label_2` (blinded re-label pass),
+  over the 20% re-labeled subset.
+- **Washout: ≥ 7 days** between the two passes. Without it, κ measures recall rather than
+  rule-consistency and comes out inflated.
 - Interpretation band (Landis & Koch 1977): `< 0.20` slight · `0.21–0.40` fair · `0.41–0.60` moderate · `0.61–0.80` substantial · `0.81–1.00` almost perfect.
 - **Gate: κ ≥ 0.60.** If the gate fails:
-  1. Review the disagreement set and the guidelines' edge-case bank.
+  1. Read every disagreement, resolve it against the guidelines, and record the rule that decided it in `adjudication_note`.
   2. Amend the guidelines → bump `guideline_version` (e.g. `v1.0` → `v1.1`) with a changelog entry.
   3. **Re-annotate the full dataset under the new version.** Labels produced under a superseded guideline version are not mixed into the final set.
   4. Recompute κ. If still < 0.60 after one revision, escalate to the adviser and consider an objective/task-definition revision.
-- Report κ, the confusion breakdown of disagreements, and the number of adjudicated rows in the paper (Member 6) and in `dataset_v1.metadata.json`.
+- Report κ, the confusion breakdown of disagreements, and the number of resolved rows in the
+  write-up (Member 6) and in `dataset_v1.metadata.json`.
+- **Label the statistic correctly in the write-up:** *intra-annotator reliability* /
+  *intra-rater reliability*, not inter-annotator agreement.
 
 ### 10.7 Auto-annotation assistant (optional, gated)
 
 `docs/NLP-PLAN.pdf` permits using an accurate auto-annotator. It is permitted **only** under this policy:
 
-**Stage 1 — Gold set.** 120 rows, double-annotated and adjudicated by two human annotators under `v1.0` guidelines. Composition: 60 rows with high likelihood of `actionable`, 60 with high likelihood of `other`, drawn across platforms and source pages, **sampled from the cleaned pool by the collector using the §8 filters — never cherry-picked to favor the assistant.**
+**Stage 1 — Gold set.** 120 rows labeled by the annotator under `v1.0` guidelines. Composition: 60 rows with high likelihood of `actionable`, 60 with high likelihood of `other`, drawn across platforms and source pages, **sampled from the cleaned pool by the collector using the §8 filters — never cherry-picked to favor the assistant.**
 
 **Stage 2 — Evaluation.** Run the candidate assistant on the gold set. Record macro-F1 and Cohen's kappa against gold.
 
@@ -621,7 +637,7 @@ Annotators **must not** see `label`, `label_2`, `agreement`, or `adjudicated_by`
 **Stage 4 — Permitted use.** As a **pre-labeling triage assistant only**:
 - The assistant produces **draft** labels.
 - **Every** draft label is confirmed or corrected by a human annotator before it enters `label`.
-- **No assistant-produced label may be used as a second annotator's label**, and assistant-labeled rows may **not** be included in the κ computation. This prevents circularity in the agreement measurement.
+- **No assistant-produced label may be used as the re-label pass reading**, and assistant-labeled rows may **not** be included in the κ computation. This prevents circularity in the reliability measurement.
 - The assistant may also be used to **order** the labeling queue (most-uncertain first), which does not affect label content.
 
 **Stage 5 — Disclosure.** If the assistant was used, the paper's Methodology **must** state: the tool and version, the gold-set size, the gate metrics, the proportion of rows pre-labeled, and the human-verification rate (target: 100%). Member 6 owns that text; Member 4 supplies the numbers.
@@ -725,7 +741,7 @@ nlp-data/
 | V-03 | `comment_id` unique, non-null, and matches `^[a-z]+_[a-z0-9_]+_\d{4}$`. |
 | V-04 | `label` ∈ {0,1} and `label_str` agrees with `label` on **every** row. |
 | V-05 | `language` ∈ {fil, eng, mixed}; `platform` ∈ {facebook, youtube, reddit, x}; `is_reply`/`agreement`/`pii_redacted` are `true`/`false`. |
-| V-06 | `label_2` is either empty or ∈ {0,1}; `agreement` is empty exactly when `label_2` is empty, and `true` exactly when `label == label_2`. |
+| V-06 | `label_2` is either empty or ∈ {0,1}; `agreement` is empty exactly when `label_2` is empty, and `true` exactly when `label == label_2`. `annotator_id` is `A1` on every row; `label_2` is populated on ≥ 20% of rows. |
 | V-07 | Every `post_id` exists in `posts_v1.csv`, and the denormalized post fields match exactly. |
 | V-08 | `comment_text_norm` is non-empty, has no zero-width characters, contains no URL/email/phone regex match (PII leak check). |
 | V-09 | `dedup_key` values are unique across the dataset (no residual exact duplicates). |
@@ -752,7 +768,7 @@ nlp-data/
 | M5 | Full collection | raw snapshots, `collection_log.csv`, `comments_captured.csv` | M4 |
 | M6 | Cleaning + dedup + PII scrub | `interim/` → candidate pool | M5 |
 | M7 | **G2 data freeze** | candidate pool + exclusion ledger | M6 |
-| M8 | Gold set (120 rows) double-annotated; κ computed | gold set, κ | M7 + `ANNOTATION_GUIDELINES.md` v1.0 |
+| M8 | Gold set (120 rows) labeled; κ computed against it | gold set, κ | M7 + `ANNOTATION_GUIDELINES.md` v1.0 |
 | M9 | Auto-annotator gate test (if a candidate exists) | gate metrics | M8 |
 | M10 | Full annotation + adjudication | `dataset_v1.csv` with labels | M8/M9 |
 | M11 | **G3 label freeze**; splits generated; metadata written | splits, metadata | M10 |
@@ -779,6 +795,8 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 | Version | Date | Author | Change |
 |---|---|---|---|
 | `1.0-draft` | 2026-10-20 | M4 (MALASAN) | Initial contract drafted from `NLP-PLAN.pdf` and `NLP-Final-Paper.pdf`. Schema, dedup/spam/PII rules, annotation interface, splits, validation, schedule. |
+| `1.3-draft` | 2026-10-20 | M4 (MALASAN) | Source list consolidated into a single canonical registry, `data/provenance/government_agencies.csv`, with one row per (agency, platform) pair carrying the agency's official name, abbreviation, type, supervising department, official website, official account details and the six source-selection criteria. `source_accounts.csv` removed. Added `agency_id` as the foreign key in the dataset schema and `counts_by_agency` to the metadata. |
+| `1.2-draft` | 2026-10-20 | M4 (MALASAN) | Annotation is now single-annotator. §10.3 replaces the annotator roster with a solo workflow plus a blinded re-label pass; §10.6 redefines the reliability statistic as intra-annotator reliability (test-retest) with a ≥ 7 day washout; `annotator_id` is always `A1`. |
 | `1.1-draft` | 2026-10-20 | M4 (MALASAN) | Switched collection to keyless HTML/DOM scraping: rewrote §3.2 routes and §3.3 run parameters, replaced the `collection_method` enum, dropped the credentials and `.env` requirement. Removed §12 (legal/ethical/platform-compliance); §12 is now the dataset's scope limits. README and requirements updated. |
 
 ---
@@ -790,7 +808,7 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 | D-1 | Which source accounts/pages exactly? | 4–6 agencies across ≥ 2 domains (e.g., DOST-PAGASA, DSWD, DPWH, DepEd, DOH, DOST) | M4 + team | G1 |
 | D-2 | Which platforms in scope, and is Facebook the primary dataset? | Facebook = primary (`dataset_v1.csv`); YouTube = extension; Reddit/X optional | Team + adviser | G1 |
 | D-3 | Collection method sign-off | Headless-DOM collection for Facebook, HTML/`ytInitialData` parse for YouTube, keyless JSON for Reddit, manual capture as fallback. Sign-off recorded in `COLLECTION_PROTOCOL.md` | Adviser | Before collection |
-| D-4 | Annotator roster, second annotator, adjudicator | M4 primary; 1 teammate second-annotates ≥ 20%; M4 adjudicates | Team | G1 |
+| D-4 | Annotation roster | M4 labels 100% as `A1`; reliability measured by a blinded 20% re-label pass after ≥ 7 days | M4 | G1 |
 | D-5 | Auto-annotator candidate and hosting | Local/offline preferred; gate = macro-F1 ≥ 0.80 and κ ≥ 0.60 on a 120-row gold set | Team | M8 |
 | D-6 | Labeling tool | Doccano or Label Studio (open source, supports context display and multi-annotator) | M4 | M8 |
 | D-7 | Final usable-comment count for the paper's `<number>` | ≥ 1,000 combined; ≥ 600 Facebook-only | M4 | M13 |
@@ -808,7 +826,7 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 
 1. That `label` might be flipped — it is not. `1 = actionable`. Use `pos_label=1`.
 2. That `comment_text` is lowercase or stripped — it is not. `comment_text` is verbatim; `comment_text_norm` is lightly normalized only.
-3. That a missing `label_2` means a bad row — it means "not double-annotated".
+3. That a missing `label_2` means a bad row — it means "not in the re-labeled subset".
 4. That `post_text` is part of the model's input — it is not, for the primary comparison.
 5. That the dataset is Facebook-only — `dataset_v1.csv` is; `dataset_v1_ext.csv` is not. Confirm which one you are using and say so in the paper.
 6. That the split files are advisory — they are authoritative. Join on `comment_id`.

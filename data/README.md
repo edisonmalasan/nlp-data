@@ -20,7 +20,7 @@ access rule and a different commit rule.
 | `processed/splits/{train,dev,test}.csv` | one row per comment | **Authoritative** split assignment. Join on `comment_id`. |
 | `processed/dataset_v1.metadata.json` | — | Counts, provenance, versions, agreement stats. Populated at G3. |
 | `interim/comments_captured.csv` | one row per captured comment | Pre-cleaning. Internal only. |
-| `provenance/government_agencies.csv` | one row per source account | Frozen at G1. |
+| `provenance/government_agencies.csv` | one row per (agency, platform) | Canonical registry of Philippine government agencies and their official accounts. Frozen at G1. |
 | `provenance/collection_log.csv` | one row per collection run | Audit trail for each retrieval run. |
 
 ## Rules
