@@ -1,0 +1,28 @@
+# ---- Raw and interim layers: not committed (size + ethics) ----
+data/raw/*
+!data/raw/.gitkeep
+data/interim/*
+
+# ---- Processed layer: committed (small, anonymized, publishable) ----
+# data/processed/ IS tracked.
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# ---- Annotation tooling / secrets ----
+.env
+*.key
+*.pem
+labeler/
+*.db
+*.sqlite3
+
+# ---- OS / editors ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

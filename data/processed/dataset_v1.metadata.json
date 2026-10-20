@@ -1,0 +1,66 @@
+{
+  "_status": "DRAFT — populated at G3 (label freeze). All zero/empty values below are placeholders, not measurements.",
+  "dataset_version": "v1",
+  "created_at": "",
+  "producer": "M4",
+  "guideline_version": "v1.0-draft",
+  "text_norm_version": "v1.0-draft",
+  "collection_window": {
+    "start": "",
+    "end": ""
+  },
+  "sources": [],
+  "n_raw_captured": 0,
+  "n_excluded_by_reason": {},
+  "n_usable": 0,
+  "class_counts": {
+    "actionable": 0,
+    "other": 0,
+    "actionable_rate": 0.0
+  },
+  "class_counts_natural_prior": {
+    "actionable": 0,
+    "other": 0,
+    "actionable_rate": 0.0
+  },
+  "counts_by_platform": {},
+  "counts_by_source_page": {},
+  "counts_by_split": {
+    "train": 0,
+    "dev": 0,
+    "test": 0
+  },
+  "language_counts": {
+    "fil": 0,
+    "eng": 0,
+    "mixed": 0
+  },
+  "split_seed": 42,
+  "split_strategy": "stratified by label, grouped by post_id",
+  "double_annotated_n": 0,
+  "cohens_kappa": 0.0,
+  "kappa_agreement_band": "",
+  "adjudicated_rows": 0,
+  "auto_annotator": {
+    "used": false,
+    "tool": "",
+    "version": "",
+    "hosting": "",
+    "gold_set_n": 0,
+    "gold_macro_f1": 0.0,
+    "gold_cohens_kappa": 0.0,
+    "gate_thresholds": {
+      "macro_f1": 0.8,
+      "cohens_kappa": 0.6
+    },
+    "gate_passed": false,
+    "pre_labeled_rows": 0,
+    "human_verified_rows": 0
+  },
+  "tool_versions": {
+    "python": "",
+    "pandas": "",
+    "scikit-learn": ""
+  },
+  "pii_scrub_patterns": []
+}

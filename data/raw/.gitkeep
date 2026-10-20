@@ -1,0 +1,2 @@
+# Raw payload snapshots land here (see DATA_CONTRACT.md §3.3).
+# This directory is excluded from git; see ../.gitignore
