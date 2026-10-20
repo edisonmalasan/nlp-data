@@ -62,7 +62,7 @@ To produce a **reproducible, documented, anonymized, human-labeled dataset** of 
 | ID | Deliverable | Due (proposed) | Owner |
 |---|---|---|---|
 | D-01 | `docs/ANNOTATION_GUIDELINES.md` v1.0 | Before gold-set labeling | M4 |
-| D-02 | `data/provenance/source_accounts.csv` | Before collection | M4 |
+| D-02 | `data/provenance/government_agencies.csv` | Before collection | M4 |
 | D-03 | Raw snapshots under `data/raw/` (immutable) | During collection | M4 |
 | D-04 | `data/interim/comments_captured.csv` | End of collection | M4 |
 | D-05 | `data/processed/dataset_v1.csv` (cleaned, anonymized, unlabeled → then labeled) | G2 / G3 | M4 |
@@ -125,7 +125,50 @@ A source account is eligible if:
 
 Excluded source types: political party pages, personal accounts of officials, news media organizations, private businesses, NGO/advocacy accounts, and "supporter" fan pages.
 
-**Source list is frozen at G1** and recorded in `data/provenance/source_accounts.csv`. Any addition after G1 must be justified in the paper (e.g., "an additional agency was added to satisfy S5") and recorded in the changelog (§17).
+**Source list is frozen at G1** and recorded in `data/provenance/government_agencies.csv`. Any addition after G1 must be justified in the paper (e.g., "an additional agency was added to satisfy S5") and recorded in the changelog (§17).
+
+### 3.1b The government agency registry (`government_agencies.csv`)
+
+Every source in this study is an account of a **Philippine national government agency**. That
+agency is recorded once, in a canonical registry, and referenced by `agency_id` everywhere
+else. This keeps the dataset self-describing: any row can be traced to a real, named
+government body, and the same agency is spelled identically everywhere.
+
+**File:** `data/provenance/government_agencies.csv` — one row per agency.
+
+| Column | Type | Description |
+|---|---|---|
+| `agency_id` | slug | Canonical ID, e.g. `dost_pagasa`. Primary key. |
+| `agency_name` | string | Official full name, e.g. *Philippine Atmospheric, Geophysical and Astronomical Services Administration*. |
+| `agency_abbr` | string | Official abbreviation, e.g. `DOST-PAGASA`. |
+| `agency_type` | enum | `national_government_agency` \| `government_owned_and_controlled_corporation` \| `government_corporation` \| `local_government_unit`. **Only `national_government_agency` and government corporations operating nationwide are in scope** (§3.1 S1) — LGUs are out of scope. |
+| `parent_department` | string | Supervising department, e.g. *Department of Science and Technology*. Empty for standalone constitutional offices. |
+| `parent_department_abbr` | string | e.g. `DOST`. |
+| `official_website` | URL | The agency's own website. Used to cross-check that the social account is genuinely official. |
+| `official_account_url` | URL | The official social account used as the source. |
+| `official_account_id` | string | Platform-side numeric/string account ID (Graph API page ID, YouTube channel ID). Needed for API collection. |
+| `official_account_name` | string | Display name of the account as it appears on the platform. |
+| `platform` | enum | `facebook` \| `youtube` \| `reddit` \| `x`. One row per **(agency, platform)** pair. |
+| `source_page` | slug | Short slug used in `comment_id` and `source_page`, e.g. `dost_pagasa`. |
+| `official_verified` | bool | `true` — the account carries official/verified status or is linked from the agency's own website. |
+| `verification_basis` | string | How officiality was established, e.g. `linked_from_official_website`, `blue_check`, `linked_from_agency_website`. |
+| `comments_enabled` | bool | Whether comments were publicly visible at collection time. |
+| `domains` | string | `;`-separated policy domains, e.g. `weather;disaster_preparedness`. Used for stratification and reporting. |
+| `eligibility_s1` … `eligibility_s6` | bool | One column per source criterion in §3.1. **All six must be `true`** for the row to be collected from. |
+| `n_posts_planned` | int | How many posts of this account are planned for collection. |
+| `collection_method` | enum | `graph_api` \| `youtube_api` \| `reddit_api` \| `x_api` \| `manual_capture`. |
+| `notes` | string | Free text. |
+
+**Rules**
+
+1. `agency_id` is **stable** across dataset versions. If an agency's official account changes, the row is updated and the change is noted in the changelog — the `agency_id` does not change.
+2. **One row per (agency, platform).** An agency with a Facebook page and a YouTube channel has two rows sharing one `agency_id`.
+3. `agency_id` is the **only** agency identifier that appears in `dataset_v1.csv`. `agency` and `agency_abbr` are denormalized convenience copies and **must** match the registry exactly (validation check V-16).
+4. The registry is **frozen at G1**. Adding an agency after G1 requires the §17 change log.
+5. The registry is a **reference table about government entities** — it contains no comment data and no personal data.
+7. This file **replaces** a separate `government_agencies.csv`. There is exactly one list of sources, and the registry is it. Two overlapping source lists would drift apart and silently contradict each other.
+
+
 
 ### 3.2 Platforms and authorized access routes
 
@@ -227,7 +270,8 @@ Every excluded row is **counted and logged with a reason code** — the exclusio
 | `data/processed/dataset_v1.metadata.json` | — | — | Counts, provenance, versions, agreement statistics. |
 | `data/interim/comments_captured.csv` | one per captured comment | comment | Verbatim union of raw snapshots, pre-cleaning. |
 | `data/interim/posts_captured.csv` | one per captured post | post | Verbatim post metadata. |
-| `data/provenance/source_accounts.csv` | one per source | account | The frozen source list (§3.1). |
+| `data/provenance/government_agencies.csv` | one per (agency, platform) | agency | **Canonical registry of the Philippine government entities and their official accounts** (§3.1b). |
+| `data/provenance/government_agencies.csv` | one per source | account | The frozen source list (§3.1). |
 | `data/provenance/collection_log.csv` | one per collection run | run | Collection audit trail (§3.3). |
 
 ### 5.2 `dataset_v1.csv` columns
@@ -240,47 +284,48 @@ CSV encoding `utf-8` (no BOM), `,` delimiter, `"` quoting, `\n` line endings, he
 | 2 | `platform` | enum | yes | `facebook` \| `youtube` \| `reddit` \| `x` | Source platform. |
 | 3 | `source_page` | string | yes | slug | Canonical account slug, e.g. `dost_pagasa`. |
 | 4 | `source_page_name` | string | yes | free text | Display name as captured. |
-| 5 | `agency` | string | yes | free text | Philippine national government agency. |
-| 6 | `agency_abbr` | string | yes | free text | e.g. `DOST-PAGASA`. |
-| 7 | `post_id` | string | yes | platform id or `sha1(permalink)` | Foreign key into `posts_v1.csv`. |
-| 8 | `post_url` | string | yes | URL | Public permalink of the parent post. |
-| 9 | `post_date` | date | yes | `YYYY-MM-DD` | Publication date of the post. |
-| 10 | `post_text` | string | yes | free text (may be empty) | **Verbatim** post caption/body. **Post context.** |
-| 11 | `post_media_type` | enum | yes | `text` \| `image` \| `video` \| `mixed` \| `link` \| `unknown` | Post media type. **Post context.** |
-| 12 | `post_topic` | string | no | slug | Manual topical tag by the collector, e.g. `flood_control`, `class_scheduling`, `vaccination`. Used for stratification and reporting. |
-| 13 | `is_reply` | bool | yes | `true` \| `false` | Comment is a reply to another comment. |
-| 14 | `parent_comment_id` | string | no | `comment_id` or empty | Empty when `is_reply == false`. |
-| 15 | `parent_comment_text` | string | no | verbatim, may be empty | **Parent comment context** — verbatim parent comment text, if available. |
-| 16 | `comment_text` | string | yes | verbatim | **The comment exactly as captured.** Original casing, emoji, typos, code-switching, punctuation — all preserved. Never edited. |
-| 17 | `comment_text_norm` | string | yes | normalized | Normalized comment text (§6.2). **This is the primary modeling text field.** |
-| 18 | `context_text_norm` | string | yes | normalized | Post + parent context, normalized (§6.3). Empty string if no context. **Annotation aid + optional robustness analysis, not the primary modeling field.** |
-| 19 | `dedup_key` | string | yes | normalized | Exact-duplicate detection key (§7.1). |
-| 20 | `n_tokens` | int | yes | ≥ 1 | Whitespace-token count of `comment_text_norm`. |
-| 21 | `language` | enum | yes | `fil` \| `eng` \| `mixed` | Language of the comment. `other` is **excluded** (X_LANG), not labeled. |
-| 22 | `label` | int | yes | `1` \| `0` | **1 = actionable suggestion/request, 0 = other comment.** (§10.1) |
-| 23 | `label_str` | string | yes | `actionable` \| `other` | Human-readable mirror of `label`. Must always agree with `label`. |
-| 24 | `annotator_id` | string | yes | `A1`–`A6` | Pseudonymous annotator. No names. |
-| 25 | `label_2` | int | no | `1` \| `0` \| empty | Second annotator's label, when double-annotated. |
-| 26 | `agreement` | bool | no | `true` \| `false` \| empty | `label == label_2`. Empty when `label_2` is empty. |
-| 27 | `adjudicated_by` | string | no | `A1`–`A6` \| `ADVISOR` | Who resolved a disagreement. Empty if no disagreement. |
-| 28 | `adjudication_note` | string | no | free text | One-line rationale for the resolution. Feeds the guidelines' edge-case bank. |
-| 29 | `guideline_version` | string | yes | `v1.x` | Version of the annotation rules the label was produced under. |
-| 30 | `source_snapshot` | string | yes | run id | `run_id` of the collection run that produced the row (§3.3). |
-| 31 | `collected_at` | string | yes | ISO 8601 | Capture timestamp. |
-| 32 | `pii_redacted` | bool | yes | `true` \| `false` | Whether anonymization altered this row. |
-| 33 | `split` | string | yes | `train` \| `dev` \| `test` | Mirrors `splits/*.csv`. **The split files are authoritative**; this column is a convenience copy and must match. |
-| 34 | `notes` | string | no | free text | Free-text row-level note (rarely used). |
+| 5 | `agency_id` | string | yes | slug | **Foreign key** into `government_agencies.csv`, e.g. `dost_pagasa`. Canonical ID for the Philippine government entity. |
+| 6 | `agency` | string | yes | free text | Philippine national government agency, full name. Denormalized copy of `government_agencies.csv.agency_name`. |
+| 7 | `agency_abbr` | string | yes | free text | e.g. `DOST-PAGASA`. Denormalized copy of `government_agencies.csv.agency_abbr`. |
+| 8 | `post_id` | string | yes | platform id or `sha1(permalink)` | Foreign key into `posts_v1.csv`. |
+| 9 | `post_url` | string | yes | URL | Public permalink of the parent post. |
+| 10 | `post_date` | date | yes | `YYYY-MM-DD` | Publication date of the post. |
+| 11 | `post_text` | string | yes | free text (may be empty) | **Verbatim** post caption/body. **Post context.** |
+| 12 | `post_media_type` | enum | yes | `text` \| `image` \| `video` \| `mixed` \| `link` \| `unknown` | Post media type. **Post context.** |
+| 13 | `post_topic` | string | no | slug | Manual topical tag by the collector, e.g. `flood_control`, `class_scheduling`, `vaccination`. Used for stratification and reporting. |
+| 14 | `is_reply` | bool | yes | `true` \| `false` | Comment is a reply to another comment. |
+| 15 | `parent_comment_id` | string | no | `comment_id` or empty | Empty when `is_reply == false`. |
+| 16 | `parent_comment_text` | string | no | verbatim, may be empty | **Parent comment context** — verbatim parent comment text, if available. |
+| 17 | `comment_text` | string | yes | verbatim | **The comment exactly as captured.** Original casing, emoji, typos, code-switching, punctuation — all preserved. Never edited. |
+| 18 | `comment_text_norm` | string | yes | normalized | Normalized comment text (§6.2). **This is the primary modeling text field.** |
+| 19 | `context_text_norm` | string | yes | normalized | Post + parent context, normalized (§6.3). Empty string if no context. **Annotation aid + optional robustness analysis, not the primary modeling field.** |
+| 20 | `dedup_key` | string | yes | normalized | Exact-duplicate detection key (§7.1). |
+| 21 | `n_tokens` | int | yes | ≥ 1 | Whitespace-token count of `comment_text_norm`. |
+| 22 | `language` | enum | yes | `fil` \| `eng` \| `mixed` | Language of the comment. `other` is **excluded** (X_LANG), not labeled. |
+| 23 | `label` | int | yes | `1` \| `0` | **1 = actionable suggestion/request, 0 = other comment.** (§10.1) |
+| 24 | `label_str` | string | yes | `actionable` \| `other` | Human-readable mirror of `label`. Must always agree with `label`. |
+| 25 | `annotator_id` | string | yes | `A1`–`A6` | Pseudonymous annotator. No names. |
+| 26 | `label_2` | int | no | `1` \| `0` \| empty | Second annotator's label, when double-annotated. |
+| 27 | `agreement` | bool | no | `true` \| `false` \| empty | `label == label_2`. Empty when `label_2` is empty. |
+| 28 | `adjudicated_by` | string | no | `A1`–`A6` \| `ADVISOR` | Who resolved a disagreement. Empty if no disagreement. |
+| 29 | `adjudication_note` | string | no | free text | One-line rationale for the resolution. Feeds the guidelines' edge-case bank. |
+| 30 | `guideline_version` | string | yes | `v1.x` | Version of the annotation rules the label was produced under. |
+| 31 | `source_snapshot` | string | yes | run id | `run_id` of the collection run that produced the row (§3.3). |
+| 32 | `collected_at` | string | yes | ISO 8601 | Capture timestamp. |
+| 33 | `pii_redacted` | bool | yes | `true` \| `false` | Whether anonymization altered this row. |
+| 34 | `split` | string | yes | `train` \| `dev` \| `test` | Mirrors `splits/*.csv`. **The split files are authoritative**; this column is a convenience copy and must match. |
+| 35 | `notes` | string | no | free text | Free-text row-level note (rarely used). |
 
 **Column groups and who owns them**
 
-- `1–16`, `18–21`, `30–32` → **producer-owned** (Member 4). Member 5 consumes, does not modify.
-- `22–29` → **annotation-owned** (Member 4 + annotator team).
-- `17`, `33` → **producer-owned**, but Member 5 may regenerate `comment_text_norm` under its own vectorizer (lowercasing, tokenization) — see §6.4.
-- `17` **must not** be lowercased, punctuation-stripped, or emoji-removed in the shipped file. Those are Member 5's vectorizer decisions.
+- `1–17`, `19–22`, `31–33` → **producer-owned** (Member 4). Member 5 consumes, does not modify.
+- `23–30` → **annotation-owned** (Member 4 + annotator team).
+- `18`, `34` → **producer-owned**, but Member 5 may regenerate `comment_text_norm` under its own vectorizer (lowercasing, tokenization) — see §6.4.
+- `18` **must not** be lowercased, punctuation-stripped, or emoji-removed in the shipped file. Those are Member 5's vectorizer decisions.
 
 ### 5.3 `posts_v1.csv` columns
 
-`post_id`, `platform`, `source_page`, `source_page_name`, `agency`, `agency_abbr`, `post_url`, `post_date`, `post_text`, `post_media_type`, `post_topic`, `source_snapshot`, `collected_at`, `n_comments`
+`post_id`, `platform`, `source_page`, `source_page_name`, `agency_id`, `agency`, `agency_abbr`, `post_url`, `post_date`, `post_text`, `post_media_type`, `post_topic`, `source_snapshot`, `collected_at`, `n_comments`
 
 **Invariant:** the denormalized post fields in `dataset_v1.csv` (`post_url`, `post_date`, `post_text`, `post_media_type`) **must be byte-identical** to the corresponding row in `posts_v1.csv`. `tools/validate_dataset.py` checks this (check V-07).
 
@@ -310,6 +355,17 @@ Member 5 may join the split files to `dataset_v1.csv` on `comment_id` alone; the
   "language_counts": { "fil": 0, "eng": 0, "mixed": 0 },
   "split_seed": 42,
   "split_strategy": "stratified by label, grouped by post_id",
+  "agencies": [ { "agency_id": "...", "agency_name": "...", "agency_abbr": "...", "agency_type": "...", "parent_department": "...", "platform": "...", "source_page": "..." } ],
+  "counts_by_agency": { "dost_pagasa": 0 },
+  "lineage": {
+    "n_raw_captured": 0,
+    "n_extracted_to_interim": 0,
+    "n_excluded_by_reason": { "X_SPAM": 0, "X_DUP_EXACT": 0, "X_DUP_NEAR": 0, "X_LANG": 0, "X_EMPTY": 0, "X_OFFICIAL": 0, "X_PII": 0 },
+    "n_candidate_pool": 0,
+    "n_labeled": 0,
+    "n_usable_final": 0,
+    "reconciles": true
+  },
   "double_annotated_n": 0,
   "cohens_kappa": 0.0,
   "kappa_agreement_band": "substantial|almost perfect|...",
@@ -318,6 +374,49 @@ Member 5 may join the split files to `dataset_v1.csv` on `comment_id` alone; the
   "pii_scrub_patterns": ["..."]
 }
 ```
+
+### 5.6 Data lineage — raw → usable → final
+
+Every comment in the delivered dataset can be traced back through a fixed chain of layers.
+**Nothing is ever deleted or edited in place**; each layer is regenerated from the one above
+it, and the row count at every step is recorded.
+
+| # | Stage | Layer on disk | Input | Transformation | Output | Gate |
+|---|---|---|---|---|---|---|
+| 0 | **Capture** | `data/raw/<platform>/<source_page>/<run_id>.json` | Live platform API | Retrieve post + comment payloads **exactly as returned**. Nothing is filtered, renamed, or reformatted here. | Immutable raw snapshots | — |
+| 1 | **Extract** | `data/interim/comments_captured.csv`, `posts_captured.csv` | Raw snapshots | Flatten each payload into one row per comment / one row per post. Verbatim text. Attach `agency_id` via the registry (§3.1b) and `post_id`. **No filtering at this stage.** | `n_extracted_to_interim` rows | — |
+| 2 | **Clean** | `data/processed/` (candidate pool) | `interim/` | Exclusion rules (§4.2) → normalization (§6.2) → dedup (§7) → spam filters (§8) → PII scrub (§11). Every removal is written to the **exclusion ledger** with a reason code. | `n_candidate_pool` rows | **G2 — data freeze** |
+| 3 | **Annotate** | `data/processed/dataset_v1.csv` | Candidate pool | Labeling under `docs/ANNOTATION_GUIDELINES.md`. 100% single-pass + 20% double-annotated + adjudication. Labels and `guideline_version` attached. | `n_labeled` rows | — |
+| 4 | **Split** | `data/processed/splits/` | Labeled dataset | Stratified by label, grouped by `post_id`, seed 42. 70/15/15. | `train` / `dev` / `test` | — |
+| 5 | **Validate & freeze** | `dataset_v1.metadata.json`, `validation_report.txt` | Everything above | Run `tools/validate_dataset.py` (V-01…V-16). Write the lineage reconciliation and the metadata file. | **Final deliverable** | **G3 — label freeze** |
+
+**The row-count reconciliation is mandatory.** This identity must hold and is checked by
+`tools/validate_dataset.py` (check V-16):
+
+```
+n_raw_captured
+  = n_extracted_to_interim
+  = n_candidate_pool + Σ(n_excluded_by_reason.values())
+  = n_labeled
+  = n_usable_final
+  = counts_by_split.train + counts_by_split.dev + counts_by_split.test
+```
+
+If any row cannot be accounted for, it is a bug, not a rounding difference. The final line
+of this reconciliation, `n_usable_final`, is the number that fills the paper's `<number>`
+placeholder in the Scope section.
+
+**Which layer answers which question**
+
+| Question | Answered by |
+|---|---|
+| "What exactly did the platform return?" | `data/raw/` |
+| "What did we collect before making any judgment calls?" | `data/interim/` |
+| "What was removed, and why?" | The exclusion ledger (reason codes in §4.2) and `lineage.n_excluded_by_reason` in the metadata |
+| "What is the labeled dataset a consumer should load?" | `data/processed/dataset_v1.csv` |
+| "Which rows go in which split?" | `data/processed/splits/*.csv` |
+| "Which government agency does this row come from?" | `agency_id` → `data/provenance/government_agencies.csv` |
+| "Which post was it on?" | `post_id` → `data/processed/posts_v1.csv` |
 
 ---
 
@@ -612,7 +711,8 @@ nlp-data/
 │   │   ├── dataset_v1.metadata.json
 │   │   └── splits/{train,dev,test}.csv
 │   └── provenance/                   ← gitignored? No — committed (small, non-personal)
-│       ├── source_accounts.csv
+│       ├── government_agencies.csv   ← canonical PH government agency registry
+│       ├── government_agencies.csv
 │       └── collection_log.csv
 ├── src/
 │   ├── collect/{facebook,youtube,reddit}.py
@@ -648,6 +748,7 @@ nlp-data/
 | V-13 | No `comment_text_norm` value is empty; `n_tokens` matches `len(comment_text_norm.split())`. |
 | V-14 | The metadata JSON parses and contains every key listed in §5.5. |
 | V-15 | The class prior in the test split is within ±10 percentage points of the train split prior. |
+| V-16 | **Lineage & agency integrity:** every `agency_id` in `dataset_v1.csv` and `posts_v1.csv` exists in `government_agencies.csv`; the denormalized `agency` and `agency_abbr` match the registry exactly; the row-count reconciliation in §5.6 holds (`n_raw_captured = Σ exclusions + n_candidate_pool = n_labeled = n_usable_final = Σ split counts`); `lineage.reconciles == true` in the metadata. |
 
 **Acceptance:** Member 4 declares the dataset delivered when V-01…V-15 pass and the report is stored at `data/processed/validation_report.txt`. Member 5 confirms receipt and acceptance, or raises specific failed checks.
 
@@ -659,7 +760,7 @@ nlp-data/
 |---|---|---|---|
 | M1 | Decisions D-1…D-6 settled | Signed section in this contract | Adviser + team |
 | M2 | **G1 schema freeze** | This contract v1.0 | M1 |
-| M3 | Source list frozen; collection protocol documented | `source_accounts.csv`, `COLLECTION_PROTOCOL.md` | M2 + adviser ethics sign-off |
+| M3 | Source list frozen; collection protocol documented | `government_agencies.csv`, `COLLECTION_PROTOCOL.md` | M2 + adviser ethics sign-off |
 | M4 | Collection pilot (2 pages, 2 posts each) | raw snapshot + yield estimate | M3 |
 | M5 | Full collection | raw snapshots, `collection_log.csv`, `comments_captured.csv` | M4 |
 | M6 | Cleaning + dedup + PII scrub | `interim/` → candidate pool | M5 |
