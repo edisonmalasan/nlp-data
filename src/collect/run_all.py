@@ -91,7 +91,7 @@ def existing_snapshots(platform, source_page):
     return [os.path.join(d, f) for f in sorted(os.listdir(d)) if f.endswith(".json")]
 
 
-def run_one(page, row, posts, notes):
+def run_one(page, row, posts, notes, mode="recent"):
     """Collect one account. Returns (n_posts, n_comments, error)."""
     platform = row["platform"]
     source_page = row["source_page"]
@@ -107,7 +107,7 @@ def run_one(page, row, posts, notes):
         ob.goto(page, url.rstrip("/") + "/videos", settle=5.0)
         time.sleep(2.0)
 
-    if args.mode == "invites" and platform == "facebook":
+    if mode == "invites" and platform == "facebook":
         urls = ob.find_inviting_posts(page, limit=posts)
     else:
         urls = ob.discover_posts(page, platform, limit=posts)
@@ -194,7 +194,7 @@ def main(argv=None) -> int:
             continue
         log(f"[{i}/{len(registry)}] {key}  {row.get('official_account_url','')}")
         try:
-            n_posts, n_comments, err = run_one(page, row, args.posts, notes)
+            n_posts, n_comments, err = run_one(page, row, args.posts, notes, args.mode)
         except Exception as e:
             n_posts, n_comments, err = 0, 0, f"{type(e).__name__}: {e}"
             log(f"  FAILED: {err}")
