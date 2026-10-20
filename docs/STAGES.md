@@ -182,17 +182,12 @@ verifying a sample.
       first**.
 - [ ] Record the agreement rate and Cohen's κ between your reading and the engine's.
 - [ ] Set `verification = human_verified` on those rows.
-- [ ] Report both numbers in the write-up.
-
-**3g — Auto-annotator audit**
-- [ ] Evaluate a candidate assistant against a **120-row self-labeled gold set**.
-- [ ] Gate: **macro-F1 ≥ 0.80 AND κ ≥ 0.60** against your gold set. Below that, don't
-      use it — record the attempt as a negative result.
-- [ ] If it passes: pre-label only, **every** draft human-confirmed by you. Assistant labels are
-      **excluded** from the reliability computation (no circularity).
-- [ ] Label your own pool first, then use the assistant only for rows you haven't reached.
-- [ ] If you use a hosted assistant, send only `comment_text_norm` after the scrub, never
-      `post_text`.
+- [ ] Measure the **engine's own accuracy** on that sample — the share of its labels you
+      confirmed, broken down by `annotation_rule`. This is the engine's audit number.
+- [ ] If the engine disagrees with you on more than ~20% of the sample, **stop and fix the
+      cue lists** before releasing (`src/annotate/README.md` §Tuning). Do not release a
+      dataset whose annotator is this far off.
+- [ ] Report the sample size, the agreement rate and κ in the write-up.
 
 **3g — Finalize**
 - [ ] Resolve every pass-1 vs pass-2 disagreement → `label`, `adjudicated_by`,
