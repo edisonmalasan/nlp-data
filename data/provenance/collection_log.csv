@@ -5,3 +5,5 @@ fb_dost_pagasa_2026-10-20T20-42,facebook,dswd,browser_dom_session,orca-computer-
 fb_dswd_2026-10-20T21-04,facebook,dswd,browser_dom_session,orca-computer-use,1.0,,3,2,25,2026-10-20T13:04:06.855141+00:00,fb_dswd_2026-10-20T21-04,pilot via orca computer-use
 fb_dost_pagasa_2026-10-20T20-42,facebook,dost_pagasa,browser_dom_session,orca-computer-use,1.0,,3,2,37,2026-10-20T12:42:59.927271+00:00,fb_dost_pagasa_2026-10-20T20-42,pilot via orca computer-use
 fb_dswd_2026-10-20T21-04,facebook,dswd,browser_dom_session,orca-computer-use,1.0,,3,2,25,2026-10-20T13:04:06.855141+00:00,fb_dswd_2026-10-20T21-04,pilot via orca computer-use
+facebook_dost_pagasa_2026-10-20T21-46,facebook,dost_pagasa,browser_dom_session,orca-cli,1.0,,3,2,7,2026-10-20T13:46:22.804787+00:00,facebook_dost_pagasa_2026-10-20T21-46,pilot via orca built-in browser
+facebook_dswd_2026-10-20T21-45,facebook,dswd,browser_dom_session,orca-cli,1.0,,3,2,5,2026-10-20T13:45:00.951607+00:00,facebook_dswd_2026-10-20T21-45,pilot via orca built-in browser
