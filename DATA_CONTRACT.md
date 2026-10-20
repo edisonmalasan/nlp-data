@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Contract version | `1.5-draft` |
+| Contract version | `1.7-draft` |
 | Status | **DRAFT — awaiting adviser + team sign-off** |
 | Created | 2026-10-20 |
 | Owner / Producer | Member 4 — **Edison Yin Malasan** (data collection, scraping, annotation) |
@@ -415,10 +415,18 @@ it, and the row count at every step is recorded.
 n_raw_captured
   = n_extracted_to_interim
   = n_candidate_pool + Σ(n_excluded_by_reason.values())
+n_candidate_pool
   = n_labeled
   = n_usable_final
   = counts_by_split.train + counts_by_split.dev + counts_by_split.test
 ```
+
+> **Form matters.** The cleaning branch and the labeling branch are two separate
+> equalities, not one chain. Extraction loses nothing, cleaning removes exactly the
+> excluded rows, and labeling covers exactly the candidate pool. Written as a single
+> chain, `n_candidate_pool + Σ exclusions = n_labeled` would make the labeled set *larger*
+> than the pool it came from, which is impossible. Written this way, every row is
+> accounted for on both branches.
 
 If any row cannot be accounted for, it is a bug, not a rounding difference. The final line
 of this reconciliation, `n_usable_final`, is the number that fills the paper's `<number>`
@@ -451,14 +459,20 @@ placeholder in the Scope section.
 ### 6.2 Normalization rules (L0 → L1), applied in this exact order
 
 1. Unicode **NFC** normalization.
-2. Remove zero-width and bidi control characters (`U+200B–U+200F`, `U+202A–U+202E`, `U+FEFF`).
-3. Replace every URL with the literal token `<URL>`.
-4. Replace every `@mention` with the literal token `<USER>`.
-5. Replace every phone-number-like sequence with `<PHONE>`.
-6. Replace every email address with `<EMAIL>`.
-7. Replace every digit sequence of length ≥ 4 with `<NUM>` (house numbers, IDs, dates) — **but keep digits inside known measure phrases intact**? No: keep it simple and deterministic — **all digit runs of length ≥ 4 → `<NUM>`**; runs of length 1–3 are kept.
+2. Remove zero-width and bidi control characters (`U+200B–U+200F`, `U+202A–U+202E`, `U+2060`, `U+FEFF`).
+3. Replace every **email address** with the literal token `<EMAIL>`.
+4. Replace every **URL** with the literal token `<URL>`.
+5. Replace every **`@mention`** with the literal token `<USER>`.
+6. Replace every phone-number-like sequence with `<PHONE>`.
+7. Replace every digit sequence of length ≥ 4 with `<NUM>` (house numbers, IDs, dates); runs of length 1–3 are kept.
 8. Collapse all runs of whitespace into a single space; strip leading/trailing whitespace.
 9. **Keep** original casing, punctuation, and emoji.
+
+> **Ordering note — email first.** An earlier draft ran the URL rule before the email
+> rule, which turned `juan@dept.gov.ph` into `juan@<URL>` and left the mention rule
+> free to chew the local part of an address. The email rule must run **before** the URL and
+> mention rules, otherwise addresses are mangled instead of replaced. The digit rule stays
+> last so that a number inside a URL or a phone number is already gone by the time it runs.
 
 > **Casing and punctuation are deliberately retained in L1.** Lowercasing would destroy the distinction between sentence-initial *Please* and mid-sentence *please* for no benefit, and the pipeline's regexes for feature extraction are specified case-insensitively (§6.5). Emojis are retained because they carry sentiment and request intensity in this corpus, and because removing them would be an unrecorded lossy transform.
 
@@ -851,6 +865,8 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 | Version | Date | Author | Change |
 |---|---|---|---|
 | `1.0-draft` | 2026-10-20 | M4 (MALASAN) | Initial contract drafted from `NLP-PLAN.pdf` and `NLP-Final-Paper.pdf`. Schema, dedup/spam/PII rules, annotation interface, splits, validation, schedule. |
+| `1.7-draft` | 2026-10-20 | M4 (MALASAN) | Corrected the §5.6 reconciliation identity. It was written as a single linear chain, which made `n_candidate_pool + Σ exclusions = n_labeled` — that would make the labeled set larger than the pool it came from. The cleaning branch and the labeling branch are two separate equalities now. |
+| `1.6-draft` | 2026-10-20 | M4 (MALASAN) | Fixed the §6.2 normalization order: the email rule now runs before the URL and mention rules, so `juan@dept.gov.ph` becomes `<EMAIL>` instead of being mangled. Zero-width removal now also covers `U+2060`. |
 | `1.5-draft` | 2026-10-20 | M4 (MALASAN) | Added the annotation provenance columns `annotation_rule` (37), `annotation_evidence` (38) and `annotation_confidence` (39), so every label in the delivered dataset records the rule that produced it, the evidence behind it, and the engine's confidence. Schema is now 39 columns. |
 | `1.4-draft` | 2026-10-20 | M4 (MALASAN) | Annotation is now performed by the annotator engine `src/annotate/auto_annotator.py` with human verification of ≥ 100 rows. §10.3 records the new roles, §10.7 documents the three-stage engine and its confidence thresholds, the `verification` column (36) was added to the schema, and check V-17 enforces annotation completeness. |
 | `1.3-draft` | 2026-10-20 | M4 (MALASAN) | Source list consolidated into a single canonical registry, `data/provenance/government_agencies.csv`, with one row per (agency, platform) pair carrying the agency's official name, abbreviation, type, supervising department, official website, official account details and the six source-selection criteria. `source_accounts.csv` removed. Added `agency_id` as the foreign key in the dataset schema and `counts_by_agency` to the metadata. |

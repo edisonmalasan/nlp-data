@@ -120,10 +120,12 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 | Path | What it is |
 |---|---|
 | `src/annotate/auto_annotator.py` | **The annotator engine.** Cue extraction → heuristic scoring → adjudication batches → merge. |
+| `src/collect/facebook.py` | **The Facebook scraper.** Headless DOM reader, no credentials. `--dump-dom` saves the HTML for offline selector work. |
 | `src/annotate/README.md` | How to run the annotation loop, and how to tune the cue lists. |
 | `src/collect/` | Platform scrapers. *(pending — Stage 1)* |
-| `src/clean/` | Normalization, dedup, spam filters, PII scrub. *(pending — Stage 2)* |
-| `tools/validate_dataset.py` | The acceptance test, V-01…V-17. *(pending — Stage 5)* |
+| `src/clean/` | **The cleaning package.** `normalize.py`, `dedup.py`, `spam.py`, `pii.py`, `pipeline.py` (the chain + exclusion ledger). |
+| `tools/validate_dataset.py` | **The acceptance test**, V-01…V-17. Reads the expected schema from the contract. |
+| `tools/split_dataset.py` | **The splitter.** 70/15/15, stratified by label, grouped by `post_id`, seed 42. |
 | `tools/build_release.py` | Assembles `data/final/`, writes `MANIFEST.json`, produces the zip. |
 
 ---
@@ -224,6 +226,19 @@ python src/annotate/auto_annotator.py apply \
     --scored data/interim/auto_scored.csv \
     --decisions data/interim/agent_decisions.csv \
     --out data/processed/dataset_v1.csv
+
+# Stage 2 — clean
+python src/clean/pipeline.py \\
+    --pool       data/interim/comments_captured.csv \\
+    --out        data/processed/candidate_pool.csv \\
+    --ledger-out data/interim/exclusion_ledger.csv \\
+    --report     data/interim/cleaning_report.json
+
+# Stage 4 — split
+python tools/split_dataset.py \\
+    --dataset data/processed/dataset_v1.csv \\
+    --outdir  data/processed/splits \\
+    --seed    42
 
 # Stage 5 — validate and release
 python tools/validate_dataset.py

@@ -102,7 +102,8 @@ print(confusion_matrix(y_te, pred, labels=[0, 1]))   # [[TN, FP], [FN, TP]]
 - [ ] `python tools/validate_dataset.py` → **0 errors**
 - [ ] `python tools/build_release.py --check` → **READY TO RELEASE**
 - [ ] The row-count reconciliation holds:
-      `n_raw_captured = n_candidate_pool + Σ exclusions = n_labeled = n_usable_final = train+dev+test`
+      `n_raw_captured = n_candidate_pool + Σ exclusions` and
+      `n_candidate_pool = n_labeled = n_usable_final = train+dev+test`
 - [ ] Reliability κ ≥ 0.60 on the re-labeled subset
 - [ ] Human-verified sample ≥ 100 rows, and the rate is recorded in the metadata
 - [ ] The usable-comment count is recorded — it fills the `<number>` placeholder in the

@@ -87,10 +87,11 @@ nlp-data/
 │       ├── government_agencies.csv
 │       └── collection_log.csv
 ├── src/
-│   ├── collect/                 ← DOM / HTML scrapers (no credentials)
-│   ├── clean/                   ← normalize, dedup, spam filter, PII scrub
+│   ├── collect/                 ← facebook.py — headless DOM scraper
+│   ├── clean/                   ← normalize, dedup, spam, PII, pipeline
 │   └── annotate/                ← labeling tool setup, agreement computation
 └── tools/
+    ├── split_dataset.py         ← 70/15/15, grouped by post_id
     ├── validate_dataset.py      ← acceptance test (V-01…V-17)
     └── build_release.py        ← assembles data/final/ + zip
 ```
@@ -152,7 +153,7 @@ by the instructor. Record the approval in `docs/COLLECTION_PROTOCOL.md` and log 
         └──────┬───────┘
                ▼
         ┌──────────────┐
-        │  5. VALIDATE │  tools/validate_dataset.py — 16 checks must pass (V-01…V-16)
+        │  5. VALIDATE │  tools/validate_dataset.py — 17 checks must pass (V-01…V-17)
         │              │  → dataset_v1.metadata.json → hand-off
         └──────────────┘
 ```
@@ -269,13 +270,11 @@ count at every step is recorded.
 **The reconciliation identity — this must always hold:**
 
 ```
-n_raw_captured
-  = n_extracted_to_interim
-  = n_candidate_pool + Σ(n_excluded_by_reason.values())
-  = n_labeled
-  = n_usable_final
-  = train + dev + test
+n_raw_captured = n_extracted_to_interim = n_candidate_pool + Σ(n_excluded_by_reason.values())
+n_candidate_pool = n_labeled = n_usable_final = train + dev + test
 ```
+
+The cleaning branch and the labeling branch are two separate equalities, not one chain.
 
 If any row cannot be accounted for, it is a bug — not a rounding difference. `n_usable_final`
 is the number that fills the paper's `<number>` placeholder.

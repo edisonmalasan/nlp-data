@@ -78,11 +78,13 @@
 
 **Goal:** raw payloads on disk, exactly as the platform returned them. No filtering.
 
-- [ ] Build the Facebook scraper in `src/collect/facebook.py` — headless browser (Playwright),
+- [x] Build the Facebook scraper in `src/collect/facebook.py` — headless browser (Playwright),
       open the public permalink, scroll the comment thread, read the rendered DOM.
+      *Built. `--dump-dom` saves the rendered HTML so selectors can be fixed offline.*
 - [ ] Build the YouTube parser in `src/collect/youtube.py` — `requests` + `ytInitialData`
-      continuation tokens.
+      continuation tokens. *(not started)*
 - [ ] Build the Reddit fetcher in `src/collect/reddit.py` — public `.json` endpoints.
+      *(not started)*
 - [ ] Write each raw payload **once** to `data/raw/<platform>/<page>/<run_id>.json`. Never edit
       it afterwards.
 - [ ] Log every run to `data/provenance/collection_log.csv` — tool, version, `user_agent`,
@@ -104,6 +106,9 @@ get IP-blocked and lose collection time.
 ## Stage 2 — Clean
 
 **Goal:** one candidate row per genuinely usable comment, with every removal accounted for.
+
+- [x] Write `src/clean/` — `normalize.py`, `dedup.py`, `spam.py`, `pii.py`, `pipeline.py`.
+      *Built and tested (47 assertions).* The order is fixed: filter → normalize → dedup → spam → scrub.
 
 **2a — Extract** (no filtering yet)
 - [ ] Flatten each raw snapshot into `data/interim/comments_captured.csv` and
@@ -208,6 +213,8 @@ verifying a sample.
 
 **Goal:** a fixed, leakage-free partition that both models share.
 
+- [x] Write `tools/split_dataset.py`. *Built and tested.*
+
 - [ ] 70 / 15 / 15, **stratified by label**.
 - [ ] **Grouped by `post_id`** — the same post's comments never straddle two splits, or the
       model is scored on its own vocabulary.
@@ -225,15 +232,20 @@ verifying a sample.
 
 **Goal:** a dataset that can be accepted or rejected with one command.
 
-- [ ] Write `tools/validate_dataset.py` — the 17 checks V-01…V-17 from the contract.
+- [x] Write `tools/validate_dataset.py` — the 17 checks V-01…V-17 from the contract.
+      *Built and tested.*
 - [ ] Run it. **0 errors**, or fix the underlying problem (don't weaken the check).
 - [ ] Fill in `data/processed/dataset_v1.metadata.json` — including the `lineage` block, which
       must satisfy the reconciliation identity.
 - [ ] Write `docs/DATA_CARD.md`.
 - [ ] Confirm the row-count reconciliation holds:
-      `n_raw_captured = n_candidate_pool + Σ exclusions = n_labeled = n_usable_final = train+dev+test`
+      `n_raw_captured = n_candidate_pool + Σ exclusions` and
+      `n_candidate_pool = n_labeled = n_usable_final = train+dev+test`
 - [ ] Note the final usable count → this is the number that fills the paper's `<number>`
       placeholder in the Scope section.
+
+- [x] Write `tools/build_release.py` — assembles `data/final/` and writes `MANIFEST.json`.
+      *Built and tested.*
 
 **Then build the release package** — this is the actual hand-off artifact:
 

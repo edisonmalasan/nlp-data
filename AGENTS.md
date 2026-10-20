@@ -39,10 +39,11 @@ data/
   provenance/[committed]   source registry + collection log
 src/
   annotate/auto_annotator.py   the annotator engine
-  collect/                     platform scrapers        (pending)
-  clean/                       cleaning pipeline       (pending)
+  collect/facebook.py          the headless DOM scraper
+  clean/                       normalize, dedup, spam, pii, pipeline
 tools/
-  validate_dataset.py          acceptance test V-01..V-17  (pending)
+  validate_dataset.py          acceptance test V-01..V-17
+  split_dataset.py             70/15/15, grouped by post_id, seed 42
   build_release.py             assembles data/final/ + zip
 ```
 
@@ -141,12 +142,8 @@ Silent drops are not acceptable.
 ### 4.4 The line-count reconciliation must hold
 
 ```
-n_raw_captured
-  = n_extracted_to_interim
-  = n_candidate_pool + Σ(n_excluded_by_reason.values())
-  = n_labeled
-  = n_usable_final
-  = train + dev + test
+n_raw_captured = n_extracted_to_interim = n_candidate_pool + Σ(n_excluded_by_reason.values())
+n_candidate_pool = n_labeled = n_usable_final = train + dev + test
 ```
 
 If a row cannot be accounted for, that is a bug, not a rounding difference.
@@ -161,7 +158,21 @@ train/dev/test split. Otherwise the model is tested on text it has already seen.
 The same post's comments never straddle two splits. Otherwise the model is scored on its
 own vocabulary.
 
-### 4.7 Scrub, don't filter
+### 4.7 The cleaning order is fixed
+
+    filter → normalize → dedup → spam → scrub
+
+Deduplication runs **before** the spam filters. If spam runs first, rule F6 (an account
+posting near-identical text) fires on exact duplicates and mislabels them `X_SPAM`
+instead of `X_DUP_EXACT`, which corrupts the exclusion ledger.
+
+### 4.8 The near-duplicate cap is a cap on near-identical rows
+
+Contract 7.2 caps how many **near-identical** comments survive from the same account on
+the same post at 2. It is **not** a cap on how many comments a post may contribute. A post
+with 40 unrelated comments keeps all 40.
+
+### 4.9 Scrub, don't filter
 
 Never remove a row because of its sentiment, profanity, political content, or length
 (beyond empty text). Aggressive filtering is the fastest way to silently lose the negative
