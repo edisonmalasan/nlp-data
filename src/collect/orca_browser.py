@@ -38,6 +38,23 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 RAW_DIR = os.path.join(ROOT, "data", "raw")
 JS_DIR = os.path.join(ROOT, "src", "collect")
 
+# The selector that identifies one comment, per platform. The collector uses it
+# to find the scrollable element that holds the thread and to count comments.
+COMMENT_SELECTOR = {
+    "facebook": 'div[role="article"][aria-label^="Comment by"]',
+    "youtube": "ytd-comment-renderer",
+    "x": 'article[data-testid="tweet"]',
+    "reddit": 'shreddit-comment, div[data-testid="comment"]',
+}
+
+# The selector for one source post, per platform, used when discovering URLs.
+POST_LINK_SELECTOR = {
+    "facebook": 'a[href*="/posts/"]',
+    "youtube": 'a[href*="/watch?v="]',
+    "x": 'a[href*="/status/"]',
+    "reddit": 'a[href*="/comments/"]',
+}
+
 # How long to wait for a page to settle, and when to give up on a thread.
 PAGE_SETTLE = 2.5
 MAX_SETTLE_ROUNDS = 20
@@ -131,14 +148,21 @@ def goto(page: str, url: str, settle: float = PAGE_SETTLE):
 
 SCROLL_JS = r"""
 (() => {
-  // A post permalink opens in an overlay whose comment list has its own
-  // scroll container. window.scrollTo moves the page BEHIND the overlay and
-  // never loads more comments, and the container is not an ancestor of the
-  // comment nodes, so it has to be found by asking the DOM which scrollable
-  // element actually holds the comments.
-  const SEL = 'div[role="article"][aria-label^="Comment by"]';
-  const n = document.querySelectorAll(SEL).length;
+  const SEL = __SEL__;
+  const nodes = document.querySelectorAll(SEL);
+  const n = nodes.length;
 
+  // Bring the last comment into view: that is what makes the lazy loader
+  // fetch the next page.
+  if (n) {
+    const last = nodes[n - 1];
+    last.scrollIntoView({block: 'end'});
+  }
+
+  // A post permalink opens in an overlay whose comment list has its own
+  // scroll container, and that container is NOT an ancestor of the comment
+  // nodes, so it has to be found by asking the DOM which scrollable element
+  // actually holds the comments.
   let target = null;
   let best = 0;
   for (const el of document.querySelectorAll('div')) {
@@ -148,16 +172,14 @@ SCROLL_JS = r"""
     const held = el.querySelectorAll(SEL).length;
     if (held > best) { best = held; target = el; }
   }
-
   if (target) {
     target.scrollTop = target.scrollHeight;
     return n + ':' + best;
   }
 
-  // no comment scroller yet: fall back to the page scroller
-  const sv = document.getElementById('scrollview');
-  if (sv) { sv.scrollTop = sv.scrollHeight; return n + ':scrollview'; }
-  window.scrollTo(0, document.body.scrollHeight);
+  // Otherwise the page itself scrolls. Step down rather than jumping to the
+  // bottom, so the comment list is never skipped past.
+  window.scrollBy(0, Math.floor(window.innerHeight * 0.85));
   return n + ':window';
 })()
 """
@@ -175,9 +197,11 @@ REPLIES_JS = r"""
 """
 
 
-def scroll_to_bottom(page: str):
+def scroll_to_bottom(page: str, platform: str = "facebook"):
     """Scroll the comment thread to its end. The comment list lazy-loads as it goes."""
-    orca("eval", "--page", page, "--expression", SCROLL_JS)
+    sel = COMMENT_SELECTOR.get(platform, COMMENT_SELECTOR["facebook"])
+    js = SCROLL_JS.replace("__SEL__", sel)
+    orca("eval", "--page", page, "--expression", js)
     time.sleep(SCROLL_PAUSE)
 
 
@@ -191,36 +215,37 @@ def expand_replies(page: str) -> int:
         return 0
 
 
-def comment_count(page: str) -> int:
-    v = eval_json(
-        page,
-        "document.querySelectorAll('div[role=\"article\"][aria-label^=\"Comment by\"]').length")
+def comment_count(page: str, platform: str = "facebook") -> int:
+    sel = COMMENT_SELECTOR.get(platform, COMMENT_SELECTOR["facebook"])
+    v = eval_json(page,
+                  f"document.querySelectorAll({json.dumps(sel)}).length")
     return int(v or 0)
 
 
-def wait_for_comments(page: str, min_count: int = 1, rounds: int = MAX_SETTLE_ROUNDS):
+def wait_for_comments(page: str, platform: str = "facebook",
+                      min_count: int = 1, rounds: int = MAX_SETTLE_ROUNDS):
     for _ in range(rounds):
-        n = comment_count(page)
+        n = comment_count(page, platform)
         if n >= min_count:
             return n
         time.sleep(1.2)
-    return comment_count(page)
+    return comment_count(page, platform)
 
 
-def load_thread(page: str, min_count: int = 1):
+def load_thread(page: str, platform: str = "facebook", min_count: int = 1):
     """Scroll until the comment count stops growing.
 
     A post's comment list grows lazily and slowly. Stopping when the count
     holds still for a few rounds catches the first handful and calls it the
     whole thread, so there is a floor on how much scrolling happens.
     """
-    n = wait_for_comments(page, min_count)
+    n = wait_for_comments(page, platform, min_count)
     last = n
     stable = 0
     for rnd in range(1, MAX_SETTLE_ROUNDS + 1):
-        scroll_to_bottom(page)
+        scroll_to_bottom(page, platform)
         expand_replies(page)
-        n = comment_count(page)
+        n = comment_count(page, platform)
         if n == last and n > 0:
             stable += 1
         else:
@@ -237,41 +262,48 @@ def load_thread(page: str, min_count: int = 1):
 # facebook
 # ===========================================================================
 
+EXTRACTOR_FILES = {
+    "facebook": "extract_facebook.js",
+    "youtube": "extract_youtube.js",
+    "x": "extract_x.js",
+    "reddit": "extract_reddit.js",
+}
+
+
 def load_extract_js(name="extract_facebook.js"):
     with io.open(os.path.join(JS_DIR, name), encoding="utf-8") as fh:
         return fh.read()
 
 
-POST_LINKS_JS = r"""
-(() => {
-  // In DOM order, so the feed's reverse-chronological order is preserved.
-  const out = [];
-  const seen = new Set();
-  for (const a of document.querySelectorAll('a[href*="/posts/"]')) {
-    const href = (a.getAttribute('href') || '').split('?')[0];
-    if (!href.includes('facebook.com') || seen.has(href)) continue;
-    seen.add(href);
-    out.push(href);
-  }
-  return JSON.stringify(out);
-})()
-"""
+def post_links_js(platform: str) -> str:
+    sel = POST_LINK_SELECTOR.get(platform, POST_LINK_SELECTOR["facebook"])
+    return (
+        "(() => {\n"
+        "  const out = []; const seen = new Set();\n"
+        f"  for (const a of document.querySelectorAll({json.dumps(sel)})) {{\n"
+        "    const href = (a.getAttribute('href') || '').split('?')[0];\n"
+        "    if (!href || seen.has(href)) continue;\n"
+        "    seen.add(href); out.push(href);\n"
+        "  }\n"
+        "  return JSON.stringify(out);\n"
+        "})()"
+    )
 
 
-def discover_facebook_posts(page: str, limit: int = 12, rounds: int = 8):
-    """Find recent post permalinks on a page.
+def discover_posts(page: str, platform: str = "facebook",
+                   limit: int = 12, rounds: int = 8):
+    """Find recent post permalinks on an account.
 
-    A page has a "Featured" carousel of older posts at the top and then the
-    main feed, which runs newest first. The carousel posts are not recent, so
-    the links are taken in DOM order and the LAST ones are used: by the time
-    the feed has been scrolled, those are the newest posts.
+    A Facebook page has a "Featured" carousel of older posts at the top and
+    then the main feed, which runs newest first. The carousel posts are not
+    recent, so the links are taken in DOM order and the LAST ones are used.
     """
     found = []
     seen = set()
     for _ in range(rounds):
-        scroll_to_bottom(page)
+        scroll_to_bottom(page, platform)
         try:
-            urls = eval_json(page, POST_LINKS_JS) or []
+            urls = eval_json(page, post_links_js(platform)) or []
         except OrcaError:
             break
         for u in urls:
@@ -284,10 +316,10 @@ def discover_facebook_posts(page: str, limit: int = 12, rounds: int = 8):
     return list(reversed(found))[:limit]
 
 
-def capture_facebook_post(page: str, url: str, extract_js: str):
+def capture_post(page: str, url: str, extract_js: str, platform: str = "facebook"):
     """Open a post, load the whole thread, extract it."""
     goto(page, url, settle=3.0)
-    n_loaded, scrolled = load_thread(page)
+    n_loaded, scrolled = load_thread(page, platform)
     data = eval_json(page, extract_js)
     if not isinstance(data, dict):
         raise OrcaError("extractor returned no data")
@@ -375,10 +407,14 @@ def main(argv=None) -> int:
     print(f"\nopening {args.account}")
     goto(page, args.account, settle=4.0)
 
-    extract_js = load_extract_js()
-    if args.platform == "facebook":
-        urls = discover_facebook_posts(page, limit=args.posts)
-    else:
+    extract_js = load_extract_js(EXTRACTOR_FILES.get(args.platform,
+                                                   "extract_facebook.js"))
+    urls = discover_posts(page, args.platform, limit=args.posts)
+    if args.platform == "youtube":
+        # the channel's videos tab is what lists the videos
+        goto(page, args.account.rstrip("/") + "/videos", settle=4.0)
+        urls = discover_posts(page, "youtube", limit=args.posts)
+    if not urls:
         urls = [args.account]
 
     print(f"\nfound {len(urls)} post url(s):")
@@ -394,7 +430,7 @@ def main(argv=None) -> int:
     for u in urls[:args.posts]:
         print(f"\ncapturing {u}")
         try:
-            data = capture_facebook_post(page, u, extract_js)
+            data = capture_post(page, u, extract_js, args.platform)
         except OrcaError as e:
             print("   FAILED:", e)
             continue
