@@ -356,6 +356,34 @@ POSTS_TAB_JS = r"""
 """
 
 
+def find_inviting_posts(page: str, limit: int = 12, rounds: int = 6) -> list:
+    """Find the posts on a page that invite citizen requests.
+
+    The "most recent posts" stratum turned out to be dominated by
+    announcements - typhoon bulletins and programme notices - where citizens
+    react rather than ask. The posts that actually draw requests are the ones
+    that invite them, so this is a second stratum rather than a replacement.
+
+    Returns a list of permalinks.
+    """
+    js = open(os.path.join(JS_DIR, "find_invites.js"), encoding="utf-8").read()
+    found = []
+    seen = set()
+    for _ in range(rounds):
+        scroll_to_bottom(page, "facebook")
+        try:
+            data = eval_json(page, js) or {}
+        except OrcaError:
+            break
+        for u in data.get("urls", []):
+            if u not in seen:
+                seen.add(u)
+                found.append(u)
+        if len(found) >= limit * 2:
+            break
+    return found[:limit]
+
+
 def open_posts_tab(page: str, platform: str = "facebook") -> str:
     """Open the account's chronological Posts tab, when it has one."""
     if platform != "facebook":
@@ -404,7 +432,8 @@ def discover_posts(page: str, platform: str = "facebook",
     return list(reversed(found))[:limit]
 
 
-def capture_post(page: str, url: str, extract_js: str, platform: str = "facebook"):
+def capture_post(page: str, url: str, extract_js: str, platform: str = "facebook",
+                 mode: str = "recent"):
     """Open a post, load the whole thread, extract it."""
     goto(page, url, settle=3.0)
     n_loaded, scrolled = load_thread(page, platform)
@@ -478,6 +507,9 @@ def main(argv=None) -> int:
     ap.add_argument("--notes", default="")
     ap.add_argument("--dry-run", action="store_true",
                     help="discover the post URLs and stop")
+    ap.add_argument("--mode", default="recent", choices=["recent", "invites"],
+                    help="recent = the most recent posts; "
+                         "invites = the posts that invite citizen requests")
     args = ap.parse_args(argv)
 
     tabs = list_tabs()
@@ -497,11 +529,14 @@ def main(argv=None) -> int:
 
     extract_js = load_extract_js(EXTRACTOR_FILES.get(args.platform,
                                                    "extract_facebook.js"))
-    urls = discover_posts(page, args.platform, limit=args.posts)
-    if args.platform == "youtube":
-        # the channel's videos tab is what lists the videos
-        goto(page, args.account.rstrip("/") + "/videos", settle=4.0)
-        urls = discover_posts(page, "youtube", limit=args.posts)
+    if args.mode == "invites" and args.platform == "facebook":
+        urls = find_inviting_posts(page, limit=args.posts)
+    else:
+        urls = discover_posts(page, args.platform, limit=args.posts)
+        if args.platform == "youtube":
+            # the channel's videos tab is what lists the videos
+            goto(page, args.account.rstrip("/") + "/videos", settle=4.0)
+            urls = discover_posts(page, "youtube", limit=args.posts)
     if not urls:
         urls = [args.account]
 
@@ -531,8 +566,11 @@ def main(argv=None) -> int:
     if not entries:
         print("nothing captured")
         return 1
+    notes = args.notes or ""
+    if args.mode and args.mode != "recent":
+        notes = f"{notes} stratum={args.mode}".strip()
     snap = build_snapshot(args.source_page, args.source_page_name, args.agency_id,
-                          args.platform, entries, notes=args.notes)
+                          args.platform, entries, notes=notes)
     path = write_snapshot(snap)
     n = sum(p["n_comments"] for p in snap["posts"])
     print(f"\nSNAPSHOT -> {path}")

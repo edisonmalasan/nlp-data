@@ -239,7 +239,21 @@ Every collection run is logged to `data/provenance/collection_log.csv`:
 | Item | Value |
 |---|---|
 | Collection window | To be fixed at G1. Proposed: **2026-10-22 → 2026-11-15** |
-| Post selection | For each source: a **contiguous, documented sample of the most recent N public posts** (proposed N = 8–12), starting from the collection date and walking backwards. "Most recent" is fixed and logged — **no cherry-picking posts by comment richness**. |
+| Post selection | **Stratum A — recent posts.** For each source, a **contiguous, documented sample of the most recent N public posts** (N = 8–12), starting from the collection date and walking backwards. "Most recent" is fixed and logged — **no cherry-picking posts by comment richness**. |
+| Post selection | **Stratum B — request-inviting posts.** Posts whose text contains an invitation marker ("let us know", "share your", "kapag may kailangan", "isumbong", "report…"). **Added under the stratified-collection clause below.** |
+| `stratum` | Every comment records which stratum its post came from: `recent` or `invites`. Column 40. |
+> **Why stratum B was added.** The stratified-collection clause below was triggered. The
+> stratum A pilot collected 45 posts and 970 cleaned comments, of which only **14%**
+> carried a request marker, and the distribution was extremely skewed: the top 8 posts held
+> **80%** of the corpus, and they were typhoon bulletins and programme announcements —
+> posts where citizens react rather than ask. The clause names exactly this remedy:
+> *"sample additional posts known to solicit citizen input, e.g. consultation posts, 'how can
+> we improve' posts, service-announcement posts with open questions"*.
+>
+> Stratum B is therefore **an additional stratum, not a replacement**. Both are collected,
+> both are kept, and `stratum` is recorded on every comment so the split and the analysis
+> can be stratified by it. Nothing collected under stratum A is discarded.
+
 | Target: usable comments | **≥ 1,000** after cleaning, dedup, and exclusion (this is the number that fills the paper's `<number>` placeholder) |
 | Target: usable comments, primary (Facebook-only) dataset | **≥ 600** (minimum viable for the paper's headline comparison) |
 | Minimum class representation | **≥ 150 actionable** and **≥ 150 other** in the primary dataset. If the natural yield of `actionable` falls below this, switch to **deliberate stratified collection** (sample additional posts known to solicit citizen input, e.g. consultation posts, "how can we improve" posts, service-announcement posts with open questions) and document the sampling design and the natural class prior. |
@@ -349,6 +363,7 @@ CSV encoding `utf-8` (no BOM), `,` delimiter, `"` quoting, `\n` line endings, he
 | 37 | `annotation_rule` | string | no | rule id | Which rule produced the label, e.g. `request_marker + action_verb`, `complaint_without_remedy`, or `adjudicated`. Makes every label traceable to a decision. |
 | 38 | `annotation_evidence` | string | no | free text | The cues that fired, or the adjudicator's one-line note naming the rule that decided it. |
 | 39 | `annotation_confidence` | float | no | 0.0–1.0 | Engine confidence. `1.0` for rows that were adjudicated. Rows below `0.85` with no adjudication would be a validation failure (V-17). |
+| 40 | `stratum` | enum | yes | `recent` \| `invites` | Which sampling stratum the comment's post came from. `recent` is the most recent posts per account; `invites` is the posts whose text invites a citizen request. |
 
 **Column groups and who owns them**
 
@@ -889,6 +904,7 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 | `1.8-draft` | 2026-10-20 | M4 (MALASAN) | Collection method switched to a computer-use agent reading the rendered DOM in the researcher's own signed-in browser. Section 3.2 rewritten around that route, with the `collection_method` values, the lazy-loading warning that truncated threads silently lose comments, and the sampling note. The source registry is pre-filled with 10 agencies across 38 policy domains. |
 | `1.7-draft` | 2026-10-20 | M4 (MALASAN) | Corrected the §5.6 reconciliation identity. It was written as a single linear chain, which made `n_candidate_pool + Σ exclusions = n_labeled` — that would make the labeled set larger than the pool it came from. The cleaning branch and the labeling branch are two separate equalities now. |
 | `1.6-draft` | 2026-10-20 | M4 (MALASAN) | Fixed the §6.2 normalization order: the email rule now runs before the URL and mention rules, so `juan@dept.gov.ph` becomes `<EMAIL>` instead of being mangled. Zero-width removal now also covers `U+2060`. |
+| `1.6-draft` | 2026-10-20 | M4 (MALASAN) | Two sampling strata. The stratified-collection clause in 3.4 was triggered: the stratum A pilot gave 14% request-marker comments concentrated in 8 posts holding 80% of the corpus, because government posts are announcements where citizens react rather than ask. Stratum B, the posts that invite a request, is collected alongside rather than instead, and `stratum` (column 40) records which stratum every comment came from. |
 | `1.5-draft` | 2026-10-20 | M4 (MALASAN) | Added the annotation provenance columns `annotation_rule` (37), `annotation_evidence` (38) and `annotation_confidence` (39), so every label in the delivered dataset records the rule that produced it, the evidence behind it, and the engine's confidence. Schema is now 39 columns. |
 | `1.4-draft` | 2026-10-20 | M4 (MALASAN) | Annotation is now performed by the annotator engine `src/annotate/auto_annotator.py` with human verification of ≥ 100 rows. §10.3 records the new roles, §10.7 documents the three-stage engine and its confidence thresholds, the `verification` column (36) was added to the schema, and check V-17 enforces annotation completeness. |
 | `1.3-draft` | 2026-10-20 | M4 (MALASAN) | Source list consolidated into a single canonical registry, `data/provenance/government_agencies.csv`, with one row per (agency, platform) pair carrying the agency's official name, abbreviation, type, supervising department, official website, official account details and the six source-selection criteria. `source_accounts.csv` removed. Added `agency_id` as the foreign key in the dataset schema and `counts_by_agency` to the metadata. |

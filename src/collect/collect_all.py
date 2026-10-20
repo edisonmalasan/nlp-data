@@ -94,6 +94,9 @@ def main(argv=None) -> int:
                     help="do not discover the other official accounts")
     ap.add_argument("--only", default=None,
                     help="run just this platform, e.g. youtube")
+    ap.add_argument("--mode", default="recent", choices=["recent", "invites"],
+                    help="recent = the most recent posts; "
+                         "invites = the posts that invite a citizen request")
     args = ap.parse_args(argv)
 
     platforms = ["facebook", "youtube", "x", "reddit"]
@@ -104,6 +107,7 @@ def main(argv=None) -> int:
         log(f"=== {platform.upper()} ===")
         rc = run_all.main(["--platform", platform,
                            "--posts", str(args.posts),
+                           "--mode", args.mode,
                            "--notes", f"collection run via orca built-in browser, "
                                      f"{args.posts} posts/account"])
         if rc != 0:

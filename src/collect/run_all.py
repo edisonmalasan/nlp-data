@@ -102,7 +102,10 @@ def run_one(page, row, posts, notes):
         ob.goto(page, url.rstrip("/") + "/videos", settle=5.0)
         time.sleep(2.0)
 
-    urls = ob.discover_posts(page, platform, limit=posts)
+    if args.mode == "invites" and platform == "facebook":
+        urls = ob.find_inviting_posts(page, limit=posts)
+    else:
+        urls = ob.discover_posts(page, platform, limit=posts)
     if not urls:
         urls = [url]
 
@@ -137,6 +140,9 @@ def main(argv=None) -> int:
                     choices=["facebook", "youtube", "x", "reddit"])
     ap.add_argument("--posts", type=int, default=12)
     ap.add_argument("--notes", default="")
+    ap.add_argument("--mode", default="recent", choices=["recent", "invites"],
+                    help="recent = the most recent posts; "
+                         "invites = the posts that invite a citizen request")
     ap.add_argument("--status", action="store_true")
     ap.add_argument("--force", action="store_true",
                     help="re-collect accounts that already have a snapshot")
@@ -167,6 +173,8 @@ def main(argv=None) -> int:
     log(f"using tab [{tab_index}] {tab.get('url')}")
 
     notes = args.notes or f"collection run via orca built-in browser, {args.posts} posts/account"
+    if args.mode and args.mode != "recent":
+        notes = f"{notes} stratum={args.mode}"
 
     for i, row in enumerate(registry, 1):
         key = f"{row['platform']}/{row['source_page']}"

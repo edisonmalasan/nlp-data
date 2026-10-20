@@ -156,6 +156,10 @@ def flatten(snap: dict, path: str, source_page: str, platform: str,
     collected_at = snap.get("collected_at") or now_iso()
     snap_id = snap.get("raw_snapshot_id") or run_id
 
+    # the sampling stratum this snapshot was collected under: stratum A is the
+    # most recent posts, stratum B is the posts that invite a citizen request
+    stratum = "invites" if "stratum=invites" in (snap.get("notes") or "") else "recent"
+
     comment_rows = []
     post_rows = []
     seq = start_seq
@@ -216,6 +220,7 @@ def flatten(snap: dict, path: str, source_page: str, platform: str,
                 "timestamp_raw": c.get("timestamp_raw", ""),
                 "source_snapshot": snap_id,
                 "collected_at": collected_at,
+                "stratum": stratum,
             })
 
     return comment_rows, post_rows

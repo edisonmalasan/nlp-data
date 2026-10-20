@@ -24,52 +24,52 @@
     "updated_at": "2026-10-20T22:25:42"
   },
   "facebook/ndrrmc": {
-    "posts": 0,
+    "posts": 1,
     "comments": 0,
-    "last_error": "AttributeError: module 'orca_browser' has no attribute 'discover_facebook_posts'",
-    "updated_at": "2026-10-20T22:39:08"
+    "last_error": "",
+    "updated_at": "2026-10-20T22:45:04"
   },
   "facebook/bfp": {
-    "posts": 2,
-    "comments": 25,
-    "last_error": "AttributeError: module 'orca_browser' has no attribute 'discover_facebook_posts'",
-    "updated_at": "2026-10-20T22:39:20"
+    "posts": 4,
+    "comments": 55,
+    "last_error": "",
+    "updated_at": "2026-10-20T22:46:34"
   },
   "facebook/dti": {
-    "posts": 2,
-    "comments": 27,
-    "last_error": "AttributeError: module 'orca_browser' has no attribute 'discover_facebook_posts'",
-    "updated_at": "2026-10-20T22:39:30"
+    "posts": 4,
+    "comments": 54,
+    "last_error": "",
+    "updated_at": "2026-10-20T22:47:47"
   },
   "facebook/denr": {
-    "posts": 0,
-    "comments": 0,
-    "last_error": "AttributeError: module 'orca_browser' has no attribute 'discover_facebook_posts'",
-    "updated_at": "2026-10-20T22:39:41"
+    "posts": 1,
+    "comments": 1,
+    "last_error": "",
+    "updated_at": "2026-10-20T22:49:29"
   },
   "youtube/dost_pagasa_yt": {
-    "posts": 0,
+    "posts": 1,
     "comments": 0,
-    "last_error": "AttributeError: module 'orca_browser' has no attribute 'capture_facebook_post'",
-    "updated_at": "2026-10-20T22:39:54"
+    "last_error": "",
+    "updated_at": "2026-10-20T22:51:54"
   },
   "youtube/deped_yt": {
-    "posts": 0,
+    "posts": 1,
     "comments": 0,
-    "last_error": "AttributeError: module 'orca_browser' has no attribute 'capture_facebook_post'",
-    "updated_at": "2026-10-20T22:40:06"
+    "last_error": "",
+    "updated_at": "2026-10-20T22:54:41"
   },
   "youtube/dti_yt": {
-    "posts": 0,
+    "posts": 1,
     "comments": 0,
-    "last_error": "AttributeError: module 'orca_browser' has no attribute 'capture_facebook_post'",
-    "updated_at": "2026-10-20T22:40:18"
+    "last_error": "",
+    "updated_at": "2026-10-20T22:57:04"
   },
   "youtube/dswd_yt": {
-    "posts": 0,
+    "posts": 1,
     "comments": 0,
-    "last_error": "AttributeError: module 'orca_browser' has no attribute 'capture_facebook_post'",
-    "updated_at": "2026-10-20T22:40:29"
+    "last_error": "",
+    "updated_at": "2026-10-20T23:01:40"
   },
   "youtube/doh_yt": {
     "posts": 0,
