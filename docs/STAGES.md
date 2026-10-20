@@ -30,7 +30,7 @@
 └──────────────────────────┬──────────────────────────────────────┘
                            ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  STAGE 3  ANNOTATE             guidelines → gold set → 100%     │
+│  STAGE 3  ANNOTATE             guidelines → 100% → re-label │
 │            → labeled dataset                                    │
 └──────────────────────────┬──────────────────────────────────────┘
                            ▼
@@ -141,35 +141,59 @@ get IP-blocked and lose collection time.
 
 **Goal:** every comment labeled `1` (actionable) or `0` (other), with measured agreement.
 
+**You are the only annotator.** Everything below is designed for one person. The reliability
+number comes from re-labeling a subset of your own work **blind**, after a washout.
+
 **3a — Guidelines**
-- [ ] Get the team to agree `docs/ANNOTATION_GUIDELINES.md` v1.0. Read §2 (the core rule) and
-      §5 (the example bank) together.
-- [ ] Run the **30-row pilot batch** — everyone labels the same 30 independently, then discuss
-      disagreements. Amend the guidelines if needed and bump `guideline_version`.
+- [ ] Read `docs/ANNOTATION_GUIDELINES.md` §2 (the core rule) and §5 (the example bank) end
+      to end before labeling anything.
+- [ ] Label a **30-row pilot batch**, writing the reason for each label in the note field.
+- [ ] Compare your reasoning against the example bank. Where it contradicts the bank, the
+      guideline is wrong → amend it and bump `guideline_version`.
 
-**3b — Gold set**
-- [ ] Two annotators independently label the same **120 rows**; adjudicate.
-- [ ] Compute Cohen's κ. **Gate: κ ≥ 0.60** to proceed.
-- [ ] If κ < 0.60 → amend the guidelines, bump the version, re-annotate the affected rows.
+**3b — Production pass**
+- [ ] Label **100%** of the pool as `annotator_id = A1`. Batches of 50–100, with breaks.
+- [ ] Set `label`, `label_str`, and `language` on every row.
+- [ ] FLAG anything unclear rather than guessing.
 
-**3c — Auto-annotator (optional)**
-- [ ] Evaluate a candidate assistant against the 120-row gold set.
-- [ ] Gate: **macro-F1 ≥ 0.80 AND κ ≥ 0.60**. Below that, don't use it — record the attempt
-      as a negative result.
-- [ ] If it passes: pre-label only, **every** draft human-confirmed. Assistant labels are
-      **excluded** from κ computation (no circularity).
+**3c — Washout**
+- [ ] Leave the data alone for **≥ 7 days**. Don't look at your labels.
+- [ ] This is what makes the next pass a measurement instead of a memory test.
+
+**3d — Blinded re-label pass**
+- [ ] Re-label a random **20% subset (≥ 200 rows)**, stratified by class and source page.
+- [ ] The labeling tool must **hide `label`** for this pass. If you can see your earlier answer,
+      the pass is worthless.
+- [ ] Store the second reading in `label_2`.
+
+**3e — Reliability**
+- [ ] Compute Cohen's κ between `label` and `label_2`. **Gate: κ ≥ 0.60.**
+- [ ] If κ < 0.60 → read every disagreement, resolve it against the guidelines (not by
+      keeping whichever you wrote first), amend the guidelines if they were unclear, bump the
+      version, re-annotate the affected rows, and re-measure.
+
+**3f — Auto-annotator (optional)**
+- [ ] Evaluate a candidate assistant against a **120-row self-labeled gold set**.
+- [ ] Gate: **macro-F1 ≥ 0.80 AND κ ≥ 0.60** against your gold set. Below that, don't
+      use it — record the attempt as a negative result.
+- [ ] If it passes: pre-label only, **every** draft human-confirmed by you. Assistant labels are
+      **excluded** from the reliability computation (no circularity).
+- [ ] Label your own pool first, then use the assistant only for rows you haven't reached.
 - [ ] If you use a hosted assistant, send only `comment_text_norm` after the scrub, never
       `post_text`.
 
-**3d — Production labeling**
-- [ ] Label 100% of the pool.
-- [ ] Double-label **≥ 20%** (≥ 200 rows), stratified by class and source page.
-- [ ] Adjudicate every disagreement → `label`, `adjudicated_by`, `adjudication_note`.
-- [ ] Add each adjudicated case to the example bank in the guidelines.
-- [ ] Compute final κ and report it.
+**3g — Finalize**
+- [ ] Resolve every pass-1 vs pass-2 disagreement → `label`, `adjudicated_by`,
+      `adjudication_note`.
+- [ ] Add each resolved case to the example bank in the guidelines.
+- [ ] Compute and report the final κ.
 
-**Done when:** every row has a label, the double-annotated subset has κ ≥ 0.60, and
+**Done when:** every row has a label, κ ≥ 0.60 on the re-labeled subset, and
 `guideline_version` is set on every row.
+
+> **How to describe this in the write-up:** *intra-annotator reliability*, measured by a blinded
+> re-annotation pass after a 7-day washout. **Not** inter-annotator agreement — there is only
+> one annotator, and calling it that is a misreport.
 
 ---
 
@@ -261,8 +285,12 @@ The load snippet is in `data/README.md`.
 Your task from `docs/NLP-PLAN.pdf`:
 
 > *Identify official government pages, collect comments using an authorized method, clean the
-> dataset (remove exact duplicates and spam), anonymize data, manually annotate comments
-> (everyone will help with this). Though if there's an accurate auto annotator that can help, go.*
+> dataset (remove exact duplicates and spam), anonymize data, manually annotate comments.
+> Though if there's an accurate auto annotator that can help, go.*
+
+**Note:** the original wording said *"(everyone will help with this)"*. That clause is **dropped** —
+the annotation is done by a single annotator, so the design and the reliability measurement both
+change accordingly (§3a–§3g).
 
 | Task item | Stage | Covered? |
 |---|---|---|
@@ -270,8 +298,8 @@ Your task from `docs/NLP-PLAN.pdf`:
 | Collect comments using an authorized method | **1** | ✅ `data/raw/` — public HTML/DOM, no credentials |
 | Clean the dataset (remove exact duplicates and spam) | **2b, 2d** | ✅ `X_DUP_EXACT`, `X_DUP_NEAR`, `X_SPAM` |
 | Anonymize data | **2e** | ✅ PII scrub, `X_PII` |
-| Manually annotate comments (everyone will help) | **3d** | ✅ 100% pass + 20% double-annotated + κ |
-| Auto annotator, if accurate | **3c** | ✅ gated on macro-F1 ≥ 0.80 and κ ≥ 0.60 |
+| Manually annotate comments | **3a–3g** | ✅ 100% pass + blinded 20% re-label + κ |
+| Auto annotator, if accurate | **3f** | ✅ gated on macro-F1 ≥ 0.80 and κ ≥ 0.60 |
 
 **Fully covered.** Six for six.
 
@@ -296,8 +324,8 @@ evaluation, and the paper's results and conclusion.
 |---|---|---|---|
 | D-1 | Which agencies exactly? | Nothing can be scraped until the source list exists | Stage 0 |
 | D-2 | Facebook-only, or add YouTube/Reddit too? | Decides the scope of the collection run | Stage 0 |
-| D-4 | Who annotates, who second-annotates, who adjudicates? | The gold set needs two independent people | Before Stage 3b |
-| D-5 | Which auto-annotator candidate, and does it run locally? | The gate needs a gold set first | Stage 3c |
+| D-4 | Confirm solo annotation and the reliability method | The re-label pass needs 20% of the pool reserved and a 7-day gap built into the schedule | Before Stage 3d |
+| D-5 | Which auto-annotator candidate, and does it run locally? | The gate needs a gold set first | Stage 3f |
 | D-6 | Which labeling tool? | Must show post context and hide other annotators' labels | Before Stage 3a |
 | D-7 | Final usable count for the paper's `<number>` | Fills the Scope placeholder | Stage 5 |
 
@@ -310,7 +338,7 @@ The full list is in `DATA_CONTRACT.md` §18.
 If you only remember one thing:
 
 > **Annotation is the long pole.** Stages 0–2 are a few weeks of your own work. Stage 3 needs
-> four to five weeks of *the whole team's* time, and it can't start until the gold set exists.
+> four to five weeks of **your own** time, and it can't start until the gold set exists.
 > So the moment Stage 2 produces a clean candidate pool, **start annotating** — do not wait for
 > collection to be "finished," and do not wait for every decision to be settled.
 >
@@ -331,6 +359,6 @@ If you only remember one thing:
 - [ ] **Stage 0** — pick the agencies, fill `government_agencies.csv`
 - [ ] **Stage 1** — build the scrapers, pilot, full collection
 - [ ] **Stage 2** — extract, filter, normalize, dedup, anonymize
-- [ ] **Stage 3** — guidelines agreement, gold set, κ, production labeling
+- [ ] **Stage 3** — guidelines calibration, 100% labeling, washout, blinded re-label, κ
 - [ ] **Stage 4** — split
 - [ ] **Stage 5** — validate, metadata, data card, hand-off

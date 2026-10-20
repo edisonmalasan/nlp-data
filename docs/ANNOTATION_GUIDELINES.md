@@ -8,7 +8,7 @@
 | Status | **DRAFT — must be agreed by the annotation team before labeling starts** |
 | Created | 2026-10-20 |
 | Owner | Member 4 — **Edison Yin Malasan** (dataset producer, adjudicator) |
-| Annotators | A1–A6 (pseudonymous IDs; names never stored in the dataset) |
+| Annotator | `A1` — the dataset owner, who labels every row personally (single-annotator design, see §8.1) |
 | Dataset | `data/processed/dataset_v1.csv` |
 | Governing contract | `DATA_CONTRACT.md` |
 | Task definition source | `docs/NLP-Final-Paper.pdf` §II (Problem Statement) and §II (Scope) |
@@ -299,19 +299,42 @@ Guidance:
 
 ### 8.1 Roles
 
+This dataset is annotated by **a single annotator** (the dataset owner, `annotator_id = A1`).
+There is no second annotator and no separate adjudicator.
+
 | Role | Responsibility |
 |---|---|
-| Annotator A1–A6 | Labels assigned rows. Sees post context. Does not see other annotators' labels. |
-| Second annotator | Labels the **20% overlap subset** (≥ 200 rows), stratified by class and source page. |
-| Adjudicator (M4) | Resolves all disagreements; escalates guideline-level disputes to the adviser. |
+| Annotator A1 (the dataset owner) | Labels **every** row. Sees post context. Owns the guidelines and the final label for every row. |
+
+Because one person does all the labeling, the reliability measurement changes from
+*inter-annotator* agreement to **intra-annotator reliability** — measured by re-labeling a
+random subset after a washout period, blind to the first pass (§8.2, §10.1). That is the
+only honest way to report a κ number here, and it must be described that way in the write-up.
 
 ### 8.2 Pass structure
 
-1. **Guideline agreement (before production).** All annotators independently label the same **30-row pilot batch**. Discuss disagreements. Amend the guidelines if needed → `guideline_version` bump.
-2. **Gold set (120 rows).** Two annotators independently label the same 120 rows; adjudicate; compute Cohen's κ. Gate: **κ ≥ 0.60** to proceed to production labeling (§10.5).
-3. **Production.** Each row is labeled by at least one annotator; 20% by two.
-4. **Adjudication.** Every disagreement goes to the adjudicator within 48 hours.
-5. **Finalization.** Disagreements resolved → `label` set, `label_2` retained, `agreement` and `adjudicated_by` filled.
+1. **Guideline calibration (before production).** Label a **30-row pilot batch**. For each
+   pilot row, write down *why* it got the label in the note field, then compare against the
+   example bank in §5. If your reasoning contradicts the bank, the guideline is wrong — amend
+   it and bump `guideline_version` before you go further.
+2. **Production pass.** Label **100%** of the pool. Work in batches of 50–100 with breaks
+   (§8.4). Set `label`, `label_str`, and `language`.
+3. **Washout.** Leave the data alone for **at least 7 days**. Do not look at the labels during
+   this time. The washout is what makes the next pass a real measurement rather than a memory
+   test — without it, κ would be inflated by recall.
+4. **Blinded re-label pass.** Re-label a random **20% subset (≥ 200 rows)**, stratified by
+   class and source page, **without** seeing your first-pass labels. The labeling tool must
+   hide the `label` column for this pass. Store the second reading in `label_2`.
+5. **Reliability check.** Compute Cohen's κ between `label` and `label_2`. Gate:
+   **κ ≥ 0.60** (§10.1). If it fails, go to step 6.
+6. **Resolve and re-check.** Read every disagreement, decide the correct label against the
+   guidelines, and record it in `adjudicated_by` and `adjudication_note` with the rule that
+   decided it. **Do not simply take the first-pass label.** Add each case to the example bank
+   (§10.4). If the disagreements reveal that the *guidelines* were unclear rather than that
+   you misapplied them, amend the guidelines, bump `guideline_version`, and re-label the
+   affected rows — labels from different guideline versions are never mixed in one release.
+7. **Finalization.** `label` holds the final answer for every row, `label_2` holds the second
+   reading, and `agreement` records whether the two passes matched.
 
 ### 8.3 Tool requirements
 
@@ -319,45 +342,66 @@ The labeling tool must:
 
 - Display **post text**, **post date**, **source agency**, and **parent comment text** (for replies) next to the comment. (§8.2 requirement, non-negotiable.)
 - Allow setting `label` and `language` and a free-text note.
-- **Hide** `label_2`, `agreement`, `adjudicated_by`, and any other annotator's output from the annotator.
-- Allow marking a row `FLAG` for adjudication.
+- **Hide** `label_2`, `agreement`, `adjudicated_by`, and `label` itself during the blinded
+  re-label pass (step 4 of §8.2). A pass where you can see your own earlier answer is
+  not a reliability measurement.
+- Allow marking a row `FLAG` for a second look during the reliability pass.
 - Export to CSV with the exact column names in `DATA_CONTRACT.md` §5.2.
 
 Recommended: Doccano or Label Studio (both open source, both support multi-annotator assignment and context display). A simple local HTML/CSV viewer is acceptable if it satisfies the above.
 
 ### 8.4 Labeling rules of conduct
 
-- Label **independently**. Do not consult other annotators' decisions before submitting your own.
 - Label from the **comment + post context**, nothing else (no comments on the agency's other posts, no outside knowledge of the issue).
-- Do **not** relabel a row after seeing the adjudicator's decision. If you still disagree, say so in the note field.
 - Do **not** skip a row. Use `FLAG` for anything unclear.
 - Work in batches of **50–100 rows**, then take a break. Fatigue is the main source of drift.
-- Log any suspected platform artifact or spam pattern to the adjudicator rather than deleting it yourself.
+- Do **not** consult the write-up, the paper, or your own earlier notes while labeling — only the comment and its context.
+- Log any suspected platform artifact or spam pattern in the note field rather than deleting the row yourself.
 
 ---
 
-## 9. Adjudication
+## 9. Resolving disagreements between your two passes
 
-When two annotators disagree:
+When your first pass and your blinded re-label pass disagree:
 
-1. The adjudicator reads the comment, the post context, both labels, and the annotators' optional notes.
-2. The adjudicator applies the rules in this document and picks the label.
-3. The adjudicator records: final `label`, `adjudicated_by`, and a **one-line `adjudication_note`** stating the rule that decided it (e.g., "§6.3 — identifiable object present").
-4. The case is **added to the example bank** (§10.4) with its rationale.
-5. If the dispute reveals that the **guidelines themselves are unclear** (not just that the annotator misapplied them), the guidelines are amended and `guideline_version` is bumped. Under a bumped version, previously labeled rows in the affected area are **re-annotated**.
+1. Re-read the comment and the post context, without looking at either label.
+2. Apply the rules in this document and decide which label is correct.
+3. Record: the final `label`, `adjudicated_by` (your annotator ID), and a **one-line
+   `adjudication_note`** stating the rule that decided it (e.g., "§6.3 — identifiable
+   object present").
+4. Add the case to the **example bank** (§10.4) with its rationale.
+5. If the disagreement reveals that the **guidelines themselves are unclear** rather than that
+   you misapplied them, amend the guidelines and bump `guideline_version`. Under a bumped
+   version, previously labeled rows in the affected area are **re-annotated**.
 
-**Adjudication is not a popularity vote.** Two annotators agreeing on a rule misreading does not make it right.
+**Do not resolve a disagreement by keeping whichever label you wrote first.** That defeats the
+purpose of the second pass. Resolve it by the rule, not by the order of writing.
+
+**Disagreement is not failure.** A κ of 0.70–0.80 on hard cases like "is this wish
+actionable?" is a good, honest result. Report it as it is.
 
 ---
 
 ## 10. Quality control
 
-### 10.1 Inter-annotator agreement
+### 10.1 Reliability
 
-- Metric: **Cohen's kappa** on the double-annotated subset.
-- Interpretation (Landis & Koch 1977): `< 0.20` slight · `0.21–0.40` fair · `0.41–0.60` moderate · `0.61–0.80` substantial · `0.81–1.00` almost perfect.
-- **Gate: κ ≥ 0.60** to start/continue production labeling.
-- Report: κ, the disagreement breakdown (which subtype of error dominates — most commonly O1↔A1, i.e. "complaint with vs. without remedy"), and the count of adjudicated rows.
+This dataset is labeled by one annotator, so there is no inter-annotator agreement to report.
+The reliability statistic is **intra-annotator reliability**, measured by Cohen's kappa between
+the first pass and the **blinded re-label pass** (§8.2, step 4).
+
+| Item | Value |
+|---|---|
+| Metric | **Cohen's kappa** between `label` (pass 1) and `label_2` (blinded re-label) |
+| Subset | Random 20% (≥ 200 rows), stratified by class and source page |
+| Washout | ≥ 7 days between the two passes |
+| Interpretation (Landis & Koch 1977) | `< 0.20` slight · `0.21–0.40` fair · `0.41–0.60` moderate · `0.61–0.80` substantial · `0.81–1.00` almost perfect |
+| **Gate** | **κ ≥ 0.60** — below this, resolve the disagreements and re-measure |
+| Report | κ, the disagreement breakdown (which error dominates — most commonly O1↔A1, "complaint with vs. without remedy"), and the count of resolved rows |
+
+**How to describe it in the write-up.** Call it *intra-rater reliability* or *intra-annotator
+agreement* from a blinded re-annotation pass. **Do not call it inter-annotator agreement** —
+there is only one annotator, and claiming otherwise is a misreport.
 
 ### 10.2 Common error patterns to watch for
 
@@ -374,9 +418,9 @@ When two annotators disagree:
 
 Every ~200 rows, the adjudicator reviews:
 - the running class distribution,
-- a random 20-row sample of labels from each annotator,
+- a random 20-row sample of your own labels, re-checked against the guidelines blind,
 - all FLAGs,
-- the rows with the largest token-level difference between the annotators' labels (if the tool supports it).
+- every row where the two passes disagreed.
 
 ### 10.4 Example bank maintenance
 
@@ -390,6 +434,7 @@ An automated assistant may pre-label rows to speed up triage, but **only** after
 
 - **Every pre-labeled row must be individually confirmed or corrected.** Do not accept a batch uncritically. Assisting means *checking*, not *approving*.
 - **Do not anchor on the draft label.** Read the comment and decide first; the assistant's guess is a hypothesis, not an answer.
+- **Keep your pass-1 labels away from the assistant's drafts.** Label the pool yourself first; use the assistant only for rows you have not yet reached.
 - **Report the assistant's wrong suggestions.** If you change a draft label, note why — these corrections are the most valuable signal about where the assistant fails, and the class distribution of corrections gets reported in the paper.
 
 ### 10.6 Guideline version history
@@ -425,8 +470,8 @@ An automated assistant may pre-label rows to speed up triage, but **only** after
 | **Marker** | A surface request/politeness word (*please, dapat, sana, paki-*). Evidence, never the definition. |
 | **Post context** | The source post's text and metadata, plus the parent comment for replies. Shown to every annotator. |
 | **Flag** | A row an annotator could not confidently label; routed to the adjudicator. |
-| **Double annotation** | Two annotators labeling the same row independently, blind to each other. |
-| **Adjudication** | The adjudicator's resolution of a disagreement, with a written rule reference. |
-| **Gold set** | 120 human-labeled, adjudicated rows used to evaluate the auto-annotator and to compute a pre-production κ. |
+| **Blinded re-label pass** | The same annotator re-labeling a subset after a washout, without seeing the first pass. The basis of the κ figure. |
+| **Resolution** | Deciding a pass-1 vs pass-2 disagreement against the guidelines, with a written rule reference. |
+| **Gold set** | 120 self-labeled rows used to evaluate the auto-annotator and to check κ before production labeling. |
 | **Prior** | The natural fraction of `actionable` comments in collected data, before any balancing. |
 | **Mixed / code-switched** | A comment containing both Filipino and English in meaningful proportion. |
