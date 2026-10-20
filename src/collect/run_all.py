@@ -36,7 +36,12 @@ RAW = os.path.join(ROOT, "data", "raw")
 PROGRESS = os.path.join(ROOT, "data", "provenance", "collection_progress.json")
 
 # Which browser tab each platform uses.
-PLATFORM_TAB = {"facebook": 0, "youtube": 1, "x": 2, "reddit": 3}
+#
+# The browser drives ONE tab at a time, and a tab only renders when it is the
+# one being driven - a YouTube tab left in the background has an empty body.
+# So every platform is collected in the SAME tab, which is navigated to the
+# platform it needs. The other tabs are left alone.
+PLATFORM_TAB = {"facebook": 0, "youtube": 0, "x": 0, "reddit": 0}
 
 # The extractor for each platform.
 EXTRACTORS = {
@@ -169,6 +174,11 @@ def main(argv=None) -> int:
 
     tab_index = PLATFORM_TAB.get(args.platform, 0)
     tab = ob.pick_tab(tabs, index=tab_index)
+    # a stale helper session on another tab blocks this one
+    try:
+        ob.orca("tab", "switch", "--index", str(tab_index))
+    except ob.OrcaError:
+        pass
     page = tab["browserPageId"]
     log(f"using tab [{tab_index}] {tab.get('url')}")
 

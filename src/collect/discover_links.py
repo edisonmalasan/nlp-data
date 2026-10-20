@@ -33,8 +33,12 @@ REGISTRY = os.path.join(ROOT, "data", "provenance", "government_agencies.csv")
 LINKS_JS = r"""
 (() => {
   const out = [];
-  for (const a of document.querySelectorAll('a[href]')) {
-    let href = a.href || '';
+  // The contact-info block that lists the official accounts is rendered
+  // lazily, so the page has to be scrolled before the links exist.
+  const links = Array.from(document.querySelectorAll('a[href], [role="link"][href]'));
+  for (const a of links) {
+    let href = a.href || a.getAttribute('href') || '';
+    if (href && href.indexOf('//') === 0) href = location.protocol + href;
     const txt = (a.innerText || '').trim();
     if (!href) continue;
     // Facebook wraps every outbound link in l.php?u=<encoded>, and that
@@ -72,8 +76,11 @@ def unwrap(href: str) -> str:
 
 
 def discover_for_page(page, page_url: str) -> dict:
-    ob.goto(page, page_url, settle=4.0)
-    time.sleep(1.5)
+    ob.goto(page, page_url, settle=5.0)
+    time.sleep(2.0)
+    # the contact-info section is below the fold
+    for _ in range(4):
+        ob.scroll_to_bottom(page, "facebook")
     links = ob.eval_json(page, LINKS_JS) or []
     found = {"x": [], "youtube": [], "reddit": []}
     for l in links:

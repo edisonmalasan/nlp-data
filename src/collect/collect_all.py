@@ -55,6 +55,15 @@ def sh(*args):
 
 def convert_and_clean():
     """Raw snapshots -> interim -> cleaned pool."""
+    # The interim layer is rebuilt from the raw snapshots every time. Appending
+    # to a stale file double-counts every comment, which the dedup stage then
+    # has to undo.
+    for stale in ("comments_captured.csv", "posts_captured.csv"):
+        p = os.path.join(INTERIM, stale)
+        if os.path.exists(p):
+            os.remove(p)
+            log(f"cleared the stale interim file {stale}")
+
     log("converting the raw snapshots to the interim layer")
     registry = run_all.read_registry()
     seen = set()
@@ -103,6 +112,16 @@ def main(argv=None) -> int:
     if args.only:
         platforms = [args.only]
 
+    # The official-link discovery has to run FIRST: it is what adds the X,
+    # YouTube and Reddit accounts to the registry, and the collectors read
+    # the registry.
+    if not args.skip_links and "facebook" in platforms:
+        log("=== discovering the other official accounts ===")
+        try:
+            discover_links.main(["--apply"])
+        except Exception as e:
+            log(f"  link discovery failed: {e}")
+
     for platform in platforms:
         log(f"=== {platform.upper()} ===")
         rc = run_all.main(["--platform", platform,
@@ -112,13 +131,6 @@ def main(argv=None) -> int:
                                      f"{args.posts} posts/account"])
         if rc != 0:
             log(f"  {platform} finished with code {rc}")
-
-    if not args.skip_links and "facebook" in platforms:
-        log("=== discovering the other official accounts ===")
-        try:
-            discover_links.main(["--apply"])
-        except Exception as e:
-            log(f"  link discovery failed: {e}")
 
     if not args.only:
         convert_and_clean()
