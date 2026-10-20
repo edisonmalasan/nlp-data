@@ -578,3 +578,33 @@
 [06:44:23] [1/10] youtube/dost_pagasa_yt: already collected (5 post(s)), skipping
 [06:44:23] [2/10] youtube/deped_yt: the last attempt was empty, retrying
 [06:44:23] [2/10] youtube/deped_yt  https://www.youtube.com/@DepEd_PH
+[06:46:08]        0 comments  https://www.youtube.com/watch?v=4JCAaxx5VgU
+[06:46:38]        0 comments  https://www.youtube.com/watch?v=S2wBZ23GEGo
+[06:47:08]        0 comments  https://www.youtube.com/watch?v=CQzV66oD5Yw
+[06:47:40]        0 comments  https://www.youtube.com/watch?v=9uA-RjAa-_s
+[06:48:12]        0 comments  https://www.youtube.com/watch?v=wktSoSLtVVg
+[06:48:12]   SNAPSHOT youtube_deped_yt_2026-10-21T06-48.json  5 post(s), 0 comment(s)
+[06:48:12]   ok: 5 post(s), 0 comment(s)
+[06:48:18] [3/10] youtube/dti_yt: already collected (5 post(s)), skipping
+[06:48:18] [4/10] youtube/dswd_yt: the last attempt was empty, retrying
+[06:48:18] [4/10] youtube/dswd_yt  https://www.youtube.com/@dswdserves
+[06:49:56]        0 comments  https://www.youtube.com/watch?v=Yy6-4ROkKok
+[06:50:24]        0 comments  https://www.youtube.com/watch?v=WDatQr_qxKg
+[06:50:53]        1 comments  https://www.youtube.com/watch?v=dlKN2selUKE
+[06:51:22]        0 comments  https://www.youtube.com/watch?v=yGFCL5WrXKA
+[06:51:50]        0 comments  https://www.youtube.com/watch?v=qqZFuZYQu98
+[06:51:50]   SNAPSHOT youtube_dswd_yt_2026-10-21T06-51.json  5 post(s), 1 comment(s)
+[06:51:50]   ok: 5 post(s), 1 comment(s)
+[06:51:56] [5/10] youtube/doh_yt: the last attempt was empty, retrying
+[06:51:56] [5/10] youtube/doh_yt  https://www.youtube.com/channel/UChZQaAATaHjT_wG-kac3qfA
+[06:53:41]        0 comments  https://www.youtube.com/watch?v=HhHTnDOtxe8
+[06:54:09]        0 comments  https://www.youtube.com/watch?v=Y0V172kjbBo
+[06:54:38]        0 comments  https://www.youtube.com/watch?v=DlanyIloe8U
+[06:55:07]        0 comments  https://www.youtube.com/watch?v=cexd_2VPVJM
+[06:55:35]        0 comments  https://www.youtube.com/watch?v=svNaHYp1Mp8
+[06:55:35]   SNAPSHOT youtube_doh_yt_2026-10-21T06-55.json  5 post(s), 0 comment(s)
+[06:55:35]   ok: 5 post(s), 0 comment(s)
+[06:55:41] [6/10] youtube/dpwh_yt: the last attempt was empty, retrying
+[06:55:41] [6/10] youtube/dpwh_yt  https://www.youtube.com/channel/UCVuowoLBD9zXS6Gnjgh-umQ
+[06:57:16]       21 comments  https://www.youtube.com/watch?v=UU1xRRf00wg
+[06:57:43]        2 comments  https://www.youtube.com/watch?v=7cZXbN_-2Gc

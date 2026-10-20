@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import io
 import json
 import os
 import random
@@ -51,6 +52,14 @@ import sys
 import unicodedata
 from dataclasses import dataclass, field, asdict
 from typing import Iterable
+
+# The language of the rows the engine decided on its own. The adjudicated
+# rows carry their own language; this only fills the rest.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from language import classify
+
+# the repository root, for the source registry
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -458,6 +467,85 @@ def cmd_score(args) -> int:
     return 0
 
 
+# The contract fixes the schema: DATA_CONTRACT.md 5.2, 40 columns, in this
+# order. The delivered dataset has exactly these columns, in this order, and
+# nothing else.
+CONTRACT_COLUMNS = [
+    "comment_id", "platform", "source_page", "source_page_name", "agency_id",
+    "agency", "agency_abbr",
+    "post_id", "post_url", "post_date", "post_text", "post_media_type",
+    "post_topic",
+    "is_reply", "parent_comment_id", "parent_comment_text", "comment_text",
+    "comment_text_norm", "context_text_norm", "dedup_key", "n_tokens",
+    "language", "label", "label_str",
+    "annotator_id", "label_2", "agreement", "adjudicated_by",
+    "adjudication_note", "guideline_version",
+    "source_snapshot", "collected_at", "pii_redacted", "split", "notes",
+    "verification", "annotation_rule", "annotation_evidence",
+    "annotation_confidence", "stratum",
+]
+
+GUIDELINE_VERSION = "1.0-draft"
+# one annotator: the annotation engine, with the adjudication applied
+# against the written guidelines (DATA_CONTRACT.md 10.1)
+ANNOTATOR_ID = "A1"
+ADJUDICATED_BY_AUTO = "auto_annotator"
+ADJUDICATED_BY_LLM = "llm_adjudicator"
+
+
+def read_agency_index():
+    """agency_id -> (agency, agency_abbr), from the source registry."""
+    path = os.path.join(ROOT, "data", "provenance", "government_agencies.csv")
+    idx = {}
+    if not os.path.exists(path):
+        return idx
+    with io.open(path, encoding="utf-8", newline="") as fh:
+        for r in csv.DictReader(fh):
+            aid = (r.get("agency_id") or "").strip()
+            if aid:
+                idx[aid] = (r.get("agency_name", ""), r.get("agency_abbr", ""))
+    return idx
+
+
+def conform_to_contract(rows, decisions):
+    """Give every row the contract's 40 columns, in the contract's order.
+
+    The columns the contract adds are filled here, and the columns that are
+    not in the contract are dropped: the delivered dataset is the contract's
+    schema and nothing else.
+    """
+    agency_index = read_agency_index()
+    for r in rows:
+        aid = (r.get("agency_id") or "").strip()
+        agency, abbr = agency_index.get(aid, ("", ""))
+        r["agency"] = agency
+        r["agency_abbr"] = abbr
+        r.setdefault("post_topic", "")
+        r.setdefault("stratum", "recent")
+
+        # the language of an adjudicated row comes from the adjudication; the
+        # rest are assigned by the rule in language.py
+        d = decisions.get(r.get("comment_id"))
+        if d:
+            r["language"] = d.get("language") or r.get("language", "")
+            r["adjudicated_by"] = ADJUDICATED_BY_LLM
+            r["adjudication_note"] = d.get("note", "")
+        else:
+            if not r.get("language"):
+                r["language"] = classify(r.get("comment_text_norm")
+                                         or r.get("comment_text") or "")
+            r["adjudicated_by"] = ADJUDICATED_BY_AUTO
+            r["adjudication_note"] = ""
+
+        r["annotator_id"] = ANNOTATOR_ID
+        # label_2 and agreement are populated by the blinded re-label pass
+        r["label_2"] = ""
+        r["agreement"] = ""
+        r["guideline_version"] = GUIDELINE_VERSION
+        r.setdefault("notes", "")
+    return rows
+
+
 def cmd_apply(args) -> int:
     """Merge adjudicated decisions over the heuristic scores."""
     scored = read_rows(args.scored)
@@ -504,16 +592,11 @@ def cmd_apply(args) -> int:
         except (TypeError, ValueError):
             r["annotation_confidence"] = 0.0
 
-    # Write ONLY the contract columns. The scoring detail (confidence, rule,
-    # evidence, cues) stays in the scored file, not in the delivered dataset.
-    fieldnames = list(scored[0].keys()) if scored else []
-    for extra in ("label_str", "verification",
-                  "annotation_rule", "annotation_evidence", "annotation_confidence"):
-        if extra not in fieldnames:
-            fieldnames.append(extra)
-    drop = {"confidence", "rule", "evidence", "cues"}
-    fieldnames = [f for f in fieldnames if f not in drop]
-    write_rows(args.out, scored, fieldnames)
+    # Write ONLY the contract columns, in the contract's order. The scoring
+    # detail (confidence, rule, evidence, cues) stays in the scored file,
+    # not in the delivered dataset.
+    scored = conform_to_contract(scored, decisions)
+    write_rows(args.out, scored, CONTRACT_COLUMNS)
 
     n_total = len(scored)
     # Only rows the heuristic could NOT decide need adjudication. Confident rows

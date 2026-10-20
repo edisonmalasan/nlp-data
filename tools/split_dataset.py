@@ -147,6 +147,14 @@ def main(argv=None) -> int:
 
     assign_splits(labeled, seed=args.seed)
 
+    # The split column is filled in BEFORE the split files are written. The
+    # contract's split schema has a `split` column (5.4), and writing the
+    # files while the value was still in the scratch key left that column
+    # empty - so the files and the dataset column did not agree, and the
+    # validator's V-10 check failed on every row.
+    for r in labeled:
+        r["split"] = r.get("_split", "")
+
     buckets = {"train": [], "dev": [], "test": []}
     for r in labeled:
         buckets[r["_split"]].append(r)
@@ -159,13 +167,13 @@ def main(argv=None) -> int:
 
     # write the split column back into the dataset.
     # The scratch key `_split` must not leak into the header: the contract
-    # fixes the column list at 39, and the validator checks the order.
+    # fixes the column list, and the validator checks the order.
     SCRATCH = {"_split", "_reason", "_rule", "_dup_of"}
     fieldnames = [k for k in rows[0].keys() if k not in SCRATCH]
     if "split" not in fieldnames:
         fieldnames.append("split")
     for r in rows:
-        r["split"] = r.pop("_split", "")
+        r["split"] = r.pop("_split", r.get("split", ""))
     write_rows(args.dataset, rows, fieldnames)
     print(f"  split column written back into {args.dataset} ({len(fieldnames)} columns)")
 

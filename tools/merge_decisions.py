@@ -79,7 +79,7 @@ def main(argv=None) -> int:
             merged[cid] = r
 
     print(f"\ntotal decisions            : {len(merged)}")
-    dupes = [c for c, n in Counter(merged).items() if n > 1]
+    dupes = [c for c, n in Counter(merged.keys()).items() if n > 1]
     print(f"conflicting duplicates     : {len(set(conflicts))}")
 
     missing = [c for c in needed if c not in merged]

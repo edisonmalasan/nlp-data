@@ -39,6 +39,7 @@ POOL = os.path.join(PROCESSED, "candidate_pool.csv")
 LEDGER = os.path.join(INTERIM, "exclusion_ledger.csv")
 SCORED = os.path.join(INTERIM, "auto_scored.csv")
 DECISIONS = os.path.join(INTERIM, "agent_decisions.csv")
+FULL = os.path.join(PROCESSED, "dataset_full.csv")
 DATASET = os.path.join(PROCESSED, "dataset_v1.csv")
 EXT = os.path.join(PROCESSED, "dataset_v1_ext.csv")
 
@@ -107,11 +108,15 @@ def stage_score():
 
 
 def stage_apply():
+    # the labelled dataset is written in full first; the primary (Facebook
+    # only) and the extension (every platform) are cut from it
     run("apply", [PY, os.path.join(ROOT, "src", "annotate", "auto_annotator.py"),
                    "apply",
                    "--scored", SCORED,
                    "--decisions", DECISIONS,
-                   "--out", DATASET], allow_fail=True)
+                   "--out", FULL], allow_fail=True)
+    run("package", [PY, os.path.join(ROOT, "tools", "build_package.py")],
+        allow_fail=True)
 
 
 def stage_split():

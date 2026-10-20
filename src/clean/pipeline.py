@@ -124,6 +124,12 @@ def clean(rows: list) -> tuple:
     survivors, pii_removed = scrub_rows(survivors)
     ledger.extend(pii_removed)
 
+    # The scrub redacts text, so the token count has to be redone: the
+    # contract's V-13 check compares n_tokens against the text that is
+    # actually delivered, and redaction changes the number of tokens.
+    for _r in survivors:
+        _r["n_tokens"] = str(token_count(_r.get("comment_text_norm") or ""))
+
     return survivors, ledger
 
 

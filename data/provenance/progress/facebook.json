@@ -1,15 +1,15 @@
 {
   "facebook/dost_pagasa": {
-    "posts": 6,
-    "comments": 8,
-    "last_error": "",
-    "updated_at": "2026-10-21T06:29:26"
-  },
-  "facebook/dswd": {
-    "posts": 8,
+    "posts": 9,
     "comments": 12,
     "last_error": "",
-    "updated_at": "2026-10-21T06:35:32"
+    "updated_at": "2026-10-21T06:47:45"
+  },
+  "facebook/dswd": {
+    "posts": 12,
+    "comments": 18,
+    "last_error": "",
+    "updated_at": "2026-10-21T06:52:00"
   },
   "facebook/bfp": {
     "posts": 4,
@@ -22,5 +22,11 @@
     "comments": 0,
     "last_error": "",
     "updated_at": "2026-10-21T06:22:20"
+  },
+  "facebook/ndrrmc": {
+    "posts": 4,
+    "comments": 0,
+    "last_error": "",
+    "updated_at": "2026-10-21T06:57:02"
   }
 }

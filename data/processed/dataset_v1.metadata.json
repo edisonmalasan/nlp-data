@@ -1,80 +1,308 @@
 {
-  "_status": "DRAFT - populated at G3 (label freeze). All zero/empty values below are placeholders, not measurements. 'lineage' must satisfy the reconciliation identity in DATA_CONTRACT.md 5.6. 'verification_counts' and 'human_verified_*' describe how the labels were produced - see ANNOTATION_GUIDELINES.md 8.5.",
-  "dataset_version": "v1",
-  "created_at": "",
-  "producer": "M4",
-  "guideline_version": "v1.0-draft",
-  "text_norm_version": "v1.0-draft",
-  "collection_window": {
-    "start": "",
-    "end": ""
-  },
-  "sources": [],
-  "agencies": [],
-  "counts_by_agency": {},
-  "lineage": {
-    "n_raw_captured": 0,
-    "n_extracted_to_interim": 0,
-    "n_excluded_by_reason": {},
-    "n_candidate_pool": 0,
-    "n_labeled": 0,
-    "n_usable_final": 0,
-    "reconciles": false
-  },
-  "n_raw_captured": 0,
-  "n_excluded_by_reason": {},
-  "n_usable": 0,
+  "dataset": "nlp-actionable-comments-v1",
+  "dataset_version": "1.0",
+  "contract_version": "1.8-draft",
+  "guideline_version": "1.0-draft",
+  "built_at": "2026-10-20T23:03:36.539933+00:00",
   "class_counts": {
-    "actionable": 0,
-    "other": 0,
-    "actionable_rate": 0.0
+    "actionable": 242,
+    "other": 1008
   },
-  "class_counts_natural_prior": {
-    "actionable": 0,
-    "other": 0,
-    "actionable_rate": 0.0
-  },
-  "counts_by_platform": {},
-  "counts_by_source_page": {},
   "counts_by_split": {
-    "train": 0,
-    "dev": 0,
-    "test": 0
-  },
-  "verification_counts": {
-    "auto": 0,
-    "human_verified": 0,
-    "human_labeled": 0
-  },
-  "n_auto_decided": 0,
-  "n_adjudicated": 0,
-  "human_verified_n": 0,
-  "human_verified_agreement": 0.0,
-  "annotator_engine": {
-    "tool": "src/annotate/auto_annotator.py",
-    "version": "1.0",
-    "confidence_threshold": 0.85,
-    "audit_sample_rate": 0.1,
-    "random_seed": 42,
-    "n_auto_decided": 0,
-    "n_adjudicated": 0,
-    "audit_kappa": 0.0
-  },
-  "language_counts": {
-    "fil": 0,
-    "eng": 0,
-    "mixed": 0
+    "train": 876,
+    "dev": 187,
+    "test": 187
   },
   "split_seed": 42,
-  "split_strategy": "stratified by label, grouped by post_id",
-  "double_annotated_n": 0,
-  "cohens_kappa": 0.0,
-  "kappa_agreement_band": "",
-  "adjudicated_rows": 0,
-  "tool_versions": {
-    "python": "",
-    "pandas": "",
-    "scikit-learn": ""
+  "cohens_kappa": null,
+  "verification_counts": {
+    "auto": 1421
   },
-  "pii_scrub_patterns": []
+  "task": {
+    "definition": "actionable = the comment identifies a concrete action the agency could be asked to take, or that the commenter proposes the agency take",
+    "labels": {
+      "1": "actionable",
+      "0": "other"
+    },
+    "positive_label": 1
+  },
+  "counts": {
+    "primary_facebook": {
+      "n_rows": 1250,
+      "actionable": 242,
+      "other": 1008,
+      "actionable_rate": 0.1936
+    },
+    "extended_all_platforms": {
+      "n_rows": 1421,
+      "actionable": 245,
+      "other": 1176,
+      "actionable_rate": 0.1724
+    }
+  },
+  "platforms": {
+    "facebook": 1250,
+    "youtube": 101,
+    "x": 70
+  },
+  "strata": {
+    "recent": 1399,
+    "invites": 22
+  },
+  "languages": {
+    "mixed": 591,
+    "fil": 461,
+    "eng": 369
+  },
+  "agencies": {
+    "n_source_accounts": 30,
+    "per_account": {
+      "BangkoSentralngPilipinas": {
+        "rows": 11,
+        "actionable": 2,
+        "other": 9
+      },
+      "DOSTASTI": {
+        "rows": 7,
+        "actionable": 0,
+        "other": 7
+      },
+      "DOSTph": {
+        "rows": 2,
+        "actionable": 0,
+        "other": 2
+      },
+      "NationalBureauofInvestigationOfficial": {
+        "rows": 9,
+        "actionable": 4,
+        "other": 5
+      },
+      "OfficeOfTheVicePresidentPH": {
+        "rows": 29,
+        "actionable": 0,
+        "other": 29
+      },
+      "PHIVOLCS": {
+        "rows": 8,
+        "actionable": 4,
+        "other": 4
+      },
+      "PhilHealthofficial": {
+        "rows": 23,
+        "actionable": 12,
+        "other": 11
+      },
+      "bfp": {
+        "rows": 29,
+        "actionable": 7,
+        "other": 22
+      },
+      "birgovph": {
+        "rows": 24,
+        "actionable": 3,
+        "other": 21
+      },
+      "dacentralphilippines": {
+        "rows": 12,
+        "actionable": 7,
+        "other": 5
+      },
+      "denr": {
+        "rows": 1,
+        "actionable": 0,
+        "other": 1
+      },
+      "deped": {
+        "rows": 266,
+        "actionable": 28,
+        "other": 238
+      },
+      "dilg": {
+        "rows": 147,
+        "actionable": 30,
+        "other": 117
+      },
+      "dilg_x": {
+        "rows": 12,
+        "actionable": 0,
+        "other": 12
+      },
+      "doh": {
+        "rows": 59,
+        "actionable": 5,
+        "other": 54
+      },
+      "dost_pagasa": {
+        "rows": 6,
+        "actionable": 0,
+        "other": 6
+      },
+      "dost_pagasa_x": {
+        "rows": 10,
+        "actionable": 0,
+        "other": 10
+      },
+      "dost_pagasa_yt": {
+        "rows": 101,
+        "actionable": 3,
+        "other": 98
+      },
+      "dpwh": {
+        "rows": 490,
+        "actionable": 102,
+        "other": 388
+      },
+      "dpwh_x": {
+        "rows": 17,
+        "actionable": 0,
+        "other": 17
+      },
+      "dswd": {
+        "rows": 24,
+        "actionable": 5,
+        "other": 19
+      },
+      "dswd_x": {
+        "rows": 10,
+        "actionable": 0,
+        "other": 10
+      },
+      "dti": {
+        "rows": 19,
+        "actionable": 13,
+        "other": 6
+      },
+      "dti_x": {
+        "rows": 21,
+        "actionable": 0,
+        "other": 21
+      },
+      "fdagovph": {
+        "rows": 24,
+        "actionable": 8,
+        "other": 16
+      },
+      "nationalmuseumofthephilippines": {
+        "rows": 20,
+        "actionable": 5,
+        "other": 15
+      },
+      "ndrrmc": {
+        "rows": 9,
+        "actionable": 2,
+        "other": 7
+      },
+      "pagcor.ph": {
+        "rows": 4,
+        "actionable": 0,
+        "other": 4
+      },
+      "pidsgovph": {
+        "rows": 11,
+        "actionable": 0,
+        "other": 11
+      },
+      "professionalregulationcommission": {
+        "rows": 16,
+        "actionable": 5,
+        "other": 11
+      }
+    }
+  },
+  "posts": {
+    "n_posts": 108,
+    "largest_posts": [
+      {
+        "post_id": "fb_deped_c7adea76301e5bdc",
+        "n_comments": 209
+      },
+      {
+        "post_id": "fb_dpwh_24364576a353a509",
+        "n_comments": 204
+      },
+      {
+        "post_id": "fb_dpwh_c6df40e102162fdf",
+        "n_comments": 106
+      },
+      {
+        "post_id": "fb_dpwh_77fb0b7cb1f05e9e",
+        "n_comments": 85
+      },
+      {
+        "post_id": "fb_dilg_55360bfda32fa270",
+        "n_comments": 85
+      },
+      {
+        "post_id": "fb_dpwh_8da3cbe8f169597b",
+        "n_comments": 32
+      },
+      {
+        "post_id": "fb_dpwh_80b98a13f1a42f4f",
+        "n_comments": 30
+      },
+      {
+        "post_id": "fb_dpwh_a5eff28a3c3e499b",
+        "n_comments": 29
+      },
+      {
+        "post_id": "yt_dost_pagasa_yt_37b00d77b7cb868a",
+        "n_comments": 29
+      },
+      {
+        "post_id": "yt_dost_pagasa_yt_24fa2a0757ea9741",
+        "n_comments": 26
+      }
+    ]
+  },
+  "annotation": {
+    "annotator_id": "A1",
+    "method": "LLM-assisted annotation with human verification",
+    "engine": "src/annotate/auto_annotator.py",
+    "confidence_threshold": 0.85,
+    "adjudicated_rows": 1046,
+    "auto_decided_rows": 375,
+    "human_verified_rows": 0,
+    "human_verification_pending": true,
+    "blinded_relabel_pending": true,
+    "reliability_statistic": "intra-annotator (test-retest) Cohen's kappa"
+  },
+  "lineage": {
+    "n_raw_captured": 1571,
+    "n_candidate_pool": 1250,
+    "n_labeled": 1250,
+    "n_usable_final": 1250,
+    "n_excluded_by_reason": {
+      "X_OFFICIAL": 19,
+      "X_LANG": 1,
+      "X_DUP_EXACT": 254,
+      "X_DUP_NEAR": 1,
+      "X_SPAM": 46
+    },
+    "n_excluded_total": 321,
+    "all_platforms": {
+      "n_raw_captured": 1775,
+      "n_candidate_pool": 1421,
+      "n_excluded_total": 354,
+      "n_excluded_by_reason": {
+        "X_OFFICIAL": 35,
+        "X_LANG": 1,
+        "X_DUP_EXACT": 270,
+        "X_DUP_NEAR": 1,
+        "X_SPAM": 47
+      }
+    },
+    "collection_method": "browser_dom_session",
+    "collection_tool": "orca built-in browser (DOM)",
+    "raw_snapshots": "data/raw/ (gitignored, immutable)"
+  },
+  "splits": {
+    "ratios": {
+      "train": 0.7,
+      "dev": 0.15,
+      "test": 0.15
+    },
+    "grouped_by": "post_id",
+    "seed": 42,
+    "note": "the split files are authoritative; the split column is a mirror"
+  }
 }

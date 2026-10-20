@@ -4563,3 +4563,30 @@
 [06:44:07] 32 registered facebook accounts
 [06:44:07] [1/32] facebook/dost_pagasa: topping up (3 of 12 posts)
 [06:44:07] [1/32] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[06:47:45]        4 comments  /www.facebook.com/photo/?fbid=1404302578408058
+[06:47:45]        0 comments  ttps://www.facebook.com/reel/28542545895448334
+[06:47:45]        0 comments  kMd1qVS6vaLHdtaWW9Bug8BSD6x5bA7fSzTASfaGrWHnEl
+[06:47:45]   SNAPSHOT facebook_dost_pagasa_2026-10-21T06-47.json  3 post(s), 4 comment(s)
+[06:47:45]   ok: 3 post(s), 4 comment(s)
+[06:47:51] [2/32] facebook/doh: already collected (12 post(s)), skipping
+[06:47:51] [3/32] facebook/dswd: topping up (4 of 12 posts)
+[06:47:51] [3/32] facebook/dswd  https://www.facebook.com/dswdserves
+[06:52:00]        6 comments  /www.facebook.com/photo/?fbid=1358495779635373
+[06:52:00]        0 comments  ttps://www.facebook.com/reel/27873251912354321
+[06:52:00]        0 comments  DGWbNiw6HdvMncnCejo9wmFwTxRLdNBHEap3V4E6qfoBDl
+[06:52:00]        0 comments  xFaHhZp4R2QvBM824oky1SyqemTd3xKtkiyAKFQ5r6C2Hl
+[06:52:00]   SNAPSHOT facebook_dswd_2026-10-21T06-52.json  4 post(s), 6 comment(s)
+[06:52:00]   ok: 4 post(s), 6 comment(s)
+[06:52:06] [4/32] facebook/deped: already collected (12 post(s)), skipping
+[06:52:06] [5/32] facebook/dpwh: already collected (12 post(s)), skipping
+[06:52:06] [6/32] facebook/dilg: already collected (12 post(s)), skipping
+[06:52:06] [7/32] facebook/ndrrmc: topping up (5 of 12 posts)
+[06:52:06] [7/32] facebook/ndrrmc  https://www.facebook.com/NDRRMC
+[06:57:02]        0 comments  /www.facebook.com/photo/?fbid=1425125779790318
+[06:57:02]        0 comments  https://www.facebook.com/reel/1418049993262044
+[06:57:02]        0 comments  https://www.facebook.com/reel/following
+[06:57:02]        0 comments  https://www.facebook.com/reel/profile
+[06:57:02]   SNAPSHOT facebook_ndrrmc_2026-10-21T06-57.json  4 post(s), 0 comment(s)
+[06:57:02]   ok: 4 post(s), 0 comment(s)
+[06:57:08] [8/32] facebook/bfp: topping up (4 of 12 posts)
+[06:57:08] [8/32] facebook/bfp  https://www.facebook.com/DILGBFP

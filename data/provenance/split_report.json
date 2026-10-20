@@ -1,0 +1,34 @@
+{
+  "seed": 42,
+  "ratios": {
+    "train": 0.7,
+    "dev": 0.15,
+    "test": 0.15
+  },
+  "n_labeled": 1250,
+  "n_unlabeled_skipped": 0,
+  "counts": {
+    "train": 876,
+    "dev": 187,
+    "test": 187
+  },
+  "class_prior": {
+    "train": {
+      "actionable": 0.1941,
+      "other": 0.8059,
+      "n": 876
+    },
+    "dev": {
+      "actionable": 0.1925,
+      "other": 0.8075,
+      "n": 187
+    },
+    "test": {
+      "actionable": 0.1925,
+      "other": 0.8075,
+      "n": 187
+    }
+  },
+  "test_vs_train_prior_drift": 0.0016,
+  "grouped_by": "post_id"
+}

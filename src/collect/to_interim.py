@@ -48,9 +48,13 @@ LOG_PATH = os.path.join(ROOT, "data", "provenance", "collection_log.csv")
 COMMENT_FIELDS = [
     "comment_id", "platform", "source_page", "source_page_name", "agency_id",
     "post_id", "post_url", "post_date", "post_text", "post_media_type",
+    "post_topic",
     "is_reply", "parent_comment_id", "parent_comment_text", "comment_text",
     "author_name", "author_is_official", "timestamp_raw", "source_snapshot",
     "collected_at",
+    # the sampling stratum the post came from: contract column 40. It has to
+    # survive the whole chain, or the analysis cannot be stratified by it
+    "stratum",
 ]
 
 POST_FIELDS = [
@@ -177,6 +181,8 @@ def flatten(snap: dict, path: str, source_page: str, platform: str,
             "post_url": post_url,
             "post_date": p.get("post_date", ""),
             "post_text": p.get("post_text", ""),
+            "post_topic": p.get("post_topic", ""),
+            "stratum": stratum,
             "post_media_type": p.get("post_media_type", "unknown"),
             "post_topic": p.get("post_topic", ""),
             "source_snapshot": snap_id,
