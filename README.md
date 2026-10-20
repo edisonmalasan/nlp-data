@@ -22,6 +22,9 @@ This repo covers **one stage only**: the acquisition, cleaning, and annotation o
 Everything a downstream consumer needs is delivered through **`data/processed/`**, governed by
 the schema in [`DATA_CONTRACT.md`](DATA_CONTRACT.md).
 
+**Working path:** [`docs/STAGES.md`](docs/STAGES.md) — the six stages with checkboxes, exit
+criteria for each, and the open decisions still blocking you.
+
 ---
 
 ## Why this data exists
@@ -61,6 +64,7 @@ nlp-data/
 │   ├── NLP-PLAN.pdf             ← source: task assignment and proposed research
 │   ├── NLP-Final-Paper.pdf      ← source: scope, objectives, label definitions
 │   ├── ANNOTATION_GUIDELINES.md ← labeling rules, decision tree, example bank
+│   ├── STAGES.md               ← the step-by-step path through this scope
 │   ├── COLLECTION_PROTOCOL.md   ← (pending) per-source collection detail
 │   └── DATA_CARD.md             ← (pending) dataset card for the write-up
 ├── data/
@@ -363,6 +367,7 @@ as the gold set exists; do not wait for collection to be "complete."
 | `docs/NLP-Final-Paper.pdf` | Label definitions, scope and limits, inclusion criteria |
 | `DATA_CONTRACT.md` | Schema, dedup/spam/PII rules, splits, validation |
 | `docs/ANNOTATION_GUIDELINES.md` | The labeling rules and example bank |
+| `docs/STAGES.md` | The step-by-step path through this scope |
 
 ---
 
