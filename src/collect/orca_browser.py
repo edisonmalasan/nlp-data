@@ -317,6 +317,7 @@ def load_thread(page: str, platform: str = "facebook", min_count: int = 1,
                           rounds=wait_rounds or MAX_SETTLE_ROUNDS)
     last = n
     stable = 0
+    empty = 0
     for rnd in range(1, MAX_SETTLE_ROUNDS + 1):
         scroll_to_bottom(page, platform)
         expand_replies(page)
@@ -325,6 +326,15 @@ def load_thread(page: str, platform: str = "facebook", min_count: int = 1,
             stable += 1
         else:
             stable = 0
+        # A post with no comments at all will not grow by scrolling for
+        # another twenty rounds. Give up early, or every empty post costs
+        # half a minute of waiting for nothing.
+        if n == 0:
+            empty += 1
+            if empty >= 3:
+                break
+        else:
+            empty = 0
         last = max(last, n)
         if stable >= SCROLL_STABLE_ROUNDS and rnd >= MIN_SCROLL_ROUNDS:
             break
@@ -781,8 +791,14 @@ def page_slug_from_url(url: str) -> str:
     return slug
 
 
-def click_permalink(page: str, url: str, rounds: int = 8) -> str:
-    """Click a permalink on the account page, scrolling the feed until it is there."""
+def click_permalink(page: str, url: str, rounds: int = 6) -> str:
+    """Click a permalink on the account page, scrolling the feed until it is there.
+
+    The feed is virtualized, so the link may not be in the DOM yet and the
+    feed has to be scrolled to bring it back. The rounds are kept few: this
+    runs once per post, and a post that is not going to be found should fail
+    quickly rather than burn a minute of scrolling.
+    """
     want = (url or "").split("?")[0]
     js = CLICK_PERMALINK_JS.replace("__WANT__", json.dumps(want))
     for _ in range(rounds):
@@ -793,7 +809,7 @@ def click_permalink(page: str, url: str, rounds: int = 8) -> str:
         if res == "clicked":
             return "clicked"
         scroll_feed(page, "facebook")
-        time.sleep(0.8)
+        time.sleep(0.5)
     return "not found"
 
 
