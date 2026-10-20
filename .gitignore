@@ -1,9 +1,9 @@
-# ---- Raw and interim layers: not committed (size + ethics) ----
+# ---- Raw and interim layers: not committed (size + pre-scrub state) ----
 data/raw/*
 !data/raw/.gitkeep
 data/interim/*
 
-# ---- Processed layer: committed (small, anonymized, publishable) ----
+# ---- Processed layer: committed (small, scrubbed) ----
 # data/processed/ IS tracked.
 
 # ---- Python ----
@@ -13,11 +13,7 @@ __pycache__/
 venv/
 env/
 
-# ---- Annotation tooling / secrets ----
-.env
-*.key
-*.pem
-labeler/
+# ---- Local scratch ----
 *.db
 *.sqlite3
 

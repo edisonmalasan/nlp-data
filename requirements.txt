@@ -1,22 +1,19 @@
+# ---- Scraping / HTML-DOM collection (no API keys or credentials) ----
+requests>=2.31
+beautifulsoup4>=4.12
+lxml>=5.0
+playwright>=1.45        # headless browser for client-rendered comment threads
+regex>=2023.0
+
 # ---- Data handling ----
 pandas>=2.0
 numpy>=1.24
 
-# ---- Modeling ----
+# ---- Agreement / modeling ----
 scikit-learn>=1.3
 scipy>=1.10
 joblib>=1.3
 
-# ---- Collection ----
-requests>=2.31
-python-dotenv>=1.0
-
-# ---- Text / analysis ----
-regex>=2023.0
-
 # ---- Optional: annotation tooling (install separately if needed) ----
 # doccano-client>=0.2.6
 # label-studio>=1.0
-
-# ---- Optional: environment ----
-# pip install -r requirements-dev.txt
