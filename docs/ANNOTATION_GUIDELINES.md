@@ -41,7 +41,7 @@ Politeness/request markers — *please*, *dapat*, *sana*, *paki-*, *pakisana*, *
 > ❌ "A comment with *please* or *dapat* is actionable."
 > ✅ "A comment that identifies a concrete action is actionable. *Please* might be in it, or it might not."
 
-**Why this matters (and why it is your problem, not just Member 5's):** the paper's research question asks whether adding these very markers as features improves detection over a plain TF-IDF baseline. If you label by marker, the answer becomes "yes, obviously" and the study proves nothing. The dataset must contain plenty of `actionable` comments **without** any politeness marker, and plenty of `other` comments **with** them. When you notice you are about to label because of a marker, slow down and re-apply §2.1.
+**Why this matters (and why it is your problem, not just the modeler's):** the paper's research question asks whether adding these very markers as features improves detection over a plain TF-IDF baseline. If you label by marker, the answer becomes "yes, obviously" and the study proves nothing. The dataset must contain plenty of `actionable` comments **without** any politeness marker, and plenty of `other` comments **with** them. When you notice you are about to label because of a marker, slow down and re-apply §2.1.
 
 Examples of what this means in practice:
 
