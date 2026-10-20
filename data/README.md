@@ -3,12 +3,12 @@
 Read `DATA_CONTRACT.md` §13 before adding anything here. Each layer has a different
 access rule and a different commit rule.
 
-| Path | Contains | Committed to git? | Publishable? |
+| Path | Contains | Committed to git? | Release-ready? |
 |---|---|---|---|
 | `raw/` | Immutable platform payloads, exactly as retrieved. Never edited. | **No** | No |
-| `interim/` | Verbatim union of raw, pre-cleaning. May still contain names. | **No** | No |
-| `processed/` | The delivered dataset: cleaned, deduped, anonymized, labeled. | **Yes** | Yes, with adviser approval |
-| `provenance/` | Source account list and collection audit log. Non-personal. | **Yes** | Yes |
+| `interim/` | Verbatim union of raw, pre-cleaning. Not yet scrubbed. | **No** | No |
+| `processed/` | The delivered dataset: cleaned, deduped, anonymized, labeled. | **Yes** | Yes |
+| `provenance/` | Source account list and collection log. | **Yes** | Yes |
 
 ## Key files
 
@@ -20,14 +20,13 @@ access rule and a different commit rule.
 | `processed/splits/{train,dev,test}.csv` | one row per comment | **Authoritative** split assignment. Join on `comment_id`. |
 | `processed/dataset_v1.metadata.json` | — | Counts, provenance, versions, agreement stats. Populated at G3. |
 | `interim/comments_captured.csv` | one row per captured comment | Pre-cleaning. Internal only. |
-| `provenance/source_accounts.csv` | one row per source account | Frozen at G1. |
-| `provenance/collection_log.csv` | one row per collection run | Audit trail for §12 compliance. |
+| `provenance/government_agencies.csv` | one row per source account | Frozen at G1. |
+| `provenance/collection_log.csv` | one row per collection run | Audit trail for each retrieval run. |
 
 ## Rules
 
 1. **Never** hand-edit `processed/*.csv`. Regenerate from `raw/` via `src/clean/`.
-2. **Never** commit anything from `raw/` or `interim/` — raw may contain personal data
-   and is excluded by `.gitignore`.
+2. **Never** commit anything from `raw/` or `interim/` — excluded by `.gitignore`.
 3. **Never** change a label, a split, or a `comment_id` silently. New version, new file,
    changelog entry (§17 of the contract).
 4. The split files win over the `split` column if they ever disagree — and if they ever
