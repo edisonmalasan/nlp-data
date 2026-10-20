@@ -1,86 +1,56 @@
 {
-  "facebook/doh": {
-    "posts": 12,
-    "comments": 72,
-    "last_error": "",
-    "updated_at": "2026-10-20T22:02:19"
-  },
-  "facebook/deped": {
-    "posts": 12,
-    "comments": 272,
-    "last_error": "",
-    "updated_at": "2026-10-20T22:09:15"
-  },
-  "facebook/dpwh": {
-    "posts": 12,
-    "comments": 511,
-    "last_error": "",
-    "updated_at": "2026-10-20T22:17:38"
-  },
-  "facebook/dilg": {
-    "posts": 12,
-    "comments": 174,
-    "last_error": "",
-    "updated_at": "2026-10-20T22:25:42"
-  },
   "facebook/ndrrmc": {
-    "posts": 1,
+    "posts": 0,
     "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-20T22:45:04"
-  },
-  "facebook/bfp": {
-    "posts": 4,
-    "comments": 55,
-    "last_error": "",
-    "updated_at": "2026-10-20T22:46:34"
-  },
-  "facebook/dti": {
-    "posts": 4,
-    "comments": 54,
-    "last_error": "",
-    "updated_at": "2026-10-20T22:47:47"
+    "last_error": "NameError: name 'args' is not defined",
+    "updated_at": "2026-10-20T23:48:55"
   },
   "facebook/denr": {
-    "posts": 1,
-    "comments": 1,
-    "last_error": "",
-    "updated_at": "2026-10-20T22:49:29"
+    "posts": 0,
+    "comments": 0,
+    "last_error": "NameError: name 'args' is not defined",
+    "updated_at": "2026-10-20T23:49:10"
   },
   "youtube/dost_pagasa_yt": {
-    "posts": 1,
+    "posts": 0,
     "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-20T22:51:54"
+    "last_error": "NameError: name 'args' is not defined",
+    "updated_at": "2026-10-20T23:49:48"
   },
   "youtube/deped_yt": {
-    "posts": 1,
+    "posts": 0,
     "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-20T22:54:41"
+    "last_error": "NameError: name 'args' is not defined",
+    "updated_at": "2026-10-20T23:50:25"
   },
   "youtube/dti_yt": {
-    "posts": 1,
+    "posts": 0,
     "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-20T22:57:04"
+    "last_error": "NameError: name 'args' is not defined",
+    "updated_at": "2026-10-20T23:50:56"
   },
   "youtube/dswd_yt": {
-    "posts": 1,
+    "posts": 0,
     "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-20T23:01:40"
+    "last_error": "NameError: name 'args' is not defined",
+    "updated_at": "2026-10-20T23:51:27"
   },
   "youtube/doh_yt": {
-    "posts": 1,
+    "posts": 0,
     "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-20T23:07:29"
+    "last_error": "NameError: name 'args' is not defined",
+    "updated_at": "2026-10-20T23:51:53"
   },
   "youtube/dpwh_yt": {
-    "posts": 1,
+    "posts": 0,
     "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-20T23:12:31"
+    "last_error": "NameError: name 'args' is not defined",
+    "updated_at": "2026-10-20T23:52:47"
+  },
+  "youtube/bfp_yt": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "NameError: name 'args' is not defined",
+    "updated_at": "2026-10-20T23:53:14"
   }
 }

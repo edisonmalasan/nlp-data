@@ -1,6 +1,8 @@
 {
   "https://www.facebook.com/PAGASA.DOST.GOV.PH": {
-    "x": [],
+    "x": [
+      "https://x.com/dost_pagasa"
+    ],
     "youtube": [],
     "reddit": []
   },
@@ -10,7 +12,9 @@
     "reddit": []
   },
   "https://www.facebook.com/dswdserves": {
-    "x": [],
+    "x": [
+      "https://x.com/dswdserves"
+    ],
     "youtube": [],
     "reddit": []
   },
@@ -20,12 +24,18 @@
     "reddit": []
   },
   "https://www.facebook.com/dpwhph": {
-    "x": [],
-    "youtube": [],
+    "x": [
+      "https://x.com/DPWHph"
+    ],
+    "youtube": [
+      "https://www.youtube.com/@DPWHPh1"
+    ],
     "reddit": []
   },
   "https://www.facebook.com/dilg.philippines": {
-    "x": [],
+    "x": [
+      "https://x.com/DILGPhilippines"
+    ],
     "youtube": [],
     "reddit": []
   },
@@ -36,12 +46,19 @@
   },
   "https://www.facebook.com/DILGBFP": {
     "x": [],
-    "youtube": [],
+    "youtube": [
+      "https://www.youtube.com/@bureauoffireprotection9016"
+    ],
     "reddit": []
   },
   "https://www.facebook.com/DTI.Philippines": {
-    "x": [],
-    "youtube": [],
+    "x": [
+      "https://x.com/DtiPhilippines"
+    ],
+    "youtube": [
+      "https://www.youtube.com/@dti_philippines",
+      "https://www.youtube.com/@dtiphilippines"
+    ],
     "reddit": []
   },
   "https://www.facebook.com/DENROfficial": {
