@@ -128,6 +128,19 @@ def usable_snapshots(platform, source_page, mode="recent"):
     return out
 
 
+def collected_posts(platform, source_page, mode="recent"):
+    """The most posts any snapshot of this account has for this stratum."""
+    best = 0
+    for path in existing_snapshots(platform, source_page, mode):
+        try:
+            snap = json.load(io.open(path, encoding="utf-8"))
+        except Exception:
+            continue
+        n = len(snap.get("posts", []))
+        best = max(best, n)
+    return best
+
+
 def run_one(page, row, posts, notes, mode="recent"):
     """Collect one account. Returns (n_posts, n_comments, error)."""
     platform = row["platform"]
@@ -149,6 +162,13 @@ def run_one(page, row, posts, notes, mode="recent"):
 
     if mode == "invites" and platform == "facebook":
         urls = ob.find_inviting_posts(page, limit=posts)
+    elif platform == "youtube":
+        # The YouTube app does not always render in a tab that is only being
+        # driven, and then the page has no video links at all. The channel's
+        # videos are in the page's own data either way.
+        urls = ob.discover_posts(page, platform, limit=posts)
+        if not urls:
+            urls = [u for u, _ in ob.discover_youtube_posts(page, limit=posts)]
     else:
         urls = ob.discover_posts(page, platform, limit=posts)
 
@@ -180,6 +200,15 @@ def run_one(page, row, posts, notes, mode="recent"):
             except ob.OrcaError as e:
                 log(f"    post failed: {e}")
                 continue
+            if platform == "youtube" and not data.get("comments"):
+                # the app did not render, so the DOM had nothing; try the
+                # page's own data
+                try:
+                    alt = ob.capture_youtube_post(page, u)
+                except ob.OrcaError:
+                    alt = {}
+                if alt.get("comments"):
+                    data = alt
             n = data.get("n_comments", 0)
             entries.append((u, data))
             log(f"    {n:>4} comments  {u[-46:]}")

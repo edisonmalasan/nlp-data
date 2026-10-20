@@ -7,3 +7,12 @@
 [05:08:07] [4/5] x/dilg_x: already collected, skipping
 [05:08:07] [5/5] x/dti_x: already collected, skipping
 [05:08:07] === x worker finished: 0 account(s) collected ===
+[06:01:10] === worker: x on tab 2, 5 posts, mode=recent ===
+[06:01:10] tab [2] ea46f37d-8caf-477b-b124-26f99a2c5f6d  https://www.reddit.com/r/Philippines/
+[06:01:10] 5 registered x accounts
+[06:01:10] [1/5] x/dost_pagasa_x: already collected (5 post(s)), skipping
+[06:01:10] [2/5] x/dswd_x: already collected (5 post(s)), skipping
+[06:01:10] [3/5] x/dpwh_x: already collected (5 post(s)), skipping
+[06:01:10] [4/5] x/dilg_x: already collected (5 post(s)), skipping
+[06:01:10] [5/5] x/dti_x: already collected (5 post(s)), skipping
+[06:01:10] === x worker finished: 0 account(s) collected ===

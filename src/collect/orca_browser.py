@@ -844,6 +844,283 @@ def capture_one(page: str, url: str, extract_js: str,
     return data
 
 
+# ---------------------------------------------------------------------------
+# YouTube
+#
+# The YouTube app does not always boot in a tab that is only being driven:
+# the page title arrives but the content never renders, so there are no
+# video links and no comments to read. The data is still in the page though.
+# ytInitialData is not a global in that case - it is only in the page source -
+# so it is parsed out of the HTML, and the comments come from the same public
+# endpoint the page itself calls.
+#
+# Each script is one IIFE. An earlier version declared a helper at the top
+# level, and orca eval shares the page's global scope, so the second call on
+# the same page failed with "Identifier has already been declared".
+# ---------------------------------------------------------------------------
+
+YT_EXTRACT_FN = r"""
+  const YT_EXTRACT = () => {
+    if (window.ytInitialData) return window.ytInitialData;
+    const h = document.documentElement.outerHTML || '';
+    const marks = ['var ytInitialData = ', 'window["ytInitialData"] = ',
+                   'ytInitialData = ', '"ytInitialData":'];
+    for (const mark of marks) {
+      const i = h.indexOf(mark);
+      if (i < 0) continue;
+      const start = h.indexOf('{', i);
+      if (start < 0) continue;
+      let depth = 0, inStr = false, esc = false, end = -1;
+      for (let j = start; j < h.length && j < start + 8000000; j++) {
+        const ch = h[j];
+        if (inStr) {
+          if (esc) esc = false;
+          else if (ch === '\\') esc = true;
+          else if (ch === '"') inStr = false;
+          continue;
+        }
+        if (ch === '"') inStr = true;
+        else if (ch === '{') depth++;
+        else if (ch === '}') { depth--; if (depth === 0) { end = j + 1; break; } }
+      }
+      if (end > start) {
+        try { return JSON.parse(h.slice(start, end)); } catch (e) {}
+      }
+    }
+    return null;
+  };
+"""
+
+YT_DISCOVER_JS = r"""
+(() => {
+__EXTRACT__
+  const d = YT_EXTRACT() || {};
+  const out = [];
+  const seen = new Set();
+  const walk = (node) => {
+    if (!node || typeof node !== 'object') return;
+    if (Array.isArray(node)) { for (const x of node) walk(x); return; }
+    // YouTube renders a channel's videos as lockupViewModel now, not
+    // videoRenderer, so the video id is looked for on any object
+    if (typeof node.videoId === 'string' && node.videoId.length === 11
+        && !seen.has(node.videoId)) {
+      seen.add(node.videoId);
+      let title = '';
+      const meta = node.metadata || node.metadataWithCollapseStatus || {};
+      const lockup = meta.lockupMetadataViewModel || {};
+      const tm = lockup.title || {};
+      if (tm.content) title = tm.content;
+      else if (tm.runs && tm.runs[0]) title = tm.runs[0].text || '';
+      else if (node.title) {
+        title = (node.title.runs && node.title.runs[0] && node.title.runs[0].text)
+                || node.title.simpleText || '';
+      }
+      out.push({id: node.videoId, title: title});
+    }
+    for (const k in node) walk(node[k]);
+  };
+  walk(d);
+  return JSON.stringify(out);
+})()
+""".replace("__EXTRACT__", YT_EXTRACT_FN)
+
+YT_COMMENTS_JS = r"""
+(async () => {
+__EXTRACT__
+  const clean = s => (s || '').replace(/\u00a0/g, ' ').replace(/[ \t]+/g, ' ').trim();
+  const cfg = window.ytcfg || {};
+  const key = cfg.get ? cfg.get('INNERTUBE_API_KEY') : '';
+  const ver = cfg.get ? cfg.get('INNERTUBE_CLIENT_VERSION') : '';
+  const cname = cfg.get ? String(cfg.get('INNERTUBE_CLIENT_NAME') || 'WEB') : 'WEB';
+
+  const textOf = (o) => {
+    if (!o) return '';
+    if (typeof o === 'string') return clean(o);
+    if (o.simpleText) return clean(o.simpleText);
+    if (o.runs) return clean(o.runs.map(r => r.text || '').join(''));
+    return '';
+  };
+
+  const d = YT_EXTRACT() || {};
+  if (!d) return JSON.stringify({comments: [], pages: 0,
+                                 error: 'ytInitialData not found'});
+  // The comment thread's continuation token lives in the engagement panel
+  // whose targetId names the comment section. Any other continuation token
+  // in the page returns the engagement panels instead of the comments.
+  let token = '';
+  const findCommand = (node) => {
+    if (!node || typeof node !== 'object') return '';
+    if (Array.isArray(node)) {
+      for (const x of node) { const t = findCommand(x); if (t) return t; }
+      return '';
+    }
+    const cc = node.continuationCommand;
+    if (cc && cc.token) return cc.token;
+    for (const k in node) { const t = findCommand(node[k]); if (t) return t; }
+    return '';
+  };
+  const panels = d.engagementPanels || [];
+  for (const p of panels) {
+    const e = p.engagementPanelSectionListRenderer;
+    if (e && /comment/i.test(e.targetId || '')) {
+      token = findCommand(e.content);
+      if (token) break;
+    }
+  }
+  if (!token) token = findCommand(d);
+  if (!token) return JSON.stringify({comments: [], pages: 0,
+                                     error: 'no continuation token'});
+
+  const comments = [];
+  const seen = new Set();
+  let pages = 0;
+  let nextToken = token;
+
+  while (nextToken && pages < 12) {
+    let r;
+    try {
+      r = await fetch('/youtubei/v1/next?key=' + key, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          context: {client: {clientName: cname, clientVersion: ver, hl: 'en', gl: 'PH'}},
+          continuation: nextToken
+        })
+      });
+    } catch (e) {
+      return JSON.stringify({comments: comments, pages: pages, error: String(e)});
+    }
+    if (!r.ok) break;
+    const j = await r.json();
+
+    const items = []
+      .concat((j.onResponseReceivedActions || []).map(
+        a => a.appendContinuationItemsAction && a.appendContinuationItemsAction.continuationItems))
+      .concat((j.onResponseReceivedEndpoints || []).map(
+        a => (a.appendContinuationItemsAction && a.appendContinuationItemsAction.continuationItems) ||
+             (a.reloadContinuationItemsCommand && a.reloadContinuationItemsCommand.continuationItems)))
+      .filter(Boolean);
+    const flat = [];
+    const flatten = (node) => {
+      if (!node || typeof node !== 'object') return;
+      if (Array.isArray(node)) { for (const x of node) flatten(x); return; }
+      flat.push(node);
+      for (const k in node) flatten(node[k]);
+    };
+    flatten(items);
+
+    for (const node of flat) {
+      const vm = node.commentViewModel;
+      if (vm) {
+        const body = textOf(vm.commentText || vm.commentContent);
+        const id = vm.commentId || '';
+        if (id && !seen.has(id)) {
+          seen.add(id);
+          comments.push({
+            comment_text: body.slice(0, 4000),
+            author_name: clean(((vm.author && vm.author.displayName) ||
+                                (vm.authorCore && vm.authorCore.displayName) || '')).slice(0, 120),
+            timestamp_raw: clean(vm.publishedTime || '').slice(0, 60),
+            permalink: id ? location.origin + location.pathname + '?lc=' + id : '',
+            is_reply: false, replies_count: '', edited: false, has_translation: false,
+          });
+        }
+      }
+      const tr = node.commentThreadRenderer;
+      if (tr && tr.comment) {
+        const c = tr.comment;
+        const body = textOf(c.contentText || c.text);
+        const id = c.id || '';
+        if (id && !seen.has(id)) {
+          seen.add(id);
+          comments.push({
+            comment_text: body.slice(0, 4000),
+            author_name: clean((c.author && c.author.displayName) || '').slice(0, 120),
+            timestamp_raw: clean(c.publishedTime || '').slice(0, 60),
+            permalink: id ? location.origin + location.pathname + '?lc=' + id : '',
+            is_reply: false, replies_count: String(tr.replyCount || 0),
+            edited: false, has_translation: false,
+          });
+        }
+      }
+    }
+
+    nextToken = findCommand(items);
+    pages++;
+  }
+
+  const vd = (window.ytInitialPlayerResponse && window.ytInitialPlayerResponse.videoDetails) || {};
+  const title = vd.title || (d.videoDetails && d.videoDetails.title) || document.title;
+
+  return JSON.stringify({
+    url: location.href,
+    title: document.title,
+    post: {post_text: clean(title), post_channel: vd.author || '',
+           post_views: '', post_date: ''},
+    n_comments: comments.length,
+    n_threads: comments.length,
+    comments: comments,
+    pages: pages,
+  });
+})()
+""".replace("__EXTRACT__", YT_EXTRACT_FN)
+
+
+def discover_youtube_posts(page: str, limit: int = 8) -> list:
+    """The channel's videos, read from the page's own data."""
+    try:
+        v = eval_json(page, YT_DISCOVER_JS, timeout=120)
+    except (OrcaError, ValueError):
+        return []
+    if not isinstance(v, list):
+        return []
+    out = []
+    for item in v:
+        vid = item.get("id") if isinstance(item, dict) else None
+        if not vid:
+            continue
+        out.append((f"https://www.youtube.com/watch?v={vid}", item.get("title", "")))
+        if len(out) >= limit:
+            break
+    return out
+
+
+def capture_youtube_post(page: str, url: str) -> dict:
+    """A YouTube video and its comments, read from the page's own data.
+
+    The DOM is used when it has rendered; the public endpoint the page
+    itself calls is used when it has not, which is the normal case in a tab
+    that is only being driven.
+    """
+    goto(page, url, settle=4.0)
+    for _ in range(8):
+        try:
+            v = eval_json(page, "typeof window.ytInitialData !== 'undefined' ? 1 : 0")
+        except (OrcaError, ValueError):
+            v = 0
+        if v:
+            break
+        time.sleep(1.0)
+
+    data = {}
+    try:
+        v = eval_json(page, YT_COMMENTS_JS, timeout=180)
+        if isinstance(v, dict):
+            data = v
+    except (OrcaError, ValueError) as e:
+        data = {"error": str(e)}
+
+    if not data.get("comments"):
+        # fall back to the DOM, in case the app did render
+        try:
+            v = eval_json(page, load_extract_js("extract_youtube.js"))
+            if isinstance(v, dict) and v.get("comments"):
+                return v
+        except (OrcaError, ValueError):
+            pass
+    return data
+
+
 def capture_account(page: str, account_url: str, extract_js: str,
                     platform: str = "facebook", limit: int = 6,
                     mode: str = "recent", rounds: int = 10):

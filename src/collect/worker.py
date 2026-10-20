@@ -185,12 +185,16 @@ def main(argv=None) -> int:
             key = f"{row['platform']}/{row['source_page']}"
             snaps = run_all.usable_snapshots(row["platform"], row["source_page"],
                                             args.mode)
-            if snaps and not os.environ.get("FORCE"):
-                log(f"[{i}/{len(registry)}] {key}: already collected, skipping")
+            have = run_all.collected_posts(row["platform"], row["source_page"],
+                                           args.mode)
+            if snaps and have >= args.posts and not os.environ.get("FORCE"):
+                log(f"[{i}/{len(registry)}] {key}: already collected "
+                    f"({have} post(s)), skipping")
                 continue
-            if run_all.existing_snapshots(row["platform"], row["source_page"],
-                                          args.mode):
+            if not snaps and have:
                 log(f"[{i}/{len(registry)}] {key}: the last attempt was empty, retrying")
+            elif have:
+                log(f"[{i}/{len(registry)}] {key}: topping up ({have} of {args.posts} posts)")
 
             log(f"[{i}/{len(registry)}] {key}  {row.get('official_account_url', '')}")
             tee = Tee(log)

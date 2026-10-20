@@ -509,3 +509,35 @@
 [05:09:48] [05:09:48]   SNAPSHOT youtube_OfficeOfTheVicePresidentPH_yt_2026-10-21T05-09.json  1 post(s), 0 comment(s)
 [05:09:48]   ok: 1 post(s), 0 comment(s)
 [05:09:56] === youtube worker finished: 1 account(s) collected ===
+[06:01:08] === worker: youtube on tab 1, 5 posts, mode=recent ===
+[06:01:08] tab [1] 0bb3746c-9947-48f1-a1bd-70e31c58aaed  https://www.youtube.com/@OVP_PH
+[06:01:08] 10 registered youtube accounts
+[06:01:08] [1/10] youtube/dost_pagasa_yt: already collected (5 post(s)), skipping
+[06:01:08] [2/10] youtube/deped_yt: the last attempt was empty, retrying
+[06:01:08] [2/10] youtube/deped_yt  https://www.youtube.com/@DepEd_PH
+[06:02:16]   error: no post permalinks found on the account page
+[06:02:22] [3/10] youtube/dti_yt: the last attempt was empty, retrying
+[06:02:22] [3/10] youtube/dti_yt  https://www.youtube.com/@dti_philippines
+[06:03:31]   error: no post permalinks found on the account page
+[06:03:37] [4/10] youtube/dswd_yt: the last attempt was empty, retrying
+[06:03:37] [4/10] youtube/dswd_yt  https://www.youtube.com/@dswdserves
+[06:04:44]   error: no post permalinks found on the account page
+[06:04:50] [5/10] youtube/doh_yt: the last attempt was empty, retrying
+[06:04:50] [5/10] youtube/doh_yt  https://www.youtube.com/channel/UChZQaAATaHjT_wG-kac3qfA
+[06:05:58]   error: no post permalinks found on the account page
+[06:06:04] [6/10] youtube/dpwh_yt: the last attempt was empty, retrying
+[06:06:04] [6/10] youtube/dpwh_yt  https://www.youtube.com/channel/UCVuowoLBD9zXS6Gnjgh-umQ
+[06:07:14]   error: no post permalinks found on the account page
+[06:07:20] [7/10] youtube/dpwh_yt: the last attempt was empty, retrying
+[06:07:20] [7/10] youtube/dpwh_yt  https://www.youtube.com/@DPWHPh1
+[06:08:28]   error: no post permalinks found on the account page
+[06:08:34] [8/10] youtube/bfp_yt: the last attempt was empty, retrying
+[06:08:34] [8/10] youtube/bfp_yt  https://www.youtube.com/@bureauoffireprotection9016
+[06:09:43]   error: no post permalinks found on the account page
+[06:09:49] [9/10] youtube/dti_yt: the last attempt was empty, retrying
+[06:09:49] [9/10] youtube/dti_yt  https://www.youtube.com/@dtiphilippines
+[06:10:54]   error: no post permalinks found on the account page
+[06:11:00] [10/10] youtube/OfficeOfTheVicePresidentPH_yt: the last attempt was empty, retrying
+[06:11:00] [10/10] youtube/OfficeOfTheVicePresidentPH_yt  https://www.youtube.com/@OVP_PH
+[06:12:10]   error: no post permalinks found on the account page
+[06:12:16] === youtube worker finished: 0 account(s) collected ===
