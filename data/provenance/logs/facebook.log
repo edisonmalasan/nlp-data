@@ -3525,3 +3525,11 @@
 [06:17:08]   ok: 4 post(s), 12 comment(s)
 [06:17:14] [9/32] facebook/dti: topping up (2 of 5 posts)
 [06:17:14] [9/32] facebook/dti  https://www.facebook.com/DTI.Philippines
+[06:21:23] === worker: facebook on tab 2, 5 posts, mode=invites ===
+[06:21:23] tab [2] ea46f37d-8caf-477b-b124-26f99a2c5f6d  https://www.reddit.com/r/Philippines/
+[06:21:23] 32 registered facebook accounts
+[06:21:23] [1/32] facebook/dost_pagasa: the last attempt was empty, retrying
+[06:21:23] [1/32] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[06:21:42]   error: no post permalinks found on the account page
+[06:21:52] [2/32] facebook/doh: topping up (1 of 5 posts)
+[06:21:52] [2/32] facebook/doh  https://www.facebook.com/DOHgovPH

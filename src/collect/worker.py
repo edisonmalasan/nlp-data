@@ -107,13 +107,20 @@ def ensure_tabs(n: int):
     return tabs
 
 
-def progress_path(platform: str) -> str:
+def progress_path(platform: str, mode: str = "recent") -> str:
+    """One progress file per platform AND stratum.
+
+    Two workers can be on the same platform at once - the recent-posts
+    stratum and the request-inviting stratum - and they must not write to
+    the same file.
+    """
     os.makedirs(PROGRESS_DIR, exist_ok=True)
-    return os.path.join(PROGRESS_DIR, f"{platform}.json")
+    suffix = "" if mode in ("recent", "") else f"_{mode}"
+    return os.path.join(PROGRESS_DIR, f"{platform}{suffix}.json")
 
 
-def load_progress(platform: str) -> dict:
-    p = progress_path(platform)
+def load_progress(platform: str, mode: str = "recent") -> dict:
+    p = progress_path(platform, mode)
     if not os.path.exists(p):
         return {}
     try:
@@ -122,8 +129,8 @@ def load_progress(platform: str) -> dict:
         return {}
 
 
-def save_progress(platform: str, data: dict):
-    p = progress_path(platform)
+def save_progress(platform: str, data: dict, mode: str = "recent"):
+    p = progress_path(platform, mode)
     tmp = p + ".tmp"
     with io.open(tmp, "w", encoding="utf-8", newline="") as fh:
         json.dump(data, fh, indent=2, ensure_ascii=False)
@@ -161,7 +168,8 @@ def main(argv=None) -> int:
     ap.add_argument("--notes", default="")
     args = ap.parse_args(argv)
 
-    log = WorkerLog(os.path.join(LOG_DIR, f"{args.platform}.log"))
+    suffix = "" if args.mode in ("recent", "") else f"_{args.mode}"
+    log = WorkerLog(os.path.join(LOG_DIR, f"{args.platform}{suffix}.log"))
     log(f"=== worker: {args.platform} on tab {args.tab}, {args.posts} posts, "
         f"mode={args.mode} ===")
 
@@ -172,7 +180,7 @@ def main(argv=None) -> int:
         log(f"tab [{args.tab}] {page}  {tab.get('url')}")
 
         registry = [r for r in run_all.read_registry() if r["platform"] == args.platform]
-        progress = load_progress(args.platform)
+        progress = load_progress(args.platform, args.mode)
         log(f"{len(registry)} registered {args.platform} accounts")
 
         notes = args.notes or (f"collection run via orca built-in browser, "
@@ -217,7 +225,7 @@ def main(argv=None) -> int:
                 "last_error": err,
                 "updated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
             }
-            save_progress(args.platform, progress)
+            save_progress(args.platform, progress, args.mode)
             if err:
                 log(f"  error: {err}")
             else:
