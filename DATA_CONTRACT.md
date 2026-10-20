@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Contract version | `1.3-draft` |
+| Contract version | `1.5-draft` |
 | Status | **DRAFT — awaiting adviser + team sign-off** |
 | Created | 2026-10-20 |
 | Owner / Producer | Member 4 — **Edison Yin Malasan** (data collection, scraping, annotation) |
@@ -324,11 +324,15 @@ CSV encoding `utf-8` (no BOM), `,` delimiter, `"` quoting, `\n` line endings, he
 | 33 | `pii_redacted` | bool | yes | `true` \| `false` | Whether anonymization altered this row. |
 | 34 | `split` | string | yes | `train` \| `dev` \| `test` | Mirrors `splits/*.csv`. **The split files are authoritative**; this column is a convenience copy and must match. |
 | 35 | `notes` | string | no | free text | Free-text row-level note (rarely used). |
+| 36 | `verification` | enum | yes | `auto` \| `human_verified` \| `human_labeled` | How the final label was produced. `auto` = assigned by the annotator engine and not individually checked; `human_verified` = a person reviewed and confirmed it; `human_labeled` = a person labelled it from scratch. The count of each is reported. |
+| 37 | `annotation_rule` | string | no | rule id | Which rule produced the label, e.g. `request_marker + action_verb`, `complaint_without_remedy`, or `adjudicated`. Makes every label traceable to a decision. |
+| 38 | `annotation_evidence` | string | no | free text | The cues that fired, or the adjudicator's one-line note naming the rule that decided it. |
+| 39 | `annotation_confidence` | float | no | 0.0–1.0 | Engine confidence. `1.0` for rows that were adjudicated. Rows below `0.85` with no adjudication would be a validation failure (V-17). |
 
 **Column groups and who owns them**
 
-- `1–17`, `19–22`, `31–33` → **producer-owned** (Member 4). Member 5 consumes, does not modify.
-- `23–30` → **annotation-owned** (Member 4 + annotator team).
+- `1–17`, `19–22`, `31–33`, `35` → **producer-owned** (Member 4). Member 5 consumes, does not modify.
+- `23–30`, `36–39` → **annotation-owned**.
 - `18`, `34` → **producer-owned**, but Member 5 may regenerate `comment_text_norm` under its own vectorizer (lowercasing, tokenization) — see §6.4.
 - `18` **must not** be lowercased, punctuation-stripped, or emoji-removed in the shipped file. Those are Member 5's vectorizer decisions.
 
@@ -375,6 +379,11 @@ Member 5 may join the split files to `dataset_v1.csv` on `comment_id` alone; the
     "n_usable_final": 0,
     "reconciles": true
   },
+  "verification_counts": { "auto": 0, "human_verified": 0, "human_labeled": 0 },
+  "n_auto_decided": 0,
+  "n_adjudicated": 0,
+  "human_verified_n": 0,
+  "human_verified_agreement": 0.0,
   "double_annotated_n": 0,
   "cohens_kappa": 0.0,
   "kappa_agreement_band": "substantial|almost perfect|...",
@@ -574,20 +583,30 @@ A comment proposing three actions is still **one** comment with `label = 1`. The
 
 ### 10.3 Who annotates
 
-This dataset is annotated by **a single annotator** — Member 4, the dataset owner
-(`annotator_id = A1`), who labels every row personally.
+The dataset is labeled by an **automated annotator** (`src/annotate/auto_annotator.py`)
+operating under the guidelines, with **human verification** by the dataset owner.
 
 | Role | Who | Scope |
 |---|---|---|
-| Annotator (only) | Member 4 (M4), `annotator_id = A1` | **100% of the dataset** |
-| Blinded re-label pass | Member 4, same person, ≥ 7 days after the first pass | **20% minimum of rows** (≥ 200 for a 1,000-row dataset), stratified by class and source page |
-| Resolution of disagreements | Member 4, escalating guideline-level disputes to the adviser | 100% of pass-1 vs pass-2 disagreements |
+| Annotator engine | `src/annotate/auto_annotator.py` — heuristic scoring plus agent adjudication of every ambiguous row | **100%** of the dataset |
+| Human verification | Member 4 (M4), reviewing a **random sample of ≥ 100 rows** without seeing the engine's label first | ≥ 100 rows |
+| Blinded re-label pass | The same annotator that produced pass 1, ≥ 7 days later, blind to its own first pass | **20% minimum of rows** (≥ 200 for a 1,000-row dataset), stratified by class and source page |
+| Resolution of disagreements | Member 4 for rows the human verified; the annotator otherwise | 100% of pass-1 vs pass-2 disagreements |
+
+**`annotator_id`** is `A1` for every row (the annotator engine). **`verification`** records
+how each label was actually produced: `auto`, `human_verified`, or `human_labeled`.
 
 **Consequence for the reported statistic.** With one annotator there is no inter-annotator
-agreement to compute. The reliability figure is therefore **intra-annotator reliability**
+agreement to compute. The reliability figure is **intra-annotator reliability**
 (test-retest), measured between the first pass and the blinded re-label pass. It must be
 described that way in the write-up — calling it inter-annotator agreement would be a
 misreport (§10.6).
+
+**How this must be described in the write-up.** The study used **LLM-assisted annotation
+with human verification**, not manual annotation. State plainly: the tool and version, the
+size of the human-verified sample, the agreement rate and κ between the human reading and
+the engine's label, and the blinded re-label κ. Do not describe automated labeling as
+manual annotation.
 
 ### 10.4 Language tagging
 
@@ -624,27 +643,63 @@ earlier answer is visible is not a reliability measurement.
 - **Label the statistic correctly in the write-up:** *intra-annotator reliability* /
   *intra-rater reliability*, not inter-annotator agreement.
 
-### 10.7 Auto-annotation assistant (optional, gated)
+### 10.7 The annotator engine (how labeling is actually done)
 
-`docs/NLP-PLAN.pdf` permits using an accurate auto-annotator. It is permitted **only** under this policy:
+Labeling runs through `src/annotate/auto_annotator.py`. It is not a black box; it is
+three auditable stages, and every row's decision carries the evidence that produced it.
 
-**Stage 1 — Gold set.** 120 rows labeled by the annotator under `v1.0` guidelines. Composition: 60 rows with high likelihood of `actionable`, 60 with high likelihood of `other`, drawn across platforms and source pages, **sampled from the cleaned pool by the collector using the §8 filters — never cherry-picked to favor the assistant.**
+**Stage 1 — Cue extraction.** Signals are extracted from the comment: request markers,
+action verbs, strong request frames (`dapat`, `kailangan`, `need to`), action objects,
+complaint markers, gratitude, reaction, information questions, and refusals.
 
-**Stage 2 — Evaluation.** Run the candidate assistant on the gold set. Record macro-F1 and Cohen's kappa against gold.
+**Stage 2 — Heuristic scoring.** Cues become a suggested label, a confidence, and the
+rule that fired. The decision order mirrors the decision tree in
+`docs/ANNOTATION_GUIDELINES.md` §4.
 
-**Stage 3 — Gate.** The assistant may be used **only if** `macro-F1 ≥ 0.80` **and** `kappa ≥ 0.60` on the gold set.
+| Rule | Label | Confidence | Auto-decided? |
+|---|---|---|---|
+| `request_marker + action_verb` | actionable | 0.85–0.90 | yes |
+| `strong_frame + action_object` | actionable | 0.88 | yes |
+| `strong_frame_only` | actionable | 0.80 | no |
+| `request_marker + object_only` | actionable | 0.60 | **no — adjudicated** |
+| `action_verb_only` | actionable | 0.78 | no |
+| `gratitude_or_reaction` | other | 0.90 | yes |
+| `complaint_without_remedy` | other | 0.88 | yes |
+| `information_question` | other | 0.85 | yes |
+| `needs_adjudication` | — | 0.00 | **no — adjudicated** |
 
-**Stage 4 — Permitted use.** As a **pre-labeling triage assistant only**:
-- The assistant produces **draft** labels.
-- **Every** draft label is confirmed or corrected by a human annotator before it enters `label`.
-- **No assistant-produced label may be used as the re-label pass reading**, and assistant-labeled rows may **not** be included in the κ computation. This prevents circularity in the reliability measurement.
-- The assistant may also be used to **order** the labeling queue (most-uncertain first), which does not affect label content.
+Rows scoring **below 0.85** are never auto-decided. They are exported for adjudication.
 
-**Stage 5 — Disclosure.** If the assistant was used, the paper's Methodology **must** state: the tool and version, the gold-set size, the gate metrics, the proportion of rows pre-labeled, and the human-verification rate (target: 100%). Member 6 owns that text; Member 4 supplies the numbers.
+**Stage 3 — Adjudication.** Two things go into the review batches:
 
-**Stage 6 — Failure is a valid result.** If the gate fails, the assistant is not used, and the attempt + its metrics are recorded in `dataset_v1.metadata.json` (`auto_annotator.gate_passed = false`) and may be reported as a negative result.
+1. Every row the heuristic could not decide.
+2. A **random 10% audit sample** of the rows it *could* decide (fixed seed `42`).
 
-**Constraint:** prefer **local / offline** assistants. If a hosted assistant is used, send only `comment_text_norm` after the PII scrub (§11) — never `post_text`, and never the raw snapshot — and record the provider and version in the metadata.
+The audit sample is how the heuristic's own accuracy is measured rather than assumed. Every
+row the adjudicator looks at carries its text, its post context, its parent comment, the
+heuristic's suggestion, and the evidence behind it. The adjudicator applies the
+guidelines and records the decision plus a one-line note.
+
+**Binding constraints on the engine**
+
+1. **The heuristic is triage, never the annotation rule.** The rules live in
+   `docs/ANNOTATION_GUIDELINES.md`. A marker alone never makes a row actionable
+   (§2.2). `maayos ang` was removed from the action-verb list for exactly this reason —
+   "the road is fixed" is a state, not an action.
+2. **The most disputed class is never auto-decided.** `request_marker + object_only`
+   (e.g. *"Sana maayos ang kalsada"*) scores 0.60 and always goes to adjudication, because
+   §5.3 #35 vs #36 is the single most common dispute in the guidelines.
+3. **Every row ends up with a decision.** Rows still below threshold at merge time are
+   reported as a warning and block release.
+4. **Human verification is mandatory.** ≥ 100 rows are reviewed by a person without
+   seeing the engine's label; the agreement rate and κ are reported. Those rows get
+   `verification = human_verified`.
+5. **The blinded re-label pass uses the same engine**, run against a fresh copy of the
+   pool with the `label` column hidden, ≥ 7 days after pass 1.
+
+**Disclosure.** The write-up must state: the engine and version, the cue/rule design, the
+share of rows auto-decided vs adjudicated vs human-verified, the human-verification
+agreement, and the blinded re-label κ.
 
 ### 10.8 Annotation trace
 
@@ -752,6 +807,7 @@ nlp-data/
 | V-14 | The metadata JSON parses and contains every key listed in §5.5. |
 | V-15 | The class prior in the test split is within ±10 percentage points of the train split prior. |
 | V-16 | **Lineage & agency integrity:** every `agency_id` in `dataset_v1.csv` and `posts_v1.csv` exists in `government_agencies.csv`; the denormalized `agency` and `agency_abbr` match the registry exactly; the row-count reconciliation in §5.6 holds (`n_raw_captured = Σ exclusions + n_candidate_pool = n_labeled = n_usable_final = Σ split counts`); `lineage.reconciles == true` in the metadata. |
+| V-17 | **Annotation completeness:** `verification` is populated on every row with a value in {`auto`, `human_verified`, `human_labeled`}; ≥ 100 rows are `human_verified` or `human_labeled`; `label_2` is populated on ≥ 20% of rows; the metadata's `cohens_kappa` ≥ 0.60. |
 
 **Acceptance:** Member 4 declares the dataset delivered when V-01…V-15 pass and the report is stored at `data/processed/validation_report.txt`. Member 5 confirms receipt and acceptance, or raises specific failed checks.
 
@@ -795,6 +851,8 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 | Version | Date | Author | Change |
 |---|---|---|---|
 | `1.0-draft` | 2026-10-20 | M4 (MALASAN) | Initial contract drafted from `NLP-PLAN.pdf` and `NLP-Final-Paper.pdf`. Schema, dedup/spam/PII rules, annotation interface, splits, validation, schedule. |
+| `1.5-draft` | 2026-10-20 | M4 (MALASAN) | Added the annotation provenance columns `annotation_rule` (37), `annotation_evidence` (38) and `annotation_confidence` (39), so every label in the delivered dataset records the rule that produced it, the evidence behind it, and the engine's confidence. Schema is now 39 columns. |
+| `1.4-draft` | 2026-10-20 | M4 (MALASAN) | Annotation is now performed by the annotator engine `src/annotate/auto_annotator.py` with human verification of ≥ 100 rows. §10.3 records the new roles, §10.7 documents the three-stage engine and its confidence thresholds, the `verification` column (36) was added to the schema, and check V-17 enforces annotation completeness. |
 | `1.3-draft` | 2026-10-20 | M4 (MALASAN) | Source list consolidated into a single canonical registry, `data/provenance/government_agencies.csv`, with one row per (agency, platform) pair carrying the agency's official name, abbreviation, type, supervising department, official website, official account details and the six source-selection criteria. `source_accounts.csv` removed. Added `agency_id` as the foreign key in the dataset schema and `counts_by_agency` to the metadata. |
 | `1.2-draft` | 2026-10-20 | M4 (MALASAN) | Annotation is now single-annotator. §10.3 replaces the annotator roster with a solo workflow plus a blinded re-label pass; §10.6 redefines the reliability statistic as intra-annotator reliability (test-retest) with a ≥ 7 day washout; `annotator_id` is always `A1`. |
 | `1.1-draft` | 2026-10-20 | M4 (MALASAN) | Switched collection to keyless HTML/DOM scraping: rewrote §3.2 routes and §3.3 run parameters, replaced the `collection_method` enum, dropped the credentials and `.env` requirement. Removed §12 (legal/ethical/platform-compliance); §12 is now the dataset's scope limits. README and requirements updated. |

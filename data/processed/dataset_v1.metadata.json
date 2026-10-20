@@ -1,5 +1,5 @@
 {
-  "_status": "DRAFT - populated at G3 (label freeze). All zero/empty values below are placeholders, not measurements. 'lineage' must satisfy the reconciliation identity in DATA_CONTRACT.md 5.6.",
+  "_status": "DRAFT - populated at G3 (label freeze). All zero/empty values below are placeholders, not measurements. 'lineage' must satisfy the reconciliation identity in DATA_CONTRACT.md 5.6. 'verification_counts' and 'human_verified_*' describe how the labels were produced - see ANNOTATION_GUIDELINES.md 8.5.",
   "dataset_version": "v1",
   "created_at": "",
   "producer": "M4",
@@ -41,6 +41,25 @@
     "dev": 0,
     "test": 0
   },
+  "verification_counts": {
+    "auto": 0,
+    "human_verified": 0,
+    "human_labeled": 0
+  },
+  "n_auto_decided": 0,
+  "n_adjudicated": 0,
+  "human_verified_n": 0,
+  "human_verified_agreement": 0.0,
+  "annotator_engine": {
+    "tool": "src/annotate/auto_annotator.py",
+    "version": "1.0",
+    "confidence_threshold": 0.85,
+    "audit_sample_rate": 0.1,
+    "random_seed": 42,
+    "n_auto_decided": 0,
+    "n_adjudicated": 0,
+    "audit_kappa": 0.0
+  },
   "language_counts": {
     "fil": 0,
     "eng": 0,
@@ -52,22 +71,6 @@
   "cohens_kappa": 0.0,
   "kappa_agreement_band": "",
   "adjudicated_rows": 0,
-  "auto_annotator": {
-    "used": false,
-    "tool": "",
-    "version": "",
-    "hosting": "",
-    "gold_set_n": 0,
-    "gold_macro_f1": 0.0,
-    "gold_cohens_kappa": 0.0,
-    "gate_thresholds": {
-      "macro_f1": 0.8,
-      "cohens_kappa": 0.6
-    },
-    "gate_passed": false,
-    "pre_labeled_rows": 0,
-    "human_verified_rows": 0
-  },
   "tool_versions": {
     "python": "",
     "pandas": "",
