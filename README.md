@@ -56,7 +56,6 @@ nlp-data/
 ├── README.md                    ← you are here
 ├── DATA_CONTRACT.md             ← the dataset schema and rules (read first)
 ├── requirements.txt
-├── .env.example                 ← collector credential placeholders
 ├── .gitignore
 ├── docs/
 │   ├── NLP-PLAN.pdf             ← source: task assignment and proposed research
@@ -78,11 +77,11 @@ nlp-data/
 │       ├── government_agencies.csv
 │       └── collection_log.csv
 ├── src/
-│   ├── collect/                 ← Graph API / YouTube API collectors
+│   ├── collect/                 ← DOM / HTML scrapers (no credentials)
 │   ├── clean/                   ← normalize, dedup, spam filter, PII scrub
 │   └── annotate/                ← labeling tool setup, agreement computation
 └── tools/
-    └── validate_dataset.py      ← acceptance test (V-01…V-15)
+    └── validate_dataset.py      ← acceptance test (V-01…V-16)
 ```
 
 ---
@@ -90,19 +89,27 @@ nlp-data/
 ## Setup
 
 ```bash
-git init
-git add -A && git commit -m "chore: scaffold repo, data contract, and dataset schemas"
+git clone https://github.com/edisonmalasan/nlp-data.git
+cd nlp-data
 
 python -m venv .venv
 # Windows: .venv\Scripts\activate
 # macOS/Linux: source .venv/bin/activate
 
 pip install -r requirements.txt
-cp .env.example .env        # then fill in the credentials you have access to
+playwright install chromium      # only needed for the Facebook headless scraper
 ```
 
-Dependencies: `pandas`, `numpy`, `requests`, `python-dotenv`, `regex`. Modeling and
-annotation-tool packages are installed separately as needed.
+**No credentials, keys, tokens, or `.env` file are needed.** There is nothing to configure
+before scraping — the collectors read publicly visible pages and nothing else.
+
+| Dependency | Used for |
+|---|---|
+| `requests` | fetching page HTML and the keyless JSON endpoints |
+| `beautifulsoup4` + `lxml` | parsing comment nodes out of the HTML |
+| `playwright` | the headless browser for Facebook's client-rendered comment threads |
+| `pandas` / `numpy` | the cleaning and annotation tables |
+| `scikit-learn` | agreement statistics and later modeling |
 
 **Before any collection begins**, the source list and the collection method must be approved
 by the instructor. Record the approval in `docs/COLLECTION_PROTOCOL.md` and log every run in
@@ -114,7 +121,7 @@ by the instructor. Record the approval in `docs/COLLECTION_PROTOCOL.md` and log 
 
 ```
         ┌──────────────┐
-        │  1. COLLECT  │  official APIs (Graph API, YouTube Data API) + manual fallback
+        │  1. COLLECT  │  read the public HTML/DOM (no keys, no tokens) + manual fallback
         │              │  → data/raw/<platform>/<page>/<run_id>.json   (immutable)
         └──────┬───────┘
                ▼
@@ -134,22 +141,37 @@ by the instructor. Record the approval in `docs/COLLECTION_PROTOCOL.md` and log 
         └──────┬───────┘
                ▼
         ┌──────────────┐
-        │  5. VALIDATE │  tools/validate_dataset.py — 15 checks must pass (V-01…V-15)
+        │  5. VALIDATE │  tools/validate_dataset.py — 16 checks must pass (V-01…V-16)
         │              │  → dataset_v1.metadata.json → hand-off
         └──────────────┘
 ```
 
 ### 1. Collect
 
-Only **official APIs** or **manual capture** from publicly visible pages.
+Comments are read straight from the **publicly visible HTML/DOM** of each post page.
+**No API keys, access tokens, OAuth apps, or account credentials are required** — there is
+nothing to sign up for and no `.env` file in this project.
 
-| Platform | Access route | Role |
+| Platform | How the comments are read | Role |
 |---|---|---|
-| **Facebook** | Meta Graph API, page access token | **Primary** — matches the study's framing |
-| Facebook (fallback) | Manual capture, no login | Contingency if API access is denied |
-| **YouTube** | YouTube Data API v3 | Secondary — agency channels have heavy comment volume |
-| **Reddit** | Reddit Data API (OAuth) | Optional — sparse, unpredictable yield |
-| **X** | X API v2 | Optional — only if access already exists |
+| **Facebook** | Headless browser (Playwright) opens the public permalink, scrolls the thread, reads the rendered DOM | **Primary** — matches the study's framing |
+| Facebook (fast path) | `requests` fetch of the permalink, parsing the HTML already in the page source | Shortcut when the comments are server-rendered |
+| **YouTube** | `requests` fetch of the watch page, parsing `ytInitialData` and its continuation tokens | Secondary — agency channels have heavy comment volume |
+| **Reddit** | Public keyless JSON endpoints (`/comments/<id>.json`) | Optional — sparse, unpredictable yield |
+| **X** | Public page HTML / embedded JSON | Optional — least accessible of the four |
+
+**Practical notes**
+
+- **Facebook** renders its comment list client-side, so a plain `requests` fetch often
+  returns the post shell with no comments in it. The headless browser that scrolls the
+  thread is the reliable route; the raw-HTML path only works when the comments happen to
+  be in the page source.
+- **YouTube** embeds the first page of comments in `ytInitialData`; the rest come from
+  continuation tokens in the same payload.
+- **Reddit** needs a descriptive `User-Agent` header or the requests get throttled.
+- **Rate behavior:** use a fixed delay between requests and a realistic `User-Agent`.
+  Going too fast gets the client IP temporarily blocked, which costs collection time.
+  On a block, log it and stop that source for the run instead of retrying in a loop.
 
 ### 2. Clean
 
