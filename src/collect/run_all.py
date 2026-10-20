@@ -160,26 +160,34 @@ def run_one(page, row, posts, notes, mode="recent"):
         ob.goto(page, url.rstrip("/") + "/videos", settle=5.0)
         time.sleep(2.0)
 
-    if mode == "invites" and platform == "facebook":
-        urls = ob.find_inviting_posts(page, limit=posts)
-    elif platform == "youtube":
-        # The YouTube app does not always render in a tab that is only being
-        # driven, and then the page has no video links at all. The channel's
-        # videos are in the page's own data either way.
-        urls = ob.discover_posts(page, platform, limit=posts)
-        if not urls:
-            urls = [u for u, _ in ob.discover_youtube_posts(page, limit=posts)]
-    else:
-        urls = ob.discover_posts(page, platform, limit=posts)
+    # Facebook is captured from the account page, and the account page does
+    # its own discovery as part of that. Discovering first and failing on an
+    # empty result would reject the accounts that capture_account can still
+    # collect.
+    use_account_capture = (platform == "facebook" and mode != "invites")
 
-    if not urls:
-        # Capturing the account page itself would produce a snapshot with no
-        # comments, which then looks like a collected account and is never
-        # retried. Report it as a failure instead.
-        return 0, 0, "no post permalinks found on the account page"
+    urls = []
+    if not use_account_capture:
+        if mode == "invites" and platform == "facebook":
+            urls = ob.find_inviting_posts(page, limit=posts)
+        elif platform == "youtube":
+            # The YouTube app does not always render in a tab that is only
+            # being driven, and then the page has no video links at all. The
+            # channel's videos are in the page's own data either way.
+            urls = ob.discover_posts(page, platform, limit=posts)
+            if not urls:
+                urls = [u for u, _ in ob.discover_youtube_posts(page, limit=posts)]
+        else:
+            urls = ob.discover_posts(page, platform, limit=posts)
+
+        if not urls:
+            # Capturing the account page itself would produce a snapshot with
+            # no comments, which then looks like a collected account and is
+            # never retried. Report it as a failure instead.
+            return 0, 0, "no post permalinks found on the account page"
 
     entries = []
-    if platform == "facebook" and mode != "invites":
+    if use_account_capture:
         # Facebook is captured from the account page, clicking the posts
         # where they sit. Navigating to a post permalink does not reliably
         # render its thread, and a photo post's permalink is only a preview
@@ -196,7 +204,12 @@ def run_one(page, row, posts, notes, mode="recent"):
     else:
         for u in urls[:posts]:
             try:
-                data = ob.capture_post(page, u, extract_js, platform, mode)
+                if platform == "facebook":
+                    # a photo post's permalink is a preview; the post is
+                    # behind it
+                    data = ob.capture_one(page, u, extract_js, platform)
+                else:
+                    data = ob.capture_post(page, u, extract_js, platform, mode)
             except ob.OrcaError as e:
                 log(f"    post failed: {e}")
                 continue

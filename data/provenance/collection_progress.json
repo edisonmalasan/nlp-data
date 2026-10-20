@@ -1,15 +1,39 @@
 {
   "facebook/dost_pagasa": {
-    "posts": 3,
-    "comments": 4,
-    "last_error": "",
-    "updated_at": "2026-10-21T06:05:36"
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-21T06:22:58"
   },
   "facebook/dswd": {
-    "posts": 4,
-    "comments": 6,
+    "posts": 1,
+    "comments": 11,
     "last_error": "",
-    "updated_at": "2026-10-21T06:11:48"
+    "updated_at": "2026-10-21T06:24:02"
+  },
+  "facebook/bfp": {
+    "posts": 4,
+    "comments": 12,
+    "last_error": "",
+    "updated_at": "2026-10-21T06:17:08"
+  },
+  "facebook/dti": {
+    "posts": 3,
+    "comments": 0,
+    "last_error": "",
+    "updated_at": "2026-10-21T06:22:20"
+  },
+  "facebook/doh": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-21T06:23:19"
+  },
+  "facebook/deped": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-21T06:24:23"
   },
   "youtube/OfficeOfTheVicePresidentPH_yt": {
     "posts": 1,
