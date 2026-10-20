@@ -225,7 +225,7 @@ verifying a sample.
 
 **Goal:** a dataset that can be accepted or rejected with one command.
 
-- [ ] Write `tools/validate_dataset.py` — the 16 checks V-01…V-16 from the contract.
+- [ ] Write `tools/validate_dataset.py` — the 17 checks V-01…V-17 from the contract.
 - [ ] Run it. **0 errors**, or fix the underlying problem (don't weaken the check).
 - [ ] Fill in `data/processed/dataset_v1.metadata.json` — including the `lineage` block, which
       must satisfy the reconciliation identity.
@@ -235,25 +235,38 @@ verifying a sample.
 - [ ] Note the final usable count → this is the number that fills the paper's `<number>`
       placeholder in the Scope section.
 
-**Done when:** `validation_report.txt` shows 0 errors, and the deliverable is:
+**Then build the release package** — this is the actual hand-off artifact:
 
-| File | What it is |
+```bash
+python tools/build_release.py --check          # is it ready?
+python tools/build_release.py --build --zip    # assemble data/final/ and zip it
+```
+
+**Done when:** `validation_report.txt` shows 0 errors, `build_release.py --check` prints
+**READY TO RELEASE**, and `data/final/` is assembled. The package is a copy of the working
+layer, so the working layer stays the source of truth:
+
+| Working layer (`data/processed/`) | Released as (`data/final/`) |
 |---|---|
-| `data/processed/dataset_v1.csv` | The labeled dataset, 35 columns. **Facebook only** — matches the paper title and abstract. |
-| `data/processed/dataset_v1_ext.csv` | The same schema across all platforms. Optional extension. |
-| `data/processed/splits/{train,dev,test}.csv` | **Authoritative** split assignment. Join on `comment_id`. |
-| `data/processed/posts_v1.csv` | Post context master. |
-| `data/processed/dataset_v1.metadata.json` | Counts, class distribution, per-agency counts, provenance, κ, lineage. |
-| `data/provenance/government_agencies.csv` | Which government agency every row came from. |
-| `data/final/` | **The release package.** Assembled by `tools/build_release.py` — one folder, one zip, one manifest. |
+| `dataset_v1.csv` — 39 columns, labeled, **Facebook only** | `dataset_v1.csv` |
+| `dataset_v1_ext.csv` — same schema, all platforms | `dataset_v1_ext.csv` |
+| `splits/{train,dev,test}.csv` — **authoritative** | `train.csv`, `dev.csv`, `test.csv` |
+| `posts_v1.csv` — post context master | `posts_v1.csv` |
+| `dataset_v1.metadata.json` — counts, κ, lineage | `dataset_v1.metadata.json` |
+| — | `government_agencies.csv` |
+| — | `ANNOTATION_GUIDELINES.md` |
+| — | `README.md` — the package readme |
+| — | `MANIFEST.json` — counts + SHA-256 per file |
+| — | `nlp-actionable-comments-v1.zip` |
 
-The 35 columns, in order: `comment_id`, `platform`, `source_page`, `source_page_name`,
+The 39 columns, in order: `comment_id`, `platform`, `source_page`, `source_page_name`,
 `agency_id`, `agency`, `agency_abbr`, `post_id`, `post_url`, `post_date`, `post_text`,
 `post_media_type`, `post_topic`, `is_reply`, `parent_comment_id`, `parent_comment_text`,
 `comment_text`, `comment_text_norm`, `context_text_norm`, `dedup_key`, `n_tokens`, `language`,
 `label`, `label_str`, `annotator_id`, `label_2`, `agreement`, `adjudicated_by`,
 `adjudication_note`, `guideline_version`, `source_snapshot`, `collected_at`, `pii_redacted`,
-`split`, `notes`.
+`verification`, `split`, `notes`, `annotation_rule`, `annotation_evidence`,
+`annotation_confidence`.
 
 **Gate G3 — label freeze.**
 
@@ -261,17 +274,25 @@ The 35 columns, in order: `comment_id`, `platform`, `source_page`, `source_page_
 
 ## The hand-off to modeling
 
-**What lands on the modeling side's desk:**
+**What lands on the modeling side's desk** — the `data/final/` package, zipped:
 
 ```
-data/processed/dataset_v1.csv          ← the labeled dataset
-data/processed/splits/train.csv        ← authoritative
-data/processed/splits/dev.csv          ← authoritative
-data/processed/splits/test.csv         ← authoritative  ← the held-out set, used ONCE
-data/processed/posts_v1.csv            ← post context, if needed
-data/processed/dataset_v1.metadata.json
-data/provenance/government_agencies.csv
+data/final/
+  dataset_v1.csv              ← the labeled dataset (39 columns)
+  train.csv                   ← authoritative
+  dev.csv                     ← authoritative
+  test.csv                    ← authoritative  ← the held-out set, used ONCE
+  posts_v1.csv                ← post context, if needed
+  dataset_v1.metadata.json
+  government_agencies.csv
+  ANNOTATION_GUIDELINES.md
+  README.md                   ← the package readme
+  MANIFEST.json               ← counts + SHA-256 per file
+  nlp-actionable-comments-v1.zip
 ```
+
+Hand over the **zip**. It is the same content as `data/processed/`, with a manifest that
+proves which version was released.
 
 **What the modeling side does with it:** TF-IDF + Logistic Regression as the baseline, then
 the same classifier plus the suggestion-related linguistic features (`please`, `dapat`, `sana`,
