@@ -41,6 +41,8 @@ import sys
 from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from alt_text import clean_comment
 LOG_PATH = os.path.join(ROOT, "data", "provenance", "collection_log.csv")
 
 COMMENT_FIELDS = [
@@ -137,9 +139,6 @@ def validate(snap: dict, path: str) -> list:
         for j, c in enumerate(comments):
             if not isinstance(c, dict):
                 problems.append(f"{path}: post {i} comment {j} is not an object")
-                continue
-            if not (c.get("comment_text") or "").strip():
-                problems.append(f"{path}: post {i} comment {j} has empty comment_text")
     return problems
 
 
@@ -182,7 +181,7 @@ def flatten(snap: dict, path: str, source_page: str, platform: str,
 
         parent_ids = {}
         for c in p.get("comments", []):
-            text = (c.get("comment_text") or "").strip()
+            text = clean_comment(c.get("comment_text") or "")
             if not text:
                 continue
             seq += 1
@@ -290,6 +289,20 @@ def main(argv=None) -> int:
         print("No snapshots found.")
         return 1
 
+    # A snapshot directory can hold several accounts. Only the ones for this
+    # source page belong here, otherwise the same capture is converted twice.
+    scoped = []
+    for path in paths:
+        try:
+            head = json.load(io.open(path, encoding="utf-8"))
+        except Exception:
+            scoped.append(path)
+            continue
+        if head.get("source_page", "") in ("", args.source_page):
+            scoped.append(path)
+    skipped = len(paths) - len(scoped)
+    paths = scoped
+
     all_comments = []
     all_posts = []
     problems = []
@@ -352,6 +365,11 @@ def main(argv=None) -> int:
         print("\nNothing was written. Fix the snapshots and run again.")
 
     ppath = os.path.join(args.outdir, "posts_captured.csv")
+    if problems:
+        # A malformed capture must not half-overwrite the interim layer.
+        print("\nNothing was written. Fix the captures and run again.")
+        return 1
+
     write_csv(cpath, all_comments, COMMENT_FIELDS, append=args.append)
     write_csv(ppath, all_posts, POST_FIELDS, append=args.append)
 
@@ -361,8 +379,7 @@ def main(argv=None) -> int:
     print(f"-> {cpath}")
     print(f"-> {ppath}")
     print(f"logged -> {LOG_PATH}")
-
-    return 1 if problems else 0
+    return 0
 
 
 if __name__ == "__main__":

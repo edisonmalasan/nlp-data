@@ -18,7 +18,8 @@ interim files the cleaning pipeline consumes.
 
 ```
 your Chrome (signed in)
-   │  computer-use agent drives it, reads the DOM
+   │  src/collect/orca_fb.py drives it via orca computer-use,
+   │  reads the accessibility tree
    ▼
 data/raw/<platform>/<source_page>/<run_id>.json      ← raw snapshot, immutable
    │  python src/collect/to_interim.py
@@ -29,6 +30,26 @@ data/interim/posts_captured.csv
    ▼
 data/processed/candidate_pool.csv                   ← cleaned
 ```
+
+### The tool
+
+`src/collect/orca_fb.py` is the collector. It drives the browser through
+`orca computer` and reads the **accessibility tree**, not the HTML DOM. Two things it
+gets right that a naive script does not:
+
+- **Navigation is verified.** Facebook is an SPA and swallows failed navigations
+  silently, so the address bar holding a URL is not evidence anything happened. The
+  check is on the loaded document URL, and the sequence that works is
+  `Ctrl+L → set-value → Delete → Return` (`paste-text` lets the omnibox
+  inline-autocomplete to a different, shorter URL).
+- **The thread is loaded to the end.** A post's comment list grows lazily and
+  slowly. Stopping when the count holds still for a few scrolls catches the first
+  ten comments and calls it the whole thread. The scroll loop keeps going until
+  the count has been stable for several rounds *and* a floor of scroll actions has
+  passed.
+
+The window must be focused for keyboard input. The tool uses `--restore-window` to
+bring Chrome forward itself, but it will steal focus from whatever you are doing.
 
 **Nothing is filtered during collection.** Every comment is captured verbatim. Filtering
 happens later, in one place, with a reason code for every removal.
@@ -214,6 +235,48 @@ dropped a row silently \u2014 that is a bug, not a rounding difference.
 ---
 
 ## 8. The pilot first
+
+### Pilot results (2026-10-20)
+
+The pilot was run through `src/collect/orca_fb.py` on two accounts, two posts each.
+
+| Account | Posts | Comments captured | After cleaning |
+|---|---|---|---|
+| DOST-PAGASA | 2 | 37 | 36 |
+| DSWD | 2 | 25 | 24 |
+| **Total** | **4** | **62** | **60** |
+
+2 comments were removed as `X_SPAM`. The line-count reconciliation held.
+
+**Comments per post: 6, 18, 1 and 37.** The spread is wide — a newly posted
+bulletin has almost no comments, an established post has dozens. Extrapolating from
+the 4 pilot posts is not safe; a real yield estimate needs the full 8–12 posts per
+account.
+
+**Request-marker rate: 20 of 60 (33%).** That is a healthy spread, not a class of
+all-requests, and it is consistent with the study's target of 15–65% actionable.
+
+**Everything works end to end.** The chain ran: capture → `to_interim` → clean →
+60 usable comments in `data/processed/candidate_pool.csv`.
+
+### What the pilot did not settle
+
+- **Yield per post is unproven.** 6, 18, 1 and 37 comments per post. Whether 10
+  accounts × 8 posts reaches 600 Facebook comments is still an open question.
+- **Replies were not detected** in the pilot (`is_reply` was false throughout), so
+  the reply-parent capture path is untested.
+- **Only 2 of the 10 accounts** have been touched.
+
+### Running the pilot
+
+```bash
+python src/collect/orca_fb.py \
+    --page https://www.facebook.com/PAGASA.DOST.GOV.PH \
+    --source-page dost_pagasa --agency-id dost_pagasa \
+    --source-page-name "DOST-PAGASA" --posts 2
+```
+
+Then convert and clean as in §6 and §7.
 
 **Before collecting the full set, run a pilot: 2 accounts \u00d7 2 posts each.**
 

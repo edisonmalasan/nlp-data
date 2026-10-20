@@ -39,6 +39,8 @@ data/
   provenance/[committed]   source registry + collection log
 src/
   annotate/auto_annotator.py   the annotator engine
+  collect/orca_fb.py           the primary collector (orca computer-use)
+  collect/alt_text.py          strips generated image descriptions
   collect/facebook.py          the scripted fallback scraper
   collect/to_interim.py        raw capture -> interim CSV
   clean/                       normalize, dedup, spam, pii, pipeline

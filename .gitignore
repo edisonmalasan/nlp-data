@@ -4,7 +4,8 @@ data/raw/*
 data/interim/*
 
 # ---- Processed layer: committed (small, scrubbed) ----
-# data/processed/ IS tracked.
+# data/processed/ IS tracked, except the transient pre-annotation pool.
+data/processed/candidate_pool.csv
 
 # ---- Release package: the generated contents are tracked, the zip is not ----
 data/final/*.zip

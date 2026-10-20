@@ -120,7 +120,9 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 | Path | What it is |
 |---|---|
 | `src/annotate/auto_annotator.py` | **The annotator engine.** Cue extraction → heuristic scoring → adjudication batches → merge. |
-| `src/collect/facebook.py` | **The scripted fallback scraper.** Headless DOM reader, no credentials. `--dump-dom` saves the HTML for offline selector work. |
+| `src/collect/orca_fb.py` | **The primary collector.** Drives the researcher's own signed-in Chrome through orca computer-use and reads the accessibility tree. |
+| `src/collect/alt_text.py` | Strips Facebook's generated image descriptions out of captured comments. |
+| `src/collect/facebook.py` | The scripted fallback scraper. Headless DOM reader, no credentials. |
 | `src/collect/to_interim.py` | **The capture hand-off.** Validates a raw snapshot and writes the interim files the cleaning pipeline consumes. |
 | `src/annotate/README.md` | How to run the annotation loop, and how to tune the cue lists. |
 | `src/collect/` | Platform scrapers. *(pending — Stage 1)* |
@@ -217,8 +219,18 @@ authoritative; the `split` column is only a mirror.
 
 ```bash
 pip install -r requirements.txt
-playwright install chromium                      # for the Facebook headless scraper
+playwright install chromium                      # only for the scripted fallback
 python tests/run_all.py                         # run the test suite
+
+# Stage 1 - collect (the primary route, through the signed-in browser)
+python src/collect/orca_fb.py \
+    --page https://www.facebook.com/dswdserves \
+    --source-page dswd --agency-id dswd \
+    --source-page-name "Department of Social Welfare and Development" \
+    --posts 2
+python src/collect/to_interim.py \
+    --snapshot-dir data/raw/facebook --source-page dswd \
+    --platform facebook --agency-id dswd --append
 
 # Stage 3 — annotate
 python src/annotate/auto_annotator.py score \

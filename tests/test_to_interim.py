@@ -83,9 +83,14 @@ def run() -> list:
     check("a valid snapshot has no problems", validate(SNAP, "snap.json"), [])
     check("a missing posts list is caught",
           bool(validate({"foo": 1}, "bad.json")), True)
-    check("an empty comment text is caught",
-          bool(validate({"posts": [{"comments": [{"comment_text": "  "}]}]},
-                        "bad2.json")), True)
+    # An empty comment text is NOT a malformed capture. Emoji and sticker
+    # reactions legitimately have no text, and the cleaning stage drops them
+    # as X_EMPTY. Only a comment that is not even an object is a problem.
+    check("an empty comment text is not a malformed capture",
+          validate({"posts": [{"comments": [{"comment_text": "  "}]}]},
+                   "bad2.json"), [])
+    check("a comment that is not an object is caught",
+          bool(validate({"posts": [{"comments": ["nope"]}]}, "bad3.json")), True)
 
     # ---- platform prefix ----
     check("facebook prefix", platform_prefix("facebook"), "fb")

@@ -87,7 +87,7 @@ nlp-data/
 │       ├── government_agencies.csv
 │       └── collection_log.csv
 ├── src/
-│   ├── collect/                 ← facebook.py, to_interim.py
+│   ├── collect/                 ← orca_fb.py, to_interim.py, alt_text.py
 │   ├── clean/                   ← normalize, dedup, spam, PII, pipeline
 │   └── annotate/                ← labeling tool setup, agreement computation
 └── tools/

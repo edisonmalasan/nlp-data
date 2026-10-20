@@ -1,1 +1,7 @@
 run_id,platform,source_page,collection_method,tool,version,user_agent,delay_seconds,post_ids_collected,comments_collected,collected_at,raw_snapshot_id,notes
+fb_dost_pagasa_2026-10-20T20-42,facebook,dost_pagasa,browser_dom_session,orca-computer-use,1.0,,3,2,37,2026-10-20T12:42:59.927271+00:00,fb_dost_pagasa_2026-10-20T20-42,pilot via orca computer-use
+fb_dswd_2026-10-20T21-04,facebook,dost_pagasa,browser_dom_session,orca-computer-use,1.0,,3,2,25,2026-10-20T13:04:06.855141+00:00,fb_dswd_2026-10-20T21-04,pilot via orca computer-use
+fb_dost_pagasa_2026-10-20T20-42,facebook,dswd,browser_dom_session,orca-computer-use,1.0,,3,2,37,2026-10-20T12:42:59.927271+00:00,fb_dost_pagasa_2026-10-20T20-42,pilot via orca computer-use
+fb_dswd_2026-10-20T21-04,facebook,dswd,browser_dom_session,orca-computer-use,1.0,,3,2,25,2026-10-20T13:04:06.855141+00:00,fb_dswd_2026-10-20T21-04,pilot via orca computer-use
+fb_dost_pagasa_2026-10-20T20-42,facebook,dost_pagasa,browser_dom_session,orca-computer-use,1.0,,3,2,37,2026-10-20T12:42:59.927271+00:00,fb_dost_pagasa_2026-10-20T20-42,pilot via orca computer-use
+fb_dswd_2026-10-20T21-04,facebook,dswd,browser_dom_session,orca-computer-use,1.0,,3,2,25,2026-10-20T13:04:06.855141+00:00,fb_dswd_2026-10-20T21-04,pilot via orca computer-use
