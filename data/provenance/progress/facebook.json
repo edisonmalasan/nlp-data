@@ -2,8 +2,8 @@
   "facebook/dost_pagasa": {
     "posts": 3,
     "comments": 4,
-    "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:21:42"
+    "last_error": "",
+    "updated_at": "2026-10-21T06:05:36"
   },
   "facebook/dswd": {
     "posts": 4,
@@ -16,5 +16,11 @@
     "comments": 12,
     "last_error": "",
     "updated_at": "2026-10-21T06:17:08"
+  },
+  "facebook/dti": {
+    "posts": 3,
+    "comments": 0,
+    "last_error": "",
+    "updated_at": "2026-10-21T06:22:20"
   }
 }

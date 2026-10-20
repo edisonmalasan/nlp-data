@@ -62,8 +62,15 @@ class WorkerLog:
             print(line, flush=True)
         except Exception:
             pass
-        self.fh.write(line + "\n")
-        self.fh.flush()
+        self.write_line(line)
+
+    def write_line(self, line: str):
+        """Write a line to the log file, with no timestamp added."""
+        try:
+            self.fh.write(line + "\n")
+            self.fh.flush()
+        except Exception:
+            pass
 
     def close(self):
         try:
@@ -73,7 +80,13 @@ class WorkerLog:
 
 
 class Tee:
-    """Captures what the collector prints and writes it to the worker's log."""
+    """Captures what the collector prints and writes it to the worker's log.
+
+    It writes to the log file directly. Calling the logger would recurse:
+    the logger prints to stdout, stdout is the tee, and the tee calls the
+    logger again, so every line would be written once per level of the
+    recursion.
+    """
 
     def __init__(self, log):
         self.log = log
@@ -84,7 +97,7 @@ class Tee:
         while "\n" in self.buf:
             line, self.buf = self.buf.split("\n", 1)
             if line.strip():
-                self.log(line)
+                self.log.write_line(line)
         return len(s)
 
     def flush(self):

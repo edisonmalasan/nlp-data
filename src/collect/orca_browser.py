@@ -467,7 +467,10 @@ def find_inviting_posts(page: str, limit: int = 12, rounds: int = 6) -> list:
     found = []
     seen = set()
     for _ in range(rounds):
-        scroll_to_bottom(page, "facebook")
+        # the FEED has to be scrolled, not a comment thread: an account page
+        # has no thread, so the thread scroller does nothing and only the
+        # posts that happened to render are ever examined
+        scroll_feed(page, "facebook")
         try:
             data = eval_json(page, js) or {}
         except OrcaError:
