@@ -229,7 +229,10 @@ def main(argv=None) -> int:
         save_progress(progress)
         if err:
             log(f"  error: {err}")
-        time.sleep(3)
+        # Pause between accounts. Facebook throttles a session that loads
+        # pages back to back, and a throttled page returns the logged-out
+        # shell, which the verifier then reads as a gated account.
+        time.sleep(float(os.environ.get("ACCOUNT_PAUSE", "8")))
 
     log("done")
     for k, v in progress.items():

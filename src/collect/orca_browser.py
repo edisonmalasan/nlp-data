@@ -152,6 +152,61 @@ def goto(page: str, url: str, settle: float = PAGE_SETTLE):
     time.sleep(settle)
 
 
+PAGE_TEXT_JS = r"""
+(() => {
+  const body = document.body.innerText || '';
+  return JSON.stringify({
+    url: location.href,
+    title: document.title || '',
+    body: body.slice(0, 4000),
+    bodyLen: body.length,
+    articles: document.querySelectorAll('div[role="article"]').length,
+    links: document.querySelectorAll('a[href*="/posts/"]').length,
+  });
+})()
+"""
+
+
+def read_page(page: str) -> dict:
+    """The rendered text of the page, with no screenshot."""
+    try:
+        v = eval_json(page, PAGE_TEXT_JS)
+    except (OrcaError, ValueError):
+        return {}
+    return v if isinstance(v, dict) else {}
+
+
+def wait_for_content(page: str, markers, timeout: float = 25.0, poll: float = 2.0) -> dict:
+    """Wait until the page has rendered.
+
+    Facebook serves the shell - the nav, the notification badge, the login
+    prompt - before the profile content arrives. Reading the page too early
+    gives the shell, whose title is always "(N) Facebook" and whose body
+    contains a login prompt, so a page that has not rendered looks exactly
+    like a page that is gated.
+
+    A profile page is rendered when the body carries a follower count.
+    """
+    deadline = time.time() + timeout
+    info = {}
+    while time.time() < deadline:
+        info = read_page(page)
+        body = (info.get("body") or "")
+        if any(m.lower() in body.lower() for m in markers):
+            return info
+        if any(b in body for b in ("This content isn't available",
+                                   "You're Temporarily Blocked",
+                                   "Page Not Found")):
+            return info
+        time.sleep(poll)
+    return info
+
+
+def profile_markers() -> list:
+    """Strings that only appear on a rendered Facebook page."""
+    return ["followers", "following", "Government organization", "Posts"]
+
+
 SCROLL_JS = r"""
 (() => {
   const SEL = __SEL__;

@@ -48,19 +48,28 @@ GOCC = {
     "Philippine Credit and Investments Corporation",
 }
 
-TITLE_JS = r"""
-(() => {
-  const t = document.title || '';
-  const body = (document.body.innerText || '').slice(0, 400);
-  return JSON.stringify({title: t, body: body});
-})()
-"""
-
 BLOCKED_MARKERS = (
     "content isn't available", "this content isn't available",
-    "page not found", "login to continue", "you must log in",
-    "this account has been", "sorry, this page isn't available",
+    "page not found", "temporarily blocked", "this account has been",
+    "sorry, this page isn't available",
 )
+
+# The page name is not in document.title for a Facebook profile - the title
+# stays "(N) Facebook" and the name is in the rendered text. A rendered
+# profile carries a follower count; a page that has not rendered does not.
+RENDERED_MARKERS = ("followers", "following", "Government organization")
+
+
+def page_name(body: str) -> str:
+    """The page's display name, taken from the line before the follower count."""
+    lines = [l.strip() for l in (body or "").splitlines() if l.strip()]
+    for i, line in enumerate(lines):
+        if "followers" in line and i > 0:
+            return lines[i - 1]
+    for line in lines[:12]:
+        if len(line) > 3 and "followers" not in line and not line.startswith("Number of"):
+            return line
+    return ""
 
 
 def read_registry():
@@ -78,32 +87,37 @@ def write_registry(rows, fields):
 
 
 def verify(page, agency, slug, expected) -> tuple:
-    """Returns (ok, reason, title)."""
+    """Returns (ok, reason, name).
+
+    The check is on the rendered page, not the title: a Facebook profile's
+    document.title stays "(N) Facebook" and the agency name appears in the
+    body. The page is also given time to render, because the shell that
+    arrives first carries a login prompt and would otherwise be mistaken
+    for a gated page.
+    """
     url = f"https://www.facebook.com/{slug}"
     try:
-        ob.goto(page, url, settle=5.0)
+        ob.goto(page, url, settle=6.0)
     except ob.OrcaError as e:
         return False, f"navigation failed: {e}", ""
-    time.sleep(1.5)
 
-    try:
-        data = ob.eval_json(page, TITLE_JS) or {}
-    except ob.OrcaError as e:
-        return False, f"read failed: {e}", ""
+    info = ob.wait_for_content(page, RENDERED_MARKERS, timeout=25.0)
+    body = (info.get("body") or "")
+    name = page_name(body)
 
-    title = (data.get("title") or "").strip()
-    body = (data.get("body") or "").strip()
+    low = body.lower()
+    for marker in BLOCKED_MARKERS:
+        if marker in low:
+            return False, f"page unavailable or blocked: {marker!r}", name
 
-    low_title = title.lower()
-    if any(m in low_title for m in BLOCKED_MARKERS) or any(m in body.lower() for m in BLOCKED_MARKERS):
-        return False, "page unavailable or gated", title
-    if not title:
-        return False, "no title", title
+    if not any(m.lower() in low for m in RENDERED_MARKERS):
+        return False, "page did not render (no follower count)", name
 
+    haystack = (name + " " + body[:600]).lower()
     for token in expected:
-        if token.lower() in title.lower():
-            return True, "title matches", title
-    return False, f"title does not name the agency: {title[:70]!r}", title
+        if token.lower() in haystack:
+            return True, "page names the agency", name
+    return False, f"page does not name the agency: {name[:60]!r}", name
 
 
 def main(argv=None) -> int:
@@ -135,11 +149,14 @@ def main(argv=None) -> int:
             print(f"  {agency:52} already registered")
             continue
 
-        ok, reason, title = verify(page, agency, slug, expected)
+        ok, reason, name = verify(page, agency, slug, expected)
         results.append({"agency": agency, "slug": slug, "ok": ok,
-                        "reason": reason, "title": title})
+                        "reason": reason, "name": name})
         mark = "OK  " if ok else "no  "
-        print(f"  {mark}{agency:52} {reason[:60]}")
+        print(f"  {mark}{agency:52} {reason[:56]}")
+        if ok:
+            print(f"      {name[:80]}")
+        time.sleep(1.5)
         if ok:
             accepted += 1
 

@@ -29,6 +29,7 @@ sys.path.insert(0, HERE)
 import collect_all
 import run_all
 import verify_sources
+import discover_from_websites
 
 
 def log(msg):
@@ -49,8 +50,12 @@ def step(name, fn):
 def main() -> int:
     posts = int(os.environ.get("POSTS", "8"))
 
-    step("verifying the candidate source accounts",
-         lambda: verify_sources.main(["--apply", "--source", "facebook"]))
+    # The agency's own website linking its Facebook page is the strongest
+    # evidence available, and the page name is then checked against the
+    # agency. Guessing slugs does not work - "PSAofficial" is a page called
+    # "Pet Society".
+    step("finding the official pages from the agency websites",
+         lambda: discover_from_websites.main(["--apply"]))
 
     for platform in ("facebook", "youtube", "x"):
         step(f"collecting {platform}", lambda p=platform: run_all.main(

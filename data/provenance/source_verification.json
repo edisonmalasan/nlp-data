@@ -1,0 +1,14 @@
+{
+  "source": "facebook",
+  "n_candidates": 73,
+  "n_accepted": 0,
+  "results": [
+    {
+      "agency": "Department of Agriculture",
+      "slug": "deptofagriculture_ph",
+      "ok": false,
+      "reason": "page unavailable or blocked: \"content isn't available\"",
+      "name": "This content isn't available right now"
+    }
+  ]
+}
