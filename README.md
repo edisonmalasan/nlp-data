@@ -25,6 +25,10 @@ the schema in [`DATA_CONTRACT.md`](DATA_CONTRACT.md).
 **Working path:** [`docs/STAGES.md`](docs/STAGES.md) — the six stages with checkboxes, exit
 criteria for each, and the open decisions still blocking you.
 
+**Orientation:** [`CONTEXT.md`](CONTEXT.md) maps every file, the 39-column schema, and every
+threshold in one place. [`AGENTS.md`](AGENTS.md) holds the operating rules any agent or new
+teammate must follow here.
+
 ---
 
 ## Why this data exists
@@ -57,6 +61,8 @@ The full task definition, inclusion criteria, and annotation rules live in
 ```
 nlp-data/
 ├── README.md                    ← you are here
+├── CONTEXT.md                   ← repo mapper: stages, files, schema, thresholds
+├── AGENTS.md                    ← operating rules for an AI agent working here
 ├── DATA_CONTRACT.md             ← the dataset schema and rules (read first)
 ├── requirements.txt
 ├── .gitignore
@@ -401,6 +407,8 @@ as the gold set exists; do not wait for collection to be "complete."
 | `DATA_CONTRACT.md` | Schema, dedup/spam/PII rules, splits, validation |
 | `docs/ANNOTATION_GUIDELINES.md` | The labeling rules and example bank |
 | `docs/STAGES.md` | The step-by-step path through this scope |
+| `CONTEXT.md` | Repo mapper: file inventory, schema, thresholds |
+| `AGENTS.md` | Operating rules for an agent or new teammate |
 
 ---
 
