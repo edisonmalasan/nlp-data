@@ -1,0 +1,482 @@
+{
+  "n_queries": 19,
+  "n_candidates": 88,
+  "n_accepted": 35,
+  "results": [
+    {
+      "subreddit": "PHGov",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "RantAndVentPH",
+      "ok": true,
+      "url": "https://www.reddit.com/r/RantAndVentPH/comments/1sev4e3/mayroon_po_ba_tayong_department_of_agriculture/",
+      "reason": "official markers: department of"
+    },
+    {
+      "subreddit": "PhilippineUbe",
+      "ok": true,
+      "url": "https://www.reddit.com/r/PhilippineUbe/comments/1utaesl/the_department_of_agriculture_held_a_meeting/",
+      "reason": "official markers: department of"
+    },
+    {
+      "subreddit": "lifestylecheckPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "Philippines",
+      "ok": true,
+      "url": "https://www.reddit.com/r/Philippines/comments/1weakpi/department_of_agriculture_suspends_outbound/",
+      "reason": "official markers: department of, bureau of, philippine government"
+    },
+    {
+      "subreddit": "Cebu",
+      "ok": true,
+      "url": "https://www.reddit.com/r/Cebu/comments/1j97he0/katuod_mo_aha_ang_dept_of_agri/",
+      "reason": "official markers: bureau of"
+    },
+    {
+      "subreddit": "USDA",
+      "ok": true,
+      "url": "https://www.reddit.com/r/USDA/",
+      "reason": "official markers: department of"
+    },
+    {
+      "subreddit": "AntiworkPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "truePhilippines",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "inthephilippines",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "BPOinPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "AskPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "utangPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "phcareers",
+      "ok": true,
+      "url": "https://www.reddit.com/r/phcareers/comments/16mnt1t/how_hard_is_it_to_land_a_job_in_the_government/",
+      "reason": "official markers: department of, bureau of"
+    },
+    {
+      "subreddit": "PinoyAskMeAnything",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "phinvest",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "PHJobs",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "pinoymed",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "NursesPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "newsPH",
+      "ok": true,
+      "url": "https://www.reddit.com/r/newsPH/",
+      "reason": "official markers: commission"
+    },
+    {
+      "subreddit": "Teachers",
+      "ok": true,
+      "url": "https://www.reddit.com/r/Teachers/comments/1uqn2pg/philippines_department_of_education_inclusive/",
+      "reason": "official markers: department of"
+    },
+    {
+      "subreddit": "studentsph",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "onlineservicesPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "Philippines_Expats",
+      "ok": true,
+      "url": "https://www.reddit.com/r/Philippines_Expats/comments/1o5zfwl/department_of_public_works_and_highways_dpwh/",
+      "reason": "official markers: department of, commission"
+    },
+    {
+      "subreddit": "CivilEngineers_PH",
+      "ok": true,
+      "url": "https://www.reddit.com/r/CivilEngineers_PH/comments/1ndm9v4/personal_experience_working_in_a_government_agency/",
+      "reason": "official markers: government agency"
+    },
+    {
+      "subreddit": "ScammersPH",
+      "ok": true,
+      "url": "https://www.reddit.com/r/ScammersPH/comments/1qyyzv8/nascam_ka_do_this/",
+      "reason": "official markers: gov.ph, department of, bureau of"
+    },
+    {
+      "subreddit": "JobPH",
+      "ok": true,
+      "url": "https://www.reddit.com/r/JobPH/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "JobsPhilippines",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "FellowKids",
+      "ok": true,
+      "url": "https://www.reddit.com/r/FellowKids/comments/txe016/the_department_of_transportation_in_the/",
+      "reason": "official markers: department of"
+    },
+    {
+      "subreddit": "ChikaPH",
+      "ok": true,
+      "url": "https://www.reddit.com/r/ChikaPH/comments/1x9reus/the_new_commissioner_of_the_presidential/",
+      "reason": "official markers: commission"
+    },
+    {
+      "subreddit": "commutersph",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "LTOph",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "scientistsPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "peyups",
+      "ok": true,
+      "url": "https://www.reddit.com/r/peyups/comments/1sudoqk/the_rotc_situation_right_now_regarding_the_issue/",
+      "reason": "official markers: department of"
+    },
+    {
+      "subreddit": "MedTechPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "gradschoolph",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "CareerAdvicePH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "dailyChismisPh",
+      "ok": true,
+      "url": "https://www.reddit.com/r/dailyChismisPh/comments/1x7c64n/chismis_about_dfa_and_diplomats_totoo_ba/",
+      "reason": "official markers: official, government agency"
+    },
+    {
+      "subreddit": "FilipinoFreethinkers",
+      "ok": true,
+      "url": "https://www.reddit.com/r/FilipinoFreethinkers/comments/o40v14/a_darker_side_of_the_philippine_foreign_service/",
+      "reason": "official markers: department of, philippine government"
+    },
+    {
+      "subreddit": "PhilippineMilitary",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "foreignservice",
+      "ok": true,
+      "url": "https://www.reddit.com/r/foreignservice/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "PHStrategy",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "QuezonCity",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "adultingph",
+      "ok": true,
+      "url": "https://www.reddit.com/r/adultingph/comments/1rv386e/i_tried_requesting_a_psa_document_through_the_psa/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "taxPH",
+      "ok": true,
+      "url": "https://www.reddit.com/r/taxPH/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "AccountingPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "phclassifieds",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "GigilAko",
+      "ok": true,
+      "url": "https://www.reddit.com/r/GigilAko/comments/1s26wkz/gigil_ako_sa_bureau_of_immigration/",
+      "reason": "official markers: bureau of"
+    },
+    {
+      "subreddit": "phmigrate",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "CorpoChikaPH",
+      "ok": true,
+      "url": "https://www.reddit.com/r/CorpoChikaPH/comments/1li4y8t/thoughts_on_bangko_sentral_ng_pilipinas_bsp/",
+      "reason": "official markers: government agency"
+    },
+    {
+      "subreddit": "todayIlearnedPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "FilipinoHistory",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "LawStudentsPH",
+      "ok": true,
+      "url": "https://www.reddit.com/r/LawStudentsPH/comments/1um8bvs/legal_careers_at_bangko_sentral/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "CasualPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "MANILA",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "hatethissmug",
+      "ok": true,
+      "url": "https://www.reddit.com/r/hatethissmug/comments/1wozuj8/i_hate_the_philippine_government/",
+      "reason": "official markers: philippine government"
+    },
+    {
+      "subreddit": "AskReddit",
+      "ok": true,
+      "url": "https://www.reddit.com/r/AskReddit/comments/1u878ob/what_do_you_think_about_the_philippine_government/",
+      "reason": "official markers: philippine government"
+    },
+    {
+      "subreddit": "ph_politics",
+      "ok": true,
+      "url": "https://www.reddit.com/r/ph_politics/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "pinoy",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "ProPhilippines",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "NewsOfTheWeird",
+      "ok": true,
+      "url": "https://www.reddit.com/r/NewsOfTheWeird/comments/ijhgqz/government_official_is_caught_having_sex_with_his/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "MilitaryPorn",
+      "ok": true,
+      "url": "https://www.reddit.com/r/MilitaryPorn/comments/ty73ba/filipino_and_turkish_officials_pour_champagne_on/",
+      "reason": "official markers: official, commission"
+    },
+    {
+      "subreddit": "Kaiserreich",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "BeAmazed",
+      "ok": true,
+      "url": "https://www.reddit.com/r/BeAmazed/comments/1s1b1r4/a_man_in_the_philippines_is_seen_at_home_checking/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "GeometryDash_Memes",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "mathmemes",
+      "ok": true,
+      "url": "https://www.reddit.com/r/mathmemes/comments/1o9wkbv/from_the_official_philippine_math_olympiad/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "cyberpunkgame",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "PhilippinesOfficial",
+      "ok": true,
+      "url": "https://www.reddit.com/r/PhilippinesOfficial/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "Filipino",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "interestingasfuck",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "geography",
+      "ok": true,
+      "url": "https://www.reddit.com/r/geography/comments/1hz3tho/the_philippines_does_not_get_hit_with_20_typhoons/",
+      "reason": "official markers: pagasa"
+    },
+    {
+      "subreddit": "thalassophobia",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "Random_Memes",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "natureismetal",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "weather",
+      "ok": true,
+      "url": "https://www.reddit.com/r/weather/comments/1ecxc14/this_happened_in_philippines_it_is_genuinely/",
+      "reason": "official markers: weather"
+    },
+    {
+      "subreddit": "ParanormalPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "worldnews",
+      "ok": true,
+      "url": "https://www.reddit.com/r/worldnews/comments/ulsmfq/philippines_marcos_maintains_huge_lead_in/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "PSA",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "psagrading",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "uniformporn",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "UrbanHell",
+      "ok": true,
+      "url": "https://www.reddit.com/r/UrbanHell/comments/13y942u/these_2_houses_in_the_philippines_share_a_wall/",
+      "reason": "official markers: official"
+    },
+    {
+      "subreddit": "LawPH",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "Galil",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "SpecOpsArchive",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "NonCredibleDefense",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "uscg",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "uscoastguard",
+      "ok": false,
+      "reason": "no official marker"
+    },
+    {
+      "subreddit": "uscgactive",
+      "ok": false,
+      "reason": "no official marker"
+    }
+  ]
+}

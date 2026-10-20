@@ -1,0 +1,36 @@
+[05:08:02] === worker: facebook on tab 0, 5 posts, mode=recent ===
+[05:08:03] tab [0] 295e07c8-3787-44b8-83f2-b12d86b27a9c  https://www.facebook.com/boiphilippines
+[05:08:03] 32 registered facebook accounts
+[05:08:03] [1/32] facebook/dost_pagasa: already collected, skipping
+[05:08:03] [2/32] facebook/doh: already collected, skipping
+[05:08:03] [3/32] facebook/dswd: already collected, skipping
+[05:08:03] [4/32] facebook/deped: already collected, skipping
+[05:08:03] [5/32] facebook/dpwh: already collected, skipping
+[05:08:03] [6/32] facebook/dilg: already collected, skipping
+[05:08:03] [7/32] facebook/ndrrmc: already collected, skipping
+[05:08:03] [8/32] facebook/bfp: already collected, skipping
+[05:08:03] [9/32] facebook/dti: already collected, skipping
+[05:08:03] [10/32] facebook/denr: already collected, skipping
+[05:08:03] [11/32] facebook/dacentralphilippines: already collected, skipping
+[05:08:03] [12/32] facebook/DOFPH: already collected, skipping
+[05:08:03] [13/32] facebook/DOSTph: already collected, skipping
+[05:08:03] [14/32] facebook/OfficeOfTheVicePresidentPH: already collected, skipping
+[05:08:03] [15/32] facebook/birgovph: already collected, skipping
+[05:08:03] [16/32] facebook/officialbureauofimmigration: already collected, skipping
+[05:08:03] [17/32] facebook/BangkoSentralngPilipinas: already collected, skipping
+[05:08:03] [18/32] facebook/PhilHealthofficial: already collected, skipping
+[05:08:03] [19/32] facebook/NationalBureauofInvestigationOfficial: already collected, skipping
+[05:08:03] [20/32] facebook/civilservicegovph: already collected, skipping
+[05:08:03] [21/32] facebook/fdagovph: already collected, skipping
+[05:08:03] [22/32] facebook/nationalyouthcommission: already collected, skipping
+[05:08:03] [23/32] facebook/CCCPhl: already collected, skipping
+[05:08:03] [24/32] facebook/boiphilippines: already collected, skipping
+[05:08:03] [25/32] facebook/pagcor.ph: already collected, skipping
+[05:08:03] [26/32] facebook/pidsgovph: already collected, skipping
+[05:08:03] [27/32] facebook/portsauthorityph: already collected, skipping
+[05:08:03] [28/32] facebook/dostpchrd: already collected, skipping
+[05:08:03] [29/32] facebook/DOSTASTI: already collected, skipping
+[05:08:03] [30/32] facebook/PHIVOLCS: already collected, skipping
+[05:08:03] [31/32] facebook/nationalmuseumofthephilippines: already collected, skipping
+[05:08:03] [32/32] facebook/professionalregulationcommission: already collected, skipping
+[05:08:03] === facebook worker finished: 0 account(s) collected ===

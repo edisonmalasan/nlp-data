@@ -60,6 +60,24 @@ BLOCKED_MARKERS = (
 RENDERED_MARKERS = ("followers", "following", "Government organization")
 
 
+def identity_block(body: str) -> str:
+    """The text that identifies the page: its name and its follower count.
+
+    Only this block is checked. Searching the whole body let a page called
+    "Happiness Travels and Tours" pass for the Department of Tourism,
+    because the agency name appears later on in its navigation.
+    """
+    lines = [l.strip() for l in (body or "").splitlines() if l.strip()]
+    out = []
+    for line in lines:
+        out.append(line)
+        if "followers" in line:
+            break
+        if len(out) > 12:
+            break
+    return " ".join(out)
+
+
 def page_name(body: str) -> str:
     """The page's display name, taken from the line before the follower count."""
     lines = [l.strip() for l in (body or "").splitlines() if l.strip()]
@@ -113,9 +131,12 @@ def verify(page, agency, slug, expected) -> tuple:
     if not any(m.lower() in low for m in RENDERED_MARKERS):
         return False, "page did not render (no follower count)", name
 
-    haystack = (name + " " + body[:600]).lower()
+    # The check is against the identity block only - the page name and its
+    # follower count. A token that appears further down the page, in the
+    # navigation or a suggested page, is not evidence of anything.
+    block = identity_block(body).lower()
     for token in expected:
-        if token.lower() in haystack:
+        if token.lower() in block:
             return True, "page names the agency", name
     return False, f"page does not name the agency: {name[:60]!r}", name
 

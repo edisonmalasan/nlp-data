@@ -110,6 +110,24 @@ def existing_snapshots(platform, source_page, mode="recent"):
     return out
 
 
+def usable_snapshots(platform, source_page, mode="recent"):
+    """The snapshots that actually yielded comments.
+
+    A snapshot with no comments is evidence that the collection did not
+    work, not that the account was collected. Without this, an account whose
+    first attempt came back empty is skipped forever.
+    """
+    out = []
+    for path in existing_snapshots(platform, source_page, mode):
+        try:
+            snap = json.load(io.open(path, encoding="utf-8"))
+        except Exception:
+            continue
+        if sum(p.get("n_comments", 0) for p in snap.get("posts", [])) > 0:
+            out.append(path)
+    return out
+
+
 def run_one(page, row, posts, notes, mode="recent"):
     """Collect one account. Returns (n_posts, n_comments, error)."""
     platform = row["platform"]
@@ -118,6 +136,9 @@ def run_one(page, row, posts, notes, mode="recent"):
 
     ob.goto(page, url, settle=5.0)
     time.sleep(2.0)
+
+    # the page has to render before anything can be read from it
+    ob.wait_for_content(page, ob.profile_markers(), timeout=20.0)
 
     extract_js = ob.load_extract_js(EXTRACTORS[platform])
 
@@ -130,22 +151,38 @@ def run_one(page, row, posts, notes, mode="recent"):
         urls = ob.find_inviting_posts(page, limit=posts)
     else:
         urls = ob.discover_posts(page, platform, limit=posts)
-    if not urls:
-        urls = [url]
 
     if not urls:
-        return 0, 0, "no post urls discovered"
+        # Capturing the account page itself would produce a snapshot with no
+        # comments, which then looks like a collected account and is never
+        # retried. Report it as a failure instead.
+        return 0, 0, "no post permalinks found on the account page"
 
     entries = []
-    for u in urls[:posts]:
+    if platform == "facebook" and mode != "invites":
+        # Facebook is captured from the account page, clicking the posts
+        # where they sit. Navigating to a post permalink does not reliably
+        # render its thread, and a photo post's permalink is only a preview
+        # of the photo, so the collector goes through the preview to the
+        # real post.
         try:
-            data = ob.capture_post(page, u, extract_js, platform)
+            entries = ob.capture_account(page, url, extract_js, platform,
+                                         limit=posts, mode=mode)
         except ob.OrcaError as e:
-            log(f"    post failed: {e}")
-            continue
-        n = data.get("n_comments", 0)
-        entries.append((u, data))
-        log(f"    {n:>4} comments  {u[-46:]}")
+            log(f"    capture failed: {e}")
+            entries = []
+        for u, data in entries:
+            log(f"    {data.get('n_comments', 0):>4} comments  {u[-46:]}")
+    else:
+        for u in urls[:posts]:
+            try:
+                data = ob.capture_post(page, u, extract_js, platform, mode)
+            except ob.OrcaError as e:
+                log(f"    post failed: {e}")
+                continue
+            n = data.get("n_comments", 0)
+            entries.append((u, data))
+            log(f"    {n:>4} comments  {u[-46:]}")
 
     if not entries:
         return 0, 0, "no posts captured"

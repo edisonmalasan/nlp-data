@@ -49,7 +49,8 @@ COMMENT_SELECTOR = {
 
 # The selector for one source post, per platform, used when discovering URLs.
 POST_LINK_SELECTOR = {
-    "facebook": 'a[href*="/posts/"], a[href*="/reel/"], a[href*="/photo/"]',
+    "facebook": 'a[href*="/posts/"], a[href*="/reel/"], a[href*="/photo/"], '
+                'a[href*="permalink.php"], a[href*="story_fbid"]',
     "youtube": 'a[href*="/watch?v="]',
     "x": 'a[href*="/status/"]',
     "reddit": 'a[href*="/comments/"]',
@@ -300,14 +301,20 @@ def wait_for_comments(page: str, platform: str = "facebook",
     return comment_count(page, platform)
 
 
-def load_thread(page: str, platform: str = "facebook", min_count: int = 1):
+def load_thread(page: str, platform: str = "facebook", min_count: int = 1,
+                wait_rounds: int = 0):
     """Scroll until the comment count stops growing.
 
     A post's comment list grows lazily and slowly. Stopping when the count
     holds still for a few rounds catches the first handful and calls it the
     whole thread, so there is a floor on how much scrolling happens.
+
+    wait_rounds caps the initial wait for the thread to appear, so a post
+    whose thread never renders does not cost the full wait before the
+    fallback is tried.
     """
-    n = wait_for_comments(page, platform, min_count)
+    n = wait_for_comments(page, platform, min_count,
+                          rounds=wait_rounds or MAX_SETTLE_ROUNDS)
     last = n
     stable = 0
     for rnd in range(1, MAX_SETTLE_ROUNDS + 1):
@@ -353,11 +360,21 @@ def post_links_js(platform: str) -> str:
     """
     sel = POST_LINK_SELECTOR.get(platform, POST_LINK_SELECTOR["facebook"])
     if platform == "facebook":
+        # A Facebook post is not always a /posts/ link. A page's feed is
+        # full of photo posts, whose permalink is /photo/?fbid=<id>, and
+        # many agencies post almost nothing else - so a selector that only
+        # matches /posts/ finds no permalinks at all on those pages.
+        #
+        # The page's own tab links (/reel/?s=tab) look like permalinks and
+        # are not posts, so each kind is checked for the id that proves it.
         return (
             "(() => {\n"
-            "  const RE = new RegExp(" + json.dumps(FACEBOOK_POST_RE) + ");\n"
             "  const out = []; const seen = new Set();\n"
-            "  for (const a of document.querySelectorAll(" + json.dumps(sel) + ")) {\n"
+            "  const A = " + json.dumps(sel) + ";\n"
+            "  const SEL = A.split(',').map(s => s.trim() + '[href]').join(',');\n"
+            "  const anchors = document.querySelectorAll(SEL);\n"
+            "  for (let k = 0; k < anchors.length; k++) {\n"
+            "    const a = anchors[k];\n"
             "    let href = a.getAttribute('href') || '';\n"
             "    if (!href) continue;\n"
             "    if (href.indexOf('l.php?u=') !== -1) {\n"
@@ -366,14 +383,32 @@ def post_links_js(platform: str) -> str:
             "    if (href.indexOf('//') === 0) { href = location.protocol + href; }\n"
             "    else if (href.charAt(0) === '/') { href = location.origin + href; }\n"
             "    if (href.indexOf('facebook.com') === -1) continue;\n"
-            "    if (!RE.test(href)) continue;\n"
-            "    href = href.split('?')[0];\n"
-            "    if (href.indexOf('/photo/') !== -1) {\n"
-            "      const f = (a.getAttribute('href') || '').match(/fbid=(\\d+)/);\n"
-            "      href = f ? ('https://www.facebook.com/photo/?fbid=' + f[1]) : href;\n"
+            "    const path = href.split('?')[0].replace(/^https?:\\/\\/[^/]*facebook\\.com/, '');\n"
+            "    const segs = path.split('/').filter(s => s.length);\n"
+            "    let kind = null, tail = '';\n"
+            "    for (let i = 0; i < segs.length; i++) {\n"
+            "      if (segs[i] === 'posts' || segs[i] === 'reel' || segs[i] === 'photo') {\n"
+            "        kind = segs[i]; tail = segs[i + 1] || ''; break;\n"
+            "      }\n"
+            "    }\n"
+            "    if (!kind) {\n"
+            "      if (/story_fbid=(\\d+)/.test(href)) {\n"
+            "        const f = href.match(/story_fbid=(\\d+)/);\n"
+            "        href = 'https://www.facebook.com/permalink.php?story_fbid=' + f[1];\n"
+            "      } else { continue; }\n"
+            "    } else if (kind === 'photo') {\n"
+            "      const f = href.match(/fbid=(\\d+)/);\n"
+            "      if (!f) continue;\n"
+            "      href = 'https://www.facebook.com/photo/?fbid=' + f[1];\n"
+            "    } else if (kind === 'reel') {\n"
+            "      if (!tail) continue;\n"
+            "      href = 'https://www.facebook.com/reel/' + tail;\n"
+            "    } else {\n"
+            "      if (!tail) continue;\n"
+            "      href = 'https://www.facebook.com/posts/' + tail;\n"
             "    }\n"
             "    if (seen.has(href)) continue;\n"
-            "    seen.add(href); out.push(href);\n"
+            "    seen.add(href); out.push({u: href, i: k});\n"
             "  }\n"
             "  return JSON.stringify(out);\n"
             "})()"
@@ -381,7 +416,9 @@ def post_links_js(platform: str) -> str:
     return (
         "(() => {\n"
         "  const out = []; const seen = new Set();\n"
-        f"  for (const a of document.querySelectorAll({json.dumps(sel)})) {{\n"
+        "  const anchors = document.querySelectorAll(" + json.dumps(sel) + ");\n"
+        "  for (let k = 0; k < anchors.length; k++) {\n"
+        "    const a = anchors[k];\n"
         "    let href = a.getAttribute('href') || '';\n"
         "    if (!href) continue;\n"
         "    if (href.indexOf('//') === 0) { href = location.protocol + href; }\n"
@@ -389,7 +426,7 @@ def post_links_js(platform: str) -> str:
         "    // the query is NOT stripped: on YouTube the video id is the query,\n"
         "    // and dropping it turns every video into /watch\n"
         "    if (!href || seen.has(href)) continue;\n"
-        "    seen.add(href); out.push(href);\n"
+        "    seen.add(href); out.push({u: href, i: k});\n"
         "  }\n"
         "  return JSON.stringify(out);\n"
         "})()"
@@ -474,15 +511,28 @@ def discover_posts(page: str, platform: str = "facebook",
     if state == "clicked":
         time.sleep(1.5)
 
+    # The page has to render before its posts exist. A YouTube channel or an
+    # X timeline that has not hydrated has no items at all, and that looks
+    # exactly like an account with no posts.
+    READY = {
+        "facebook": ["followers", "Posts"],
+        "youtube": ["Video", "videos", "Shorts"],
+        "x": ["Home", "Posts"],
+        "reddit": ["post", "comments"],
+    }
+    wait_for_content(page, READY.get(platform, ["followers"]), timeout=25.0)
+
     found = []
     seen = set()
     for _ in range(rounds):
-        scroll_to_bottom(page, platform)
+        # the feed has to be scrolled, not the comment thread
+        scroll_feed(page, platform)
         try:
             urls = eval_json(page, post_links_js(platform)) or []
         except OrcaError:
             break
-        for u in urls:
+        for item in urls:
+            u = item["u"] if isinstance(item, dict) else item
             if u not in seen:
                 seen.add(u)
                 found.append(u)
@@ -492,11 +542,407 @@ def discover_posts(page: str, platform: str = "facebook",
     return list(reversed(found))[:limit]
 
 
+FEED_SCROLL_JS = r"""
+(() => {
+  // Scrolling a FEED is not the same as scrolling a comment thread.
+  //
+  // A Facebook feed, a YouTube channel and an X timeline are each a
+  // virtualized list inside their own scroll container, and the container
+  // only becomes scrollable once it has overflowed. On a page with a short
+  // feed it has not overflowed yet, so the usual "scroll the scroller that
+  // holds the articles" logic finds nothing to scroll, the feed never
+  // grows, and the account looks like it has no posts at all.
+  //
+  // So: scroll the window first to make the layout taller, then scroll
+  // every candidate container to its end whether or not it overflows, and
+  // report how many items are in the feed now.
+  window.scrollBy(0, Math.floor(window.innerHeight * 0.9));
+
+  const ITEM = 'div[role="article"], ytd-rich-item-renderer, ' +
+               'ytd-grid-video-renderer, ytd-video-renderer, ' +
+               'article[data-testid="tweet"], shreddit-comment';
+  const containers = new Set();
+  const items = document.querySelectorAll(ITEM);
+  for (const it of items) {
+    let el = it.parentElement;
+    let hops = 0;
+    while (el && el !== document.body && hops < 12) {
+      const st = getComputedStyle(el);
+      if (st.overflowY === 'scroll' || st.overflowY === 'auto') {
+        containers.add(el);
+        break;
+      }
+      el = el.parentElement;
+      hops++;
+    }
+  }
+  for (const el of containers) {
+    el.scrollTop = el.scrollHeight;
+    el.dispatchEvent(new Event('scroll', {bubbles: true}));
+  }
+  window.scrollBy(0, Math.floor(window.innerHeight * 0.6));
+
+  return JSON.stringify({
+    items: items.length,
+    containers: containers.size,
+    y: Math.round(window.scrollY),
+    h: Math.round(document.body.scrollHeight),
+  });
+})()
+"""
+
+
+def scroll_feed(page: str, platform: str = "facebook") -> dict:
+    """Scroll an account's FEED, so more posts load.
+
+    This is not the comment-thread scroll: that one looks for the thread's
+    own scroller, which an account page does not have.
+    """
+    try:
+        v = eval_json(page, FEED_SCROLL_JS)
+    except (OrcaError, ValueError):
+        return {}
+    return v if isinstance(v, dict) else {}
+
+
+VIEW_POST_JS = r"""
+(() => {
+  // A photo permalink opens a PREVIEW of the photo, not the post: the page
+  // says "This photo is from a post" and the comment box is empty. The
+  // post itself is behind the "View post" link, and that is where the
+  // thread is.
+  for (const a of document.querySelectorAll('a[href]')) {
+    const t = (a.innerText || '').trim();
+    const h = a.getAttribute('href') || '';
+    if (/view post/i.test(t) && /\/posts\/|permalink/.test(h)) {
+      return h.split('?')[0];
+    }
+  }
+  return '';
+})()
+"""
+
+
+def resolve_view_post(page: str, timeout: float = 0.0) -> str:
+    """The real post permalink behind a photo preview, if there is one.
+
+    The preview renders lazily, so the link is not there the instant the
+    page arrives. With a timeout, the page is polled until it appears.
+    """
+    deadline = time.time() + timeout
+    while True:
+        try:
+            v = eval_json(page, VIEW_POST_JS)
+        except (OrcaError, ValueError):
+            v = ""
+        if isinstance(v, str) and v.strip():
+            return v.strip()
+        if time.time() >= deadline:
+            return ""
+        time.sleep(1.5)
+
+
+# Facebook will not route a direct permalink navigation for this session:
+# the browser lands on the home feed instead of the post, and the comment
+# thread is never rendered. Clicking the permalink from the account's own
+# feed opens the post in an overlay with the thread attached, which is how a
+# person reads the comments anyway. The capture therefore falls back to the
+# click when the direct navigation lands on the feed.
+HOME_FEED_JS = r"""
+(() => {
+  const b = document.body.innerText || '';
+  const onFeed = /What's on your mind|Create a post/i.test(b);
+  const onPost = document.querySelectorAll('div[role="article"]').length > 1;
+  return JSON.stringify({onFeed: onFeed, onPost: onPost,
+                         bodyLen: b.length,
+                         arts: document.querySelectorAll('div[role="article"]').length});
+})()
+"""
+
+CLICK_PERMALINK_JS = r"""
+(() => {
+  const WANT = __WANT__;
+  // the target may be a /posts/ link or a /photo/?fbid= link, and the feed
+  // may carry either, so the post id is compared as well as the whole URL
+  const wantId = (WANT.match(/fbid=(\d+)/) || [])[1] ||
+                 (WANT.match(/pfbid([A-Za-z0-9]+)/) || [])[1] || '';
+  for (const a of document.querySelectorAll('a[href]')) {
+    let h = a.getAttribute('href') || '';
+    if (!h) continue;
+    if (h.indexOf('l.php?u=') !== -1) {
+      try { h = decodeURIComponent(h.split('u=')[1].split('&')[0]); } catch (e) {}
+    }
+    const raw = h;
+    h = h.split('?')[0];
+    const myId = (raw.match(/fbid=(\d+)/) || [])[1] ||
+                 (h.match(/pfbid([A-Za-z0-9]+)/) || [])[1] || '';
+    if (h !== WANT && !(wantId && myId && myId === wantId)) continue;
+    a.scrollIntoView({block: 'center'});
+    a.click();
+    return 'clicked';
+  }
+  return 'not found';
+})()
+"""
+
+
+CLICK_INDEX_JS = r"""
+(() => {
+  const a = document.querySelectorAll('a[href]')[__IDX__];
+  if (!a) return 'gone';
+  a.scrollIntoView({block: 'center'});
+  a.click();
+  return 'clicked';
+})()
+"""
+
+CLICK_VIEW_POST_JS = r"""
+(() => {
+  for (const a of document.querySelectorAll('a[href]')) {
+    const t = (a.innerText || '').trim();
+    if (/view post/i.test(t)) { a.click(); return 'clicked'; }
+  }
+  return 'not found';
+})()
+"""
+
+CLOSE_OVERLAY_JS = r"""
+(() => {
+  for (const b of document.querySelectorAll('[aria-label="Close"], [aria-label="close"]')) {
+    b.click();
+    return 'closed';
+  }
+  document.dispatchEvent(new KeyboardEvent('keydown',
+    {key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true}));
+  document.body.dispatchEvent(new KeyboardEvent('keydown',
+    {key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true}));
+  return 'esc';
+})()
+"""
+
+
+def click_index(page: str, idx: int) -> str:
+    """Click the anchor at a DOM index, without navigating away."""
+    js = CLICK_INDEX_JS.replace("__IDX__", str(int(idx)))
+    try:
+        v = eval_json(page, js)
+    except (OrcaError, ValueError):
+        return "failed"
+    return v.strip() if isinstance(v, str) else "failed"
+
+
+def click_view_post(page: str) -> str:
+    """Click the "View post" link of a photo preview."""
+    try:
+        v = eval_json(page, CLICK_VIEW_POST_JS)
+    except (OrcaError, ValueError):
+        return "failed"
+    return v.strip() if isinstance(v, str) else "failed"
+
+
+def close_overlay(page: str) -> str:
+    """Close the post overlay and return to the feed."""
+    try:
+        v = eval_json(page, CLOSE_OVERLAY_JS)
+    except (OrcaError, ValueError):
+        v = ""
+    time.sleep(0.8)
+    # Escape as well, in case the overlay ignored the click
+    try:
+        orca("keypress", "--key", "Escape", "--page", page)
+    except OrcaError:
+        pass
+    time.sleep(0.8)
+    return v.strip() if isinstance(v, str) else ""
+
+
+def looks_like_home_feed(page: str) -> bool:
+    """True when the browser is showing the home feed instead of the post."""
+    try:
+        v = eval_json(page, HOME_FEED_JS)
+    except (OrcaError, ValueError):
+        return False
+    if not isinstance(v, dict):
+        return False
+    return bool(v.get("onFeed")) and not v.get("onPost")
+
+
+def page_slug_from_url(url: str) -> str:
+    """The page name out of a Facebook permalink: .../dpwhph/posts/x -> dpwhph."""
+    m = re.search(r"facebook\.com/([^/?#]+)", url or "")
+    if not m:
+        return ""
+    slug = m.group(1)
+    if slug in ("photo", "permalink.php", "watch", "profile.php", "groups", "pages"):
+        return ""
+    return slug
+
+
+def click_permalink(page: str, url: str, rounds: int = 8) -> str:
+    """Click a permalink on the account page, scrolling the feed until it is there."""
+    want = (url or "").split("?")[0]
+    js = CLICK_PERMALINK_JS.replace("__WANT__", json.dumps(want))
+    for _ in range(rounds):
+        try:
+            res = eval_json(page, js)
+        except (OrcaError, ValueError):
+            res = ""
+        if res == "clicked":
+            return "clicked"
+        scroll_feed(page, "facebook")
+        time.sleep(0.8)
+    return "not found"
+
+
+def capture_one(page: str, url: str, extract_js: str,
+                platform: str = "facebook") -> dict:
+    """Capture one post and its thread.
+
+    A photo post's permalink is a PREVIEW: it says "This photo is from a
+    post", shows an empty comment box, and carries a "View post" link to
+    the post itself, where the thread is. Clicking the photo link on the
+    account page navigates away instead, so the preview is opened and the
+    real permalink read from it.
+
+    If the post then loads without its thread - which Facebook does for a
+    logged-in session - the account page is opened again and the permalink
+    clicked there, which attaches the thread.
+    """
+    goto(page, url, settle=4.0)
+    real = ""
+    if platform == "facebook":
+        real = resolve_view_post(page, timeout=10.0)
+    if real and real != url:
+        goto(page, real, settle=4.0)
+
+    n_loaded, scrolled = load_thread(page, platform, wait_rounds=8)
+
+    if platform == "facebook" and n_loaded == 0:
+        slug = page_slug_from_url(url)
+        if slug:
+            goto(page, f"https://www.facebook.com/{slug}", settle=5.0)
+            wait_for_content(page, ["followers", "Posts"], timeout=20.0)
+            time.sleep(1.5)
+            target = real if real else url
+            if click_permalink(page, target, rounds=12) == "clicked":
+                time.sleep(2.5)
+                n_loaded, scrolled = load_thread(page, platform)
+                if n_loaded == 0 and real:
+                    if click_view_post(page) == "clicked":
+                        time.sleep(2.0)
+                        n_loaded, scrolled = load_thread(page, platform)
+
+    try:
+        data = eval_json(page, extract_js)
+    except (OrcaError, ValueError):
+        return {}
+    if not isinstance(data, dict):
+        return {}
+    data["n_loaded"] = n_loaded
+    data["scrolled_to_end"] = scrolled
+    data["resolved_post_url"] = real
+    return data
+
+
+def capture_account(page: str, account_url: str, extract_js: str,
+                    platform: str = "facebook", limit: int = 6,
+                    mode: str = "recent", rounds: int = 10):
+    """Collect posts from one account in a single page load.
+
+    Navigating to a post permalink does not work reliably: Facebook serves
+    the post without its comment thread, or the home feed instead, for a
+    logged-in session. Clicking the permalink on the account's own page
+    opens the post with the thread attached, so the posts are clicked where
+    they sit instead of being navigated to.
+
+    The feed is virtualized, so the links are taken from the DOM as it
+    stands and clicked immediately, before the feed scrolls on.
+
+    Returns a list of (post_url, data) pairs.
+    """
+    goto(page, account_url, settle=5.0)
+    wait_for_content(page, ["followers", "Posts"], timeout=20.0)
+    time.sleep(1.0)
+
+    if platform == "facebook":
+        open_posts_tab(page, platform)
+        time.sleep(1.5)
+
+    seen = set()
+    entries = []
+    for _ in range(rounds):
+        if len(entries) >= limit:
+            break
+        try:
+            items = eval_json(page, post_links_js(platform)) or []
+        except OrcaError:
+            break
+
+        fresh = []
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            u = item.get("u")
+            if not u or u in seen:
+                continue
+            seen.add(u)
+            fresh.append(item)
+
+        for item in fresh:
+            if len(entries) >= limit:
+                break
+            data = capture_one(page, item["u"], extract_js, platform)
+            if data:
+                data["post_url"] = item["u"]
+                entries.append((item["u"], data))
+
+        if len(entries) >= limit:
+            break
+        scroll_feed(page, platform)
+        time.sleep(0.5)
+
+    return entries
+
+
 def capture_post(page: str, url: str, extract_js: str, platform: str = "facebook",
                  mode: str = "recent"):
     """Open a post, load the whole thread, extract it."""
+    # The URL the feed gave us is kept: it is the one that has to be clicked
+    # in the fallback. A photo post's feed link is /photo/?fbid=<id>, while
+    # the post behind it is /<page>/posts/pfbid..., and the feed only carries
+    # the first of the two.
+    feed_url = url
+
     goto(page, url, settle=3.0)
-    n_loaded, scrolled = load_thread(page, platform)
+    if platform == "facebook":
+        real = resolve_view_post(page)
+        if real and real != url:
+            goto(page, real, settle=3.0)
+            url = real
+    n_loaded, scrolled = load_thread(page, platform, wait_rounds=6)
+
+    if platform == "facebook" and n_loaded == 0:
+        # The thread did not render. Facebook will not always route a direct
+        # permalink for a logged-in session - it serves the post without its
+        # comments, or the home feed instead - but clicking the permalink on
+        # the account's own page opens the post with the thread attached.
+        slug = page_slug_from_url(feed_url) or page_slug_from_url(url)
+        if slug:
+            goto(page, f"https://www.facebook.com/{slug}", settle=5.0)
+            wait_for_content(page, ["followers", "Posts"], timeout=20.0)
+            time.sleep(1.5)
+            state = click_permalink(page, feed_url)
+            if state == "clicked":
+                time.sleep(2.5)
+                n_loaded, scrolled = load_thread(page, platform)
+                if n_loaded == 0:
+                    # the click opened a photo preview, not the post
+                    real2 = resolve_view_post(page)
+                    if real2:
+                        click_permalink(page, real2)
+                        time.sleep(2.0)
+                        n_loaded, scrolled = load_thread(page, platform)
+
     data = eval_json(page, extract_js)
     if not isinstance(data, dict):
         raise OrcaError("extractor returned no data")
