@@ -6,6 +6,9 @@ data/interim/*
 # ---- Processed layer: committed (small, scrubbed) ----
 # data/processed/ IS tracked.
 
+# ---- Release package: the generated contents are tracked, the zip is not ----
+data/final/*.zip
+
 # ---- Python ----
 __pycache__/
 *.py[cod]
