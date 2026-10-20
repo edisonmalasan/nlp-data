@@ -1,0 +1,50 @@
+{
+  "facebook/doh": {
+    "posts": 12,
+    "comments": 72,
+    "last_error": "",
+    "updated_at": "2026-10-20T22:02:19"
+  },
+  "facebook/deped": {
+    "posts": 12,
+    "comments": 272,
+    "last_error": "",
+    "updated_at": "2026-10-20T22:09:15"
+  },
+  "facebook/dpwh": {
+    "posts": 12,
+    "comments": 511,
+    "last_error": "",
+    "updated_at": "2026-10-20T22:17:38"
+  },
+  "facebook/dilg": {
+    "posts": 12,
+    "comments": 174,
+    "last_error": "",
+    "updated_at": "2026-10-20T22:25:42"
+  },
+  "facebook/ndrrmc": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks exposed in the page feed",
+    "updated_at": "2026-10-20"
+  },
+  "facebook/bfp": {
+    "posts": 2,
+    "comments": 25,
+    "last_error": "",
+    "updated_at": "2026-10-20T22:27:29"
+  },
+  "facebook/dti": {
+    "posts": 2,
+    "comments": 27,
+    "last_error": "",
+    "updated_at": "2026-10-20T22:28:45"
+  },
+  "facebook/denr": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks exposed in the page feed",
+    "updated_at": "2026-10-20"
+  }
+}

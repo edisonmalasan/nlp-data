@@ -49,11 +49,16 @@ COMMENT_SELECTOR = {
 
 # The selector for one source post, per platform, used when discovering URLs.
 POST_LINK_SELECTOR = {
-    "facebook": 'a[href*="/posts/"]',
+    "facebook": 'a[href*="/posts/"], a[href*="/reel/"], a[href*="/photo/"]',
     "youtube": 'a[href*="/watch?v="]',
     "x": 'a[href*="/status/"]',
     "reddit": 'a[href*="/comments/"]',
 }
+
+# A Facebook post is not always a /posts/ link. A page's feed is full of
+# Reels and photo posts, and their permalinks are /reel/<id> and
+# /photo/?fbid=<id>. Missing those loses most of the posts on some pages.
+FACEBOOK_POST_RE = r"^https?://(?:www\.|m\.|l\.)?facebook\.com/.*?/(?:posts/|reel/|photo/)"
 
 # How long to wait for a page to settle, and when to give up on a thread.
 PAGE_SETTLE = 2.5
@@ -111,7 +116,8 @@ def eval_json(page: str, js: str, timeout=180):
         try:
             return json.loads(val)
         except Exception:
-            raise OrcaError(f"eval returned unparseable JSON: {val[:300]}")
+            # a plain string result, e.g. "clicked" - not an error
+            return val
     return val
 
 
@@ -163,24 +169,30 @@ SCROLL_JS = r"""
   // scroll container, and that container is NOT an ancestor of the comment
   // nodes, so it has to be found by asking the DOM which scrollable element
   // actually holds the comments.
-  let target = null;
-  let best = 0;
-  for (const el of document.querySelectorAll('div')) {
+  //
+  // The same is true of a page feed: Facebook's new feed is a virtualized
+  // list inside its own scroller, so window.scrollBy never moves it and the
+  // feed appears to have no posts at all. Any scrollable element holding
+  // articles is scrolled to its end.
+  const scrollers = [];
+  for (const el of document.querySelectorAll('div, ul, section')) {
     const st = getComputedStyle(el);
     if (st.overflowY !== 'scroll' && st.overflowY !== 'auto') continue;
     if (el.scrollHeight <= el.clientHeight + 20) continue;
     const held = el.querySelectorAll(SEL).length;
-    if (held > best) { best = held; target = el; }
+    const arts = el.querySelectorAll('div[role="article"]').length;
+    if (held > 0 || arts > 0) scrollers.push({el: el, held: held, arts: arts});
   }
-  if (target) {
-    target.scrollTop = target.scrollHeight;
-    return n + ':' + best;
+  // prefer the scroller that holds the most comments, then the most articles
+  scrollers.sort((a, b) => (b.held - a.held) || (b.arts - a.arts));
+  for (const s of scrollers.slice(0, 3)) {
+    s.el.scrollTop = s.el.scrollHeight;
   }
 
-  // Otherwise the page itself scrolls. Step down rather than jumping to the
-  // bottom, so the comment list is never skipped past.
+  // The page itself may scroll too.
   window.scrollBy(0, Math.floor(window.innerHeight * 0.85));
-  return n + ':window';
+
+  return n + ':' + scrollers.length;
 })()
 """
 
@@ -277,7 +289,40 @@ def load_extract_js(name="extract_facebook.js"):
 
 
 def post_links_js(platform: str) -> str:
+    """Collect the permalinks of the posts on the page.
+
+    Facebook wraps outbound links in l.php?u=<encoded>, so those are
+    unwrapped first, and a post is not always a /posts/ link: a page's feed is
+    full of Reels and photo posts, whose permalinks are /reel/<id> and
+    /photo/?fbid=<id>.
+    """
     sel = POST_LINK_SELECTOR.get(platform, POST_LINK_SELECTOR["facebook"])
+    if platform == "facebook":
+        return (
+            "(() => {\n"
+            "  const RE = new RegExp(" + json.dumps(FACEBOOK_POST_RE) + ");\n"
+            "  const out = []; const seen = new Set();\n"
+            "  for (const a of document.querySelectorAll(" + json.dumps(sel) + ")) {\n"
+            "    let href = a.getAttribute('href') || '';\n"
+            "    if (!href) continue;\n"
+            "    if (href.indexOf('l.php?u=') !== -1) {\n"
+            "      try { href = decodeURIComponent(href.split('u=')[1].split('&')[0]); } catch (e) {}\n"
+            "    }\n"
+            "    if (href.indexOf('//') === 0) { href = location.protocol + href; }\n"
+            "    else if (href.charAt(0) === '/') { href = location.origin + href; }\n"
+            "    if (href.indexOf('facebook.com') === -1) continue;\n"
+            "    if (!RE.test(href)) continue;\n"
+            "    href = href.split('?')[0];\n"
+            "    if (href.indexOf('/photo/') !== -1) {\n"
+            "      const f = (a.getAttribute('href') || '').match(/fbid=(\\d+)/);\n"
+            "      href = f ? ('https://www.facebook.com/photo/?fbid=' + f[1]) : href;\n"
+            "    }\n"
+            "    if (seen.has(href)) continue;\n"
+            "    seen.add(href); out.push(href);\n"
+            "  }\n"
+            "  return JSON.stringify(out);\n"
+            "})()"
+        )
     return (
         "(() => {\n"
         "  const out = []; const seen = new Set();\n"
@@ -291,6 +336,41 @@ def post_links_js(platform: str) -> str:
     )
 
 
+POSTS_TAB_JS = r"""
+(() => {
+  // A page's feed only exposes a permalink for some of its posts, so the
+  // reliable source is the page's own "Posts" tab, which lists them all in
+  // order. Click it if it is not already selected.
+  const wanted = /^posts$/i;
+  for (const el of document.querySelectorAll(
+        'a[role="tab"], div[role="tab"], [role="tablist"] a, a')) {
+    const t = (el.innerText || '').trim();
+    if (!wanted.test(t)) continue;
+    const sel = el.getAttribute('aria-selected');
+    if (sel === 'true') return 'already';
+    el.click();
+    return 'clicked';
+  }
+  return 'not found';
+})()
+"""
+
+
+def open_posts_tab(page: str, platform: str = "facebook") -> str:
+    """Open the account's chronological Posts tab, when it has one."""
+    if platform != "facebook":
+        return "n/a"
+    try:
+        r = orca("eval", "--page", page, "--expression", POSTS_TAB_JS)
+        res = (r.get("result", {}) or {}).get("result")
+        state = str(res or "")
+        if state == "clicked":
+            time.sleep(3.0)
+        return state
+    except (OrcaError, ValueError):
+        return "error"
+
+
 def discover_posts(page: str, platform: str = "facebook",
                    limit: int = 12, rounds: int = 8):
     """Find recent post permalinks on an account.
@@ -298,7 +378,14 @@ def discover_posts(page: str, platform: str = "facebook",
     A Facebook page has a "Featured" carousel of older posts at the top and
     then the main feed, which runs newest first. The carousel posts are not
     recent, so the links are taken in DOM order and the LAST ones are used.
+
+    The page's own "Posts" tab is opened first, because the feed alone only
+    exposes a permalink for some of the posts.
     """
+    state = open_posts_tab(page, platform)
+    if state == "clicked":
+        time.sleep(1.5)
+
     found = []
     seen = set()
     for _ in range(rounds):
