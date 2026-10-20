@@ -541,3 +541,10 @@
 [06:11:00] [10/10] youtube/OfficeOfTheVicePresidentPH_yt  https://www.youtube.com/@OVP_PH
 [06:12:10]   error: no post permalinks found on the account page
 [06:12:16] === youtube worker finished: 0 account(s) collected ===
+[06:25:04] === worker: youtube on tab 1, 5 posts, mode=recent ===
+[06:25:04] tab [1] 0bb3746c-9947-48f1-a1bd-70e31c58aaed  https://www.youtube.com/@OVP_PH/videos
+[06:25:04] 10 registered youtube accounts
+[06:25:04] [1/10] youtube/dost_pagasa_yt: already collected (5 post(s)), skipping
+[06:25:04] [2/10] youtube/deped_yt: the last attempt was empty, retrying
+[06:25:04] [2/10] youtube/deped_yt  https://www.youtube.com/@DepEd_PH
+[06:27:16]        0 comments  https://www.youtube.com/watch?v=4JCAaxx5VgU

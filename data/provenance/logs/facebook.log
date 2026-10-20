@@ -4528,3 +4528,8 @@
 [06:22:20]   ok: 3 post(s), 0 comment(s)
 [06:22:26] [10/32] facebook/denr: topping up (1 of 5 posts)
 [06:22:26] [10/32] facebook/denr  https://www.facebook.com/DENROfficial
+[06:25:02] === worker: facebook on tab 0, 5 posts, mode=recent ===
+[06:25:02] tab [0] 295e07c8-3787-44b8-83f2-b12d86b27a9c  https://www.facebook.com/DENROfficial/posts/pfbid02HYcRzSkSA56s7u7dG5xzw7RKdrMEZGZib52XhgZc82avtPSXsuPJTWsy1wZ1G5Xdl
+[06:25:02] 32 registered facebook accounts
+[06:25:02] [1/32] facebook/dost_pagasa: topping up (3 of 5 posts)
+[06:25:02] [1/32] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
