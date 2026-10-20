@@ -267,6 +267,34 @@ def append_log(row: dict) -> None:
         w.writerow({f: row.get(f, "") for f in LOG_FIELDS})
 
 
+def reconcile_posts(post_rows, comment_rows):
+    """One row per post, and the comment rows carry that post's fields.
+
+    A post that was captured twice - once in an earlier run and again in a
+    later one - produces two post rows with the same post_id. The newest
+    snapshot wins, because a later capture has a better post caption: the
+    caption is read from the page, and the extractor that reads it was
+    fixed after the earlier captures were made.
+
+    The comment rows carry the post's fields denormalised, so they are
+    rewritten to match the post row that was kept. The contract's V-07
+    check compares them field by field.
+    """
+    by_id = {}
+    for r in post_rows:
+        by_id[r["post_id"]] = r
+    kept = list(by_id.values())
+    for c in comment_rows:
+        p = by_id.get(c.get("post_id"))
+        if not p:
+            continue
+        for f in ("post_url", "post_date", "post_text", "post_media_type",
+                  "post_topic"):
+            if f in c:
+                c[f] = p.get(f, "")
+    return kept, comment_rows
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Stage 1b - raw capture to interim CSV")
     g = ap.add_mutually_exclusive_group(required=True)
@@ -374,6 +402,13 @@ def main(argv=None) -> int:
         # A malformed capture must not half-overwrite the interim layer.
         print("\nNothing was written. Fix the captures and run again.")
         return 1
+
+    # one row per post, newest capture wins, and the comment rows
+
+    # are brought into line with it
+
+    all_posts, all_comments = reconcile_posts(all_posts, all_comments)
+
 
     write_csv(cpath, all_comments, COMMENT_FIELDS, append=args.append)
     write_csv(ppath, all_posts, POST_FIELDS, append=args.append)

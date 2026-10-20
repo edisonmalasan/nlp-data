@@ -597,3 +597,17 @@
 [06:41:41] 32 registered facebook accounts
 [06:41:41] [1/32] facebook/dost_pagasa: the last attempt was empty, retrying
 [06:41:41] [1/32] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[06:42:27]        0 comments  https://www.facebook.com/photo/
+[06:42:27]   SNAPSHOT facebook_dost_pagasa_2026-10-21T06-42.json  1 post(s), 0 comment(s)
+[06:42:27]   ok: 1 post(s), 0 comment(s)
+[06:42:35] [2/32] facebook/doh: topping up (1 of 5 posts)
+[06:42:35] [2/32] facebook/doh  https://www.facebook.com/DOHgovPH
+[06:42:46]   error: no post permalinks found on the account page
+[06:42:54] [3/32] facebook/dswd: topping up (1 of 5 posts)
+[06:42:54] [3/32] facebook/dswd  https://www.facebook.com/dswdserves
+[06:44:11] === worker: facebook on tab 2, 8 posts, mode=invites ===
+[06:44:15] tab [2] ea46f37d-8caf-477b-b124-26f99a2c5f6d  https://www.facebook.com/dswdserves/posts/pfbid0qeKLhJyZfP9LJHBDkBMxFaHhZp4R2QvBM824oky1SyqemTd3xKtkiyAKFQ5r6C2Hl
+[06:44:15] 32 registered facebook accounts
+[06:44:15] [1/32] facebook/dost_pagasa: the last attempt was empty, retrying
+[06:44:15] [1/32] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[06:45:28]        0 comments  https://www.facebook.com/photo/
