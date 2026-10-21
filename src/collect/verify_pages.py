@@ -218,7 +218,9 @@ def main(argv=None) -> int:
         verdict, reasons = classify(r, info)
         got = collected.get(slug, [])
         expected = urlparse(url).path.strip("/").split("/")[0]
-        if got and expected not in got:
+        # a Facebook slug is case-insensitive: the page is PhilHealthOfficial
+        # whatever case the registry carries
+        if got and expected.lower() not in [g.lower() for g in got]:
             reasons.append(f"the collected posts came from {got}, not {expected}")
             verdict = "FAIL"
 
