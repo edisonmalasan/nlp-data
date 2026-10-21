@@ -1,7 +1,7 @@
 {
-  "n_checked": 32,
-  "n_pass": 32,
-  "n_fail": 0,
+  "n_checked": 46,
+  "n_pass": 45,
+  "n_fail": 1,
   "n_unread": 0,
   "results": [
     {
@@ -50,7 +50,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "DOHgovPH"
+        "DOHgovPH",
+        "photo",
+        "posts"
       ]
     },
     {
@@ -99,7 +101,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "DepartmentOfEducation.PH"
+        "DepartmentOfEducation.PH",
+        "photo",
+        "reel"
       ]
     },
     {
@@ -115,14 +119,16 @@
       "name": "Department of Public Works and Highways",
       "category": "The engineering and construction arm of the Philippine government.",
       "description": "",
-      "followers": "581K followers • 130 following",
+      "followers": "582K followers • 130 following",
       "buttons": [
         "Message",
         "Follow"
       ],
       "gov_domains": [],
       "collected_from": [
-        "dpwhph"
+        "dpwhph",
+        "photo",
+        "posts"
       ]
     },
     {
@@ -145,14 +151,18 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "dilg.philippines"
+        "dilg.philippines",
+        "photo",
+        "posts"
       ]
     },
     {
       "source_page": "ndrrmc",
       "url": "https://www.facebook.com/NDRRMC",
-      "verdict": "PASS",
-      "reasons": [],
+      "verdict": "FAIL",
+      "reasons": [
+        "the collected posts came from ['civildefensePH'], not NDRRMC"
+      ],
       "signals": [
         "the page name is 'NDRRMC'",
         "it is a Page (Message/Follow), not a personal profile",
@@ -245,7 +255,8 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "DENROfficial"
+        "DENROfficial",
+        "photo"
       ]
     },
     {
@@ -267,7 +278,10 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "dacentralphilippines"
+        "dacentralphilippines",
+        "photo",
+        "posts",
+        "reel"
       ]
     },
     {
@@ -289,7 +303,8 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "DOFPH"
+        "DOFPH",
+        "photo"
       ]
     },
     {
@@ -313,7 +328,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "DOSTph"
+        "DOSTph",
+        "photo",
+        "posts"
       ]
     },
     {
@@ -337,7 +354,9 @@
       "gov_domains": [],
       "collected_from": [
         "OfficeOfTheVicePresidentPH",
-        "photo"
+        "photo",
+        "posts",
+        "reel"
       ]
     },
     {
@@ -353,14 +372,16 @@
       "name": "Bureau of Internal Revenue Philippines",
       "category": "Official Account of the Bureau of Internal Revenue (BIR)",
       "description": "",
-      "followers": "836K followers • 128 following",
+      "followers": "837K followers • 128 following",
       "buttons": [
         "Message",
         "Follow"
       ],
       "gov_domains": [],
       "collected_from": [
-        "birgovph"
+        "birgovph",
+        "photo",
+        "posts"
       ]
     },
     {
@@ -383,7 +404,8 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "officialbureauofimmigration"
+        "officialbureauofimmigration",
+        "photo"
       ]
     },
     {
@@ -406,7 +428,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "BangkoSentralngPilipinas"
+        "BangkoSentralngPilipinas",
+        "photo",
+        "posts"
       ]
     },
     {
@@ -429,7 +453,10 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "PhilHealthOfficial"
+        "PhilHealthOfficial",
+        "photo",
+        "posts",
+        "reel"
       ]
     },
     {
@@ -451,7 +478,8 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "NationalBureauofInvestigationOfficial"
+        "NationalBureauofInvestigationOfficial",
+        "posts"
       ]
     },
     {
@@ -474,7 +502,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "civilservicegovph"
+        "civilservicegovph",
+        "photo",
+        "posts"
       ]
     },
     {
@@ -497,7 +527,8 @@
       "gov_domains": [],
       "collected_from": [
         "fdagovph",
-        "photo"
+        "photo",
+        "posts"
       ]
     },
     {
@@ -520,7 +551,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "nationalyouthcommission"
+        "nationalyouthcommission",
+        "photo",
+        "posts"
       ]
     },
     {
@@ -543,7 +576,8 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "CCCPhl"
+        "CCCPhl",
+        "photo"
       ]
     },
     {
@@ -566,7 +600,8 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "boiphilippines"
+        "boiphilippines",
+        "photo"
       ]
     },
     {
@@ -589,7 +624,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "pagcor.ph"
+        "pagcor.ph",
+        "photo",
+        "posts"
       ]
     },
     {
@@ -613,7 +650,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "pidsgovph"
+        "photo",
+        "pidsgovph",
+        "posts"
       ]
     },
     {
@@ -636,7 +675,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "portsauthorityph"
+        "photo",
+        "portsauthorityph",
+        "posts"
       ]
     },
     {
@@ -660,7 +701,8 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "dostpchrd"
+        "dostpchrd",
+        "photo"
       ]
     },
     {
@@ -683,7 +725,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "DOSTASTI"
+        "DOSTASTI",
+        "photo",
+        "posts"
       ]
     },
     {
@@ -706,7 +750,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "PHIVOLCS"
+        "PHIVOLCS",
+        "photo",
+        "posts"
       ]
     },
     {
@@ -729,7 +775,9 @@
       ],
       "gov_domains": [],
       "collected_from": [
-        "nationalmuseumofthephilippines"
+        "nationalmuseumofthephilippines",
+        "photo",
+        "posts"
       ]
     },
     {
@@ -752,7 +800,347 @@
       ],
       "gov_domains": [],
       "collected_from": [
+        "photo",
+        "posts",
         "professionalregulationcommission"
+      ]
+    },
+    {
+      "source_page": "pcsoofficialsocialmedia",
+      "url": "https://www.facebook.com/pcsoofficialsocialmedia",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine Charity Sweepstakes Office'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'Government organization'"
+      ],
+      "name": "Philippine Charity Sweepstakes Office",
+      "category": "Government organization",
+      "description": "PCSO, Hindi Umuurong Sa Pagtulong.",
+      "followers": "2.4M followers • 75 following",
+      "buttons": [
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo",
+        "posts",
+        "reel"
+      ]
+    },
+    {
+      "source_page": "nsc.gov.ph",
+      "url": "https://www.facebook.com/nsc.gov.ph",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'National Security Council of the Philippines'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The Official Page of the National Security Council Philippines'"
+      ],
+      "name": "National Security Council of the Philippines",
+      "category": "The Official Page of the National Security Council Philippines",
+      "description": "",
+      "followers": "50K followers • 101 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo",
+        "posts"
+      ]
+    },
+    {
+      "source_page": "PhilippineNavy",
+      "url": "https://www.facebook.com/PhilippineNavy",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine Navy'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'This is the Official Page of the Philippine Navy | Protecting The Seas, Securing Our Future'"
+      ],
+      "name": "Philippine Navy",
+      "category": "This is the Official Page of the Philippine Navy | Protecting The Seas, Securing Our Future",
+      "description": "",
+      "followers": "1.1M followers • 293 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo",
+        "reel"
+      ]
+    },
+    {
+      "source_page": "piopaf",
+      "url": "https://www.facebook.com/piopaf",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine Air Force'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says 'Government organization'"
+      ],
+      "name": "Philippine Air Force",
+      "category": "Welcome to the PAF official FB page!",
+      "description": "Follow for inspiring stories, photos, and activities.",
+      "followers": "874K followers • 184 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo",
+        "posts",
+        "reel"
+      ]
+    },
+    {
+      "source_page": "DDBgov",
+      "url": "https://www.facebook.com/DDBgov",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Dangerous Drugs Board'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says 'The Official Facebook page of the Dangerous Drugs Board, Philippines.'"
+      ],
+      "name": "Dangerous Drugs Board",
+      "category": "Learn more",
+      "description": "",
+      "followers": "94K followers • 37 following",
+      "buttons": [
+        "Learn more",
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo",
+        "posts"
+      ]
+    },
+    {
+      "source_page": "DOST.FNRI",
+      "url": "https://facebook.com/DOST.FNRI",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'DOST-Food and Nutrition Research Institute'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says 'Government organization'"
+      ],
+      "name": "DOST-Food and Nutrition Research Institute",
+      "category": "Learn more",
+      "description": "",
+      "followers": "101K followers • 17 following",
+      "buttons": [
+        "Learn more",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo",
+        "posts"
+      ]
+    },
+    {
+      "source_page": "OfficialLRTA",
+      "url": "https://www.facebook.com/OfficialLRTA",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Light Rail Transit Authority-LRT Line 2'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The Official Facebook Page of the Light Rail Transit Authority-2 System | Taking you to places'"
+      ],
+      "name": "Light Rail Transit Authority-LRT Line 2",
+      "category": "The Official Facebook Page of the Light Rail Transit Authority-2 System | Taking you to places",
+      "description": "",
+      "followers": "128K followers • 46 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo",
+        "posts",
+        "reel"
+      ]
+    },
+    {
+      "source_page": "nncofficial",
+      "url": "https://www.facebook.com/nncofficial",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'National Nutrition Council (Official)'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "it links its own site (nnc.gov.ph)"
+      ],
+      "name": "National Nutrition Council (Official)",
+      "category": "Message",
+      "description": "The NNC, created by virtue of PD 491 or Nutrition Act of the Philippines, is the country’s highest policy-making and coordinating body on nutrition. This mandate is further redefined and reaffirmed with the enactment of RA 11148 in 2018.",
+      "followers": "118K followers • 101 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo"
+      ]
+    },
+    {
+      "source_page": "pnagovph",
+      "url": "https://www.facebook.com/pnagovph",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine News Agency'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "it links its own site (pna.gov.ph)"
+      ],
+      "name": "Philippine News Agency",
+      "category": "Learn more",
+      "description": "",
+      "followers": "752K followers • 0 following",
+      "buttons": [
+        "Learn more",
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo"
+      ]
+    },
+    {
+      "source_page": "PhStockExchange",
+      "url": "https://www.facebook.com/PhStockExchange",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'The Philippine Stock Exchange, Inc.'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says 'The official Facebook account of The Philippine Stock Exchange, Inc.'"
+      ],
+      "name": "The Philippine Stock Exchange, Inc.",
+      "category": "Learn more",
+      "description": "",
+      "followers": "422K followers • 0 following",
+      "buttons": [
+        "Learn more",
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo",
+        "posts",
+        "reel"
+      ]
+    },
+    {
+      "source_page": "OfficialPDIC",
+      "url": "https://www.facebook.com/OfficialPDIC",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine Deposit Insurance Corporation - PDIC'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'Government organization'"
+      ],
+      "name": "Philippine Deposit Insurance Corporation - PDIC",
+      "category": "Government organization",
+      "description": "PDIC protects depositors by providing deposit insurance and promoting financial stability.",
+      "followers": "43K followers • 4 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo",
+        "posts"
+      ]
+    },
+    {
+      "source_page": "sugarregulatoryadmin",
+      "url": "https://www.facebook.com/sugarregulatoryadmin",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Sugar Regulatory Administration'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The Sugar Regulatory Administration is a Philippine Government-Owned or -Controlled Corporation (GOCC) tasked to promote the growth & development of the sugar industry.'"
+      ],
+      "name": "Sugar Regulatory Administration",
+      "category": "The Sugar Regulatory Administration is a Philippine Government-Owned or -Controlled Corporation (GOCC) tasked to promote the growth & development of the sugar industry.",
+      "description": "For more information, visit sra.gov.ph.",
+      "followers": "2.3K followers • 3 following",
+      "buttons": [
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo"
+      ]
+    },
+    {
+      "source_page": "ITDIDOSTUpdates",
+      "url": "https://www.facebook.com/ITDIDOSTUpdates",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'DOST ITDI'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says 'Government organization'"
+      ],
+      "name": "DOST ITDI",
+      "category": "The Industrial Technology Development Institute is an agency of the Department of Science and Technology mandated to undertake research and development (R&D), conduct knowledge and technology transfer, and provide technical services.",
+      "description": "",
+      "followers": "45K followers • 126 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo",
+        "posts"
+      ]
+    },
+    {
+      "source_page": "pnacph",
+      "url": "https://www.facebook.com/pnacph",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine National AIDS Council - PNAC'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'Government organization'"
+      ],
+      "name": "Philippine National AIDS Council - PNAC",
+      "category": "Government organization",
+      "description": "PNAC was reconstituted to ensure the implementation of the PH response to HIV and AIDS situation.",
+      "followers": "13K followers • 0 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": [
+        "photo",
+        "posts"
       ]
     }
   ]

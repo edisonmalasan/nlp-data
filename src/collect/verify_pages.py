@@ -119,7 +119,7 @@ PAGE_JS = r"""
 GOV_SIGNAL = re.compile(
     r"government|public & government|government organization|"
     r"government service|government agency|government body|"
-    r"official (facebook )?page|official account|official website|"
+    r"official\s+(facebook\s+)?(page|account|website)|"
     r"attached agency|government corporation|state-owned", re.I)
 GOV_DOMAIN = re.compile(r"\.gov\.ph\b", re.I)
 
@@ -283,6 +283,7 @@ def main(argv=None) -> int:
     registry = read_rows(REGISTRY)
     fields = list(registry[0].keys()) if registry else []
     fb = [r for r in registry if r["platform"] == "facebook"]
+    registered_pages = {r["source_page"] for r in fb}
     collected = collected_pages()
 
     tabs = ob.list_tabs()
@@ -312,9 +313,26 @@ def main(argv=None) -> int:
         verdict, reasons, signals = classify(r, info)
         got = collected.get(slug, [])
         expected = urlparse(url).path.strip("/").split("/")[0]
-        if got and expected.lower() not in [g.lower() for g in got]:
-            reasons.append(f"the collected posts came from {got}, not {expected}")
+        # A post permalink comes in two forms. Some carry the page's slug -
+        # facebook.com/dpwhph/posts/pfbid... - and some do not -
+        # facebook.com/posts/pfbid... or facebook.com/photo/?fbid=... . The
+        # second form is what Facebook serves from a page's own feed, and it
+        # resolves against the page it was served from. Both are correct, so
+        # the cross-check only fails when a DIFFERENT page's slug appears.
+        SLUGLESS = {"photo", "posts", "reel", "permalink.php", "story.php"}
+        other = [g for g in got
+                 if g.lower() != expected.lower() and g.lower() not in SLUGLESS]
+        # A post shared from ANOTHER registered government account is still a
+        # post on this page - the NDRRMC page shares the Office of Civil
+        # Defense's posts - so a shared post from a registered account is
+        # consistent, and only an unregistered one is a mismatch.
+        unregistered = [g for g in other if g not in registered_pages]
+        if unregistered:
+            reasons.append(f"the collected posts came from {unregistered}, "
+                           f"not {expected}")
             verdict = "FAIL"
+        elif other:
+            signals.append(f"it also carries posts shared from {other}")
 
         results.append({
             "source_page": slug, "url": url, "verdict": verdict,

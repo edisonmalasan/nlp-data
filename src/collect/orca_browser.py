@@ -47,6 +47,20 @@ COMMENT_SELECTOR = {
     "reddit": 'shreddit-comment, div[data-testid="comment"]',
 }
 
+# Navigational links that look like permalinks. /reel/following and
+# /reel/profile are the page's own controls, not posts, and a collector
+# that treats them as posts spends its time opening a page that has no
+# thread on it.
+RESERVED = {
+    "following", "profile", "reels", "photos", "videos", "events", "store",
+    "groups", "pages", "feed", "home", "explore", "notifications",
+    "messages", "marketplace", "watch", "settings", "gaming", "help",
+    "policies", "login", "logout", "share", "sharer", "share.php",
+    "dialog", "plugins", "permalink.php", "story.php", "watchlist",
+    "saved", "likes", "friends", "about", "details", "info",
+    "more-info", "ad_campaign", "ads", "permalink",
+}
+
 # The selector for one source post, per platform, used when discovering URLs.
 POST_LINK_SELECTOR = {
     "facebook": 'a[href*="/posts/"], a[href*="/reel/"], a[href*="/photo/"], '
@@ -377,9 +391,11 @@ def post_links_js(platform: str) -> str:
         #
         # The page's own tab links (/reel/?s=tab) look like permalinks and
         # are not posts, so each kind is checked for the id that proves it.
+        reserved = json.dumps(sorted(RESERVED))
         return (
             "(() => {\n"
             "  const out = []; const seen = new Set();\n"
+            "  const RESERVED = new Set(" + reserved + ".map(s => s.toLowerCase()));\n"
             "  const A = " + json.dumps(sel) + ";\n"
             "  const SEL = A.split(',').map(s => s.trim() + '[href]').join(',');\n"
             "  const anchors = document.querySelectorAll(SEL);\n"
@@ -411,10 +427,10 @@ def post_links_js(platform: str) -> str:
             "      if (!f) continue;\n"
             "      href = 'https://www.facebook.com/photo/?fbid=' + f[1];\n"
             "    } else if (kind === 'reel') {\n"
-            "      if (!tail) continue;\n"
+            "      if (!tail || RESERVED.has(tail.toLowerCase())) continue;\n"
             "      href = 'https://www.facebook.com/reel/' + tail;\n"
             "    } else {\n"
-            "      if (!tail) continue;\n"
+            "      if (!tail || RESERVED.has(tail.toLowerCase())) continue;\n"
             "      href = 'https://www.facebook.com/posts/' + tail;\n"
             "    }\n"
             "    if (seen.has(href)) continue;\n"
