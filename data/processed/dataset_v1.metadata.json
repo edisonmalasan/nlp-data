@@ -3,7 +3,7 @@
   "dataset_version": "1.0",
   "contract_version": "1.8-draft",
   "guideline_version": "1.0-draft",
-  "built_at": "2026-10-21T01:51:37.376343+00:00",
+  "built_at": "2026-10-21T02:18:42.332856+00:00",
   "class_counts": {
     "actionable": 242,
     "other": 1008
@@ -50,9 +50,9 @@
     "invites": 22
   },
   "languages": {
-    "mixed": 591,
-    "fil": 461,
-    "eng": 369
+    "mixed": 336,
+    "fil": 645,
+    "eng": 440
   },
   "agencies": {
     "n_source_accounts": 30,

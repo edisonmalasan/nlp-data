@@ -493,6 +493,30 @@ ADJUDICATED_BY_AUTO = "auto_annotator"
 ADJUDICATED_BY_LLM = "llm_adjudicator"
 
 
+LANGUAGE_LABELS = os.path.join(ROOT, "data", "provenance", "language_labels.csv")
+
+
+def read_language_labels():
+    """The re-labelled language for every row, where it exists.
+
+    The language column is assigned against ONE written convention
+    (data/interim/language_convention.md) by a separate pass, and the
+    result is stored here. Without it, every run of the apply step would
+    recompute the language from the rule in language.py and quietly undo
+    the re-label.
+    """
+    out = {}
+    if not os.path.exists(LANGUAGE_LABELS):
+        return out
+    with io.open(LANGUAGE_LABELS, encoding="utf-8", newline="") as fh:
+        for r in csv.DictReader(fh):
+            cid = (r.get("comment_id") or "").strip()
+            lang = (r.get("language") or "").strip()
+            if cid and lang in ("fil", "eng", "mixed"):
+                out[cid] = lang
+    return out
+
+
 def read_agency_index():
     """agency_id -> (agency, agency_abbr), from the source registry."""
     path = os.path.join(ROOT, "data", "provenance", "government_agencies.csv")
@@ -515,6 +539,7 @@ def conform_to_contract(rows, decisions):
     schema and nothing else.
     """
     agency_index = read_agency_index()
+    language_labels = read_language_labels()
     for r in rows:
         aid = (r.get("agency_id") or "").strip()
         agency, abbr = agency_index.get(aid, ("", ""))
@@ -525,15 +550,21 @@ def conform_to_contract(rows, decisions):
 
         # the language of an adjudicated row comes from the adjudication; the
         # rest are assigned by the rule in language.py
-        d = decisions.get(r.get("comment_id"))
+        cid = r.get("comment_id")
+        d = decisions.get(cid)
+        if cid in language_labels:
+            # the re-label is the authority: one written convention, applied
+            # to every row
+            r["language"] = language_labels[cid]
+        elif d and d.get("language"):
+            r["language"] = d["language"]
+        elif not r.get("language"):
+            r["language"] = classify(r.get("comment_text_norm")
+                                     or r.get("comment_text") or "")
         if d:
-            r["language"] = d.get("language") or r.get("language", "")
             r["adjudicated_by"] = ADJUDICATED_BY_LLM
             r["adjudication_note"] = d.get("note", "")
         else:
-            if not r.get("language"):
-                r["language"] = classify(r.get("comment_text_norm")
-                                         or r.get("comment_text") or "")
             r["adjudicated_by"] = ADJUDICATED_BY_AUTO
             r["adjudication_note"] = ""
 

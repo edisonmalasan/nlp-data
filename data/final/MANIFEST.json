@@ -1,6 +1,6 @@
 {
   "package": "nlp-actionable-comments-v1",
-  "built_at": "2026-10-21T01:51:38.096080+00:00",
+  "built_at": "2026-10-21T02:18:50.480733+00:00",
   "builder": "tools/build_release.py",
   "dataset_version": "1.0",
   "guideline_version": "1.0-draft",
@@ -31,14 +31,14 @@
     {
       "source": "data/processed/dataset_v1.csv",
       "packaged_as": "dataset_v1.csv",
-      "bytes": 1130053,
-      "sha256": "0d38fe7fbecb7c760a0a36ab82823bb33f9bd9c37409040d97344276f0472950"
+      "bytes": 1129543,
+      "sha256": "4e07b76a200485294bf3de8b3f507390dc8fa353471c44faeced0fc9b90f81f6"
     },
     {
       "source": "data/processed/dataset_v1_ext.csv",
       "packaged_as": "dataset_v1_ext.csv",
-      "bytes": 1286017,
-      "sha256": "76d63125f4a002a67320643c6a0e57bebe9c51b474e20132ac6e48884fe0fe09"
+      "bytes": 1285507,
+      "sha256": "827a78ec353133f28e19292e9e74d7e415dbc6a42581ca54d481d5e73708b7bf"
     },
     {
       "source": "data/processed/posts_v1.csv",
@@ -50,7 +50,7 @@
       "source": "data/processed/dataset_v1.metadata.json",
       "packaged_as": "dataset_v1.metadata.json",
       "bytes": 6570,
-      "sha256": "b5084f4685e7e03736b1aa29ba7f099b9bf8554d7c0441224d87441a42a36697"
+      "sha256": "c3c08f084d1cde8f343d0bfffd4d658be51bcbfe9313d5e6d94afede1ae4851e"
     },
     {
       "source": "data/processed/splits/train.csv",
@@ -73,8 +73,8 @@
     {
       "source": "data/provenance/government_agencies.csv",
       "packaged_as": "government_agencies.csv",
-      "bytes": 18218,
-      "sha256": "72f2add2578b177a13326c2a83ada38ee3e938e31a88e9160192a1fc11d28aa5"
+      "bytes": 18341,
+      "sha256": "c924bfd523759c9232d810ce1bab7e2c78362cbea71a4b0fbabcd0d567951285"
     },
     {
       "source": "docs/ANNOTATION_GUIDELINES.md",
