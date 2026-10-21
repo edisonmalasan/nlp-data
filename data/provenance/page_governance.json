@@ -1,7 +1,7 @@
 {
-  "n_checked": 46,
-  "n_pass": 45,
-  "n_fail": 1,
+  "n_checked": 47,
+  "n_pass": 47,
+  "n_fail": 0,
   "n_unread": 0,
   "results": [
     {
@@ -159,14 +159,13 @@
     {
       "source_page": "ndrrmc",
       "url": "https://www.facebook.com/NDRRMC",
-      "verdict": "FAIL",
-      "reasons": [
-        "the collected posts came from ['civildefensePH'], not NDRRMC"
-      ],
+      "verdict": "PASS",
+      "reasons": [],
       "signals": [
         "the page name is 'NDRRMC'",
         "it is a Page (Message/Follow), not a personal profile",
-        "the identity block says 'Government organization'"
+        "the identity block says 'Government organization'",
+        "it also carries posts shared from ['civildefensePH']"
       ],
       "name": "NDRRMC",
       "category": "Learn more",
@@ -1142,6 +1141,27 @@
         "photo",
         "posts"
       ]
+    },
+    {
+      "source_page": "civildefensePH",
+      "url": "https://www.facebook.com/civildefensePH",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Civil Defense PH'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'Welcome to the official Facebook page of the Office of Civil Defense!'"
+      ],
+      "name": "Civil Defense PH",
+      "category": "Welcome to the official Facebook page of the Office of Civil Defense!",
+      "description": "",
+      "followers": "425K followers • 82 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
+      "collected_from": []
     }
   ]
 }
