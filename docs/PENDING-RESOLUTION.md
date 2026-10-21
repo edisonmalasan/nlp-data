@@ -111,7 +111,8 @@ idle should recover it. **Otherwise** it is reported as a limitation.
 extractor, since fixed (`src/collect/extract_facebook.js` reads the message
 container Facebook marks with `data-ad-comet-preview`); the earlier captures
 predate the fix. **No caption is wrong** — the 77% that are present are real
-captions.
+captions, and a caption that is real is truncated with an ellipsis the way
+Facebook collapses a long one.
 
 This does not touch the modelling text field (`comment_text_norm` alone) and it
 touched at most the 53 A4 rows in the adjudication. The recovery tool is
@@ -119,6 +120,61 @@ touched at most the 53 A4 rows in the adjudication. The recovery tool is
 
 **Owner:** M4. **Fallback if not recovered:** the empty captions are already
 correct as "no caption", and the data card states the coverage.
+
+### 3.5 The `language` column was noise, and has been re-labelled
+
+**Now closed.** The seven adjudicators each applied their own version of the
+Filipino/mixed boundary and did not agree with each other — one treated an
+English greeting with *"po"* as mixed, another said a courtesy particle alone
+does not create a mix. For a study *about* code-switching, a slice variable
+whose annotators disagree with each other is the worst kind of noise.
+
+The whole column has been re-labelled against one written text,
+`data/interim/language_convention.md`, which settles the two rules that decide
+everything (a courtesy particle does not create a mix; a naturalised loanword
+inside a Filipino clause does not) and the four hard families the passes
+found. **The label, the model's target, was not touched.** Only the slice
+variable changed.
+
+A consistency check (`tools/language_consistency.py`) finds the template
+families that received more than one label, so the residue is visible rather
+than assumed away. Seven families still split, and they are genuine linguistic
+variation rather than annotator disagreement: *"Good morning. Waiting for the
+webinar"* is English, *"Good morning! Naa po bay link?"* is mixed.
+
+**Residue that remains:** roughly one row in a thousand is a lone case of the
+*"road improvement"* family, where a compound of two naturalised words was
+judged `mixed` on one row and `fil` on another. The rule that settles it
+(rule 2a) is in the convention, but an automated fix for it was **written and
+withdrawn**: it read any two adjacent content words as an English compound, so
+it misread *"salamat"* and *"buhay"* as English and flipped 88 correct rows. The
+withdrawal is recorded in `data/provenance/language_rule2a.json`.
+
+**Owner:** M4. **If M5 slices by `language`:** the column is now internally
+consistent, but it is still a noisy variable, and a slice on it will be
+sensitive to its errors. The `language` field is not a modelling feature.
+
+### 3.6 The source pages are being checked against Facebook's own category
+
+**In progress.** The earlier verification only checked that the page *name*
+matched the agency name, which would not catch a fan page or a personal
+profile called "deped". Every registered account is now checked against three
+things Facebook itself publishes:
+
+1. the page **category** — a government agency is categorised *"Government
+   organization"*;
+2. the page **buttons** — a Page shows *Message* and *Follow*, a personal
+   profile shows *Add Friend* and no *Message*;
+3. the **website in Details** — a government agency links its own `.gov.ph`
+   site.
+
+Plus a cross-check that every collected post actually came from the registered
+page, so a page that was registered and then collected from somewhere else is
+caught.
+
+**Owner:** M4. The result is in `data/provenance/page_governance.json`. Any
+account that fails is removed from the registry rather than left in.
+
 
 ---
 
@@ -128,8 +184,9 @@ correct as "no caption", and the data card states the coverage.
 |---|---|---|---|
 | 4.1 | Is the primary dataset Facebook-only? | M4 + M5 | It is now: `dataset_v1.csv` is the 1,250 Facebook rows, `dataset_v1_ext.csv` is all 1,421. The paper's scope is Facebook, so this matches. But M5 must be told which file to model on. |
 | 4.2 | Which file does M5 model on? | M5 | `dataset_v1.csv` (Facebook, 1,250 rows, 242 actionable). The extension file is there for a robustness analysis, not for the headline number. |
-| 4.3 | Does M5 slice the results by `language`? | M5 | The `language` column is now assigned against one written convention for every row, so it is internally consistent. It is still a *noisy* variable, and because the study is about code-switching, a slice on it will be sensitive to its errors. The convention is `data/interim/language_convention.md`. |
+| 4.3 | Does M5 slice the results by `language`? | M5 | The `language` column is now assigned against one written convention for every row, so it is internally consistent (§3.5). It is still a *noisy* variable, and because the study is about code-switching, a slice on it will be sensitive to its errors. The convention is `data/interim/language_convention.md`. |
 | 4.4 | Is the "invites" stratum reported separately? | M6 | It is recorded on every row in `stratum`, so it can be excluded and reported separately. The headline number should be the whole dataset, with the stratum reported as a design detail. |
+| 4.5 | Is the collection still running, and does it need a stop? | M4 | The corpus has no ceiling, so the collection runs as a loop (`src/collect/collect_forever.py`). It has to be stopped before the label freeze (§1.1), because a row collected after the freeze would have no label. |
 
 ---
 
