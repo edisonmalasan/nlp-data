@@ -133,29 +133,28 @@ def main(argv=None) -> int:
                 log("   " + l)
 
         # ---- 2. the collectors ------------------------------------------
-        procs = []
-        for i, platform in enumerate(args.platforms):
-            cmd = [PY, os.path.join(HERE, "worker.py"),
-                   "--platform", platform, "--tab", str(i),
-                   "--posts", str(args.posts), "--mode", "recent", "--pause", "6"]
-            log(f"starting {platform} on tab {i}")
-            procs.append((platform, subprocess.Popen(cmd, cwd=ROOT)))
-            time.sleep(2.0)
-
-        # ---- 3. wait for the cycle --------------------------------------
+        # One worker at a time. The browser holds several tabs, and a short
+        # test with three driving at once works, but sustained concurrent
+        # driving closes the runtime's connection and every account fails
+        # with "runtime_unavailable". One process drives the browser; the
+        # parallelism is in the adjudication and the validation, which do
+        # not touch it.
         deadline = time.time() + args.cycle_seconds
-        while time.time() < deadline:
-            alive = [p for _, p in procs if p.poll() is None]
-            if not alive:
-                break
-            time.sleep(20)
-
-        for platform, p in procs:
-            if p.poll() is not None:
-                log(f"  {platform} finished with code {p.returncode}")
+        for platform in args.platforms:
+            if time.time() >= deadline:
+                log(f"  the cycle is out of time; {platform} waits for the next one")
+                continue
+            cmd = [PY, os.path.join(HERE, "worker.py"),
+                   "--platform", platform, "--tab", "0",
+                   "--posts", str(args.posts), "--mode", "recent", "--pause", "6"]
+            log(f"starting {platform} on tab 0")
+            p = subprocess.Popen(cmd, cwd=ROOT)
+            while p.poll() is None and time.time() < deadline:
+                time.sleep(20)
+            if p.poll() is None:
+                log(f"  {platform} is out of time; it is resumable, so it is left to run")
             else:
-                log(f"  {platform} is still running; leaving it to the next cycle")
-        # a worker that is still running is left alone - it is resumable
+                log(f"  {platform} finished with code {p.returncode}")
 
         # ---- 4. rebuild the interim and clean ----------------------------
         log("rebuilding the interim layer and cleaning")

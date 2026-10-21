@@ -171,12 +171,32 @@ train/dev/test split. Otherwise the model is tested on text it has already seen.
 The same post's comments never straddle two splits. Otherwise the model is scored on its
 own vocabulary.
 
-### 4.6 The browser allows one driven tab at a time
+### 4.6 The browser is driven by ONE process at a time
 
 `orca tab switch` fails with `browser_owner_unavailable` while another page is being
 driven. The platforms therefore run **in sequence**, not in parallel: Facebook, then
 YouTube, then X, then Reddit. `collect_all.py` does this. Do not start a second
 collector while one is running.
+
+This holds even though the browser can hold several tabs, and even though a short
+test with three tabs driving at once does appear to work. Sustained concurrent
+driving closes the runtime's connection, and **every** account then fails with:
+
+```
+orca goto: runtime_unavailable The Orca runtime closed the connection before
+responding. Restart Orca and try again.
+```
+
+The failure looks like the accounts are empty or the pages are blocked. They are
+not: the accounts are fine and the pages load. The runtime is simply gone. A run
+that lost an hour to this produced no data at all and reported every account as an
+error.
+
+**The parallelism that is safe is off the browser.** The cleaning, the
+adjudication and the validation can all run while nothing is driving — and the
+adjudication is where the real parallelism pays, because it does not touch the
+browser at all. `launch_workers.py` and `collect_forever.py` run the workers one
+at a time for this reason.
 
 ### 4.7 The cleaning order is fixed
 

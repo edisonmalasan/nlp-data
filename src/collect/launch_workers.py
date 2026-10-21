@@ -55,31 +55,29 @@ def main(argv=None) -> int:
         print("no known platforms selected")
         return 1
 
-    tabs = wk.ensure_tabs(len(platforms))
-    log(f"{len(tabs)} tabs available")
-    for i, t in enumerate(tabs[:len(platforms)]):
+    tabs = wk.ensure_tabs(1)
+    log(f"{len(tabs)} tab(s) available; the browser is driven one worker at a time")
+    for i, t in enumerate(tabs):
         log(f"  tab [{i}] {t.get('browserPageId')}  {t.get('url')}")
 
-    # the registry must not change while the workers run: they only read it
-    procs = []
+    # The workers run ONE AT A TIME.
+    #
+    # The browser can hold several tabs, and a short test with three tabs
+    # driving at once works. Sustained concurrent driving does not: the
+    # runtime closes the connection under the load, and every account fails
+    # with "runtime_unavailable - the Orca runtime closed the connection
+    # before responding". The browser is driven by one process at a time.
+    #
+    # The parallelism that IS safe is off the browser: the cleaning, the
+    # adjudication and the validation all run while nothing is driving.
+    rc = 0
     for i, platform in enumerate(platforms):
         cmd = [sys.executable, os.path.join(HERE, "worker.py"),
-               "--platform", platform, "--tab", str(i),
+               "--platform", platform, "--tab", "0",
                "--posts", str(args.posts), "--mode", args.mode,
                "--pause", str(args.pause)]
-        log(f"starting {platform} worker on tab {i}: {' '.join(cmd[1:])}")
-        p = subprocess.Popen(cmd, cwd=ROOT)
-        procs.append((platform, p))
-        time.sleep(2.0)
-
-    log("")
-    log("=== the workers are running ===")
-    for platform, p in procs:
-        log(f"  {platform:10} pid {p.pid:>6}   log: data/provenance/logs/{platform}.log")
-
-    rc = 0
-    for platform, p in procs:
-        code = p.wait()
+        log(f"starting {platform} worker on tab 0: {' '.join(cmd[1:])}")
+        code = subprocess.call(cmd, cwd=ROOT)
         log(f"  {platform:10} finished with code {code}")
         if code != 0:
             rc = 1

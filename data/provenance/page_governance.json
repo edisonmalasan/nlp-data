@@ -1,0 +1,536 @@
+{
+  "n_checked": 32,
+  "n_pass": 0,
+  "n_fail": 1,
+  "n_unread": 31,
+  "results": [
+    {
+      "source_page": "dost_pagasa",
+      "url": "https://www.facebook.com/PAGASA.DOST.GOV.PH",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "PAGASA.DOST.GOV.PH",
+        "photo",
+        "posts",
+        "reel"
+      ]
+    },
+    {
+      "source_page": "doh",
+      "url": "https://www.facebook.com/DOHgovPH",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "DOHgovPH"
+      ]
+    },
+    {
+      "source_page": "dswd",
+      "url": "https://www.facebook.com/dswdserves",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "dswdserves",
+        "photo",
+        "posts",
+        "reel"
+      ]
+    },
+    {
+      "source_page": "deped",
+      "url": "https://www.facebook.com/DepartmentOfEducation.PH",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "DepartmentOfEducation.PH"
+      ]
+    },
+    {
+      "source_page": "dpwh",
+      "url": "https://www.facebook.com/dpwhph",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "dpwhph"
+      ]
+    },
+    {
+      "source_page": "dilg",
+      "url": "https://www.facebook.com/dilg.philippines",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "dilg.philippines"
+      ]
+    },
+    {
+      "source_page": "ndrrmc",
+      "url": "https://www.facebook.com/NDRRMC",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "NDRRMC",
+        "civildefensePH",
+        "photo",
+        "reel"
+      ]
+    },
+    {
+      "source_page": "bfp",
+      "url": "https://www.facebook.com/DILGBFP",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "DILGBFP",
+        "photo",
+        "posts"
+      ]
+    },
+    {
+      "source_page": "dti",
+      "url": "https://www.facebook.com/DTI.Philippines",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "DTI.Philippines",
+        "photo",
+        "posts"
+      ]
+    },
+    {
+      "source_page": "denr",
+      "url": "https://www.facebook.com/DENROfficial",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "DENROfficial"
+      ]
+    },
+    {
+      "source_page": "dacentralphilippines",
+      "url": "https://www.facebook.com/dacentralphilippines",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "dacentralphilippines"
+      ]
+    },
+    {
+      "source_page": "DOFPH",
+      "url": "https://www.facebook.com/DOFPH",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "DOFPH"
+      ]
+    },
+    {
+      "source_page": "DOSTph",
+      "url": "https://www.facebook.com/DOSTph",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "DOSTph"
+      ]
+    },
+    {
+      "source_page": "OfficeOfTheVicePresidentPH",
+      "url": "https://www.facebook.com/OfficeOfTheVicePresidentPH",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "OfficeOfTheVicePresidentPH",
+        "photo"
+      ]
+    },
+    {
+      "source_page": "birgovph",
+      "url": "https://www.facebook.com/birgovph",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "birgovph"
+      ]
+    },
+    {
+      "source_page": "officialbureauofimmigration",
+      "url": "https://www.facebook.com/officialbureauofimmigration",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "officialbureauofimmigration"
+      ]
+    },
+    {
+      "source_page": "BangkoSentralngPilipinas",
+      "url": "http://www.facebook.com/BangkoSentralngPilipinas",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "BangkoSentralngPilipinas"
+      ]
+    },
+    {
+      "source_page": "PhilHealthofficial",
+      "url": "https://www.facebook.com/PhilHealthofficial",
+      "verdict": "FAIL",
+      "reasons": [
+        "the page did not render",
+        "the collected posts came from ['PhilHealthOfficial'], not PhilHealthofficial"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "PhilHealthOfficial"
+      ]
+    },
+    {
+      "source_page": "NationalBureauofInvestigationOfficial",
+      "url": "https://www.facebook.com/NationalBureauofInvestigationOfficial",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "NationalBureauofInvestigationOfficial"
+      ]
+    },
+    {
+      "source_page": "civilservicegovph",
+      "url": "https://www.facebook.com/civilservicegovph",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "civilservicegovph"
+      ]
+    },
+    {
+      "source_page": "fdagovph",
+      "url": "https://web.facebook.com/fdagovph",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "fdagovph",
+        "photo"
+      ]
+    },
+    {
+      "source_page": "nationalyouthcommission",
+      "url": "https://www.facebook.com/nationalyouthcommission",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "nationalyouthcommission"
+      ]
+    },
+    {
+      "source_page": "CCCPhl",
+      "url": "https://www.facebook.com/CCCPhl",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "CCCPhl"
+      ]
+    },
+    {
+      "source_page": "boiphilippines",
+      "url": "https://www.facebook.com/boiphilippines",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "boiphilippines"
+      ]
+    },
+    {
+      "source_page": "pagcor.ph",
+      "url": "https://www.facebook.com/pagcor.ph",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "pagcor.ph"
+      ]
+    },
+    {
+      "source_page": "pidsgovph",
+      "url": "https://www.facebook.com/pidsgovph",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "pidsgovph"
+      ]
+    },
+    {
+      "source_page": "portsauthorityph",
+      "url": "https://www.facebook.com/portsauthorityph",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "portsauthorityph"
+      ]
+    },
+    {
+      "source_page": "dostpchrd",
+      "url": "https://www.facebook.com/dostpchrd",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "dostpchrd"
+      ]
+    },
+    {
+      "source_page": "DOSTASTI",
+      "url": "https://www.facebook.com/DOSTASTI",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "DOSTASTI"
+      ]
+    },
+    {
+      "source_page": "PHIVOLCS",
+      "url": "https://www.facebook.com/PHIVOLCS",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "PHIVOLCS"
+      ]
+    },
+    {
+      "source_page": "nationalmuseumofthephilippines",
+      "url": "https://www.facebook.com/nationalmuseumofthephilippines",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "nationalmuseumofthephilippines"
+      ]
+    },
+    {
+      "source_page": "professionalregulationcommission",
+      "url": "https://www.facebook.com/professionalregulationcommission",
+      "verdict": "UNREAD",
+      "reasons": [
+        "the page did not render"
+      ],
+      "name": "",
+      "category": "",
+      "followers": "",
+      "buttons": [],
+      "gov_links": [],
+      "collected_from": [
+        "professionalregulationcommission"
+      ]
+    }
+  ]
+}
