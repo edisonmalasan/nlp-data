@@ -155,20 +155,20 @@ def main(argv=None) -> int:
                   if pl != "facebook"]
 
         for platform, mode, posts in queue:
-            if time.time() >= deadline:
-                log(f"  the cycle is out of time; {platform}/{mode} waits for the next one")
-                continue
             cmd = [PY, os.path.join(HERE, "worker.py"),
                    "--platform", platform, "--tab", "0",
                    "--posts", str(posts), "--mode", mode, "--pause", "6"]
             log(f"starting {platform}/{mode} on tab 0, {posts} posts")
             p = subprocess.Popen(cmd, cwd=ROOT)
-            while p.poll() is None and time.time() < deadline:
+            # Wait for the worker to finish, even past the deadline. Two
+            # workers driving the browser at once closes the runtime's
+            # connection, so the queue must never overlap itself. The
+            # deadline only decides when the NEXT cycle starts.
+            while p.poll() is None:
                 time.sleep(20)
-            if p.poll() is None:
-                log(f"  {platform}/{mode} is out of time; it is resumable, so it is left to run")
-            else:
-                log(f"  {platform}/{mode} finished with code {p.returncode}")
+            log(f"  {platform}/{mode} finished with code {p.returncode}")
+            if time.time() >= deadline:
+                log("  the cycle is over; the next one starts now")
 
         # ---- 4. rebuild the interim and clean ----------------------------
         log("rebuilding the interim layer and cleaning")
