@@ -13,15 +13,15 @@ media, labelled `actionable` (1) or `other` (0).
 
 | | |
 |---|---|
-| **Rows** | 1,250 |
-| **Distinct comments** | 1,250 |
-| **Distinct posts** | 92 |
-| **Agencies (source accounts)** | 24 |
-| **Platforms** | facebook (1250) |
-| **Sampling strata** | recent (1228), invites (22) |
-| **Label `1` (actionable)** | 242 (19.4%) |
-| **Label `0` (other)** | 1,008 (80.6%) |
-| **Comment length (chars)** | median 81, p90 174 |
+| **Rows** | 1,511 |
+| **Distinct comments** | 1,511 |
+| **Distinct posts** | 157 |
+| **Agencies (source accounts)** | 42 |
+| **Platforms** | facebook (1511) |
+| **Sampling strata** | recent (1489), invites (22) |
+| **Label `1` (actionable)** | 278 (18.4%) |
+| **Label `0` (other)** | 1,233 (81.6%) |
+| **Comment length (chars)** | median 76, p90 163 |
 | **Split** | 70 / 15 / 15, grouped by `post_id`, seed 42 |
 
 ### The label definition — the one thing to get right
@@ -69,50 +69,68 @@ labelled robustness analysis.
 
 | Platform | Rows | Share |
 |---|---|---|
-| facebook | 1,250 | 100.0% |
+| facebook | 1,511 | 100.0% |
 
 ### Per language
 
 | Language | Rows | Share |
 |---|---|---|
-| fil | 620 | 49.6% |
-| eng | 350 | 28.0% |
-| mixed | 280 | 22.4% |
+| fil | 697 | 46.1% |
+| eng | 467 | 30.9% |
+| mixed | 347 | 23.0% |
 
 ### Per sampling stratum
 
 | Stratum | Rows | Share |
 |---|---|---|
-| recent | 1,228 | 98.2% |
-| invites | 22 | 1.8% |
+| recent | 1,489 | 98.5% |
+| invites | 22 | 1.5% |
 
 ### Per agency
 
 | Source account | Rows | actionable | other | actionable % |
 |---|---|---|---|---|
-| dpwh | 490 | 102 | 388 | 20.8% |
-| deped | 266 | 28 | 238 | 10.5% |
-| dilg | 147 | 30 | 117 | 20.4% |
-| doh | 59 | 5 | 54 | 8.5% |
+| dpwh | 502 | 106 | 396 | 21.1% |
+| deped | 268 | 29 | 239 | 10.8% |
+| dilg | 152 | 29 | 123 | 19.1% |
+| doh | 77 | 5 | 72 | 6.5% |
+| OfficeOfTheVicePresidentPH | 39 | 0 | 39 | 0.0% |
+| PhilHealthofficial | 35 | 14 | 21 | 40.0% |
+| fdagovph | 33 | 13 | 20 | 39.4% |
+| dacentralphilippines | 32 | 15 | 17 | 46.9% |
+| professionalregulationcommission | 32 | 8 | 24 | 25.0% |
 | bfp | 29 | 7 | 22 | 24.1% |
-| OfficeOfTheVicePresidentPH | 29 | 0 | 29 | 0.0% |
+| dost_pagasa | 26 | 1 | 25 | 3.8% |
 | dswd | 24 | 5 | 19 | 20.8% |
 | birgovph | 24 | 3 | 21 | 12.5% |
-| fdagovph | 24 | 8 | 16 | 33.3% |
-| PhilHealthofficial | 23 | 12 | 11 | 52.2% |
-| nationalmuseumofthephilippines | 20 | 5 | 15 | 25.0% |
+| nationalmuseumofthephilippines | 22 | 5 | 17 | 22.7% |
 | dti | 19 | 13 | 6 | 68.4% |
-| professionalregulationcommission | 16 | 5 | 11 | 31.2% |
-| dacentralphilippines | 12 | 7 | 5 | 58.3% |
-| BangkoSentralngPilipinas | 11 | 2 | 9 | 18.2% |
+| piopaf | 16 | 2 | 14 | 12.5% |
+| PHIVOLCS | 15 | 4 | 11 | 26.7% |
+| BangkoSentralngPilipinas | 14 | 2 | 12 | 14.3% |
+| pagcor.ph | 14 | 1 | 13 | 7.1% |
+| ndrrmc | 13 | 2 | 11 | 15.4% |
+| nsc.gov.ph | 12 | 1 | 11 | 8.3% |
+| DOSTph | 11 | 1 | 10 | 9.1% |
 | pidsgovph | 11 | 0 | 11 | 0.0% |
-| ndrrmc | 9 | 2 | 7 | 22.2% |
-| NationalBureauofInvestigationOfficial | 9 | 4 | 5 | 44.4% |
-| PHIVOLCS | 8 | 4 | 4 | 50.0% |
+| civilservicegovph | 11 | 0 | 11 | 0.0% |
+| PhilippineNavy | 10 | 1 | 9 | 10.0% |
+| NationalBureauofInvestigationOfficial | 9 | 3 | 6 | 33.3% |
+| DDBgov | 8 | 2 | 6 | 25.0% |
 | DOSTASTI | 7 | 0 | 7 | 0.0% |
-| dost_pagasa | 6 | 0 | 6 | 0.0% |
-| pagcor.ph | 4 | 0 | 4 | 0.0% |
-| DOSTph | 2 | 0 | 2 | 0.0% |
+| OfficialLRTA | 7 | 1 | 6 | 14.3% |
+| DOFPH | 6 | 1 | 5 | 16.7% |
+| officialbureauofimmigration | 4 | 1 | 3 | 25.0% |
+| DOST.FNRI | 4 | 1 | 3 | 25.0% |
+| nncofficial | 4 | 0 | 4 | 0.0% |
+| boiphilippines | 3 | 0 | 3 | 0.0% |
+| pnagovph | 3 | 2 | 1 | 66.7% |
+| OfficialPDIC | 3 | 0 | 3 | 0.0% |
+| pnacph | 3 | 0 | 3 | 0.0% |
+| nationalyouthcommission | 2 | 0 | 2 | 0.0% |
+| CCCPhl | 2 | 0 | 2 | 0.0% |
+| dostpchrd | 2 | 0 | 2 | 0.0% |
+| pcsoofficialsocialmedia | 2 | 0 | 2 | 0.0% |
 | denr | 1 | 0 | 1 | 0.0% |
 
 ## 4. Known limitations — read this before drawing conclusions
@@ -125,9 +143,9 @@ than the rest.
 
 | Post | Comments | actionable | actionable % |
 |---|---|---|---|
-| d_c7adea76301e5bdc | 209 | 10 | 4.8% |
-| h_24364576a353a509 | 204 | 51 | 25.0% |
-| h_c6df40e102162fdf | 106 | 20 | 18.9% |
+| d_c7adea76301e5bdc | 209 | 11 | 5.3% |
+| h_24364576a353a509 | 204 | 53 | 26.0% |
+| h_c6df40e102162fdf | 106 | 19 | 17.9% |
 | h_77fb0b7cb1f05e9e | 85 | 9 | 10.6% |
 | g_55360bfda32fa270 | 85 | 15 | 17.6% |
 | h_8da3cbe8f169597b | 32 | 9 | 28.1% |
@@ -136,7 +154,7 @@ than the rest.
 | h_3f0026fd16fae3dc | 23 | 2 | 8.7% |
 | d_2d702ca032c46ec7 | 21 | 10 | 47.6% |
 
-The ten largest posts hold **824 of 1,250 rows (65.9%)**.
+The ten largest posts hold **824 of 1,511 rows (54.5%)**.
 A random-split classifier can therefore score well by recognising *which post a
 comment came from* rather than what it says. The split is grouped by `post_id`
 precisely so that a post's comments never straddle two splits — otherwise the
@@ -175,7 +193,7 @@ inter-annotator agreement.** There is one annotator.
 
 | | |
 |---|---|
-| Source registry | `data/provenance/government_agencies.csv` (47 rows: facebook 32, youtube 10, x 5) |
+| Source registry | `data/provenance/government_agencies.csv` (62 rows: facebook 47, youtube 10, x 5) |
 | Collection log | `data/provenance/collection_log.csv` |
 | Per-worker logs | `data/provenance/logs/` |
 | Account verification | `data/provenance/website_discovery.json`, `source_verification.json` |
@@ -198,7 +216,7 @@ the browser profile.
 | `data/final/dataset_v1.metadata.json` | Counts, class balance, lineage, and the exclusion ledger summary. |
 | `data/final/MANIFEST.json` | The file list and checksums for the package. |
 
-The extension file holds 1,421 rows across 1421 comments.
+The extension file holds 1,682 rows across 1682 comments.
 
 **The split files are authoritative.** The `split` column in the dataset is a
 mirror. If they ever disagree, the files win and it is a bug to fix.

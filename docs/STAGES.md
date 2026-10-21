@@ -53,7 +53,7 @@
 
 **Goal:** a frozen, defensible list of official Philippine government accounts to read.
 
-- [x] Pick the agencies — **32 Facebook accounts across 38 policy domains**, pre-filled in
+- [x] Pick the agencies — **47 Facebook accounts across 38 policy domains**, pre-filled in
       `data/provenance/government_agencies.csv`: DOST-PAGASA, DOH, DSWD, DepEd, DPWH, DILG,
       NDRRMC, BFP, DTI, DENR. 10 Facebook rows + 6 YouTube rows, 136 posts planned.
 - [x] Official accounts confirmed against each agency's own website — every row carries

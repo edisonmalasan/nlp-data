@@ -3,20 +3,20 @@
   "dataset_version": "1.0",
   "contract_version": "1.8-draft",
   "guideline_version": "1.0-draft",
-  "built_at": "2026-10-21T02:18:42.332856+00:00",
+  "built_at": "2026-10-21T10:51:47.924783+00:00",
   "class_counts": {
-    "actionable": 242,
-    "other": 1008
+    "actionable": 278,
+    "other": 1233
   },
   "counts_by_split": {
-    "train": 876,
-    "dev": 187,
-    "test": 187
+    "train": 1058,
+    "dev": 227,
+    "test": 226
   },
   "split_seed": 42,
   "cohens_kappa": null,
   "verification_counts": {
-    "auto": 1421
+    "auto": 1682
   },
   "task": {
     "definition": "actionable = the comment identifies a concrete action the agency could be asked to take, or that the commenter proposes the agency take",
@@ -28,39 +28,59 @@
   },
   "counts": {
     "primary_facebook": {
-      "n_rows": 1250,
-      "actionable": 242,
-      "other": 1008,
-      "actionable_rate": 0.1936
+      "n_rows": 1511,
+      "actionable": 278,
+      "other": 1233,
+      "actionable_rate": 0.184
     },
     "extended_all_platforms": {
-      "n_rows": 1421,
-      "actionable": 245,
-      "other": 1176,
-      "actionable_rate": 0.1724
+      "n_rows": 1682,
+      "actionable": 281,
+      "other": 1401,
+      "actionable_rate": 0.1671
     }
   },
   "platforms": {
-    "facebook": 1250,
+    "facebook": 1511,
     "youtube": 101,
     "x": 70
   },
   "strata": {
-    "recent": 1399,
+    "recent": 1660,
     "invites": 22
   },
   "languages": {
-    "mixed": 336,
-    "fil": 645,
-    "eng": 440
+    "mixed": 382,
+    "fil": 737,
+    "eng": 563
   },
   "agencies": {
-    "n_source_accounts": 30,
+    "n_source_accounts": 48,
     "per_account": {
       "BangkoSentralngPilipinas": {
-        "rows": 11,
+        "rows": 14,
         "actionable": 2,
-        "other": 9
+        "other": 12
+      },
+      "CCCPhl": {
+        "rows": 2,
+        "actionable": 0,
+        "other": 2
+      },
+      "DDBgov": {
+        "rows": 8,
+        "actionable": 2,
+        "other": 6
+      },
+      "DOFPH": {
+        "rows": 6,
+        "actionable": 1,
+        "other": 5
+      },
+      "DOST.FNRI": {
+        "rows": 4,
+        "actionable": 1,
+        "other": 3
       },
       "DOSTASTI": {
         "rows": 7,
@@ -68,29 +88,44 @@
         "other": 7
       },
       "DOSTph": {
-        "rows": 2,
-        "actionable": 0,
-        "other": 2
+        "rows": 11,
+        "actionable": 1,
+        "other": 10
       },
       "NationalBureauofInvestigationOfficial": {
         "rows": 9,
-        "actionable": 4,
-        "other": 5
+        "actionable": 3,
+        "other": 6
       },
       "OfficeOfTheVicePresidentPH": {
-        "rows": 29,
+        "rows": 39,
         "actionable": 0,
-        "other": 29
+        "other": 39
+      },
+      "OfficialLRTA": {
+        "rows": 7,
+        "actionable": 1,
+        "other": 6
+      },
+      "OfficialPDIC": {
+        "rows": 3,
+        "actionable": 0,
+        "other": 3
       },
       "PHIVOLCS": {
-        "rows": 8,
+        "rows": 15,
         "actionable": 4,
-        "other": 4
+        "other": 11
       },
       "PhilHealthofficial": {
-        "rows": 23,
-        "actionable": 12,
-        "other": 11
+        "rows": 35,
+        "actionable": 14,
+        "other": 21
+      },
+      "PhilippineNavy": {
+        "rows": 10,
+        "actionable": 1,
+        "other": 9
       },
       "bfp": {
         "rows": 29,
@@ -102,10 +137,20 @@
         "actionable": 3,
         "other": 21
       },
+      "boiphilippines": {
+        "rows": 3,
+        "actionable": 0,
+        "other": 3
+      },
+      "civilservicegovph": {
+        "rows": 11,
+        "actionable": 0,
+        "other": 11
+      },
       "dacentralphilippines": {
-        "rows": 12,
-        "actionable": 7,
-        "other": 5
+        "rows": 32,
+        "actionable": 15,
+        "other": 17
       },
       "denr": {
         "rows": 1,
@@ -113,14 +158,14 @@
         "other": 1
       },
       "deped": {
-        "rows": 266,
-        "actionable": 28,
-        "other": 238
+        "rows": 268,
+        "actionable": 29,
+        "other": 239
       },
       "dilg": {
-        "rows": 147,
-        "actionable": 30,
-        "other": 117
+        "rows": 152,
+        "actionable": 29,
+        "other": 123
       },
       "dilg_x": {
         "rows": 12,
@@ -128,14 +173,14 @@
         "other": 12
       },
       "doh": {
-        "rows": 59,
+        "rows": 77,
         "actionable": 5,
-        "other": 54
+        "other": 72
       },
       "dost_pagasa": {
-        "rows": 6,
-        "actionable": 0,
-        "other": 6
+        "rows": 26,
+        "actionable": 1,
+        "other": 25
       },
       "dost_pagasa_x": {
         "rows": 10,
@@ -147,10 +192,15 @@
         "actionable": 3,
         "other": 98
       },
+      "dostpchrd": {
+        "rows": 2,
+        "actionable": 0,
+        "other": 2
+      },
       "dpwh": {
-        "rows": 490,
-        "actionable": 102,
-        "other": 388
+        "rows": 502,
+        "actionable": 106,
+        "other": 396
       },
       "dpwh_x": {
         "rows": 17,
@@ -178,39 +228,79 @@
         "other": 21
       },
       "fdagovph": {
-        "rows": 24,
-        "actionable": 8,
-        "other": 16
+        "rows": 33,
+        "actionable": 13,
+        "other": 20
       },
       "nationalmuseumofthephilippines": {
-        "rows": 20,
+        "rows": 22,
         "actionable": 5,
-        "other": 15
+        "other": 17
+      },
+      "nationalyouthcommission": {
+        "rows": 2,
+        "actionable": 0,
+        "other": 2
       },
       "ndrrmc": {
-        "rows": 9,
+        "rows": 13,
         "actionable": 2,
-        "other": 7
+        "other": 11
       },
-      "pagcor.ph": {
+      "nncofficial": {
         "rows": 4,
         "actionable": 0,
         "other": 4
+      },
+      "nsc.gov.ph": {
+        "rows": 12,
+        "actionable": 1,
+        "other": 11
+      },
+      "officialbureauofimmigration": {
+        "rows": 4,
+        "actionable": 1,
+        "other": 3
+      },
+      "pagcor.ph": {
+        "rows": 14,
+        "actionable": 1,
+        "other": 13
+      },
+      "pcsoofficialsocialmedia": {
+        "rows": 2,
+        "actionable": 0,
+        "other": 2
       },
       "pidsgovph": {
         "rows": 11,
         "actionable": 0,
         "other": 11
       },
-      "professionalregulationcommission": {
+      "piopaf": {
         "rows": 16,
-        "actionable": 5,
-        "other": 11
+        "actionable": 2,
+        "other": 14
+      },
+      "pnacph": {
+        "rows": 3,
+        "actionable": 0,
+        "other": 3
+      },
+      "pnagovph": {
+        "rows": 3,
+        "actionable": 2,
+        "other": 1
+      },
+      "professionalregulationcommission": {
+        "rows": 32,
+        "actionable": 8,
+        "other": 24
       }
     }
   },
   "posts": {
-    "n_posts": 108,
+    "n_posts": 173,
     "largest_posts": [
       {
         "post_id": "fb_deped_c7adea76301e5bdc",
@@ -259,36 +349,36 @@
     "method": "LLM-assisted annotation with human verification",
     "engine": "src/annotate/auto_annotator.py",
     "confidence_threshold": 0.85,
-    "adjudicated_rows": 1046,
-    "auto_decided_rows": 375,
+    "adjudicated_rows": 1263,
+    "auto_decided_rows": 419,
     "human_verified_rows": 0,
     "human_verification_pending": true,
     "blinded_relabel_pending": true,
     "reliability_statistic": "intra-annotator (test-retest) Cohen's kappa"
   },
   "lineage": {
-    "n_raw_captured": 1571,
-    "n_candidate_pool": 1250,
-    "n_labeled": 1250,
-    "n_usable_final": 1250,
+    "n_raw_captured": 2264,
+    "n_candidate_pool": 1511,
+    "n_labeled": 1511,
+    "n_usable_final": 1511,
     "n_excluded_by_reason": {
-      "X_OFFICIAL": 19,
-      "X_LANG": 1,
-      "X_DUP_EXACT": 254,
-      "X_DUP_NEAR": 1,
-      "X_SPAM": 46
+      "X_OFFICIAL": 21,
+      "X_LANG": 3,
+      "X_DUP_EXACT": 645,
+      "X_DUP_NEAR": 5,
+      "X_SPAM": 79
     },
-    "n_excluded_total": 321,
+    "n_excluded_total": 753,
     "all_platforms": {
-      "n_raw_captured": 1775,
-      "n_candidate_pool": 1421,
-      "n_excluded_total": 354,
+      "n_raw_captured": 2468,
+      "n_candidate_pool": 1682,
+      "n_excluded_total": 786,
       "n_excluded_by_reason": {
-        "X_OFFICIAL": 35,
-        "X_LANG": 1,
-        "X_DUP_EXACT": 270,
-        "X_DUP_NEAR": 1,
-        "X_SPAM": 47
+        "X_OFFICIAL": 37,
+        "X_LANG": 3,
+        "X_DUP_EXACT": 661,
+        "X_DUP_NEAR": 5,
+        "X_SPAM": 80
       }
     },
     "collection_method": "browser_dom_session",
