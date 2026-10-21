@@ -235,6 +235,35 @@ def main(argv=None) -> int:
     A("from the annotator.")
     A("")
 
+    # ---- the post context ----
+    n_nocap = sum(1 for r in ds if not (r.get("post_text") or "").strip())
+    A("**The post caption is missing on some rows.** `post_text` is the post context -")
+    A("the caption of the post the comment sits on. It is empty for "
+      f"{n_nocap} of {n:,} rows ({n_nocap/max(n,1):.0%}), because the extractor that")
+    A("reads the caption was corrected after those captures were made. No caption is")
+    A("**wrong**: the ones that are present are real captions. This does not touch the")
+    A("modelling text field, which is `comment_text_norm` alone, and `post_text` is")
+    A("context for annotation and for reporting, not a feature.")
+    A("")
+
+    # ---- the other platforms ----
+    yt = sum(1 for r in ext if r.get("platform") == "youtube")
+    A("**The extension platforms are thin.** YouTube contributes "
+      f"{yt} comments and X fewer. The YouTube application stopped")
+    A("rendering in the driven tabs partway through the collection, so its comments")
+    A("could not be read from the page; the videos themselves were found from the")
+    A("page's own data. The primary dataset is Facebook only, which is what the")
+    A("study's scope describes, and the extension is there for a robustness check")
+    A("rather than as the study's dataset.")
+    A("")
+
+    A("**A couple of rows are Cebuano or Boholano rather than Filipino.** The")
+    A("exclusion rule for a non-Filipino language is a script check, and those")
+    A("languages are written in Latin script, so they pass it. They are labelled")
+    A("`other`, which is right in every case where they were a reaction, and they")
+    A("are counted here rather than quietly filtered.")
+    A("")
+
     A("## 5. How the labels were produced")
     A("")
     A("**LLM-assisted annotation with human verification.** This is not manual")

@@ -171,6 +171,26 @@ and fails the eligibility criteria S1 and S2. The reasoning is in
 computed from surface markers, used only to describe the corpus. The label comes
 from the annotator.
 
+**The post caption is missing on some rows.** `post_text` is the post context -
+the caption of the post the comment sits on. It is empty for 487 of 1,566 rows (31%), because the extractor that
+reads the caption was corrected after those captures were made. No caption is
+**wrong**: the ones that are present are real captions. This does not touch the
+modelling text field, which is `comment_text_norm` alone, and `post_text` is
+context for annotation and for reporting, not a feature.
+
+**The extension platforms are thin.** YouTube contributes 101 comments and X fewer. The YouTube application stopped
+rendering in the driven tabs partway through the collection, so its comments
+could not be read from the page; the videos themselves were found from the
+page's own data. The primary dataset is Facebook only, which is what the
+study's scope describes, and the extension is there for a robustness check
+rather than as the study's dataset.
+
+**A couple of rows are Cebuano or Boholano rather than Filipino.** The
+exclusion rule for a non-Filipino language is a script check, and those
+languages are written in Latin script, so they pass it. They are labelled
+`other`, which is right in every case where they were a reaction, and they
+are counted here rather than quietly filtered.
+
 ## 5. How the labels were produced
 
 **LLM-assisted annotation with human verification.** This is not manual

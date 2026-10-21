@@ -1,33 +1,33 @@
 {
   "facebook/dost_pagasa": {
-    "posts": 38,
-    "comments": 92,
-    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
-    "updated_at": "2026-10-22T03:23:31"
+    "posts": 42,
+    "comments": 104,
+    "last_error": "",
+    "updated_at": "2026-10-22T04:55:46"
   },
   "facebook/dswd": {
-    "posts": 20,
-    "comments": 24,
-    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
-    "updated_at": "2026-10-22T03:24:08"
+    "posts": 26,
+    "comments": 36,
+    "last_error": "",
+    "updated_at": "2026-10-22T05:04:02"
   },
   "facebook/bfp": {
-    "posts": 21,
-    "comments": 78,
+    "posts": 29,
+    "comments": 121,
     "last_error": "",
-    "updated_at": "2026-10-22T03:36:22"
+    "updated_at": "2026-10-22T05:15:48"
   },
   "facebook/dti": {
-    "posts": 14,
+    "posts": 17,
     "comments": 0,
     "last_error": "",
-    "updated_at": "2026-10-22T03:39:46"
+    "updated_at": "2026-10-22T05:20:01"
   },
   "facebook/ndrrmc": {
-    "posts": 19,
+    "posts": 22,
     "comments": 7,
     "last_error": "",
-    "updated_at": "2026-10-22T03:27:54"
+    "updated_at": "2026-10-22T05:07:29"
   },
   "facebook/doh": {
     "posts": 8,

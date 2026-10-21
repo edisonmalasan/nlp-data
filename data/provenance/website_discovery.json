@@ -1,6 +1,6 @@
 {
   "n_sites": 177,
-  "n_accepted": 38,
+  "n_accepted": 37,
   "results": [
     {
       "agency": "Department of Agriculture",
@@ -114,7 +114,7 @@
       "agency": "Social Security System",
       "site": "https://www.sss.gov.ph",
       "ok": false,
-      "reason": "site unreachable"
+      "reason": "no facebook link on the site"
     },
     {
       "agency": "Bangko Sentral ng Pilipinas",
@@ -183,7 +183,7 @@
       "agency": "Commission on Audit",
       "site": "https://coa.gov.ph",
       "ok": false,
-      "reason": "site unreachable"
+      "reason": "no facebook link on the site"
     },
     {
       "agency": "Food and Drug Administration",
@@ -195,9 +195,8 @@
     {
       "agency": "Philippine Charity Sweepstakes Office",
       "site": "https://www.pcso.gov.ph",
-      "ok": true,
-      "url": "https://www.facebook.com/pcsoofficialsocialmedia",
-      "reason": "verified: Philippine Charity Sweepstakes Office"
+      "ok": false,
+      "reason": "site unreachable"
     },
     {
       "agency": "Philippine Veterans Affairs Office",
@@ -370,7 +369,7 @@
       "site": "https://nsc.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/nsc.gov.ph",
-      "reason": "verified: National Security Council of the Philippines"
+      "reason": "already in the registry"
     },
     {
       "agency": "Games and Amusements Board",
@@ -527,7 +526,7 @@
       "agency": "Mines and Geosciences Bureau",
       "site": "https://mgb.gov.ph",
       "ok": false,
-      "reason": "no facebook link on the site"
+      "reason": "site unreachable"
     },
     {
       "agency": "National Population Commission",
@@ -569,21 +568,21 @@
       "agency": "Philippine Army",
       "site": "https://www.army.mil.ph",
       "ok": false,
-      "reason": "no facebook link on the site"
+      "reason": "site unreachable"
     },
     {
       "agency": "Philippine Navy",
       "site": "https://www.navy.mil.ph",
       "ok": true,
       "url": "https://www.facebook.com/PhilippineNavy",
-      "reason": "verified: Philippine Navy"
+      "reason": "already in the registry"
     },
     {
       "agency": "Philippine Air Force",
       "site": "https://www.paf.mil.ph",
       "ok": true,
       "url": "https://www.facebook.com/piopaf",
-      "reason": "verified: Philippine Air Force"
+      "reason": "already in the registry"
     },
     {
       "agency": "Bureau of Fire Protection",
@@ -632,7 +631,7 @@
       "site": "https://ddb.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/DDBgov",
-      "reason": "verified: Dangerous Drugs Board"
+      "reason": "already in the registry"
     },
     {
       "agency": "Energy Regulatory Commission",
@@ -645,7 +644,7 @@
       "site": "https://fnri.dost.gov.ph",
       "ok": true,
       "url": "https://facebook.com/DOST.FNRI",
-      "reason": "verified: DOST-Food and Nutrition Research Institute"
+      "reason": "already in the registry"
     },
     {
       "agency": "Housing and Land Regulatory Board",
@@ -664,7 +663,7 @@
       "site": "https://www.lrta.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/OfficialLRTA",
-      "reason": "verified: Light Rail Transit Authority-LRT Line 2"
+      "reason": "already in the registry"
     },
     {
       "agency": "Local Water Utilities Administration",
@@ -725,7 +724,7 @@
       "site": "https://www.nnc.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/nncofficial",
-      "reason": "verified: National Nutrition Council (Official)"
+      "reason": "already in the registry"
     },
     {
       "agency": "National Power Corporation",
@@ -786,20 +785,20 @@
       "site": "https://www.pna.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/pnagovph",
-      "reason": "verified: Philippine News Agency"
+      "reason": "already in the registry"
     },
     {
       "agency": "Philippine Stock Exchange",
       "site": "https://www.pse.com.ph",
       "ok": true,
       "url": "https://www.facebook.com/PhStockExchange",
-      "reason": "verified: The Philippine Stock Exchange, Inc."
+      "reason": "already in the registry"
     },
     {
       "agency": "Pollution Control Board",
       "site": "https://emb.gov.ph",
       "ok": false,
-      "reason": "site unreachable"
+      "reason": "no facebook link on the site"
     },
     {
       "agency": "Power Development Corporation",
@@ -830,14 +829,14 @@
       "site": "https://www.pdic.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/OfficialPDIC",
-      "reason": "verified: Philippine Deposit Insurance Corporation - PDIC"
+      "reason": "already in the registry"
     },
     {
       "agency": "Sugar Regulatory Administration",
       "site": "https://www.sra.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/sugarregulatoryadmin",
-      "reason": "verified: Sugar Regulatory Administration"
+      "reason": "already in the registry"
     },
     {
       "agency": "Subic Bay Freeport Zone Authority",
@@ -892,7 +891,7 @@
       "site": "https://www.itdi.dost.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/ITDIDOSTUpdates",
-      "reason": "verified: DOST ITDI"
+      "reason": "already in the registry"
     },
     {
       "agency": "Metals and Engineering Innovation Center",
@@ -923,7 +922,7 @@
       "agency": "National Housing Authority",
       "site": "https://www.nha.gov.ph",
       "ok": false,
-      "reason": "no facebook link on the site"
+      "reason": "site unreachable"
     },
     {
       "agency": "Department of Migrant Workers",
@@ -954,7 +953,7 @@
       "site": "https://pnac.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/pnacph",
-      "reason": "verified: Philippine National AIDS Council - PNAC"
+      "reason": "already in the registry"
     },
     {
       "agency": "Bureau of Public Information",
@@ -1063,13 +1062,13 @@
       "agency": "Local Government Academy",
       "site": "https://lga.gov.ph",
       "ok": false,
-      "reason": "no verified facebook page linked"
+      "reason": "no facebook link on the site"
     },
     {
       "agency": "National Disaster Response Council",
       "site": "https://ndrc.gov.ph",
       "ok": false,
-      "reason": "no facebook link on the site"
+      "reason": "site unreachable"
     },
     {
       "agency": "National Youth Service Corps",
