@@ -4736,3 +4736,8 @@
 [11:13:57]   error: no posts captured
 [11:14:03] [12/32] facebook/DOFPH: the last attempt was empty, retrying
 [11:14:03] [12/32] facebook/DOFPH  https://www.facebook.com/DOFPH
+[13:59:38] === worker: facebook on tab 0, 8 posts, mode=recent ===
+[13:59:39] tab [0] 295e07c8-3787-44b8-83f2-b12d86b27a9c  https://afc.gov.ph/
+[13:59:39] 46 registered facebook accounts
+[13:59:39] [1/46] facebook/dost_pagasa: topping up (5 of 8 posts)
+[13:59:39] [1/46] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH

@@ -433,6 +433,12 @@ def main(argv=None) -> int:
             print(f"  OK   {agency:52} {link}")
             print(f"       {reason}")
             accepted += 1
+            # The report is written after every agency, not at the end. A run
+            # that is interrupted - and they get interrupted - keeps what it
+            # found instead of losing the whole hour of work.
+            with io.open(REPORT, "w", encoding="utf-8", newline="") as fh:
+                json.dump({"n_sites": len(AGENCIES), "n_accepted": accepted,
+                           "results": results}, fh, indent=2, ensure_ascii=False)
         else:
             results.append({"agency": agency, "site": site, "ok": False,
                             "reason": "no verified facebook page linked"})
