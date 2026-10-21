@@ -1,13 +1,13 @@
 {
-  "n_sites": 85,
-  "n_accepted": 24,
+  "n_sites": 177,
+  "n_accepted": 38,
   "results": [
     {
       "agency": "Department of Agriculture",
       "site": "https://www.da.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/dacentralphilippines",
-      "reason": "verified: (Kagawaran ng Agrikultura)"
+      "reason": "already in the registry"
     },
     {
       "agency": "Department of Energy",
@@ -20,7 +20,7 @@
       "site": "https://www.dof.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/DOFPH",
-      "reason": "verified: Department of Finance"
+      "reason": "already in the registry"
     },
     {
       "agency": "Department of Foreign Affairs",
@@ -45,7 +45,7 @@
       "site": "https://www.dost.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/DOSTph",
-      "reason": "verified: DOST Philippines"
+      "reason": "already in the registry"
     },
     {
       "agency": "Department of Transportation",
@@ -56,16 +56,15 @@
     {
       "agency": "Department of Tourism",
       "site": "https://tourism.gov.ph",
-      "ok": true,
-      "url": "https://www.facebook.com/happinesstravelsandtours",
-      "reason": "verified: Happiness Travel & Tours"
+      "ok": false,
+      "reason": "no verified facebook page linked"
     },
     {
       "agency": "Office of the Vice President",
       "site": "https://www.ovp.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/OfficeOfTheVicePresidentPH",
-      "reason": "verified: Office of the Vice President of the Philippines"
+      "reason": "already in the registry"
     },
     {
       "agency": "Presidential Communications Operations Office",
@@ -96,7 +95,7 @@
       "site": "https://www.bir.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/birgovph",
-      "reason": "verified: Bureau of Internal Revenue Philippines"
+      "reason": "already in the registry"
     },
     {
       "agency": "Bureau of the Treasury",
@@ -109,20 +108,20 @@
       "site": "https://immigration.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/officialbureauofimmigration",
-      "reason": "verified: Bureau of Immigration, Republic of the Philippines"
+      "reason": "already in the registry"
     },
     {
       "agency": "Social Security System",
       "site": "https://www.sss.gov.ph",
       "ok": false,
-      "reason": "no facebook link on the site"
+      "reason": "site unreachable"
     },
     {
       "agency": "Bangko Sentral ng Pilipinas",
       "site": "https://www.bsp.gov.ph",
       "ok": true,
       "url": "http://www.facebook.com/BangkoSentralngPilipinas",
-      "reason": "verified: Bangko Sentral ng Pilipinas"
+      "reason": "already in the registry"
     },
     {
       "agency": "Government Service Insurance System",
@@ -133,9 +132,8 @@
     {
       "agency": "Philippine Health Insurance Corporation",
       "site": "https://www.philhealth.gov.ph",
-      "ok": true,
-      "url": "https://www.facebook.com/PhilHealthofficial",
-      "reason": "verified: Philippine Health Insurance Corporation"
+      "ok": false,
+      "reason": "no verified facebook page linked"
     },
     {
       "agency": "Land Transportation Office",
@@ -154,7 +152,7 @@
       "site": "https://nbi.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/NationalBureauofInvestigationOfficial",
-      "reason": "verified: National Bureau of Investigation"
+      "reason": "already in the registry"
     },
     {
       "agency": "National Police Commission",
@@ -167,7 +165,7 @@
       "site": "https://csc.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/civilservicegovph",
-      "reason": "verified: Philippine Civil Service Commission"
+      "reason": "already in the registry"
     },
     {
       "agency": "Commission on Elections",
@@ -185,20 +183,21 @@
       "agency": "Commission on Audit",
       "site": "https://coa.gov.ph",
       "ok": false,
-      "reason": "no facebook link on the site"
+      "reason": "site unreachable"
     },
     {
       "agency": "Food and Drug Administration",
       "site": "https://www.fda.gov.ph",
       "ok": true,
       "url": "https://web.facebook.com/fdagovph",
-      "reason": "verified: Food and Drug Administration Philippines"
+      "reason": "already in the registry"
     },
     {
       "agency": "Philippine Charity Sweepstakes Office",
       "site": "https://www.pcso.gov.ph",
-      "ok": false,
-      "reason": "site unreachable"
+      "ok": true,
+      "url": "https://www.facebook.com/pcsoofficialsocialmedia",
+      "reason": "verified: Philippine Charity Sweepstakes Office"
     },
     {
       "agency": "Philippine Veterans Affairs Office",
@@ -235,7 +234,7 @@
       "site": "https://nyc.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/nationalyouthcommission",
-      "reason": "verified: National Youth Commission"
+      "reason": "already in the registry"
     },
     {
       "agency": "Philippine Commission on Women",
@@ -326,7 +325,7 @@
       "site": "https://climate.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/CCCPhl",
-      "reason": "verified: Climate Change Commission PH"
+      "reason": "already in the registry"
     },
     {
       "agency": "Philippine Economic Zone Authority",
@@ -339,7 +338,7 @@
       "site": "https://boi.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/boiphilippines",
-      "reason": "verified: Philippine Board of Investments"
+      "reason": "already in the registry"
     },
     {
       "agency": "Small Business Corporation",
@@ -358,7 +357,7 @@
       "site": "https://www.pagcor.ph",
       "ok": true,
       "url": "https://www.facebook.com/pagcor.ph",
-      "reason": "verified: PAGCOR"
+      "reason": "already in the registry"
     },
     {
       "agency": "Presidential Commission on Good Government",
@@ -408,14 +407,14 @@
       "site": "https://www.pids.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/pidsgovph",
-      "reason": "verified: Philippine Institute For Development Studies"
+      "reason": "already in the registry"
     },
     {
       "agency": "Philippine Ports Authority",
       "site": "https://www.ppa.com.ph",
       "ok": true,
       "url": "https://www.facebook.com/portsauthorityph",
-      "reason": "verified: Philippine Ports Authority"
+      "reason": "already in the registry"
     },
     {
       "agency": "Philippine National Railways",
@@ -464,14 +463,14 @@
       "site": "https://pchrd.dost.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/dostpchrd",
-      "reason": "verified: DOST PCHRD"
+      "reason": "already in the registry"
     },
     {
       "agency": "Advanced Science and Technology Institute",
       "site": "https://asti.dost.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/DOSTASTI",
-      "reason": "verified: DOST Advanced Science and Technology Institute"
+      "reason": "already in the registry"
     },
     {
       "agency": "Philippine Nuclear Research Institute",
@@ -484,14 +483,14 @@
       "site": "https://www.phivolcs.dost.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/PHIVOLCS",
-      "reason": "verified: Philippine Institute of Volcanology and Seismology (PHIVOLCS"
+      "reason": "already in the registry"
     },
     {
       "agency": "National Museum of the Philippines",
       "site": "https://www.nationalmuseum.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/nationalmuseumofthephilippines",
-      "reason": "verified: National Museum of the Philippines"
+      "reason": "already in the registry"
     },
     {
       "agency": "National Commission for Culture and the Arts",
@@ -522,7 +521,7 @@
       "site": "https://www.prc.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/professionalregulationcommission",
-      "reason": "verified: Professional Regulation Commission"
+      "reason": "already in the registry"
     },
     {
       "agency": "Mines and Geosciences Bureau",
@@ -533,6 +532,573 @@
     {
       "agency": "National Population Commission",
       "site": "https://popcom.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Department of Agrarian Reform and Rural Development",
+      "site": "https://www.dar.gov.ph",
+      "ok": false,
+      "reason": "no verified facebook page linked"
+    },
+    {
+      "agency": "Department of National Defense",
+      "site": "https://afp.mil.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Department of Order and Payment",
+      "site": "https://dop.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Office of the President of the Philippines",
+      "site": "https://www.op.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Armed Forces of the Philippines",
+      "site": "https://www.afp.mil.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Philippine Army",
+      "site": "https://www.army.mil.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Philippine Navy",
+      "site": "https://www.navy.mil.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/PhilippineNavy",
+      "reason": "verified: Philippine Navy"
+    },
+    {
+      "agency": "Philippine Air Force",
+      "site": "https://www.paf.mil.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/piopaf",
+      "reason": "verified: Philippine Air Force"
+    },
+    {
+      "agency": "Bureau of Fire Protection",
+      "site": "https://www.bfp.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Bureau of Labor Conditions",
+      "site": "https://blc.dole.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Bureau of Local Government Supervision",
+      "site": "https://blgs.dilg.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Bureau of Mines and Geosciences",
+      "site": "https://www.mgb.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Career Service Philippines",
+      "site": "https://csp.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Civil Aeronautics Board",
+      "site": "https://cab.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Communications Commission",
+      "site": "https://commcom.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Dangerous Drugs Board",
+      "site": "https://ddb.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/DDBgov",
+      "reason": "verified: Dangerous Drugs Board"
+    },
+    {
+      "agency": "Energy Regulatory Commission",
+      "site": "https://www.erc.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Food and Nutrition Research Institute",
+      "site": "https://fnri.dost.gov.ph",
+      "ok": true,
+      "url": "https://facebook.com/DOST.FNRI",
+      "reason": "verified: DOST-Food and Nutrition Research Institute"
+    },
+    {
+      "agency": "Housing and Land Regulatory Board",
+      "site": "https://hlrb.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Insurance Commission",
+      "site": "https://insurance.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Light Rail Transit Authority",
+      "site": "https://www.lrta.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/OfficialLRTA",
+      "reason": "verified: Light Rail Transit Authority-LRT Line 2"
+    },
+    {
+      "agency": "Local Water Utilities Administration",
+      "site": "https://www.lwua.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Metropolitan Manila Development Authority",
+      "site": "https://mmda.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Metropolitan Manila Authority",
+      "site": "https://mmmda.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "National Academy of Science and Technology",
+      "site": "https://nast.dost.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "National Anti-Poverty Commission",
+      "site": "https://napc.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "National Book Development Board",
+      "site": "https://bookdev.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "National Human Rights Commission",
+      "site": "https://www.nhrc.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "National Institute of Biological Control",
+      "site": "https://nibio.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "National Mining and Metallurgical Research Institute",
+      "site": "https://www.nmmr.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "National Nutrition Council",
+      "site": "https://www.nnc.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/nncofficial",
+      "reason": "verified: National Nutrition Council (Official)"
+    },
+    {
+      "agency": "National Power Corporation",
+      "site": "https://www.napocor.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "National Statistical Coordination Board",
+      "site": "https://www.nscb.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Office of the Ombudsman",
+      "site": "https://ombudsman.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine Atomic Energy Commission",
+      "site": "https://paec.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine Council for Industry, Energy and Emerging Technology Research",
+      "site": "https://pcieer.dost.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine Crop Insurance Corporation",
+      "site": "https://www.pcic.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Philippine Development Authority",
+      "site": "https://www.phildev.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine Fisheries Development Authority",
+      "site": "https://pfda.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Philippine Genome Center",
+      "site": "https://pgc.dost.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine News Agency",
+      "site": "https://www.pna.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/pnagovph",
+      "reason": "verified: Philippine News Agency"
+    },
+    {
+      "agency": "Philippine Stock Exchange",
+      "site": "https://www.pse.com.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/PhStockExchange",
+      "reason": "verified: The Philippine Stock Exchange, Inc."
+    },
+    {
+      "agency": "Pollution Control Board",
+      "site": "https://emb.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Power Development Corporation",
+      "site": "https://www.pdc.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Presidential Museum and Library",
+      "site": "https://pml.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Provincial Electricity Development Corporation",
+      "site": "https://pedc.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Public Information and Broadcasting Affairs",
+      "site": "https://piba.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine Deposit Insurance Corporation",
+      "site": "https://www.pdic.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/OfficialPDIC",
+      "reason": "verified: Philippine Deposit Insurance Corporation - PDIC"
+    },
+    {
+      "agency": "Sugar Regulatory Administration",
+      "site": "https://www.sra.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/sugarregulatoryadmin",
+      "reason": "verified: Sugar Regulatory Administration"
+    },
+    {
+      "agency": "Subic Bay Freeport Zone Authority",
+      "site": "https://www.sbfa.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Tariff Commission",
+      "site": "https://tariffcommission.gov.ph",
+      "ok": false,
+      "reason": "no verified facebook page linked"
+    },
+    {
+      "agency": "Water Resources Development Commission",
+      "site": "https://www.wrdc.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Cultural Center of the Philippines",
+      "site": "https://www.ccp.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Office of the Presidential Adviser on the Peace Process",
+      "site": "https://opapp.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "National Capital Region Police Office",
+      "site": "https://ncpo.pnp.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Government Procurement Policy Board",
+      "site": "https://gppb.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "National Statistics Authority",
+      "site": "https://www.psa.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Industrial Technology Development Institute",
+      "site": "https://www.itdi.dost.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/ITDIDOSTUpdates",
+      "reason": "verified: DOST ITDI"
+    },
+    {
+      "agency": "Metals and Engineering Innovation Center",
+      "site": "https://www.meic.dost.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine Institute of Volcanology and Seismology",
+      "site": "https://www.phivolcs.dost.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/PHIVOLCS",
+      "reason": "already in the registry"
+    },
+    {
+      "agency": "Mindanao Development Authority",
+      "site": "https://mindanao.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Bangsamoro Development Agency",
+      "site": "https://bda.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "National Housing Authority",
+      "site": "https://www.nha.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Department of Migrant Workers",
+      "site": "https://www.dmw.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Commission on Filipino Workers",
+      "site": "https://cfo.gov.ph",
+      "ok": false,
+      "reason": "no verified facebook page linked"
+    },
+    {
+      "agency": "National Commission for the Senior Citizens",
+      "site": "https://ncsc.gov.ph",
+      "ok": false,
+      "reason": "no verified facebook page linked"
+    },
+    {
+      "agency": "Office of the Secretary to the President",
+      "site": "https://osp.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine National AIDS Council",
+      "site": "https://pnac.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/pnacph",
+      "reason": "verified: Philippine National AIDS Council - PNAC"
+    },
+    {
+      "agency": "Bureau of Public Information",
+      "site": "https://bpi.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "National Integrated Research Program on Climate Change",
+      "site": "https://climate.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/CCCPhl",
+      "reason": "already in the registry"
+    },
+    {
+      "agency": "Overseas Filipino Workers Development Center",
+      "site": "https://dmw.gov.ph",
+      "ok": false,
+      "reason": "no verified facebook page linked"
+    },
+    {
+      "agency": "Philippine Space Development Agency",
+      "site": "https://philsa.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Water Development Sector Coordinating Office",
+      "site": "https://wdsco.dost.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine Government Post Agency",
+      "site": "https://ppa.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Public Sector Supply Management",
+      "site": "https://pssm.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Coal and Energy Development Department",
+      "site": "https://doe.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "National Science and Technology Institute",
+      "site": "https://nsti.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine Nuclear Safety Regulatory Board",
+      "site": "https://pnsrb.dost.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Cordillera Administrative Region",
+      "site": "https://car.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Department of Science and Technology - SET",
+      "site": "https://set.dost.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine Earth Observation Network",
+      "site": "https://philspace.dost.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "National Human Rights Commission - CAR",
+      "site": "https://nhrc.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Bureau of Services",
+      "site": "https://bss.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine Port Authority",
+      "site": "https://ppa.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Philippine Registry of Civil Vitalities",
+      "site": "https://psa.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Local Government Academy",
+      "site": "https://lga.gov.ph",
+      "ok": false,
+      "reason": "no verified facebook page linked"
+    },
+    {
+      "agency": "National Disaster Response Council",
+      "site": "https://ndrc.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "National Youth Service Corps",
+      "site": "https://nysc.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Bureau of Immigration and Naturalization",
+      "site": "https://immigration.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/officialbureauofimmigration",
+      "reason": "already in the registry"
+    },
+    {
+      "agency": "Office of the Special Court for the Accelerated Clean Up of the Environment",
+      "site": "https://sc.judiciary.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Cebu Port Authority",
+      "site": "https://cpa.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Authority for the Freeport of Clark",
+      "site": "https://afc.gov.ph",
       "ok": false,
       "reason": "site unreachable"
     }
