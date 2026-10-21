@@ -2,32 +2,32 @@
   "facebook/dost_pagasa": {
     "posts": 38,
     "comments": 92,
-    "last_error": "",
-    "updated_at": "2026-10-22T01:43:34"
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-22T03:23:31"
   },
   "facebook/dswd": {
     "posts": 20,
     "comments": 24,
-    "last_error": "",
-    "updated_at": "2026-10-21T10:32:04"
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-22T03:24:08"
   },
   "facebook/bfp": {
-    "posts": 12,
-    "comments": 25,
+    "posts": 21,
+    "comments": 78,
     "last_error": "",
-    "updated_at": "2026-10-21T14:18:45"
+    "updated_at": "2026-10-22T03:36:22"
   },
   "facebook/dti": {
-    "posts": 11,
+    "posts": 14,
     "comments": 0,
     "last_error": "",
-    "updated_at": "2026-10-21T14:24:40"
+    "updated_at": "2026-10-22T03:39:46"
   },
   "facebook/ndrrmc": {
-    "posts": 16,
+    "posts": 19,
     "comments": 7,
     "last_error": "",
-    "updated_at": "2026-10-21T14:12:59"
+    "updated_at": "2026-10-22T03:27:54"
   },
   "facebook/doh": {
     "posts": 8,
@@ -54,46 +54,46 @@
     "updated_at": "2026-10-21T10:45:55"
   },
   "facebook/denr": {
-    "posts": 16,
-    "comments": 0,
+    "posts": 19,
+    "comments": 6,
     "last_error": "",
-    "updated_at": "2026-10-22T01:45:10"
+    "updated_at": "2026-10-22T03:42:20"
   },
   "facebook/dacentralphilippines": {
-    "posts": 8,
-    "comments": 53,
+    "posts": 19,
+    "comments": 127,
     "last_error": "",
-    "updated_at": "2026-10-21T14:35:02"
+    "updated_at": "2026-10-22T03:51:37"
   },
   "facebook/DOFPH": {
-    "posts": 8,
-    "comments": 10,
+    "posts": 20,
+    "comments": 77,
     "last_error": "",
-    "updated_at": "2026-10-21T14:39:33"
+    "updated_at": "2026-10-22T03:59:36"
   },
   "facebook/DOSTph": {
-    "posts": 19,
-    "comments": 31,
-    "last_error": "",
-    "updated_at": "2026-10-22T01:47:16"
-  },
-  "facebook/OfficeOfTheVicePresidentPH": {
-    "posts": 8,
-    "comments": 41,
-    "last_error": "",
-    "updated_at": "2026-10-21T14:49:30"
-  },
-  "facebook/birgovph": {
-    "posts": 14,
-    "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-21T18:32:22"
-  },
-  "facebook/officialbureauofimmigration": {
     "posts": 21,
     "comments": 31,
     "last_error": "",
-    "updated_at": "2026-10-22T01:51:39"
+    "updated_at": "2026-10-22T04:01:39"
+  },
+  "facebook/OfficeOfTheVicePresidentPH": {
+    "posts": 15,
+    "comments": 58,
+    "last_error": "",
+    "updated_at": "2026-10-22T04:08:45"
+  },
+  "facebook/birgovph": {
+    "posts": 23,
+    "comments": 10,
+    "last_error": "",
+    "updated_at": "2026-10-22T04:14:58"
+  },
+  "facebook/officialbureauofimmigration": {
+    "posts": 30,
+    "comments": 43,
+    "last_error": "",
+    "updated_at": "2026-10-22T04:20:29"
   },
   "facebook/BangkoSentralngPilipinas": {
     "posts": 16,

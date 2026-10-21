@@ -111,6 +111,9 @@ def main(argv=None) -> int:
                     help="how many posts to take per account")
     ap.add_argument("--platforms", nargs="+",
                     default=["facebook", "youtube", "x"])
+    ap.add_argument("--invites-posts", type=int, default=8,
+                    help="how many posts to take per account in the "
+                         "request-inviting stratum")
     ap.add_argument("--discover-every", type=int, default=3,
                     help="re-check the source frame every N cycles")
     args = ap.parse_args(argv)
@@ -140,21 +143,32 @@ def main(argv=None) -> int:
         # parallelism is in the adjudication and the validation, which do
         # not touch it.
         deadline = time.time() + args.cycle_seconds
-        for platform in args.platforms:
+
+        # The queue. The most recent posts first, because that is the frame
+        # the paper describes; then the request-inviting stratum, which is
+        # the contract's pre-registered stratified collection and the one
+        # that raises the yield of actionable rows; then the other
+        # platforms.
+        queue = [("facebook", "recent", args.posts)]
+        queue += [("facebook", "invites", args.invites_posts)]
+        queue += [(pl, "recent", args.posts) for pl in args.platforms
+                  if pl != "facebook"]
+
+        for platform, mode, posts in queue:
             if time.time() >= deadline:
-                log(f"  the cycle is out of time; {platform} waits for the next one")
+                log(f"  the cycle is out of time; {platform}/{mode} waits for the next one")
                 continue
             cmd = [PY, os.path.join(HERE, "worker.py"),
                    "--platform", platform, "--tab", "0",
-                   "--posts", str(args.posts), "--mode", "recent", "--pause", "6"]
-            log(f"starting {platform} on tab 0")
+                   "--posts", str(posts), "--mode", mode, "--pause", "6"]
+            log(f"starting {platform}/{mode} on tab 0, {posts} posts")
             p = subprocess.Popen(cmd, cwd=ROOT)
             while p.poll() is None and time.time() < deadline:
                 time.sleep(20)
             if p.poll() is None:
-                log(f"  {platform} is out of time; it is resumable, so it is left to run")
+                log(f"  {platform}/{mode} is out of time; it is resumable, so it is left to run")
             else:
-                log(f"  {platform} finished with code {p.returncode}")
+                log(f"  {platform}/{mode} finished with code {p.returncode}")
 
         # ---- 4. rebuild the interim and clean ----------------------------
         log("rebuilding the interim layer and cleaning")
