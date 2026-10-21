@@ -1,6 +1,6 @@
 {
   "package": "nlp-actionable-comments-v1",
-  "built_at": "2026-10-20T23:03:50.040332+00:00",
+  "built_at": "2026-10-21T01:51:38.096080+00:00",
   "builder": "tools/build_release.py",
   "dataset_version": "1.0",
   "guideline_version": "1.0-draft",
@@ -50,7 +50,7 @@
       "source": "data/processed/dataset_v1.metadata.json",
       "packaged_as": "dataset_v1.metadata.json",
       "bytes": 6570,
-      "sha256": "faa80f8b3ebe29141c4c50278684066128f4e6b2e96f62404740401a3444bf8f"
+      "sha256": "b5084f4685e7e03736b1aa29ba7f099b9bf8554d7c0441224d87441a42a36697"
     },
     {
       "source": "data/processed/splits/train.csv",
@@ -73,8 +73,8 @@
     {
       "source": "data/provenance/government_agencies.csv",
       "packaged_as": "government_agencies.csv",
-      "bytes": 18185,
-      "sha256": "7ee8c4574adda7924407ec16ec4ae4b516330e849354b238e3f47d810f71ff2d"
+      "bytes": 18218,
+      "sha256": "72f2add2578b177a13326c2a83ada38ee3e938e31a88e9160192a1fc11d28aa5"
     },
     {
       "source": "docs/ANNOTATION_GUIDELINES.md",

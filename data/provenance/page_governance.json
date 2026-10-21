@@ -1,21 +1,28 @@
 {
   "n_checked": 32,
-  "n_pass": 0,
-  "n_fail": 1,
-  "n_unread": 31,
+  "n_pass": 32,
+  "n_fail": 0,
+  "n_unread": 0,
   "results": [
     {
       "source_page": "dost_pagasa",
       "url": "https://www.facebook.com/PAGASA.DOST.GOV.PH",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'DOST-PAGASA'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the description says 'Public & Government Service'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "DOST-PAGASA",
+      "category": "Department of Science and Technology – Philippine Atmospheric, Geophysical and Astronomical Services Administration | The Weather and Climate Authority",
+      "description": "Public & Government Service",
+      "followers": "8.1M followers • 38 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "PAGASA.DOST.GOV.PH",
         "photo",
@@ -26,15 +33,22 @@
     {
       "source_page": "doh",
       "url": "https://www.facebook.com/DOHgovPH",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Department of Health (Philippines)'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The official Facebook page of the Department of Health in the Philippines'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Department of Health (Philippines)",
+      "category": "The official Facebook page of the Department of Health in the Philippines",
+      "description": "",
+      "followers": "8.1M followers • 72 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "DOHgovPH"
       ]
@@ -42,15 +56,22 @@
     {
       "source_page": "dswd",
       "url": "https://www.facebook.com/dswdserves",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Department of Social Welfare and Development - DSWD'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The official account of the Department of Social Welfare and Development (DSWD) - Central Office'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Department of Social Welfare and Development - DSWD",
+      "category": "The official account of the Department of Social Welfare and Development (DSWD) - Central Office",
+      "description": "",
+      "followers": "4.3M followers • 113 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "dswdserves",
         "photo",
@@ -61,15 +82,22 @@
     {
       "source_page": "deped",
       "url": "https://www.facebook.com/DepartmentOfEducation.PH",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'DepEd Philippines'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says 'Government organization'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "DepEd Philippines",
+      "category": "The executive agency for basic education of the Republic of the Philippines.",
+      "description": "",
+      "followers": "6.5M followers • 165 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "DepartmentOfEducation.PH"
       ]
@@ -77,15 +105,22 @@
     {
       "source_page": "dpwh",
       "url": "https://www.facebook.com/dpwhph",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Department of Public Works and Highways'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The engineering and construction arm of the Philippine government.'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Department of Public Works and Highways",
+      "category": "The engineering and construction arm of the Philippine government.",
+      "description": "",
+      "followers": "581K followers • 130 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "dpwhph"
       ]
@@ -93,15 +128,22 @@
     {
       "source_page": "dilg",
       "url": "https://www.facebook.com/dilg.philippines",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'DILG Philippines'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The official Facebook page of the Department of the Interior and Local Government, Republic of the Philippines'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "DILG Philippines",
+      "category": "The official Facebook page of the Department of the Interior and Local Government, Republic of the Philippines",
+      "description": "",
+      "followers": "2M followers • 44 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "dilg.philippines"
       ]
@@ -109,15 +151,23 @@
     {
       "source_page": "ndrrmc",
       "url": "https://www.facebook.com/NDRRMC",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'NDRRMC'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says 'Government organization'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "NDRRMC",
+      "category": "Learn more",
+      "description": "",
+      "followers": "1M followers • 74 following",
+      "buttons": [
+        "Learn more",
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "NDRRMC",
         "civildefensePH",
@@ -128,15 +178,22 @@
     {
       "source_page": "bfp",
       "url": "https://www.facebook.com/DILGBFP",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Bureau of Fire Protection'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The official facebook page of the Bureau of Fire Protection.'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Bureau of Fire Protection",
+      "category": "The official facebook page of the Bureau of Fire Protection.",
+      "description": "",
+      "followers": "575K followers • 122 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "DILGBFP",
         "photo",
@@ -146,15 +203,22 @@
     {
       "source_page": "dti",
       "url": "https://www.facebook.com/DTI.Philippines",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'DTI Philippines'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'DTI is the primary coordinative, promotive, facilitative, and regulatory arm of the PH government for trade, industry, and investment activities.'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "DTI Philippines",
+      "category": "DTI is the primary coordinative, promotive, facilitative, and regulatory arm of the PH government for trade, industry, and investment activities.",
+      "description": "",
+      "followers": "859K followers • 82 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "DTI.Philippines",
         "photo",
@@ -164,15 +228,22 @@
     {
       "source_page": "denr",
       "url": "https://www.facebook.com/DENROfficial",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Department of Environment and Natural Resources (DENR)'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'Government organization'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Department of Environment and Natural Resources (DENR)",
+      "category": "Government organization",
+      "description": "Join us in protecting our ecosystems and ensuring the sustainable use of natural resources for a climate- and disaster-resilient Philippines.",
+      "followers": "447K followers • 242 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "DENROfficial"
       ]
@@ -180,15 +251,21 @@
     {
       "source_page": "dacentralphilippines",
       "url": "https://www.facebook.com/dacentralphilippines",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is '(Kagawaran ng Agrikultura)'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is \"The Department of Agriculture is the Philippine government's frontline agency on food, agriculture and sustainable rural development. Visit www.da.gov.ph.\""
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "(Kagawaran ng Agrikultura)",
+      "category": "The Department of Agriculture is the Philippine government's frontline agency on food, agriculture and sustainable rural development. Visit www.da.gov.ph.",
+      "description": "",
+      "followers": "492K followers • 130 following",
+      "buttons": [
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "dacentralphilippines"
       ]
@@ -196,15 +273,21 @@
     {
       "source_page": "DOFPH",
       "url": "https://www.facebook.com/DOFPH",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Department of Finance'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'Government organization'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Department of Finance",
+      "category": "Government organization",
+      "description": "Follow us to get the latest news on the Philippines' economic development and fiscal policies.",
+      "followers": "795K followers • 87 following",
+      "buttons": [
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "DOFPH"
       ]
@@ -212,15 +295,23 @@
     {
       "source_page": "DOSTph",
       "url": "https://www.facebook.com/DOSTph",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'DOST Philippines'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says 'This is the official Facebook page of the Department of Science and Te'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "DOST Philippines",
+      "category": "Learn more",
+      "description": "",
+      "followers": "302K followers • 140 following",
+      "buttons": [
+        "Learn more",
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "DOSTph"
       ]
@@ -228,15 +319,22 @@
     {
       "source_page": "OfficeOfTheVicePresidentPH",
       "url": "https://www.facebook.com/OfficeOfTheVicePresidentPH",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Office of the Vice President of the Philippines'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'This is the Official Facebook Page of the Office of the Vice President of the Philippines'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Office of the Vice President of the Philippines",
+      "category": "This is the Official Facebook Page of the Office of the Vice President of the Philippines",
+      "description": "",
+      "followers": "807K followers • 12 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "OfficeOfTheVicePresidentPH",
         "photo"
@@ -245,15 +343,22 @@
     {
       "source_page": "birgovph",
       "url": "https://www.facebook.com/birgovph",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Bureau of Internal Revenue Philippines'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'Official Account of the Bureau of Internal Revenue (BIR)'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Bureau of Internal Revenue Philippines",
+      "category": "Official Account of the Bureau of Internal Revenue (BIR)",
+      "description": "",
+      "followers": "836K followers • 128 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "birgovph"
       ]
@@ -261,15 +366,22 @@
     {
       "source_page": "officialbureauofimmigration",
       "url": "https://www.facebook.com/officialbureauofimmigration",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Bureau of Immigration, Republic of the Philippines'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'This is the official Facebook page of the Bureau of Immigration, Philippines.'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Bureau of Immigration, Republic of the Philippines",
+      "category": "This is the official Facebook page of the Bureau of Immigration, Philippines.",
+      "description": "",
+      "followers": "437K followers • 29 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "officialbureauofimmigration"
       ]
@@ -277,32 +389,45 @@
     {
       "source_page": "BangkoSentralngPilipinas",
       "url": "http://www.facebook.com/BangkoSentralngPilipinas",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Bangko Sentral ng Pilipinas'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'This is the official Facebook page of the Bangko Sentral ng Pilipinas (BSP).'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Bangko Sentral ng Pilipinas",
+      "category": "This is the official Facebook page of the Bangko Sentral ng Pilipinas (BSP).",
+      "description": "",
+      "followers": "1.1M followers • 6 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "BangkoSentralngPilipinas"
       ]
     },
     {
       "source_page": "PhilHealthofficial",
-      "url": "https://www.facebook.com/PhilHealthofficial",
-      "verdict": "FAIL",
-      "reasons": [
-        "the page did not render",
-        "the collected posts came from ['PhilHealthOfficial'], not PhilHealthofficial"
+      "url": "https://www.facebook.com/PhilHealthOfficial",
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine Health Insurance Corporation'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The official Facebook page of the Philippine Health Insurance Corporation'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Philippine Health Insurance Corporation",
+      "category": "The official Facebook page of the Philippine Health Insurance Corporation",
+      "description": "",
+      "followers": "2.7M followers • 26 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "PhilHealthOfficial"
       ]
@@ -310,15 +435,21 @@
     {
       "source_page": "NationalBureauofInvestigationOfficial",
       "url": "https://www.facebook.com/NationalBureauofInvestigationOfficial",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'National Bureau of Investigation'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The Official Facebook Page of the National Bureau of Investigation (NBI)'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "National Bureau of Investigation",
+      "category": "The Official Facebook Page of the National Bureau of Investigation (NBI)",
+      "description": "",
+      "followers": "450K followers • 33 following",
+      "buttons": [
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "NationalBureauofInvestigationOfficial"
       ]
@@ -326,15 +457,22 @@
     {
       "source_page": "civilservicegovph",
       "url": "https://www.facebook.com/civilservicegovph",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine Civil Service Commission'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The official Facebook Page of the Philippine Civil Service Commission (CSC)'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Philippine Civil Service Commission",
+      "category": "The official Facebook Page of the Philippine Civil Service Commission (CSC)",
+      "description": "",
+      "followers": "1.7M followers • 14 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "civilservicegovph"
       ]
@@ -342,15 +480,21 @@
     {
       "source_page": "fdagovph",
       "url": "https://web.facebook.com/fdagovph",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Food and Drug Administration Philippines'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'This is the official Facebook page of Food and Drug Administration Philippines. A government regulatory agency'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Food and Drug Administration Philippines",
+      "category": "This is the official Facebook page of Food and Drug Administration Philippines. A government regulatory agency",
+      "description": "",
+      "followers": "372K followers • 34 following",
+      "buttons": [
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "fdagovph",
         "photo"
@@ -359,15 +503,22 @@
     {
       "source_page": "nationalyouthcommission",
       "url": "https://www.facebook.com/nationalyouthcommission",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'National Youth Commission'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The Voice and Advocate of the Filipino Youth in Government🇵🇭'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "National Youth Commission",
+      "category": "The Voice and Advocate of the Filipino Youth in Government🇵🇭",
+      "description": "",
+      "followers": "339K followers • 140 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "nationalyouthcommission"
       ]
@@ -375,15 +526,22 @@
     {
       "source_page": "CCCPhl",
       "url": "https://www.facebook.com/CCCPhl",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Climate Change Commission PH'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The Climate Change Commission is the lead policy-making government body on climate change.'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Climate Change Commission PH",
+      "category": "The Climate Change Commission is the lead policy-making government body on climate change.",
+      "description": "",
+      "followers": "98K followers • 198 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "CCCPhl"
       ]
@@ -391,15 +549,22 @@
     {
       "source_page": "boiphilippines",
       "url": "https://www.facebook.com/boiphilippines",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine Board of Investments'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is \"The Board of Investments (BOI) is the Philippine government's lead industry development and investment promotion agency. It is an attached agency of the Department of Trade and Industry.\""
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Philippine Board of Investments",
+      "category": "The Board of Investments (BOI) is the Philippine government's lead industry development and investment promotion agency. It is an attached agency of the Department of Trade and Industry.",
+      "description": "",
+      "followers": "22K followers • 89 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "boiphilippines"
       ]
@@ -407,15 +572,22 @@
     {
       "source_page": "pagcor.ph",
       "url": "https://www.facebook.com/pagcor.ph",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'PAGCOR'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says 'Government organization'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "PAGCOR",
+      "category": "The Facebook Page of the Philippine Amusement and Gaming Corporation (PAGCOR)",
+      "description": "",
+      "followers": "174K followers • 48 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "pagcor.ph"
       ]
@@ -423,15 +595,23 @@
     {
       "source_page": "pidsgovph",
       "url": "https://www.facebook.com/pidsgovph",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine Institute For Development Studies'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says \"PIDS is the Philippine government's main socioeconomic think tank.\""
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Philippine Institute For Development Studies",
+      "category": "Learn more",
+      "description": "",
+      "followers": "75K followers • 422 following",
+      "buttons": [
+        "Learn more",
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "pidsgovph"
       ]
@@ -439,15 +619,22 @@
     {
       "source_page": "portsauthorityph",
       "url": "https://www.facebook.com/portsauthorityph",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine Ports Authority'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'Official Page of PH Ports Authority, managing and developing ports and harbors nationwide.'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Philippine Ports Authority",
+      "category": "Official Page of PH Ports Authority, managing and developing ports and harbors nationwide.",
+      "description": "",
+      "followers": "141K followers • 82 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "portsauthorityph"
       ]
@@ -455,15 +642,23 @@
     {
       "source_page": "dostpchrd",
       "url": "https://www.facebook.com/dostpchrd",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'DOST PCHRD'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says 'Government organization'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "DOST PCHRD",
+      "category": "Learn more",
+      "description": "",
+      "followers": "114K followers • 84 following",
+      "buttons": [
+        "Learn more",
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "dostpchrd"
       ]
@@ -471,15 +666,22 @@
     {
       "source_page": "DOSTASTI",
       "url": "https://www.facebook.com/DOSTASTI",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'DOST Advanced Science and Technology Institute'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the identity block says 'Government organization'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "DOST Advanced Science and Technology Institute",
+      "category": "The Advanced Science and Technology Institute is an agency of the DOST mandated to undertake research and development activities aimed at strengthening and modernizing ICT and microelectronics.",
+      "description": "",
+      "followers": "70K followers • 153 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "DOSTASTI"
       ]
@@ -487,15 +689,22 @@
     {
       "source_page": "PHIVOLCS",
       "url": "https://www.facebook.com/PHIVOLCS",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Philippine Institute of Volcanology and Seismology (PHIVOLCS-DOST)'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'This is the official Facebook Page of PHIVOLCS, a DOST service institute mandated to mitigate disasters arising from volcanic eruptions, earthquakes, tsunamis, and other related geotectonic phenomena.'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Philippine Institute of Volcanology and Seismology (PHIVOLCS-DOST)",
+      "category": "This is the official Facebook Page of PHIVOLCS, a DOST service institute mandated to mitigate disasters arising from volcanic eruptions, earthquakes, tsunamis, and other related geotectonic phenomena.",
+      "description": "",
+      "followers": "4.4M followers • 171 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "PHIVOLCS"
       ]
@@ -503,15 +712,22 @@
     {
       "source_page": "nationalmuseumofthephilippines",
       "url": "https://www.facebook.com/nationalmuseumofthephilippines",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'National Museum of the Philippines'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "it links its own site (nationalmuseum.gov.ph)"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "National Museum of the Philippines",
+      "category": "A premier educational, scientific, and cultural institution in the Philippines founded in 1887.",
+      "description": "",
+      "followers": "544K followers • 123 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "nationalmuseumofthephilippines"
       ]
@@ -519,15 +735,22 @@
     {
       "source_page": "professionalregulationcommission",
       "url": "https://www.facebook.com/professionalregulationcommission",
-      "verdict": "UNREAD",
-      "reasons": [
-        "the page did not render"
+      "verdict": "PASS",
+      "reasons": [],
+      "signals": [
+        "the page name is 'Professional Regulation Commission'",
+        "it is a Page (Message/Follow), not a personal profile",
+        "the category is 'The Official Facebook Page of the Professional Regulation Commission (PRC)'"
       ],
-      "name": "",
-      "category": "",
-      "followers": "",
-      "buttons": [],
-      "gov_links": [],
+      "name": "Professional Regulation Commission",
+      "category": "The Official Facebook Page of the Professional Regulation Commission (PRC)",
+      "description": "",
+      "followers": "1.7M followers • 40 following",
+      "buttons": [
+        "Message",
+        "Follow"
+      ],
+      "gov_domains": [],
       "collected_from": [
         "professionalregulationcommission"
       ]

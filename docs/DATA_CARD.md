@@ -75,9 +75,9 @@ labelled robustness analysis.
 
 | Language | Rows | Share |
 |---|---|---|
-| mixed | 535 | 42.8% |
-| fil | 436 | 34.9% |
-| eng | 279 | 22.3% |
+| fil | 620 | 49.6% |
+| eng | 350 | 28.0% |
+| mixed | 280 | 22.4% |
 
 ### Per sampling stratum
 

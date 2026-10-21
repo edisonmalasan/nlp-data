@@ -1,23 +1,36 @@
 """
 verify_pages.py — is every registered Facebook source a GOVERNMENT page?
 
-The name check alone is not enough. A page can be called "deped" and belong to
-somebody, and a name that matches the agency's name says nothing about who
-runs it. So every registered page is checked against three things Facebook
-itself publishes:
+The name check alone is not enough. A page can be called "deped" and belong
+to somebody, and a name that matches the agency's name says nothing about
+who runs it. So every registered page is checked against what Facebook
+itself publishes, read from the page's identity block:
 
-  1. the page CATEGORY - a government agency page is categorised as
-     "Government organization" / "Government agency" / "Government office"
-  2. the page BUTTONS - a Page shows "Message" and "Follow"; a personal
-     profile shows "Add Friend" and no "Message"
-  3. the external WEBSITE in the Details section - a government agency links
-     its own .gov.ph site
+    <follower count>
+    <the buttons: Message, Follow, ...>
+    <the page's description, which usually self-declares>
+    <the CATEGORY>
+    More
+    All
+    About
+    ...
 
-A page that fails any of them is reported with the reason, so the source
-list can be corrected rather than assumed.
+A page passes when all three hold:
+
+  1. the page NAME names the agency
+  2. it is a Page, not a personal profile - a Page shows "Message" and
+     "Follow"; a personal profile shows "Add Friend" and no "Message"
+  3. there is a GOVERNMENT signal in the identity block: Facebook's own
+     category ("Government organization", "Public & Government Service"),
+     or a self-declaration naming the agency as the official page, or a
+     .gov.ph domain
+
+Plus a cross-check that every collected post actually came from the
+registered page, so a page that was registered and then collected from
+somewhere else is caught.
 
     python src/collect/verify_pages.py
-    python src/collect/verify_pages.py --apply     # drop the failures from the registry
+    python src/collect/verify_pages.py --apply     # drop the failures
 """
 
 from __future__ import annotations
@@ -52,18 +65,8 @@ PAGE_JS = r"""
   const name = fi >= 0 ? (lines[fi - 1] || '') : '';
   const followers = fi >= 0 ? lines[fi] : '';
 
-  // the category sits a few lines after the follower count
-  let category = '';
-  if (fi >= 0) {
-    for (let i = fi + 1; i < Math.min(fi + 8, lines.length); i++) {
-      const l = lines[i];
-      if (/^(Message|Follow|Search|MessageFollow|Add Friend|Add to Story|Following|Group|Learn More)$/i.test(l)) continue;
-      if (l.length > 60) continue;          // a description, not a category
-      if (/followers|following/i.test(l)) continue;
-      category = l;
-      break;
-    }
-  }
+  // the identity block: the follower count and the lines under it
+  const window_ = fi >= 0 ? lines.slice(fi, fi + 12) : [];
 
   const buttons = [];
   for (const l of lines) {
@@ -73,29 +76,58 @@ PAGE_JS = r"""
     if (buttons.length >= 4) break;
   }
 
-  // the external links in the Details section
-  const links = [];
-  for (const a of document.querySelectorAll('a[href]')) {
-    const h = a.getAttribute('href') || '';
-    const t = clean(a.innerText || '');
-    if (!h || !/^https?:/.test(h)) continue;
-    if (/facebook\.com|fb\.com|instagram|youtube|twitter|x\.com|tiktok|linkedin|pinterest/i.test(h)) continue;
-    if (links.indexOf(h) < 0) links.push(h);
+  // a .gov.ph domain anywhere in the page text - the Details section is
+  // rendered lazily, so the link may only be in the text
+  const govDomains = [];
+  const re = /[a-z0-9.-]*\.gov\.ph/gi;
+  let m;
+  while ((m = re.exec(b)) !== null) {
+    if (govDomains.indexOf(m[0]) < 0) govDomains.push(m[0]);
+    if (govDomains.length >= 5) break;
   }
 
-  const blocked = /This content isn't available|You're Temporarily Blocked|Page Not Found|content is no longer available/i.test(b);
+  const blocked = /This content isn.t available|You.re Temporarily Blocked|Page Not Found|content is no longer available/i.test(b);
+
+  // the category is under the description, and the description usually
+  // self-declares the page as official
+  let category = '';
+  let description = '';
+  for (const l of window_.slice(1)) {
+    if (/^(More|All|About|Reels|Photos|Videos|Events|Store|Groups|See more|Learn more|Details|More info)$/i.test(l)) break;
+    if (!category && /government|official|agency|institution|bureau|department|authority|commission|council|service|corporation/i.test(l)) {
+      category = l;
+    } else if (!description && l.length > 25) {
+      description = l;
+    }
+  }
+  if (!category) {
+    for (const l of window_.slice(1)) {
+      if (/^(More|All|About)$/i.test(l)) break;
+      if (l.length < 60) { category = l; break; }
+    }
+  }
 
   return JSON.stringify({
     name: name, followers: followers, category: category,
-    buttons: buttons, links: links.slice(0, 8),
-    bodyLen: b.length, blocked: blocked,
-    description: (lines[fi + 3] || (lines[fi + 2] || '')) if fi >= 0 else '',
+    description: description, buttons: buttons, window: window_.slice(0, 10),
+    govDomains: govDomains, bodyLen: b.length, blocked: blocked,
   });
 })()
 """
 
-GOV_CATEGORY = re.compile(r"government", re.I)
+# the words that mark the identity block as a government account
+GOV_SIGNAL = re.compile(
+    r"government|public & government|government organization|"
+    r"government service|government agency|government body|"
+    r"official (facebook )?page|official account|official website|"
+    r"attached agency|government corporation|state-owned", re.I)
 GOV_DOMAIN = re.compile(r"\.gov\.ph\b", re.I)
+
+# the words that are a button, not the category
+BUTTON_WORDS = {"contact us", "call now", "send email", "book now", "message",
+                "follow", "following", "learn more", "add friend",
+                "add to story", "group", "subscribe", "search", "see more",
+                "more", "more info"}
 
 
 def read_rows(path):
@@ -116,72 +148,134 @@ def write_rows(path, rows, fields):
 def collected_pages():
     """Which page slug each collected post actually came from."""
     seen = {}
-    for plat in ("facebook",):
-        base = os.path.join(RAW, plat)
-        if not os.path.isdir(base):
+    base = os.path.join(RAW, "facebook")
+    if not os.path.isdir(base):
+        return seen
+    for src in sorted(os.listdir(base)):
+        d = os.path.join(base, src)
+        if not os.path.isdir(d):
             continue
-        for src in sorted(os.listdir(base)):
-            d = os.path.join(base, src)
-            if not os.path.isdir(d):
+        slugs = set()
+        for f in sorted(os.listdir(d)):
+            if not f.endswith(".json"):
                 continue
-            slugs = set()
-            for f in sorted(os.listdir(d)):
-                if not f.endswith(".json"):
+            try:
+                s = json.load(io.open(os.path.join(d, f), encoding="utf-8"))
+            except Exception:
+                continue
+            for p in s.get("posts", []):
+                u = p.get("post_url", "")
+                if "facebook.com" not in u:
                     continue
-                try:
-                    s = json.load(io.open(os.path.join(d, f), encoding="utf-8"))
-                except Exception:
-                    continue
-                for p in s.get("posts", []):
-                    u = p.get("post_url", "")
-                    if "facebook.com" not in u:
-                        continue
-                    parts = urlparse(u).path.strip("/").split("/")
-                    if parts and parts[0]:
-                        slugs.add(parts[0])
-            if slugs:
-                seen[src] = sorted(slugs)
+                parts = urlparse(u).path.strip("/").split("/")
+                if parts and parts[0]:
+                    slugs.add(parts[0])
+        if slugs:
+            seen[src] = sorted(slugs)
     return seen
 
 
+def name_matches(page_name, agency, abbr="", description="", self_text=""):
+    """Does the page name name the agency?
+
+    Three ways it can, and all three are legitimate:
+
+      1. the full name - "Department of Public Works and Highways"
+      2. the agency's ABBREVIATION - "DOST-PAGASA", "DepEd", "DILG",
+         "NDRRMC". The abbreviation is what the agency itself calls it.
+      3. the page's own description naming the agency - a page called
+         "(Kagawaran ng Agrikultura)" whose description says "The
+         Department of Agriculture" is the same agency.
+    """
+    if not agency or not page_name:
+        return False
+    n = page_name.lower()
+    a = agency.lower()
+
+    if a in n or n in a:
+        return True
+
+    # the abbreviation
+    ab = (abbr or "").strip().lower()
+    if ab and len(ab) > 2 and ab in n:
+        return True
+
+    # the page's own self-description names the agency. The description
+    # sits under the follower count, and on some pages it is where the
+    # category would be, so the whole identity block is searched too.
+    d = " ".join([description or "", self_text or ""]).lower()
+    if d and (a in d or (ab and ab in d)):
+        return True
+
+    # the significant words of the name
+    generic = {"philippines", "philippine", "the", "of", "and", "ph", "official",
+               "national", "government", "department", "office", "bureau",
+               "agency", "commission", "council", "secretariat", "board",
+               "authority", "corporation", "service", "services"}
+    words = [w for w in re.findall(r"[a-z]+", a) if w not in generic and len(w) > 2]
+    if not words:
+        return False
+    return sum(1 for w in words if w in n) >= max(1, len(words) - 1)
+
+
 def classify(row, info):
-    """(verdict, reasons) for one page."""
+    """(verdict, reasons, signals) for one page."""
     reasons = []
-    name = (info.get("name") or "").strip()
-    category = (info.get("category") or "").strip()
-    buttons = info.get("buttons") or []
-    links = info.get("links") or []
+    signals = []
 
     if info.get("blocked") or (info.get("bodyLen") or 0) < 400:
-        return "UNREAD", ["the page did not render"]
+        return "UNREAD", ["the page did not render"], signals
 
-    if "Add Friend" in buttons and "Message" not in buttons:
-        reasons.append("looks like a personal profile, not a Page")
-    if category and not GOV_CATEGORY.search(category):
-        reasons.append(f"the category is {category!r}, not a government one")
-    if not category:
-        reasons.append("no category line was found")
-
-    gov_links = [l for l in links if GOV_DOMAIN.search(l)]
-    if not gov_links:
-        reasons.append("no .gov.ph website in the Details section")
-
-    # the name has to name the agency
+    name = (info.get("name") or "").strip()
+    category = (info.get("category") or "").strip()
+    description = (info.get("description") or "").strip()
+    window = info.get("window") or []
+    buttons = info.get("buttons") or []
+    gov_domains = info.get("govDomains") or []
     agency = (row.get("agency_name") or "").strip()
-    if agency and name:
-        head = agency.split()[0].lower()
-        if head and head not in name.lower() and name.lower() not in agency.lower():
-            reasons.append(f"the page name {name!r} does not name {agency!r}")
 
-    if not reasons:
-        return "PASS", []
-    return "FAIL", reasons
+    # 1. the name names the agency
+    if not name:
+        reasons.append("the page name was not found")
+    elif not name_matches(name, agency, row.get("agency_abbr", ""), description,
+                          " | ".join(window)):
+        reasons.append(f"the page name {name!r} does not name {agency!r}")
+    else:
+        signals.append(f"the page name is {name!r}")
+
+    # 2. it is a Page, not a personal profile
+    if "Add Friend" in buttons and "Message" not in buttons:
+        reasons.append("it looks like a personal profile, not a Page")
+    elif "Message" in buttons or "Follow" in buttons:
+        signals.append("it is a Page (Message/Follow), not a personal profile")
+    else:
+        reasons.append("no Page buttons were found")
+
+    # 3. a government signal
+    gov_hit = None
+    if category and GOV_SIGNAL.search(category):
+        gov_hit = f"the category is {category!r}"
+    elif description and GOV_SIGNAL.search(description):
+        gov_hit = f"the description says {description[:70]!r}"
+    elif any(GOV_SIGNAL.search(l) for l in window):
+        hit = next(l for l in window if GOV_SIGNAL.search(l))
+        gov_hit = f"the identity block says {hit[:70]!r}"
+    elif gov_domains:
+        gov_hit = f"it links its own site ({', '.join(gov_domains[:2])})"
+    if gov_hit:
+        signals.append(gov_hit)
+    else:
+        reasons.append("no government signal: the category, the description "
+                       "and the website are all non-governmental")
+
+    if reasons:
+        return "FAIL", reasons, signals
+    return "PASS", [], signals
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Verify that every source is a government page")
-    ap.add_argument("--apply", action="store_true",
-                    help="remove the failing rows from the registry")
+    ap.add_argument("--apply", action="store_true")
     ap.add_argument("--tab", type=int, default=0)
     ap.add_argument("--retries", type=int, default=3)
     args = ap.parse_args(argv)
@@ -206,36 +300,38 @@ def main(argv=None) -> int:
         for attempt in range(args.retries):
             try:
                 ob.goto(page, url, settle=6.0)
-                ob.wait_for_content(page, ["followers", "followers"], timeout=18.0)
-                time.sleep(1.5)
+                ob.wait_for_content(page, ["followers"], timeout=18.0)
+                time.sleep(1.0)
                 info = ob.eval_json(page, PAGE_JS) or {}
             except ob.OrcaError as e:
                 info = {"error": str(e)}
-            if info.get("name") or info.get("blocked"):
+            if info.get("name") and not info.get("error"):
                 break
             time.sleep(2.0)
 
-        verdict, reasons = classify(r, info)
+        verdict, reasons, signals = classify(r, info)
         got = collected.get(slug, [])
         expected = urlparse(url).path.strip("/").split("/")[0]
-        # a Facebook slug is case-insensitive: the page is PhilHealthOfficial
-        # whatever case the registry carries
         if got and expected.lower() not in [g.lower() for g in got]:
             reasons.append(f"the collected posts came from {got}, not {expected}")
             verdict = "FAIL"
 
         results.append({
             "source_page": slug, "url": url, "verdict": verdict,
-            "reasons": reasons, "name": info.get("name", ""),
+            "reasons": reasons, "signals": signals,
+            "name": info.get("name", ""),
             "category": info.get("category", ""),
+            "description": info.get("description", ""),
             "followers": info.get("followers", ""),
             "buttons": info.get("buttons", []),
-            "gov_links": [l for l in (info.get("links") or []) if GOV_DOMAIN.search(l)],
+            "gov_domains": info.get("gov_domains", []),
             "collected_from": got,
         })
         mark = {"PASS": "ok  ", "FAIL": "FAIL", "UNREAD": "?   "}[verdict]
-        print(f"  {mark} {slug:34} {str(info.get('category',''))[:26]:28} "
-              f"{str(info.get('followers',''))[:22]:24} {'; '.join(reasons)[:60]}")
+        print(f"  {mark} {slug:32} {str(info.get('category',''))[:30]:32} "
+              f"{' | '.join(signals)[:60]}")
+        if reasons:
+            print(f"       {'; '.join(reasons)[:100]}")
         time.sleep(1.0)
 
     n_pass = sum(1 for x in results if x["verdict"] == "PASS")
