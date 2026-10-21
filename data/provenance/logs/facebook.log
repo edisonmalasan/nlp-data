@@ -4741,3 +4741,17 @@
 [13:59:39] 46 registered facebook accounts
 [13:59:39] [1/46] facebook/dost_pagasa: topping up (5 of 8 posts)
 [13:59:39] [1/46] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[14:05:14]        5 comments  /www.facebook.com/photo/?fbid=1404302578408058
+[14:05:14]        0 comments  UWjiVz3CrAC71xLnTWKePZmmyWHxHTJXV5tRWQqQ4Xm8Vl
+[14:05:14]        5 comments  /www.facebook.com/photo/?fbid=1592541139584200
+[14:05:14]        5 comments  /www.facebook.com/photo/?fbid=1592541146250866
+[14:05:14]        0 comments  67MMmSyojCaFaDGqZc7wZ2uSVFEhm5EvC2WGK8eP8UTC5l
+[14:05:14]   SNAPSHOT facebook_dost_pagasa_2026-10-21T14-05.json  5 post(s), 15 comment(s)
+[14:05:14]   ok: 5 post(s), 15 comment(s)
+[14:05:20] [2/46] facebook/doh: already collected (12 post(s)), skipping
+[14:05:20] [3/46] facebook/dswd: already collected (8 post(s)), skipping
+[14:05:20] [4/46] facebook/deped: already collected (12 post(s)), skipping
+[14:05:20] [5/46] facebook/dpwh: already collected (12 post(s)), skipping
+[14:05:20] [6/46] facebook/dilg: already collected (12 post(s)), skipping
+[14:05:20] [7/46] facebook/ndrrmc: topping up (5 of 8 posts)
+[14:05:20] [7/46] facebook/ndrrmc  https://www.facebook.com/NDRRMC

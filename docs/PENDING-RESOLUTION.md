@@ -190,9 +190,37 @@ registry rather than left in.
 
 
 
----
+### 3.7 The source frame has been widened — 46 Facebook accounts
 
-## 4. Things to decide before the paper is written
+The frame started at 10 accounts and stood at 32. It is now **46 verified
+Facebook accounts**, 10 YouTube channels and 5 X accounts, from a search of
+**185 agency websites** — the Philippine national government has roughly two
+hundred, and the ones that were missing were the bureaus, commissions and
+government corporations that publish on social media.
+
+Each account was found by reading the agency's **own website** for the Facebook
+page it links to, and the page was then verified against Facebook's own
+signals. The link from the agency is the evidence; nothing was found by
+guessing a handle.
+
+**What the search found, and did not:**
+
+| | Count | |
+|---|---|---|
+| Verified official pages | 38 | of 177 sites reached |
+| The agency's site has no Facebook link | 59 | nothing to find |
+| The site did not load | 69 | mostly domains I had wrong |
+| A page was linked but did not name the agency | 11 | rejected |
+
+**Still open on the frame:** the 69 unreachable sites should be retried, and
+the 14 new accounts have not yet been through the governance check (§3.6) —
+they came through a different path, so they are verified by the same rules
+but not yet verified by them. Their YouTube and X accounts are not yet
+discovered either; the Facebook contact block of each new page is where its
+agency declares them.
+
+**Owner:** M4. **Fallback if not done:** the frame is already systematic and
+documented, and the dataset exceeds every contract target without these.
 
 | # | Question | Who | Why it matters |
 |---|---|---|---|
@@ -201,6 +229,7 @@ registry rather than left in.
 | 4.3 | Does M5 slice the results by `language`? | M5 | The `language` column is now assigned against one written convention for every row, so it is internally consistent (§3.5). It is still a *noisy* variable, and because the study is about code-switching, a slice on it will be sensitive to its errors. The convention is `data/interim/language_convention.md`. |
 | 4.4 | Is the "invites" stratum reported separately? | M6 | It is recorded on every row in `stratum`, so it can be excluded and reported separately. The headline number should be the whole dataset, with the stratum reported as a design detail. |
 | 4.5 | Is the collection still running, and does it need a stop? | M4 | The corpus has no ceiling, so the collection runs as a loop (`src/collect/collect_forever.py`). It has to be stopped before the label freeze (§1.1), because a row collected after the freeze would have no label. |
+| 4.6 | Is the wider frame worth reporting as a design change? | M6 | The frame grew from 10 accounts to 46 during collection (§3.7). That is a systematic widening, not a change of subject, and the number belongs in the Methodology's source description. |
 
 ---
 
