@@ -4647,3 +4647,8 @@
 [09:08:16]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
 [09:08:21] [14/32] facebook/OfficeOfTheVicePresidentPH: topping up (3 of 20 posts)
 [09:08:21] [14/32] facebook/OfficeOfTheVicePresidentPH  https://www.facebook.com/OfficeOfTheVicePresidentPH
+[10:16:31] === worker: facebook on tab 0, 20 posts, mode=recent ===
+[10:16:31] tab [0] 295e07c8-3787-44b8-83f2-b12d86b27a9c  https://www.facebook.com/professionalregulationcommission
+[10:16:31] 32 registered facebook accounts
+[10:16:31] [1/32] facebook/dost_pagasa: topping up (3 of 20 posts)
+[10:16:31] [1/32] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH

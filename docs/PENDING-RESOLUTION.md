@@ -154,26 +154,40 @@ withdrawal is recorded in `data/provenance/language_rule2a.json`.
 consistent, but it is still a noisy variable, and a slice on it will be
 sensitive to its errors. The `language` field is not a modelling feature.
 
-### 3.6 The source pages are being checked against Facebook's own category
+### 3.6 The source pages are verified against Facebook's own signals — **CLOSED**
 
-**In progress.** The earlier verification only checked that the page *name*
-matched the agency name, which would not catch a fan page or a personal
-profile called "deped". Every registered account is now checked against three
-things Facebook itself publishes:
+**All 32 registered Facebook accounts pass.** The earlier verification only
+checked that the page *name* matched the agency name, which would not catch a
+fan page or a personal profile called "deped". Every account is now checked
+against what Facebook itself publishes:
 
 1. the page **category** — a government agency is categorised *"Government
-   organization"*;
+   organization"* or *"Public & Government Service"*;
 2. the page **buttons** — a Page shows *Message* and *Follow*, a personal
    profile shows *Add Friend* and no *Message*;
-3. the **website in Details** — a government agency links its own `.gov.ph`
-   site.
+3. the page's own **self-description** — *"This is the official Facebook page
+   of the Department of Health in the Philippines"*;
+4. a **`.gov.ph` domain** the page links.
 
 Plus a cross-check that every collected post actually came from the registered
 page, so a page that was registered and then collected from somewhere else is
-caught.
+caught. The verdict per account is in `data/provenance/page_governance.json`.
 
-**Owner:** M4. The result is in `data/provenance/page_governance.json`. Any
-account that fails is removed from the registry rather than left in.
+**Three registry errors were found and fixed:** PHIVOLCS was registered under
+the name of its programme (*Earthquake and Volcano Observatories*) rather than
+the agency (*Philippine Institute of Volcanology and Seismology*), and four
+abbreviations were empty.
+
+**On "deped":** `facebook.com/deped` is **not** the Department of Education's
+page, and nothing was ever collected from it. Every collected DepEd post came
+from `facebook.com/DepartmentOfEducation.PH`, whose name is *"DepEd
+Philippines"*. The `deped` in the registry is the short slug used in the
+`comment_id`, not a URL. The check is what makes that distinction checkable
+rather than asserted.
+
+**Owner:** M4. **No action.** If an account ever fails, it is removed from the
+registry rather than left in.
+
 
 
 ---
@@ -195,6 +209,11 @@ account that fails is removed from the registry rather than left in.
 So that nobody re-opens them:
 
 - **The contract's schema, splits, and the 17 acceptance checks.** All pass.
+- **Every source page is a government page.** All 32 registered Facebook
+  accounts pass the category, buttons, self-description and `.gov.ph` checks,
+  and every collected post came from the registered page (§3.6).
+- **The `language` column.** Re-labelled against one written convention for
+  every row, with the residue visible rather than assumed away (§3.5).
 - **The 1,000-comment target and the 600 Facebook target.** 1,421 usable, 1,250
   Facebook. Both met.
 - **The class-balance window (15%–65% actionable) and the ≥150 per class.** 19.4%
@@ -203,11 +222,13 @@ So that nobody re-opens them:
   actionable comments carry a politeness marker and **56% carry none**, and only
   3.5% of the other comments carry one. The study's question is therefore
   answerable rather than trivially yes.
-- **The source frame.** 32 Facebook accounts verified from the agencies' own
-  websites, 0 LGUs, 0 unregistered accounts.
+- **The source frame.** 32 Facebook accounts, 0 LGUs, 0 unregistered accounts.
 - **Privacy.** 0 email or phone hits; the author's name is not a column.
 - **The identifier scheme.** `<platform>_<source_page>_<seq4>`, unique across
   1,421 rows, never reused.
+- **No duplicates in the delivered dataset.** 1,250 rows, 1,250 distinct
+  dedup keys, 0 residual duplicates, and every removal from the raw layer is
+  counted with a reason code.
 
 ---
 
