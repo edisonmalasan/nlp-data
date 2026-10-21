@@ -122,11 +122,28 @@ def main(argv=None) -> int:
         except Exception:
             recovered = {}
 
-    # the account page of each post, so the permalink can be clicked there
+    # The account page of each post, so the permalink can be clicked there.
+    #
+    # The URL has to come from the source REGISTRY, never from the slug:
+    # source_page is a short label used in the comment_id ("deped"), and
+    # facebook.com/deped is NOT the Department of Education's page - its
+    # page is facebook.com/DepartmentOfEducation.PH. Building the URL from
+    # the slug would open an unrelated page.
+    registry = {}
+    reg_path = os.path.join(ROOT, "data", "provenance", "government_agencies.csv")
+    if os.path.exists(reg_path):
+        with io.open(reg_path, encoding="utf-8", newline="") as fh:
+            for r in csv.DictReader(fh):
+                if r.get("platform") == "facebook":
+                    registry[r["source_page"]] = r.get("official_account_url", "")
+
     account_of = {}
     for r in missing:
-        account_of.setdefault(r["source_page"], r.get("official_account_url")
-                               or f"https://www.facebook.com/{r['source_page']}")
+        url = registry.get(r["source_page"], "")
+        if not url:
+            print(f"  no registry URL for {r['source_page']}, skipping")
+            continue
+        account_of.setdefault(r["source_page"], url)
 
     current_account = None
     for i, r in enumerate(missing, 1):

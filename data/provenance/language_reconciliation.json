@@ -1,0 +1,23 @@
+{
+  "n_changed": 2,
+  "changes": [
+    {
+      "comment_id": "fb_dpwh_0028",
+      "from": "mixed",
+      "to": "fil",
+      "template": "kudos name :: 11 content words",
+      "reason": "rule 2: kudos is naturalised",
+      "text": "Kudos kay <NAME> Dizon sa pagtutok sa bridge repairs para mas maging maayos ang biyahe ng mga kababayan natin"
+    },
+    {
+      "comment_id": "fb_dpwh_0073",
+      "from": "mixed",
+      "to": "fil",
+      "template": "kudos name :: 11 content words",
+      "reason": "rule 2: kudos is naturalised",
+      "text": "Kudos kay <NAME>. Vince Dizon at <NAME> sa magandang pagtutulungan para sa agarang solusyon sa imprastraktura ng probins"
+    }
+  ],
+  "reverted_majority_vote": 10,
+  "note": "the majority-vote tie-break was withdrawn: the template grouping lumps an English-only comment together with a bilingual one, and the convention is applied per row"
+}

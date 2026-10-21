@@ -4590,3 +4590,8 @@
 [06:57:02]   ok: 4 post(s), 0 comment(s)
 [06:57:08] [8/32] facebook/bfp: topping up (4 of 12 posts)
 [06:57:08] [8/32] facebook/bfp  https://www.facebook.com/DILGBFP
+[08:57:55] === worker: facebook on tab 1, 20 posts, mode=recent ===
+[08:57:56] tab [1] 0bb3746c-9947-48f1-a1bd-70e31c58aaed  https://www.facebook.com/deped
+[08:57:56] 32 registered facebook accounts
+[08:57:56] [1/32] facebook/dost_pagasa: topping up (3 of 20 posts)
+[08:57:56] [1/32] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
