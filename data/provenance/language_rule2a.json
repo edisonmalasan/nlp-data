@@ -1,0 +1,5 @@
+{
+  "n_changed": 0,
+  "changes": [],
+  "note": "the automated rule-2a fix was withdrawn: it read any two adjacent content words as an English compound, so it misread Filipino words as English. The rule is recorded in the convention, but the per-row adjudicator labels stand."
+}

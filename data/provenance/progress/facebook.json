@@ -8,31 +8,73 @@
   "facebook/dswd": {
     "posts": 12,
     "comments": 18,
-    "last_error": "",
-    "updated_at": "2026-10-21T06:52:00"
+    "last_error": "no posts captured",
+    "updated_at": "2026-10-21T09:02:10"
   },
   "facebook/bfp": {
     "posts": 4,
     "comments": 12,
-    "last_error": "",
-    "updated_at": "2026-10-21T06:17:08"
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-21T09:05:17"
   },
   "facebook/dti": {
     "posts": 3,
     "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-21T06:22:20"
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-21T09:05:53"
   },
   "facebook/ndrrmc": {
     "posts": 4,
     "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-21T06:57:02"
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-21T09:04:38"
   },
   "facebook/doh": {
     "posts": 0,
     "comments": 0,
     "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
     "updated_at": "2026-10-21T09:00:19"
+  },
+  "facebook/deped": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-21T09:02:50"
+  },
+  "facebook/dpwh": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-21T09:03:26"
+  },
+  "facebook/dilg": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-21T09:04:02"
+  },
+  "facebook/denr": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-21T09:06:29"
+  },
+  "facebook/dacentralphilippines": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-21T09:07:05"
+  },
+  "facebook/DOFPH": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-21T09:07:41"
+  },
+  "facebook/DOSTph": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-21T09:08:16"
   }
 }

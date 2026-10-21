@@ -4601,3 +4601,49 @@
 [08:59:44] [2/32] facebook/doh  https://www.facebook.com/DOHgovPH
 [09:00:18]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
 [09:00:19]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:00:24] [3/32] facebook/dswd: topping up (4 of 20 posts)
+[09:00:24] [3/32] facebook/dswd  https://www.facebook.com/dswdserves
+[09:02:10]     capture failed: orca eval: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:02:10]   error: no posts captured
+[09:02:16] [4/32] facebook/deped: topping up (12 of 20 posts)
+[09:02:16] [4/32] facebook/deped  https://www.facebook.com/DepartmentOfEducation.PH
+[09:02:50]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:02:50]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:02:55] [5/32] facebook/dpwh: topping up (12 of 20 posts)
+[09:02:55] [5/32] facebook/dpwh  https://www.facebook.com/dpwhph
+[09:03:26]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:03:26]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:03:31] [6/32] facebook/dilg: topping up (12 of 20 posts)
+[09:03:31] [6/32] facebook/dilg  https://www.facebook.com/dilg.philippines
+[09:04:02]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:04:02]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:04:07] [7/32] facebook/ndrrmc: topping up (5 of 20 posts)
+[09:04:07] [7/32] facebook/ndrrmc  https://www.facebook.com/NDRRMC
+[09:04:38]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:04:38]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:04:44] [8/32] facebook/bfp: topping up (4 of 20 posts)
+[09:04:44] [8/32] facebook/bfp  https://www.facebook.com/DILGBFP
+[09:05:17]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:05:17]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:05:22] [9/32] facebook/dti: topping up (3 of 20 posts)
+[09:05:22] [9/32] facebook/dti  https://www.facebook.com/DTI.Philippines
+[09:05:53]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:05:53]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:05:58] [10/32] facebook/denr: topping up (1 of 20 posts)
+[09:05:58] [10/32] facebook/denr  https://www.facebook.com/DENROfficial
+[09:06:29]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:06:29]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:06:34] [11/32] facebook/dacentralphilippines: topping up (2 of 20 posts)
+[09:06:34] [11/32] facebook/dacentralphilippines  https://www.facebook.com/dacentralphilippines
+[09:07:05]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:07:05]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:07:10] [12/32] facebook/DOFPH: the last attempt was empty, retrying
+[09:07:10] [12/32] facebook/DOFPH  https://www.facebook.com/DOFPH
+[09:07:41]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:07:41]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:07:46] [13/32] facebook/DOSTph: topping up (1 of 20 posts)
+[09:07:46] [13/32] facebook/DOSTph  https://www.facebook.com/DOSTph
+[09:08:16]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:08:16]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:08:21] [14/32] facebook/OfficeOfTheVicePresidentPH: topping up (3 of 20 posts)
+[09:08:21] [14/32] facebook/OfficeOfTheVicePresidentPH  https://www.facebook.com/OfficeOfTheVicePresidentPH
