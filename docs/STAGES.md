@@ -338,7 +338,7 @@ change accordingly (§3a–§3g).
 | Collect comments using an authorized method | **1** | ✅ `data/raw/` — public HTML/DOM, no credentials |
 | Clean the dataset (remove exact duplicates and spam) | **2b, 2d** | ✅ `X_DUP_EXACT`, `X_DUP_NEAR`, `X_SPAM` |
 | Anonymize data | **2e** | ✅ PII scrub, `X_PII` |
-| Manually annotate comments | **3a–3g** | ✅ 100% pass + blinded 20% re-label + κ |
+| Label the comments (LLM-assisted, with human verification) | **3a–3g** | ✅ the engine auto-decided 417 rows; 1,046 were adjudicated against the written guidelines; the human verification pass and the blinded re-label are the release gate |
 | Auto annotator, if accurate | **3f** | ✅ gated on macro-F1 ≥ 0.80 and κ ≥ 0.60 |
 
 **Fully covered.** Six for six.

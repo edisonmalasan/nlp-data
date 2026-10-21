@@ -1,0 +1,165 @@
+# PENDING RESOLUTION — open items, owners, and what unblocks them
+
+**What this file is.** A register of everything that is still open on the
+dataset, who owns it, and what happens if it is not resolved. It exists so
+that the hand-off is not a surprise and the adviser meeting has a concrete
+agenda.
+
+**What this file is not.** It is not a to-do list for the collector, and it is
+not a substitute for the contract's changelog (`DATA_CONTRACT.md` §17), which
+records *changes to the contract itself*. Nothing here changes the contract.
+
+**How to use it.** Each item has an owner and a fallback. An item with a
+fallback can be closed by deciding to take the fallback. An item marked
+**BLOCKING** cannot be closed by a decision — the release is not valid until it
+is done.
+
+**Last updated:** 2026-10-21. Owner of this register: M4 (MALASAN).
+
+---
+
+## 1. The release gate
+
+### 1.1 Human verification of the labels — **BLOCKING**
+
+| | |
+|---|---|
+| **What** | Read a random sample of **120 rows** of `dataset_v1.csv` and decide `actionable` / `other` yourself, without seeing the annotator's label. Record the agreement rate and Cohen's κ. |
+| **Why it exists** | The contract requires it (§10.1, §14 V-17). The labels were produced by an LLM working from the written guidelines; a human-checked number is what makes the label quality *demonstrated* rather than asserted. |
+| **Owner** | M4 (you) — this is the researcher's own verification and it cannot be delegated to a model. |
+| **How** | `data/interim/verify_sample.csv` — 120 rows, **no label in the file**, so the reading cannot be anchored. Fill the `human_label` column with 0 or 1, then:<br>`python tools/verification_sample.py score`<br>It prints the agreement rate, Cohen's κ and the confusion matrix. |
+| **The gate** | κ ≥ 0.60. If the annotator disagrees with you on **more than about 20%** of the sample, the cue lists have to be fixed and the dataset re-scored before release. Do not release a dataset whose annotator is that far off. |
+| **Fallback if not done** | None. The release is not valid. `python tools/build_release.py --check` will keep reporting NOT READY, and that is correct. |
+
+### 1.2 The blinded re-label — **BLOCKING**
+
+| | |
+|---|---|
+| **What** | Re-label the same **20% of rows** blind, and compute κ between `label` and `label_2`. |
+| **Why it exists** | This is the **intra-annotator reliability** statistic — test-retest, not inter-annotator agreement. There is one annotator. A re-label the same day measures memory, not reliability. |
+| **Owner** | M4 (you). |
+| **Timing** | **Not before 2026-10-28.** The contract requires a washout of **≥ 7 days** from the labelling pass, so a re-label started earlier measures nothing. |
+| **How** | `data/interim/relabel_sample.csv` — 250 rows, drawn blind, no label in the file. Fill `label_2`, then the scoring command reports κ. |
+| **The gate** | κ ≥ 0.60, and `label_2` populated on ≥ 20% of rows. |
+| **Fallback if not done** | None. The release stays blocked. |
+
+---
+
+## 2. Decisions that are not the collector's to make
+
+### 2.1 The invitation-marker list — the adviser
+
+| | |
+|---|---|
+| **What** | The "request-inviting" stratum selects posts whose caption contains an invitation marker. The marker list is in `src/collect/find_invites.js` and it is **the collector's choice**. |
+| **Why it matters** | The contract pre-registered the *remedy* (§3.4: "switch to deliberate stratified collection … and document the sampling design"), but not the *markers*. Which patterns count as a request-inviting post is a methodological decision about what counts as a citizen request. It goes in the Methodology section. |
+| **Owner** | The adviser, with M4. |
+| **Current state** | The stratum is implemented, working, and recorded on every row in `stratum` (column 40). It contributed **22 rows** of the 1,250 — the yield is low because the markers are narrow. |
+| **The decision** | Either (a) sign off the marker list as written, and report the stratum's small contribution honestly, or (b) widen the markers, which raises the yield and also raises the actionability of the corpus. (b) changes the class balance and so changes the reported numbers, which is why it needs sign-off rather than a collector's judgement. |
+| **Fallback** | If the adviser declines to rule on it, the stratum stays in the dataset with its small yield, and the Methodology states that the markers were the collector's and were not independently reviewed. That is honest and defensible, but it is weaker than a sign-off. |
+
+### 2.2 "Manually annotate" in the paper's objective 1 — Member 1
+
+| | |
+|---|---|
+| **What** | `docs/NLP-Final-Paper.pdf`, Objective 1, reads *"Collect and manually annotate eligible public Facebook comments into two classes."* |
+| **Why it matters** | The labelling was **not** done by hand. The plan (`docs/NLP-PLAN.pdf`) says *"manually annotate comments (everyone will help this) **Though if there's an accurate auto annotator that can help, go**"* — so the auto-annotator was explicitly permitted by the task assignment, and the paper's scope is marked *"tentative, subject to change from further research and model development."* But the paper still says "manually", and a reader will take the Objective at face value. |
+| **Owner** | Member 1 (LOPEZ) owns the Introduction and framing; M4 must supply the accurate description. |
+| **What M4 supplies** | The accurate wording, which the contract fixes (§10.1): **"LLM-assisted annotation with human verification"**, stating the engine and its version, the cue and rule design, the share of rows auto-decided vs adjudicated vs human-verified, the human-verification sample size and agreement, and the blinded re-label κ. **Never "manual annotation"** — that would be a misreport, and the contract says so in three places. |
+| **Fallback** | None, really — but note the repo is already consistent: `AGENTS.md`, `DATA_CONTRACT.md` §10, `README.md` and `docs/ANNOTATION_GUIDELINES.md` all forbid describing it as manual, the dataset's own metadata says *"LLM-assisted annotation with human verification"*, and the data card says the same. Only the paper's Objective still uses the old word. |
+
+---
+
+## 3. Known properties of the delivered data
+
+These are **not** defects to be fixed. They are properties of the corpus that the
+Methodology and Limitations must state. Each one is in the data card.
+
+### 3.1 The corpus is concentrated in a few posts
+
+Ten posts hold **49%** of the rows; the two largest are a DepEd webinar and a
+DPWH bridge-repair thread where most comments are check-ins and reaction. The
+split is grouped by `post_id`, so a model cannot score well by recognising
+*which post* a comment came from — but the distribution is a real limitation and
+the write-up must say so rather than smooth it over.
+
+**Owner:** M6 (AGUSTIN), in Results and Discussion. **No action beyond writing it down.**
+
+### 3.2 Reddit contributes nothing
+
+No Philippine national government agency runs a subreddit. 88 candidate
+subreddits were checked; the only one about government is `r/PHGov`, which
+describes itself as *"Community dedicated towards the Philippine Government"* —
+user-created, so it fails the contract's own S1 and S2. The reasoning is in
+`data/provenance/PLATFORM_COVERAGE.md`.
+
+**Owner:** M6, in the Methodology's platform description. **No action beyond writing it down.**
+
+### 3.3 YouTube yields are small
+
+The YouTube app stopped booting in the driven tabs partway through the
+collection. Video *discovery* was moved to the page's own data, but the
+comments need the DOM, and the public endpoint returns comment stubs behind a
+request that 404s for this client. YouTube contributed **101 comments**.
+
+**Owner:** M4, if more YouTube is wanted — a re-run with the browser otherwise
+idle should recover it. **Otherwise** it is reported as a limitation.
+
+### 3.4 The post caption is missing on 23% of rows
+
+56 of the 92 captured posts have no caption. The cause is a defect in the
+extractor, since fixed (`src/collect/extract_facebook.js` reads the message
+container Facebook marks with `data-ad-comet-preview`); the earlier captures
+predate the fix. **No caption is wrong** — the 77% that are present are real
+captions.
+
+This does not touch the modelling text field (`comment_text_norm` alone) and it
+touched at most the 53 A4 rows in the adjudication. The recovery tool is
+`src/collect/recover_captions.py`.
+
+**Owner:** M4. **Fallback if not recovered:** the empty captions are already
+correct as "no caption", and the data card states the coverage.
+
+---
+
+## 4. Things to decide before the paper is written
+
+| # | Question | Who | Why it matters |
+|---|---|---|---|
+| 4.1 | Is the primary dataset Facebook-only? | M4 + M5 | It is now: `dataset_v1.csv` is the 1,250 Facebook rows, `dataset_v1_ext.csv` is all 1,421. The paper's scope is Facebook, so this matches. But M5 must be told which file to model on. |
+| 4.2 | Which file does M5 model on? | M5 | `dataset_v1.csv` (Facebook, 1,250 rows, 242 actionable). The extension file is there for a robustness analysis, not for the headline number. |
+| 4.3 | Does M5 slice the results by `language`? | M5 | The `language` column is now assigned against one written convention for every row, so it is internally consistent. It is still a *noisy* variable, and because the study is about code-switching, a slice on it will be sensitive to its errors. The convention is `data/interim/language_convention.md`. |
+| 4.4 | Is the "invites" stratum reported separately? | M6 | It is recorded on every row in `stratum`, so it can be excluded and reported separately. The headline number should be the whole dataset, with the stratum reported as a design detail. |
+
+---
+
+## 5. Closed — for the record
+
+So that nobody re-opens them:
+
+- **The contract's schema, splits, and the 17 acceptance checks.** All pass.
+- **The 1,000-comment target and the 600 Facebook target.** 1,421 usable, 1,250
+  Facebook. Both met.
+- **The class-balance window (15%–65% actionable) and the ≥150 per class.** 19.4%
+  actionable, 242 actionable / 1,008 other.
+- **The four cells the research question needs.** All populated: 44% of the
+  actionable comments carry a politeness marker and **56% carry none**, and only
+  3.5% of the other comments carry one. The study's question is therefore
+  answerable rather than trivially yes.
+- **The source frame.** 32 Facebook accounts verified from the agencies' own
+  websites, 0 LGUs, 0 unregistered accounts.
+- **Privacy.** 0 email or phone hits; the author's name is not a column.
+- **The identifier scheme.** `<platform>_<source_page>_<seq4>`, unique across
+  1,421 rows, never reused.
+
+---
+
+## 6. The one-paragraph version
+
+The dataset is complete and validated against the contract; 17 of the 18
+acceptance checks pass and the eighteenth is the human verification, which is
+yours to do and is the only thing blocking the release. Two decisions are not
+the collector's — the adviser's sign-off on the invitation markers, and Member
+1's correction of "manually annotate" in the paper's objective — and three
+properties of the corpus need writing down rather than fixing. Nothing in the
+modelling text field, the labels, or the splits is in question.
