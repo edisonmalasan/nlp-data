@@ -1,9 +1,9 @@
 [PASS] V-01  schema matches the contract exactly
          40 columns (expected order from contract)
 [PASS] V-01b  dataset parses as CSV
-         1511 rows
+         1566 rows
 [PASS] V-02  row count meets the target
-         1511 rows, need >= 600
+         1566 rows, need >= 600
 [PASS] V-03  comment_id unique, non-null, well-formed
          bad_format=0 duplicates=0 empty=0
 [PASS] V-04  label in {0,1} and label_str agrees
@@ -23,16 +23,16 @@
 [PASS] V-11  no duplicate and no post straddles two splits
          duplicate_leak=0 post_leak=0
 [PASS] V-12  class balance and per-agency minimums
-         actionable=278 other=1233 rate=0.184 agencies_under_40=[]
+         actionable=284 other=1282 rate=0.181 agencies_under_40=[]
 [PASS] V-13  n_tokens matches the normalized text
          0 mismatches
 [PASS] V-14  metadata is complete
          all required keys present
 [PASS] V-15  test class prior within 0.10 of train
-         train=0.184 test=0.181 drift=0.003
+         train=0.181 test=0.179 drift=0.002
 [PASS] V-16  lineage reconciles and every agency_id is in the registry
-         unknown_agency=0 raw=2264 candidate=1511 excluded=753 labeled=1511 usable=1511 rows=1511 split_total=1511 reconciles=True
+         unknown_agency=0 raw=2755 candidate=1566 excluded=1189 labeled=1566 usable=1566 rows=1566 split_total=1566 reconciles=True
 [FAIL] V-17  annotation completeness, human verification and reliability
-         bad_verification=0 human_verified=0 (need >= 100) relabeled=0/1511 (need >= 20%) kappa=None (need >= 0.6)
+         bad_verification=0 human_verified=0 (need >= 100) relabeled=0/1566 (need >= 20%) kappa=None (need >= 0.6)
 
 18 checks, 1 errors

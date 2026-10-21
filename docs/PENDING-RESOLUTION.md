@@ -138,7 +138,11 @@ variable changed.
 
 A consistency check (`tools/language_consistency.py`) finds the template
 families that received more than one label, so the residue is visible rather
-than assumed away. Seven families still split, and they are genuine linguistic
+than assumed away. **Every row in the delivered dataset is now labelled
+against that one convention** - 1,682 from the re-label, the rest from the
+adjudication of the rows added since and a language pass over the rows the
+engine decided on its own. No row falls back to the rule, which was only about
+71% accurate against the adjudicated labels. Seven families still split, and they are genuine linguistic
 variation rather than annotator disagreement: *"Good morning. Waiting for the
 webinar"* is English, *"Good morning! Naa po bay link?"* is mixed.
 
@@ -190,9 +194,9 @@ registry rather than left in.
 
 
 
-### 3.7 The source frame has been widened — 46 Facebook accounts
+### 3.7 The source frame has been widened — 47 Facebook accounts
 
-The frame started at 10 accounts and stood at 32. It is now **46 verified
+The frame started at 10 accounts and now stands at 47. It is now **47 verified
 Facebook accounts**, 10 YouTube channels and 5 X accounts, from a search of
 **185 agency websites** — the Philippine national government has roughly two
 hundred, and the ones that were missing were the bureaus, commissions and
@@ -224,8 +228,8 @@ documented, and the dataset exceeds every contract target without these.
 
 | # | Question | Who | Why it matters |
 |---|---|---|---|
-| 4.1 | Is the primary dataset Facebook-only? | M4 + M5 | It is now: `dataset_v1.csv` is the 1,250 Facebook rows, `dataset_v1_ext.csv` is all 1,421. The paper's scope is Facebook, so this matches. But M5 must be told which file to model on. |
-| 4.2 | Which file does M5 model on? | M5 | `dataset_v1.csv` (Facebook, 1,250 rows, 242 actionable). The extension file is there for a robustness analysis, not for the headline number. |
+| 4.1 | Is the primary dataset Facebook-only? | M4 + M5 | It is now: `dataset_v1.csv` is the 1,566 Facebook rows, `dataset_v1_ext.csv` is all 1,421. The paper's scope is Facebook, so this matches. But M5 must be told which file to model on. |
+| 4.2 | Which file does M5 model on? | M5 | `dataset_v1.csv` (Facebook, 1,566 rows, 284 actionable). The extension file is there for a robustness analysis, not for the headline number. |
 | 4.3 | Does M5 slice the results by `language`? | M5 | The `language` column is now assigned against one written convention for every row, so it is internally consistent (§3.5). It is still a *noisy* variable, and because the study is about code-switching, a slice on it will be sensitive to its errors. The convention is `data/interim/language_convention.md`. |
 | 4.4 | Is the "invites" stratum reported separately? | M6 | It is recorded on every row in `stratum`, so it can be excluded and reported separately. The headline number should be the whole dataset, with the stratum reported as a design detail. |
 | 4.5 | Is the collection still running, and does it need a stop? | M4 | The corpus has no ceiling, so the collection runs as a loop (`src/collect/collect_forever.py`). It has to be stopped before the label freeze (§1.1), because a row collected after the freeze would have no label. |
@@ -243,19 +247,17 @@ So that nobody re-opens them:
   and every collected post came from the registered page (§3.6).
 - **The `language` column.** Re-labelled against one written convention for
   every row, with the residue visible rather than assumed away (§3.5).
-- **The 1,000-comment target and the 600 Facebook target.** 1,421 usable, 1,250
-  Facebook. Both met.
-- **The class-balance window (15%–65% actionable) and the ≥150 per class.** 19.4%
-  actionable, 242 actionable / 1,008 other.
+- **The 1,000-comment target and the 600 Facebook target.** 1,737 usable, 1,566 Facebook. Both met.
+- **The class-balance window (15%–65% actionable) and the ≥150 per class.** 18.1% actionable, 284 actionable / 1,282 other.
 - **The four cells the research question needs.** All populated: 44% of the
   actionable comments carry a politeness marker and **56% carry none**, and only
   3.5% of the other comments carry one. The study's question is therefore
   answerable rather than trivially yes.
-- **The source frame.** 32 Facebook accounts, 0 LGUs, 0 unregistered accounts.
+- **The source frame.** 47 Facebook accounts, 0 LGUs, 0 unregistered accounts.
 - **Privacy.** 0 email or phone hits; the author's name is not a column.
 - **The identifier scheme.** `<platform>_<source_page>_<seq4>`, unique across
-  1,421 rows, never reused.
-- **No duplicates in the delivered dataset.** 1,250 rows, 1,250 distinct
+  1,737 rows, never reused.
+- **No duplicates in the delivered dataset.** 1,566 rows, 1,566 distinct
   dedup keys, 0 residual duplicates, and every removal from the raw layer is
   counted with a reason code.
 

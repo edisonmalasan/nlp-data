@@ -3,20 +3,20 @@
   "dataset_version": "1.0",
   "contract_version": "1.8-draft",
   "guideline_version": "1.0-draft",
-  "built_at": "2026-10-21T10:51:47.924783+00:00",
+  "built_at": "2026-10-21T19:20:54.769269+00:00",
   "class_counts": {
-    "actionable": 278,
-    "other": 1233
+    "actionable": 284,
+    "other": 1282
   },
   "counts_by_split": {
-    "train": 1058,
-    "dev": 227,
-    "test": 226
+    "train": 1097,
+    "dev": 235,
+    "test": 234
   },
   "split_seed": 42,
   "cohens_kappa": null,
   "verification_counts": {
-    "auto": 1682
+    "auto": 1737
   },
   "task": {
     "definition": "actionable = the comment identifies a concrete action the agency could be asked to take, or that the commenter proposes the agency take",
@@ -28,39 +28,39 @@
   },
   "counts": {
     "primary_facebook": {
-      "n_rows": 1511,
-      "actionable": 278,
-      "other": 1233,
-      "actionable_rate": 0.184
+      "n_rows": 1566,
+      "actionable": 284,
+      "other": 1282,
+      "actionable_rate": 0.1814
     },
     "extended_all_platforms": {
-      "n_rows": 1682,
-      "actionable": 281,
-      "other": 1401,
-      "actionable_rate": 0.1671
+      "n_rows": 1737,
+      "actionable": 287,
+      "other": 1450,
+      "actionable_rate": 0.1652
     }
   },
   "platforms": {
-    "facebook": 1511,
+    "facebook": 1566,
     "youtube": 101,
     "x": 70
   },
   "strata": {
-    "recent": 1660,
+    "recent": 1715,
     "invites": 22
   },
   "languages": {
-    "mixed": 382,
-    "fil": 737,
-    "eng": 563
+    "mixed": 391,
+    "fil": 764,
+    "eng": 582
   },
   "agencies": {
-    "n_source_accounts": 48,
+    "n_source_accounts": 50,
     "per_account": {
       "BangkoSentralngPilipinas": {
-        "rows": 14,
+        "rows": 16,
         "actionable": 2,
-        "other": 12
+        "other": 14
       },
       "CCCPhl": {
         "rows": 2,
@@ -103,9 +103,9 @@
         "other": 39
       },
       "OfficialLRTA": {
-        "rows": 7,
-        "actionable": 1,
-        "other": 6
+        "rows": 15,
+        "actionable": 3,
+        "other": 12
       },
       "OfficialPDIC": {
         "rows": 3,
@@ -116,6 +116,11 @@
         "rows": 15,
         "actionable": 4,
         "other": 11
+      },
+      "PhStockExchange": {
+        "rows": 3,
+        "actionable": 0,
+        "other": 3
       },
       "PhilHealthofficial": {
         "rows": 35,
@@ -129,8 +134,8 @@
       },
       "bfp": {
         "rows": 29,
-        "actionable": 7,
-        "other": 22
+        "actionable": 8,
+        "other": 21
       },
       "birgovph": {
         "rows": 24,
@@ -138,9 +143,9 @@
         "other": 21
       },
       "boiphilippines": {
-        "rows": 3,
+        "rows": 8,
         "actionable": 0,
-        "other": 3
+        "other": 8
       },
       "civilservicegovph": {
         "rows": 11,
@@ -164,8 +169,8 @@
       },
       "dilg": {
         "rows": 152,
-        "actionable": 29,
-        "other": 123
+        "actionable": 30,
+        "other": 122
       },
       "dilg_x": {
         "rows": 12,
@@ -178,9 +183,9 @@
         "other": 72
       },
       "dost_pagasa": {
-        "rows": 26,
+        "rows": 32,
         "actionable": 1,
-        "other": 25
+        "other": 31
       },
       "dost_pagasa_x": {
         "rows": 10,
@@ -193,14 +198,14 @@
         "other": 98
       },
       "dostpchrd": {
-        "rows": 2,
-        "actionable": 0,
-        "other": 2
+        "rows": 18,
+        "actionable": 2,
+        "other": 16
       },
       "dpwh": {
         "rows": 502,
-        "actionable": 106,
-        "other": 396
+        "actionable": 105,
+        "other": 397
       },
       "dpwh_x": {
         "rows": 17,
@@ -258,14 +263,14 @@
         "other": 11
       },
       "officialbureauofimmigration": {
-        "rows": 4,
-        "actionable": 1,
-        "other": 3
+        "rows": 10,
+        "actionable": 2,
+        "other": 8
       },
       "pagcor.ph": {
-        "rows": 14,
+        "rows": 18,
         "actionable": 1,
-        "other": 13
+        "other": 17
       },
       "pcsoofficialsocialmedia": {
         "rows": 2,
@@ -292,15 +297,20 @@
         "actionable": 2,
         "other": 1
       },
+      "portsauthorityph": {
+        "rows": 1,
+        "actionable": 0,
+        "other": 1
+      },
       "professionalregulationcommission": {
-        "rows": 32,
+        "rows": 36,
         "actionable": 8,
-        "other": 24
+        "other": 28
       }
     }
   },
   "posts": {
-    "n_posts": 173,
+    "n_posts": 184,
     "largest_posts": [
       {
         "post_id": "fb_deped_c7adea76301e5bdc",
@@ -349,36 +359,36 @@
     "method": "LLM-assisted annotation with human verification",
     "engine": "src/annotate/auto_annotator.py",
     "confidence_threshold": 0.85,
-    "adjudicated_rows": 1263,
-    "auto_decided_rows": 419,
+    "adjudicated_rows": 1309,
+    "auto_decided_rows": 428,
     "human_verified_rows": 0,
     "human_verification_pending": true,
     "blinded_relabel_pending": true,
     "reliability_statistic": "intra-annotator (test-retest) Cohen's kappa"
   },
   "lineage": {
-    "n_raw_captured": 2264,
-    "n_candidate_pool": 1511,
-    "n_labeled": 1511,
-    "n_usable_final": 1511,
+    "n_raw_captured": 2755,
+    "n_candidate_pool": 1566,
+    "n_labeled": 1566,
+    "n_usable_final": 1566,
     "n_excluded_by_reason": {
-      "X_OFFICIAL": 21,
-      "X_LANG": 3,
-      "X_DUP_EXACT": 645,
-      "X_DUP_NEAR": 5,
-      "X_SPAM": 79
+      "X_OFFICIAL": 32,
+      "X_LANG": 9,
+      "X_DUP_EXACT": 1039,
+      "X_DUP_NEAR": 23,
+      "X_SPAM": 86
     },
-    "n_excluded_total": 753,
+    "n_excluded_total": 1189,
     "all_platforms": {
-      "n_raw_captured": 2468,
-      "n_candidate_pool": 1682,
-      "n_excluded_total": 786,
+      "n_raw_captured": 2959,
+      "n_candidate_pool": 1737,
+      "n_excluded_total": 1222,
       "n_excluded_by_reason": {
-        "X_OFFICIAL": 37,
-        "X_LANG": 3,
-        "X_DUP_EXACT": 661,
-        "X_DUP_NEAR": 5,
-        "X_SPAM": 80
+        "X_OFFICIAL": 48,
+        "X_LANG": 9,
+        "X_DUP_EXACT": 1055,
+        "X_DUP_NEAR": 23,
+        "X_SPAM": 87
       }
     },
     "collection_method": "browser_dom_session",

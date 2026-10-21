@@ -5,30 +5,30 @@
     "dev": 0.15,
     "test": 0.15
   },
-  "n_labeled": 1511,
+  "n_labeled": 1566,
   "n_unlabeled_skipped": 0,
   "counts": {
-    "train": 1058,
-    "dev": 227,
-    "test": 226
+    "train": 1097,
+    "dev": 235,
+    "test": 234
   },
   "class_prior": {
     "train": {
-      "actionable": 0.1843,
-      "other": 0.8157,
-      "n": 1058
-    },
-    "dev": {
-      "actionable": 0.185,
-      "other": 0.815,
-      "n": 227
-    },
-    "test": {
       "actionable": 0.1814,
       "other": 0.8186,
-      "n": 226
+      "n": 1097
+    },
+    "dev": {
+      "actionable": 0.183,
+      "other": 0.817,
+      "n": 235
+    },
+    "test": {
+      "actionable": 0.1795,
+      "other": 0.8205,
+      "n": 234
     }
   },
-  "test_vs_train_prior_drift": 0.0029,
+  "test_vs_train_prior_drift": 0.0019,
   "grouped_by": "post_id"
 }

@@ -150,28 +150,28 @@
     "updated_at": "2026-10-21T06:40:14"
   },
   "facebook/pidsgovph": {
-    "posts": 3,
-    "comments": 1,
+    "posts": 14,
+    "comments": 4,
     "last_error": "",
-    "updated_at": "2026-10-21T16:17:09"
+    "updated_at": "2026-10-22T02:18:17"
   },
   "facebook/portsauthorityph": {
-    "posts": 2,
-    "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-21T16:19:07"
-  },
-  "facebook/dostpchrd": {
-    "posts": 1,
-    "comments": 2,
-    "last_error": "",
-    "updated_at": "2026-10-21T16:20:10"
-  },
-  "facebook/DOSTASTI": {
-    "posts": 5,
+    "posts": 15,
     "comments": 1,
     "last_error": "",
-    "updated_at": "2026-10-21T16:24:23"
+    "updated_at": "2026-10-22T02:22:57"
+  },
+  "facebook/dostpchrd": {
+    "posts": 17,
+    "comments": 70,
+    "last_error": "",
+    "updated_at": "2026-10-22T02:28:01"
+  },
+  "facebook/DOSTASTI": {
+    "posts": 20,
+    "comments": 4,
+    "last_error": "",
+    "updated_at": "2026-10-22T02:32:22"
   },
   "facebook/PHIVOLCS": {
     "posts": 8,
@@ -180,16 +180,16 @@
     "updated_at": "2026-10-21T16:29:22"
   },
   "facebook/nationalmuseumofthephilippines": {
-    "posts": 5,
-    "comments": 6,
+    "posts": 20,
+    "comments": 24,
     "last_error": "",
-    "updated_at": "2026-10-21T16:33:16"
+    "updated_at": "2026-10-22T02:36:26"
   },
   "facebook/professionalregulationcommission": {
-    "posts": 7,
-    "comments": 20,
-    "last_error": "",
-    "updated_at": "2026-10-21T16:38:49"
+    "posts": 21,
+    "comments": 62,
+    "last_error": "no posts captured",
+    "updated_at": "2026-10-22T02:37:44"
   },
   "facebook/pcsoofficialsocialmedia": {
     "posts": 8,
@@ -198,10 +198,10 @@
     "updated_at": "2026-10-21T16:44:23"
   },
   "facebook/nsc.gov.ph": {
-    "posts": 4,
-    "comments": 19,
+    "posts": 16,
+    "comments": 75,
     "last_error": "",
-    "updated_at": "2026-10-21T16:47:25"
+    "updated_at": "2026-10-22T02:42:16"
   },
   "facebook/PhilippineNavy": {
     "posts": 8,
@@ -228,59 +228,65 @@
     "updated_at": "2026-10-21T17:08:23"
   },
   "facebook/OfficialLRTA": {
-    "posts": 4,
-    "comments": 9,
+    "posts": 22,
+    "comments": 53,
     "last_error": "",
-    "updated_at": "2026-10-21T17:12:04"
+    "updated_at": "2026-10-22T02:47:58"
   },
   "facebook/nncofficial": {
-    "posts": 3,
-    "comments": 9,
+    "posts": 11,
+    "comments": 36,
     "last_error": "",
-    "updated_at": "2026-10-21T17:14:12"
+    "updated_at": "2026-10-22T02:50:39"
   },
   "facebook/pnagovph": {
-    "posts": 2,
-    "comments": 3,
+    "posts": 8,
+    "comments": 12,
     "last_error": "",
-    "updated_at": "2026-10-21T17:15:48"
+    "updated_at": "2026-10-22T02:52:19"
   },
   "facebook/PhStockExchange": {
+    "posts": 14,
+    "comments": 7,
+    "last_error": "",
+    "updated_at": "2026-10-21T21:24:46"
+  },
+  "facebook/OfficialPDIC": {
+    "posts": 12,
+    "comments": 9,
+    "last_error": "",
+    "updated_at": "2026-10-22T02:56:17"
+  },
+  "facebook/sugarregulatoryadmin": {
     "posts": 6,
     "comments": 0,
     "last_error": "",
-    "updated_at": "2026-10-21T17:21:16"
-  },
-  "facebook/OfficialPDIC": {
-    "posts": 4,
-    "comments": 3,
-    "last_error": "",
-    "updated_at": "2026-10-21T17:24:16"
-  },
-  "facebook/sugarregulatoryadmin": {
-    "posts": 2,
-    "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-21T17:25:55"
+    "updated_at": "2026-10-22T02:57:57"
   },
   "facebook/ITDIDOSTUpdates": {
-    "posts": 4,
+    "posts": 12,
     "comments": 0,
     "last_error": "",
-    "updated_at": "2026-10-21T17:29:18"
+    "updated_at": "2026-10-22T03:01:25"
   },
   "facebook/pnacph": {
-    "posts": 3,
-    "comments": 4,
+    "posts": 11,
+    "comments": 12,
     "last_error": "",
-    "updated_at": "2026-10-21T17:31:46"
+    "updated_at": "2026-10-22T03:04:35"
+  },
+  "facebook/civildefensePH": {
+    "posts": 11,
+    "comments": 0,
+    "last_error": "",
+    "updated_at": "2026-10-22T03:07:51"
   },
   "platform": "facebook",
   "tab": 0,
   "mode": "recent",
   "state": "finished",
-  "updated_at": "2026-10-21T17:31:52",
-  "accounts_done": 34,
+  "updated_at": "2026-10-22T03:07:57",
+  "accounts_done": 24,
   "youtube/OfficeOfTheVicePresidentPH_yt": {
     "posts": 1,
     "comments": 0,

@@ -334,7 +334,7 @@ change accordingly (§3a–§3g).
 
 | Task item | Stage | Covered? |
 |---|---|---|
-| Identify official government pages | **0** | ✅ `government_agencies.csv` — 32 Facebook accounts, 38 domains |
+| Identify official government pages | **0** | ✅ `government_agencies.csv` — 47 Facebook accounts, 38 domainsmains |
 | Collect comments using an authorized method | **1** | ✅ `data/raw/` — public HTML/DOM, no credentials |
 | Clean the dataset (remove exact duplicates and spam) | **2b, 2d** | ✅ `X_DUP_EXACT`, `X_DUP_NEAR`, `X_SPAM` |
 | Anonymize data | **2e** | ✅ PII scrub, `X_PII` |

@@ -5279,3 +5279,583 @@
 [18:48:47]   ok: 3 post(s), 4 comment(s)
 [18:48:53] [23/47] facebook/CCCPhl: topping up (7 of 8 posts)
 [18:48:53] [23/47] facebook/CCCPhl  https://www.facebook.com/CCCPhl
+[18:53:19]        0 comments  /www.facebook.com/photo/?fbid=1420321306861703
+[18:53:19]        2 comments  //www.facebook.com/photo/?fbid=332340552326456
+[18:53:19]        0 comments  /www.facebook.com/photo/?fbid=1438089765084857
+[18:53:19]        0 comments  /www.facebook.com/photo/?fbid=1438089775084856
+[18:53:19]        0 comments  /www.facebook.com/photo/?fbid=1438089691751531
+[18:53:19]        0 comments  /www.facebook.com/photo/?fbid=1438089681751532
+[18:53:19]        0 comments  /www.facebook.com/photo/?fbid=1438089708418196
+[18:53:19]   SNAPSHOT facebook_CCCPhl_2026-10-21T18-53.json  7 post(s), 2 comment(s)
+[18:53:19]   ok: 7 post(s), 2 comment(s)
+[18:53:25] [24/47] facebook/boiphilippines: topping up (6 of 8 posts)
+[18:53:25] [24/47] facebook/boiphilippines  https://www.facebook.com/boiphilippines
+[18:55:57]     capture failed: orca eval: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[18:55:58]   error: no posts captured
+[18:56:04] [25/47] facebook/pagcor.ph: topping up (7 of 8 posts)
+[18:56:04] [25/47] facebook/pagcor.ph  https://www.facebook.com/pagcor.ph
+[19:01:26]        6 comments  //www.facebook.com/photo/?fbid=659312592903907
+[19:01:26]        6 comments  //www.facebook.com/photo/?fbid=659312432903923
+[19:01:26]        4 comments  /www.facebook.com/photo/?fbid=1558514142983743
+[19:01:26]        4 comments  /www.facebook.com/photo/?fbid=1558514436317047
+[19:01:26]        4 comments  /www.facebook.com/photo/?fbid=1558514452983712
+[19:01:26]        4 comments  /www.facebook.com/photo/?fbid=1558514402983717
+[19:01:26]        0 comments  tzpt5F8yvS2M7bcEAwfrA2f3aydmvVfrca4fXUuv8h1Chl
+[19:01:26]   SNAPSHOT facebook_pagcor.ph_2026-10-21T19-01.json  7 post(s), 28 comment(s)
+[19:01:26]   ok: 7 post(s), 28 comment(s)
+[19:01:32] [26/47] facebook/pidsgovph: topping up (3 of 8 posts)
+[19:01:32] [26/47] facebook/pidsgovph  https://www.facebook.com/pidsgovph
+[19:06:13]        1 comments  /www.facebook.com/photo/?fbid=1255348986629102
+[19:06:13]        0 comments  4p2CkiPMvBKhqewiAtpSTnQ1EbzyiaWSDnzBqZvqahdUul
+[19:06:13]        0 comments  mS6vcTWLgkT9aVLMeiTmGVBHaYaDq3eMtWBR9QAkQusKDl
+[19:06:13]        0 comments  /www.facebook.com/photo/?fbid=1567907048706626
+[19:06:13]   SNAPSHOT facebook_pidsgovph_2026-10-21T19-06.json  4 post(s), 1 comment(s)
+[19:06:13]   ok: 4 post(s), 1 comment(s)
+[19:06:19] [27/47] facebook/portsauthorityph: the last attempt was empty, retrying
+[19:06:19] [27/47] facebook/portsauthorityph  https://www.facebook.com/portsauthorityph
+[19:11:25]        0 comments  /www.facebook.com/photo/?fbid=1344173567906532
+[19:11:25]        0 comments  https://www.facebook.com/reel/2383636805774817
+[19:11:25]        0 comments  NsGNgLPUFnur5a2iHCn1Lx7cJGzLQc6HsmNC4TYiYtKzFl
+[19:11:25]        0 comments  /www.facebook.com/photo/?fbid=1434592908864597
+[19:11:25]   SNAPSHOT facebook_portsauthorityph_2026-10-21T19-11.json  4 post(s), 0 comment(s)
+[19:11:25]   ok: 4 post(s), 0 comment(s)
+[19:11:31] [28/47] facebook/dostpchrd: topping up (1 of 8 posts)
+[19:11:31] [28/47] facebook/dostpchrd  https://www.facebook.com/dostpchrd
+[19:15:23]        2 comments  //www.facebook.com/photo/?fbid=855251583308622
+[19:15:23]        0 comments  /www.facebook.com/photo/?fbid=1573207588179681
+[19:15:23]        0 comments  /www.facebook.com/photo/?fbid=1573207584846348
+[19:15:23]        7 comments  /www.facebook.com/photo/?fbid=1687970293368789
+[19:15:23]        0 comments  goNnhjx3Kgdw1AJDMnpK7SreLhcBSgHgKUZts4F1JvExBl
+[19:15:23]   SNAPSHOT facebook_dostpchrd_2026-10-21T19-15.json  5 post(s), 9 comment(s)
+[19:15:23]   ok: 5 post(s), 9 comment(s)
+[19:15:29] [29/47] facebook/DOSTASTI: topping up (5 of 8 posts)
+[19:15:29] [29/47] facebook/DOSTASTI  https://www.facebook.com/DOSTASTI
+[19:20:22]        1 comments  /www.facebook.com/photo/?fbid=1282962737201232
+[19:20:22]        0 comments  w9WbYgo3GFhLB4hn7f8cQTyuAc7D2edAMydAXuAzAEtqUl
+[19:20:22]        0 comments  ebvT83K1KuX9MzjDJY2jQMGBGW74ab3cJJ5oaW6pVLPsrl
+[19:20:22]        0 comments  EWSpubvzHpNCnE5Hsskt9nU5aLw1aqnGamJxoMbudeGp2l
+[19:20:22]        0 comments  /www.facebook.com/photo/?fbid=1152395807361821
+[19:20:22]   SNAPSHOT facebook_DOSTASTI_2026-10-21T19-20.json  5 post(s), 1 comment(s)
+[19:20:22]   ok: 5 post(s), 1 comment(s)
+[19:20:28] [30/47] facebook/PHIVOLCS: already collected (8 post(s)), skipping
+[19:20:28] [31/47] facebook/nationalmuseumofthephilippines: topping up (5 of 8 posts)
+[19:20:28] [31/47] facebook/nationalmuseumofthephilippines  https://www.facebook.com/nationalmuseumofthephilippines
+[19:25:00]        0 comments  /www.facebook.com/photo/?fbid=1542689981219609
+[19:25:00]        6 comments  //www.facebook.com/photo/?fbid=589691726519444
+[19:25:00]        0 comments  bHYCKDViTwr3VuhAEBPVFH1H9ARgj5EHLSrrXBVnihpTfl
+[19:25:00]        0 comments  3op7qNr99FnYg1jEdpQ9BJmrpk64Mw8XyAdiNL5mENS9kl
+[19:25:00]        0 comments  /www.facebook.com/photo/?fbid=1562776539210953
+[19:25:00]   SNAPSHOT facebook_nationalmuseumofthephilippines_2026-10-21T19-25.json  5 post(s), 6 comment(s)
+[19:25:00]   ok: 5 post(s), 6 comment(s)
+[19:25:06] [32/47] facebook/professionalregulationcommission: topping up (7 of 8 posts)
+[19:25:06] [32/47] facebook/professionalregulationcommission  https://www.facebook.com/professionalregulationcommission
+[19:34:24]        6 comments  //www.facebook.com/photo/?fbid=621895993448283
+[19:34:24]        7 comments  //www.facebook.com/photo/?fbid=692069066430975
+[19:34:24]        0 comments  YVibdpXXzjHXU4bkpPiAmdvYzeDLedMgU7Txk7FnkzB8ul
+[19:34:24]        0 comments  oDrjXLy6SSgeMshayWmUARsiKhfZD7bv7R5HECqeKFAuZl
+[19:34:24]        0 comments  ChKa3ZwDgXVGYppxyRkmE2eohymxz6Qud7WLRVB17RzpCl
+[19:34:24]        8 comments  /www.facebook.com/photo/?fbid=1448792100758664
+[19:34:24]        0 comments  Hw9uE4xyniwnXoN3XZhbpzhz9kFoWmaUtHvY3Rcph7tuTl
+[19:34:24]   SNAPSHOT facebook_professionalregulationcommission_2026-10-21T19-34.json  7 post(s), 21 comment(s)
+[19:34:24]   ok: 7 post(s), 21 comment(s)
+[19:34:30] [33/47] facebook/pcsoofficialsocialmedia: already collected (8 post(s)), skipping
+[19:34:30] [34/47] facebook/nsc.gov.ph: topping up (4 of 8 posts)
+[19:34:30] [34/47] facebook/nsc.gov.ph  https://www.facebook.com/nsc.gov.ph
+[19:40:06]        1 comments  /www.facebook.com/photo/?fbid=1431402842365143
+[19:40:06]       11 comments  //www.facebook.com/photo/?fbid=675996007905834
+[19:40:06]        7 comments  /www.facebook.com/photo/?fbid=1584664097039016
+[19:40:06]        0 comments  sYyg579niDuC4SaUXTbA29rGiuHmsSwZsQkaoq929Djj4l
+[19:40:06]   SNAPSHOT facebook_nsc.gov.ph_2026-10-21T19-40.json  4 post(s), 19 comment(s)
+[19:40:06]   ok: 4 post(s), 19 comment(s)
+[19:40:12] [35/47] facebook/PhilippineNavy: already collected (8 post(s)), skipping
+[19:40:12] [36/47] facebook/piopaf: already collected (8 post(s)), skipping
+[19:40:12] [37/47] facebook/DDBgov: already collected (8 post(s)), skipping
+[19:40:12] [38/47] facebook/DOST.FNRI: already collected (8 post(s)), skipping
+[19:40:12] [39/47] facebook/OfficialLRTA: topping up (4 of 8 posts)
+[19:40:12] [39/47] facebook/OfficialLRTA  https://www.facebook.com/OfficialLRTA
+[19:46:13]        2 comments  //www.facebook.com/photo/?fbid=881049070719762
+[19:46:13]        7 comments  //www.facebook.com/photo/?fbid=881048747386461
+[19:46:13]        0 comments  https://www.facebook.com/reel/1694674664965935
+[19:46:13]        0 comments  jA7a31oY7CGZFPjbkahXp6hHNyMrcY8Bd92M2qqLeVc3gl
+[19:46:13]        6 comments  /www.facebook.com/photo/?fbid=1550181703806492
+[19:46:13]        0 comments  AXaETGW3M6sR2DDYPocuXM19wwCv8eSGSUNmQQ38kKgf7l
+[19:46:13]   SNAPSHOT facebook_OfficialLRTA_2026-10-21T19-46.json  6 post(s), 15 comment(s)
+[19:46:13]   ok: 6 post(s), 15 comment(s)
+[19:46:19] [40/47] facebook/nncofficial: topping up (3 of 8 posts)
+[19:46:19] [40/47] facebook/nncofficial  https://www.facebook.com/nncofficial
+[19:48:49]        3 comments  /www.facebook.com/photo/?fbid=1049437740546977
+[19:48:49]        6 comments  /www.facebook.com/photo/?fbid=1489241496566597
+[19:48:49]        0 comments  /www.facebook.com/photo/?fbid=1597037435787002
+[19:48:49]   SNAPSHOT facebook_nncofficial_2026-10-21T19-48.json  3 post(s), 9 comment(s)
+[19:48:49]   ok: 3 post(s), 9 comment(s)
+[19:48:55] [41/47] facebook/pnagovph: topping up (2 of 8 posts)
+[19:48:55] [41/47] facebook/pnagovph  https://www.facebook.com/pnagovph
+[19:51:49]        3 comments  /www.facebook.com/photo/?fbid=1095964642579989
+[19:51:49]        0 comments  /www.facebook.com/photo/?fbid=1534359285407187
+[19:51:49]   SNAPSHOT facebook_pnagovph_2026-10-21T19-51.json  2 post(s), 3 comment(s)
+[19:51:49]   ok: 2 post(s), 3 comment(s)
+[19:51:55] [42/47] facebook/PhStockExchange: the last attempt was empty, retrying
+[19:51:55] [42/47] facebook/PhStockExchange  https://www.facebook.com/PhStockExchange
+[20:11:03] === worker: facebook on tab 0, 8 posts, mode=recent ===
+[20:11:04] tab [0] 295e07c8-3787-44b8-83f2-b12d86b27a9c  https://www.facebook.com/posts/pfbid0o3iXF4qTHKUF1osF2SNESih3nUceAn9uZqBfZmoCUbiXuUbvafHb8HK3btetaVrSl
+[20:11:04] 47 registered facebook accounts
+[20:11:05] [1/47] facebook/dost_pagasa: topping up (6 of 8 posts)
+[20:11:05] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[20:15:19]        5 comments  /www.facebook.com/photo/?fbid=1404302578408058
+[20:15:19]        0 comments  Z7j9S8FgB4ELdYGtMTxLxyjF5cJnPWHpDoRB9rmC4ADM6l
+[20:15:19]        2 comments  /www.facebook.com/photo/?fbid=1592796979558616
+[20:15:19]        2 comments  /www.facebook.com/photo/?fbid=1592797059558608
+[20:15:19]        0 comments  j2E6mxmGpn1RbWN1cnJbdDBA9wjc1iyM2Ufs9cDN8i6Enl
+[20:15:19]   SNAPSHOT facebook_dost_pagasa_2026-10-21T20-15.json  5 post(s), 9 comment(s)
+[20:15:19]   ok: 5 post(s), 9 comment(s)
+[20:15:25] [2/47] facebook/doh: already collected (12 post(s)), skipping
+[20:15:25] [3/47] facebook/dswd: already collected (8 post(s)), skipping
+[20:15:25] [4/47] facebook/deped: already collected (12 post(s)), skipping
+[20:15:25] [5/47] facebook/dpwh: already collected (12 post(s)), skipping
+[20:15:25] [6/47] facebook/dilg: already collected (12 post(s)), skipping
+[20:15:26] [7/47] facebook/ndrrmc: already collected (8 post(s)), skipping
+[20:15:26] [8/47] facebook/bfp: already collected (8 post(s)), skipping
+[20:15:26] [9/47] facebook/dti: already collected (8 post(s)), skipping
+[20:15:26] [10/47] facebook/denr: topping up (6 of 8 posts)
+[20:15:26] [10/47] facebook/denr  https://www.facebook.com/DENROfficial
+[20:18:01]        0 comments  /www.facebook.com/photo/?fbid=1560227992797622
+[20:18:01]        0 comments  https://www.facebook.com/reel/1668075881343379
+[20:18:01]   SNAPSHOT facebook_denr_2026-10-21T20-18.json  2 post(s), 0 comment(s)
+[20:18:01]   ok: 2 post(s), 0 comment(s)
+[20:18:08] [11/47] facebook/dacentralphilippines: already collected (8 post(s)), skipping
+[20:18:08] [12/47] facebook/DOFPH: already collected (8 post(s)), skipping
+[20:18:08] [13/47] facebook/DOSTph: topping up (5 of 8 posts)
+[20:18:08] [13/47] facebook/DOSTph  https://www.facebook.com/DOSTph
+[20:21:41]        0 comments  /www.facebook.com/photo/?fbid=1347901590851704
+[20:21:41]        0 comments  4sPr1u9LfKKBWBL8V1EvjHaFX68h9nMEd7473fKU9RKiLl
+[20:21:41]        1 comments  /www.facebook.com/photo/?fbid=1415954110713118
+[20:21:41]        0 comments  dYtyGYSRx7ia8PzZyJfZBR2ge5QwiX9nTtj9cB5DWQcKpl
+[20:21:41]   SNAPSHOT facebook_DOSTph_2026-10-21T20-21.json  4 post(s), 1 comment(s)
+[20:21:41]   ok: 4 post(s), 1 comment(s)
+[20:21:47] [14/47] facebook/OfficeOfTheVicePresidentPH: already collected (8 post(s)), skipping
+[20:21:47] [15/47] facebook/birgovph: already collected (8 post(s)), skipping
+[20:21:47] [16/47] facebook/officialbureauofimmigration: topping up (2 of 8 posts)
+[20:21:47] [16/47] facebook/officialbureauofimmigration  https://www.facebook.com/officialbureauofimmigration
+[20:26:20]        1 comments  /www.facebook.com/photo/?fbid=1482079407293160
+[20:26:20]        4 comments  /www.facebook.com/photo/?fbid=1048536257314146
+[20:26:20]        0 comments  /www.facebook.com/photo/?fbid=1558998926267874
+[20:26:20]        0 comments  /www.facebook.com/photo/?fbid=1558998976267869
+[20:26:20]        0 comments  /www.facebook.com/photo/?fbid=1558999029601197
+[20:26:20]        0 comments  /www.facebook.com/photo/?fbid=1558999089601191
+[20:26:20]        0 comments  /www.facebook.com/photo/?fbid=1558999159601184
+[20:26:20]   SNAPSHOT facebook_officialbureauofimmigration_2026-10-21T20-26.json  7 post(s), 5 comment(s)
+[20:26:20]   ok: 7 post(s), 5 comment(s)
+[20:26:26] [17/47] facebook/BangkoSentralngPilipinas: already collected (8 post(s)), skipping
+[20:26:26] [18/47] facebook/PhilHealthofficial: already collected (8 post(s)), skipping
+[20:26:26] [19/47] facebook/NationalBureauofInvestigationOfficial: topping up (1 of 8 posts)
+[20:26:26] [19/47] facebook/NationalBureauofInvestigationOfficial  https://www.facebook.com/NationalBureauofInvestigationOfficial
+[20:28:19]        0 comments  6pjXitrYyGSraePByKxbKNwXDHEz3qg5im2cJ1TsrMTp1l
+[20:28:19]   SNAPSHOT facebook_NationalBureauofInvestigationOfficial_2026-10-21T20-28.json  1 post(s), 0 comment(s)
+[20:28:19]   ok: 1 post(s), 0 comment(s)
+[20:28:25] [20/47] facebook/civilservicegovph: already collected (8 post(s)), skipping
+[20:28:25] [21/47] facebook/fdagovph: topping up (5 of 8 posts)
+[20:28:25] [21/47] facebook/fdagovph  https://web.facebook.com/fdagovph
+[20:32:36]        7 comments  /www.facebook.com/photo/?fbid=1115933137244757
+[20:32:36]        6 comments  //www.facebook.com/photo/?fbid=226796752825071
+[20:32:36]        0 comments  v57BuPZiC5mEnzrNgXqqeLbMf4H7cqiJPVdUvkt6XxkB1l
+[20:32:36]        0 comments  nKdXTDLSXd6His2LsgJ2VA6sWtA6F4ArYLXTayaQhJUBhl
+[20:32:36]        0 comments  /www.facebook.com/photo/?fbid=1580642584107141
+[20:32:36]   SNAPSHOT facebook_fdagovph_2026-10-21T20-32.json  5 post(s), 13 comment(s)
+[20:32:36]   ok: 5 post(s), 13 comment(s)
+[20:32:43] [22/47] facebook/nationalyouthcommission: topping up (3 of 8 posts)
+[20:32:43] [22/47] facebook/nationalyouthcommission  https://www.facebook.com/nationalyouthcommission
+[20:35:10]        1 comments  /www.facebook.com/photo/?fbid=1414040950757386
+[20:35:10]        3 comments  /www.facebook.com/photo/?fbid=1120444720117012
+[20:35:10]        0 comments  hZTA1TauT89wZ4EQahA3MLos6xrPCuWTt8AzxJ2TjT49hl
+[20:35:10]   SNAPSHOT facebook_nationalyouthcommission_2026-10-21T20-35.json  3 post(s), 4 comment(s)
+[20:35:10]   ok: 3 post(s), 4 comment(s)
+[20:35:16] [23/47] facebook/CCCPhl: topping up (7 of 8 posts)
+[20:35:16] [23/47] facebook/CCCPhl  https://www.facebook.com/CCCPhl
+[20:39:29]        0 comments  /www.facebook.com/photo/?fbid=1420321306861703
+[20:39:29]        2 comments  //www.facebook.com/photo/?fbid=332340552326456
+[20:39:29]        0 comments  /www.facebook.com/photo/?fbid=1438089765084857
+[20:39:29]        0 comments  /www.facebook.com/photo/?fbid=1438089775084856
+[20:39:29]        0 comments  /www.facebook.com/photo/?fbid=1438089691751531
+[20:39:29]        0 comments  /www.facebook.com/photo/?fbid=1438089681751532
+[20:39:29]        0 comments  /www.facebook.com/photo/?fbid=1438089708418196
+[20:39:29]   SNAPSHOT facebook_CCCPhl_2026-10-21T20-39.json  7 post(s), 2 comment(s)
+[20:39:29]   ok: 7 post(s), 2 comment(s)
+[20:39:35] [24/47] facebook/boiphilippines: topping up (6 of 8 posts)
+[20:39:35] [24/47] facebook/boiphilippines  https://www.facebook.com/boiphilippines
+[20:41:55]     capture failed: orca goto: browser_error Failed to navigate browser page 295e07c8-3787-44b8-83f2-b12d86b27a9c: ERR_NAME_NOT_RESOLVED (-105) loading 'https://www.facebook.com/photo/?fbid=1592986402862952'
+[20:41:55]   error: no posts captured
+[20:42:01] [25/47] facebook/pagcor.ph: topping up (7 of 8 posts)
+[20:42:01] [25/47] facebook/pagcor.ph  https://www.facebook.com/pagcor.ph
+[20:42:05]   FAILED: OrcaError: orca goto: browser_error Failed to navigate browser page 295e07c8-3787-44b8-83f2-b12d86b27a9c: ERR_QUIC_PROTOCOL_ERROR (-356) loading 'https://www.facebook.com/pagcor.ph'
+[20:42:05]   error: OrcaError: orca goto: browser_error Failed to navigate browser page 295e07c8-3787-44b8-83f2-b12d86b27a9c: ERR_QUIC_PROTOCOL_ERROR (-356) loading 'https://www.facebook.com/pagcor.ph'
+[20:42:11] [26/47] facebook/pidsgovph: topping up (4 of 8 posts)
+[20:42:11] [26/47] facebook/pidsgovph  https://www.facebook.com/pidsgovph
+[20:45:12]        1 comments  /www.facebook.com/photo/?fbid=1255348986629102
+[20:45:12]        0 comments  4p2CkiPMvBKhqewiAtpSTnQ1EbzyiaWSDnzBqZvqahdUul
+[20:45:12]        0 comments  mS6vcTWLgkT9aVLMeiTmGVBHaYaDq3eMtWBR9QAkQusKDl
+[20:45:12]   SNAPSHOT facebook_pidsgovph_2026-10-21T20-45.json  3 post(s), 1 comment(s)
+[20:45:12]   ok: 3 post(s), 1 comment(s)
+[20:45:18] [27/47] facebook/portsauthorityph: the last attempt was empty, retrying
+[20:45:18] [27/47] facebook/portsauthorityph  https://www.facebook.com/portsauthorityph
+[20:49:04]        0 comments  /www.facebook.com/photo/?fbid=1344173567906532
+[20:49:04]        0 comments  https://www.facebook.com/reel/2383636805774817
+[20:49:04]        0 comments  NsGNgLPUFnur5a2iHCn1Lx7cJGzLQc6HsmNC4TYiYtKzFl
+[20:49:04]        0 comments  /www.facebook.com/photo/?fbid=1434592908864597
+[20:49:04]   SNAPSHOT facebook_portsauthorityph_2026-10-21T20-49.json  4 post(s), 0 comment(s)
+[20:49:04]   ok: 4 post(s), 0 comment(s)
+[20:49:10] [28/47] facebook/dostpchrd: topping up (5 of 8 posts)
+[20:49:10] [28/47] facebook/dostpchrd  https://www.facebook.com/dostpchrd
+[20:51:13]        2 comments  //www.facebook.com/photo/?fbid=855251583308622
+[20:51:13]        0 comments  /www.facebook.com/photo/?fbid=1573207588179681
+[20:51:13]        0 comments  /www.facebook.com/photo/?fbid=1573207584846348
+[20:51:13]   SNAPSHOT facebook_dostpchrd_2026-10-21T20-51.json  3 post(s), 2 comment(s)
+[20:51:13]   ok: 3 post(s), 2 comment(s)
+[20:51:19] [29/47] facebook/DOSTASTI: topping up (5 of 8 posts)
+[20:51:19] [29/47] facebook/DOSTASTI  https://www.facebook.com/DOSTASTI
+[20:55:37]        1 comments  /www.facebook.com/photo/?fbid=1282962737201232
+[20:55:37]        0 comments  w9WbYgo3GFhLB4hn7f8cQTyuAc7D2edAMydAXuAzAEtqUl
+[20:55:37]        0 comments  ebvT83K1KuX9MzjDJY2jQMGBGW74ab3cJJ5oaW6pVLPsrl
+[20:55:37]        0 comments  EWSpubvzHpNCnE5Hsskt9nU5aLw1aqnGamJxoMbudeGp2l
+[20:55:37]        0 comments  /www.facebook.com/photo/?fbid=1152395807361821
+[20:55:38]   SNAPSHOT facebook_DOSTASTI_2026-10-21T20-55.json  5 post(s), 1 comment(s)
+[20:55:38]   ok: 5 post(s), 1 comment(s)
+[20:55:44] [30/47] facebook/PHIVOLCS: already collected (8 post(s)), skipping
+[20:55:44] [31/47] facebook/nationalmuseumofthephilippines: topping up (5 of 8 posts)
+[20:55:44] [31/47] facebook/nationalmuseumofthephilippines  https://www.facebook.com/nationalmuseumofthephilippines
+[20:59:49]        0 comments  /www.facebook.com/photo/?fbid=1542689981219609
+[20:59:49]        6 comments  //www.facebook.com/photo/?fbid=589691726519444
+[20:59:49]        0 comments  bHYCKDViTwr3VuhAEBPVFH1H9ARgj5EHLSrrXBVnihpTfl
+[20:59:49]        0 comments  3op7qNr99FnYg1jEdpQ9BJmrpk64Mw8XyAdiNL5mENS9kl
+[20:59:49]        0 comments  /www.facebook.com/photo/?fbid=1562776539210953
+[20:59:49]   SNAPSHOT facebook_nationalmuseumofthephilippines_2026-10-21T20-59.json  5 post(s), 6 comment(s)
+[20:59:49]   ok: 5 post(s), 6 comment(s)
+[20:59:55] [32/47] facebook/professionalregulationcommission: topping up (7 of 8 posts)
+[20:59:55] [32/47] facebook/professionalregulationcommission  https://www.facebook.com/professionalregulationcommission
+[21:06:14]        6 comments  //www.facebook.com/photo/?fbid=621895993448283
+[21:06:14]        7 comments  //www.facebook.com/photo/?fbid=692069066430975
+[21:06:14]        0 comments  YVibdpXXzjHXU4bkpPiAmdvYzeDLedMgU7Txk7FnkzB8ul
+[21:06:14]        0 comments  oDrjXLy6SSgeMshayWmUARsiKhfZD7bv7R5HECqeKFAuZl
+[21:06:14]        0 comments  ChKa3ZwDgXVGYppxyRkmE2eohymxz6Qud7WLRVB17RzpCl
+[21:06:14]        8 comments  /www.facebook.com/photo/?fbid=1448792100758664
+[21:06:14]        0 comments  Hw9uE4xyniwnXoN3XZhbpzhz9kFoWmaUtHvY3Rcph7tuTl
+[21:06:14]   SNAPSHOT facebook_professionalregulationcommission_2026-10-21T21-06.json  7 post(s), 21 comment(s)
+[21:06:14]   ok: 7 post(s), 21 comment(s)
+[21:06:20] [33/47] facebook/pcsoofficialsocialmedia: already collected (8 post(s)), skipping
+[21:06:20] [34/47] facebook/nsc.gov.ph: topping up (4 of 8 posts)
+[21:06:20] [34/47] facebook/nsc.gov.ph  https://www.facebook.com/nsc.gov.ph
+[21:09:17]        1 comments  /www.facebook.com/photo/?fbid=1431402842365143
+[21:09:17]       11 comments  //www.facebook.com/photo/?fbid=675996007905834
+[21:09:17]        6 comments  /www.facebook.com/photo/?fbid=1584664097039016
+[21:09:17]        0 comments  3a5h25ccdCcJ7H9U75wzPK8VmJHzaaCTf5AS7g4BphHbjl
+[21:09:17]   SNAPSHOT facebook_nsc.gov.ph_2026-10-21T21-09.json  4 post(s), 18 comment(s)
+[21:09:17]   ok: 4 post(s), 18 comment(s)
+[21:09:23] [35/47] facebook/PhilippineNavy: already collected (8 post(s)), skipping
+[21:09:23] [36/47] facebook/piopaf: already collected (8 post(s)), skipping
+[21:09:23] [37/47] facebook/DDBgov: already collected (8 post(s)), skipping
+[21:09:23] [38/47] facebook/DOST.FNRI: already collected (8 post(s)), skipping
+[21:09:23] [39/47] facebook/OfficialLRTA: topping up (6 of 8 posts)
+[21:09:23] [39/47] facebook/OfficialLRTA  https://www.facebook.com/OfficialLRTA
+[21:14:24]        2 comments  //www.facebook.com/photo/?fbid=881049070719762
+[21:14:24]        7 comments  //www.facebook.com/photo/?fbid=881048747386461
+[21:14:24]        0 comments  https://www.facebook.com/reel/1694674664965935
+[21:14:24]        0 comments  jA7a31oY7CGZFPjbkahXp6hHNyMrcY8Bd92M2qqLeVc3gl
+[21:14:24]        6 comments  /www.facebook.com/photo/?fbid=1550181703806492
+[21:14:24]        0 comments  AXaETGW3M6sR2DDYPocuXM19wwCv8eSGSUNmQQ38kKgf7l
+[21:14:24]   SNAPSHOT facebook_OfficialLRTA_2026-10-21T21-14.json  6 post(s), 15 comment(s)
+[21:14:24]   ok: 6 post(s), 15 comment(s)
+[21:14:30] [40/47] facebook/nncofficial: topping up (3 of 8 posts)
+[21:14:30] [40/47] facebook/nncofficial  https://www.facebook.com/nncofficial
+[21:16:34]        3 comments  /www.facebook.com/photo/?fbid=1049437740546977
+[21:16:34]        6 comments  /www.facebook.com/photo/?fbid=1489241496566597
+[21:16:34]        0 comments  /www.facebook.com/photo/?fbid=1597037435787002
+[21:16:34]   SNAPSHOT facebook_nncofficial_2026-10-21T21-16.json  3 post(s), 9 comment(s)
+[21:16:34]   ok: 3 post(s), 9 comment(s)
+[21:16:40] [41/47] facebook/pnagovph: topping up (2 of 8 posts)
+[21:16:40] [41/47] facebook/pnagovph  https://www.facebook.com/pnagovph
+[21:18:13]        3 comments  /www.facebook.com/photo/?fbid=1095964642579989
+[21:18:13]        0 comments  /www.facebook.com/photo/?fbid=1534434388733010
+[21:18:13]   SNAPSHOT facebook_pnagovph_2026-10-21T21-18.json  2 post(s), 3 comment(s)
+[21:18:13]   ok: 2 post(s), 3 comment(s)
+[21:18:19] [42/47] facebook/PhStockExchange: the last attempt was empty, retrying
+[21:18:19] [42/47] facebook/PhStockExchange  https://www.facebook.com/PhStockExchange
+[21:24:46]        0 comments  /www.facebook.com/photo/?fbid=1410939091077248
+[21:24:46]        0 comments  ESih3nUceAn9uZqBfZmoCUbiXuUbvafHb8HK3btetaVrSl
+[21:24:46]        0 comments  https://www.facebook.com/reel/1513108803905198
+[21:24:46]        0 comments  p8h45XV38Lo3CRF8YwHPZ7yLYMzNdENaLBa7MruzVJKfml
+[21:24:46]        0 comments  /www.facebook.com/photo/?fbid=1550525957118560
+[21:24:46]        0 comments  /www.facebook.com/photo/?fbid=1550525953785227
+[21:24:46]        7 comments  /www.facebook.com/photo/?fbid=1592721562899491
+[21:24:46]        0 comments  dNyA2rDeT19eWz8F1bZVRc57Zk2hKBdRp8P3eXoowPKikl
+[21:24:46]   SNAPSHOT facebook_PhStockExchange_2026-10-21T21-24.json  8 post(s), 7 comment(s)
+[21:24:46]   ok: 8 post(s), 7 comment(s)
+[21:24:52] [43/47] facebook/OfficialPDIC: topping up (4 of 8 posts)
+[21:24:52] [43/47] facebook/OfficialPDIC  https://www.facebook.com/OfficialPDIC
+[21:27:49]        0 comments  /www.facebook.com/photo/?fbid=1439974734944071
+[21:27:49]        2 comments  //www.facebook.com/photo/?fbid=183767193898171
+[21:27:49]        1 comments  /www.facebook.com/photo/?fbid=1443740074567537
+[21:27:49]        0 comments  KJAMsnV3MjG4Fw3HN1JbEeBVtFYLcwSLjVo8dwBfFd9GYl
+[21:27:49]   SNAPSHOT facebook_OfficialPDIC_2026-10-21T21-27.json  4 post(s), 3 comment(s)
+[21:27:49]   ok: 4 post(s), 3 comment(s)
+[21:27:55] [44/47] facebook/sugarregulatoryadmin: the last attempt was empty, retrying
+[21:27:55] [44/47] facebook/sugarregulatoryadmin  https://www.facebook.com/sugarregulatoryadmin
+[21:29:28]        0 comments  //www.facebook.com/photo/?fbid=637909582553167
+[21:29:28]        0 comments  //www.facebook.com/photo/?fbid=107506255593505
+[21:29:28]   SNAPSHOT facebook_sugarregulatoryadmin_2026-10-21T21-29.json  2 post(s), 0 comment(s)
+[21:29:28]   ok: 2 post(s), 0 comment(s)
+[21:29:34] [45/47] facebook/ITDIDOSTUpdates: the last attempt was empty, retrying
+[21:29:34] [45/47] facebook/ITDIDOSTUpdates  https://www.facebook.com/ITDIDOSTUpdates
+[21:32:58]        0 comments  /www.facebook.com/photo/?fbid=1415857407238253
+[21:32:58]        0 comments  aZpms6Nf44LzBB8j2FBrHpjXJLLTRbpzhJ8grzZKc6JbTl
+[21:32:58]        0 comments  J5LP9bKfG8Yn7puMs8jvDzLuYJ25qjaHTVzDFt53YrqGHl
+[21:32:58]        0 comments  /www.facebook.com/photo/?fbid=1542007544623238
+[21:32:58]   SNAPSHOT facebook_ITDIDOSTUpdates_2026-10-21T21-32.json  4 post(s), 0 comment(s)
+[21:32:58]   ok: 4 post(s), 0 comment(s)
+[21:33:04] [46/47] facebook/pnacph: topping up (3 of 8 posts)
+[21:33:04] [46/47] facebook/pnacph  https://www.facebook.com/pnacph
+[21:36:04]        0 comments  //www.facebook.com/photo/?fbid=230517219253630
+[21:36:04]        0 comments  //www.facebook.com/photo/?fbid=163231089315577
+[21:36:04]        4 comments  /www.facebook.com/photo/?fbid=1427452396226767
+[21:36:04]        0 comments  NNG1MPEY9i91Kdf3UuM4z1GGBQEaRqR9bAzevtGzHovNkl
+[21:36:04]   SNAPSHOT facebook_pnacph_2026-10-21T21-36.json  4 post(s), 4 comment(s)
+[21:36:04]   ok: 4 post(s), 4 comment(s)
+[21:36:10] [47/47] facebook/civildefensePH  https://www.facebook.com/civildefensePH
+[21:41:26]        0 comments  /www.facebook.com/photo/?fbid=1636206718549093
+[21:41:26]        0 comments  kCrxdckiWWeMThoo6GenPAj5A9Awsx5sbN1RzRaLhDvkFl
+[21:41:26]        0 comments  https://www.facebook.com/reel/2338814763537101
+[21:41:26]        0 comments  /www.facebook.com/photo/?fbid=1643725557797209
+[21:41:26]        0 comments  /www.facebook.com/photo/?fbid=1643725747797190
+[21:41:26]        0 comments  /www.facebook.com/photo/?fbid=1643725737797191
+[21:41:26]        0 comments  /www.facebook.com/photo/?fbid=1643725887797176
+[21:41:26]        0 comments  /www.facebook.com/photo/?fbid=1643725901130508
+[21:41:26]   SNAPSHOT facebook_civildefensePH_2026-10-21T21-41.json  8 post(s), 0 comment(s)
+[21:41:26]   ok: 8 post(s), 0 comment(s)
+[21:41:32] === facebook worker finished: 24 account(s) collected ===
+[01:41:17] === worker: facebook on tab 0, 8 posts, mode=recent ===
+[01:41:18] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.youtube.com/watch?v=wktSoSLtVVg
+[01:41:18] 47 registered facebook accounts
+[01:41:18] [1/47] facebook/dost_pagasa: topping up (6 of 8 posts)
+[01:41:18] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[01:43:34]        5 comments  /www.facebook.com/photo/?fbid=1404302578408058
+[01:43:34]        0 comments  BuKnBFjMH3QY6m14xZ3oibhq4ghF8Ac4GBaKmZ3h82CT9l
+[01:43:34]   SNAPSHOT facebook_dost_pagasa_2026-10-22T01-43.json  2 post(s), 5 comment(s)
+[01:43:34]   ok: 2 post(s), 5 comment(s)
+[01:43:40] [2/47] facebook/doh: already collected (12 post(s)), skipping
+[01:43:40] [3/47] facebook/dswd: already collected (8 post(s)), skipping
+[01:43:40] [4/47] facebook/deped: already collected (12 post(s)), skipping
+[01:43:40] [5/47] facebook/dpwh: already collected (12 post(s)), skipping
+[01:43:40] [6/47] facebook/dilg: already collected (12 post(s)), skipping
+[01:43:40] [7/47] facebook/ndrrmc: already collected (8 post(s)), skipping
+[01:43:40] [8/47] facebook/bfp: already collected (8 post(s)), skipping
+[01:43:40] [9/47] facebook/dti: already collected (8 post(s)), skipping
+[01:43:41] [10/47] facebook/denr: topping up (6 of 8 posts)
+[01:43:41] [10/47] facebook/denr  https://www.facebook.com/DENROfficial
+[01:45:10]        0 comments  /www.facebook.com/photo/?fbid=1560227992797622
+[01:45:10]   SNAPSHOT facebook_denr_2026-10-22T01-45.json  1 post(s), 0 comment(s)
+[01:45:10]   ok: 1 post(s), 0 comment(s)
+[01:45:16] [11/47] facebook/dacentralphilippines: already collected (8 post(s)), skipping
+[01:45:16] [12/47] facebook/DOFPH: already collected (8 post(s)), skipping
+[01:45:16] [13/47] facebook/DOSTph: topping up (5 of 8 posts)
+[01:45:16] [13/47] facebook/DOSTph  https://www.facebook.com/DOSTph
+[01:47:16]        0 comments  /www.facebook.com/photo/?fbid=1347901590851704
+[01:47:16]        0 comments  4sPr1u9LfKKBWBL8V1EvjHaFX68h9nMEd7473fKU9RKiLl
+[01:47:16]   SNAPSHOT facebook_DOSTph_2026-10-22T01-47.json  2 post(s), 0 comment(s)
+[01:47:16]   ok: 2 post(s), 0 comment(s)
+[01:47:22] [14/47] facebook/OfficeOfTheVicePresidentPH: already collected (8 post(s)), skipping
+[01:47:22] [15/47] facebook/birgovph: already collected (8 post(s)), skipping
+[01:47:22] [16/47] facebook/officialbureauofimmigration: topping up (7 of 8 posts)
+[01:47:22] [16/47] facebook/officialbureauofimmigration  https://www.facebook.com/officialbureauofimmigration
+[01:51:39]        1 comments  /www.facebook.com/photo/?fbid=1482079407293160
+[01:51:39]        4 comments  /www.facebook.com/photo/?fbid=1048536257314146
+[01:51:39]        0 comments  /www.facebook.com/photo/?fbid=1558998926267874
+[01:51:39]        0 comments  /www.facebook.com/photo/?fbid=1558998976267869
+[01:51:39]        0 comments  /www.facebook.com/photo/?fbid=1558999029601197
+[01:51:39]        0 comments  /www.facebook.com/photo/?fbid=1558999089601191
+[01:51:39]        0 comments  /www.facebook.com/photo/?fbid=1558999159601184
+[01:51:39]        6 comments  /www.facebook.com/photo/?fbid=1730434445798471
+[01:51:39]   SNAPSHOT facebook_officialbureauofimmigration_2026-10-22T01-51.json  8 post(s), 11 comment(s)
+[01:51:39]   ok: 8 post(s), 11 comment(s)
+[01:51:45] [17/47] facebook/BangkoSentralngPilipinas: already collected (8 post(s)), skipping
+[01:51:45] [18/47] facebook/PhilHealthofficial: already collected (8 post(s)), skipping
+[01:51:45] [19/47] facebook/NationalBureauofInvestigationOfficial: topping up (1 of 8 posts)
+[01:51:45] [19/47] facebook/NationalBureauofInvestigationOfficial  https://www.facebook.com/NationalBureauofInvestigationOfficial
+[01:53:06]        0 comments  9xFPwJ7iyLoib3LquHAJSau234oYWwJPwxECaohjbtH3cl
+[01:53:06]   SNAPSHOT facebook_NationalBureauofInvestigationOfficial_2026-10-22T01-53.json  1 post(s), 0 comment(s)
+[01:53:06]   ok: 1 post(s), 0 comment(s)
+[01:53:12] [20/47] facebook/civilservicegovph: already collected (8 post(s)), skipping
+[01:53:12] [21/47] facebook/fdagovph: topping up (5 of 8 posts)
+[01:53:12] [21/47] facebook/fdagovph  https://web.facebook.com/fdagovph
+[01:57:07]        7 comments  /www.facebook.com/photo/?fbid=1115933137244757
+[01:57:07]        6 comments  //www.facebook.com/photo/?fbid=226796752825071
+[01:57:07]        0 comments  v57BuPZiC5mEnzrNgXqqeLbMf4H7cqiJPVdUvkt6XxkB1l
+[01:57:07]        0 comments  nKdXTDLSXd6His2LsgJ2VA6sWtA6F4ArYLXTayaQhJUBhl
+[01:57:07]        0 comments  /www.facebook.com/photo/?fbid=1580642584107141
+[01:57:07]   SNAPSHOT facebook_fdagovph_2026-10-22T01-57.json  5 post(s), 13 comment(s)
+[01:57:07]   ok: 5 post(s), 13 comment(s)
+[01:57:13] [22/47] facebook/nationalyouthcommission: topping up (3 of 8 posts)
+[01:57:13] [22/47] facebook/nationalyouthcommission  https://www.facebook.com/nationalyouthcommission
+[01:59:40]        1 comments  /www.facebook.com/photo/?fbid=1414040950757386
+[01:59:40]        3 comments  /www.facebook.com/photo/?fbid=1120444720117012
+[01:59:40]        0 comments  hZTA1TauT89wZ4EQahA3MLos6xrPCuWTt8AzxJ2TjT49hl
+[01:59:40]   SNAPSHOT facebook_nationalyouthcommission_2026-10-22T01-59.json  3 post(s), 4 comment(s)
+[01:59:40]   ok: 3 post(s), 4 comment(s)
+[01:59:46] [23/47] facebook/CCCPhl: topping up (7 of 8 posts)
+[01:59:46] [23/47] facebook/CCCPhl  https://www.facebook.com/CCCPhl
+[02:05:14]        0 comments  /www.facebook.com/photo/?fbid=1420321306861703
+[02:05:14]        2 comments  //www.facebook.com/photo/?fbid=332340552326456
+[02:05:14]        0 comments  /www.facebook.com/photo/?fbid=1438089765084857
+[02:05:14]        0 comments  /www.facebook.com/photo/?fbid=1438089775084856
+[02:05:14]        0 comments  /www.facebook.com/photo/?fbid=1438089691751531
+[02:05:14]        0 comments  /www.facebook.com/photo/?fbid=1438089681751532
+[02:05:14]        0 comments  /www.facebook.com/photo/?fbid=1438089708418196
+[02:05:14]        6 comments  /www.facebook.com/photo/?fbid=1730434445798471
+[02:05:14]   SNAPSHOT facebook_CCCPhl_2026-10-22T02-05.json  8 post(s), 8 comment(s)
+[02:05:14]   ok: 8 post(s), 8 comment(s)
+[02:05:20] [24/47] facebook/boiphilippines: topping up (6 of 8 posts)
+[02:05:20] [24/47] facebook/boiphilippines  https://www.facebook.com/boiphilippines
+[02:09:56]        3 comments  /www.facebook.com/photo/?fbid=1558589669635959
+[02:09:56]        0 comments  /www.facebook.com/photo/?fbid=1592986359529623
+[02:09:56]        0 comments  /www.facebook.com/photo/?fbid=1592986519529607
+[02:09:56]        0 comments  /www.facebook.com/photo/?fbid=1592986479529611
+[02:09:56]        0 comments  /www.facebook.com/photo/?fbid=1592986402862952
+[02:09:56]        0 comments  /www.facebook.com/photo/?fbid=1592986509529608
+[02:09:56]        6 comments  /www.facebook.com/photo/?fbid=1407917928167847
+[02:09:56]        0 comments  64fyiqMiLvscXNwJYswBgCVWjkjcppX3bofEcHTbdx7eal
+[02:09:56]   SNAPSHOT facebook_boiphilippines_2026-10-22T02-09.json  8 post(s), 9 comment(s)
+[02:09:56]   ok: 8 post(s), 9 comment(s)
+[02:10:02] [25/47] facebook/pagcor.ph: topping up (7 of 8 posts)
+[02:10:02] [25/47] facebook/pagcor.ph  https://www.facebook.com/pagcor.ph
+[02:14:10]        6 comments  //www.facebook.com/photo/?fbid=659312592903907
+[02:14:10]        6 comments  //www.facebook.com/photo/?fbid=659312432903923
+[02:14:10]        5 comments  /www.facebook.com/photo/?fbid=1558514142983743
+[02:14:10]        5 comments  /www.facebook.com/photo/?fbid=1558514436317047
+[02:14:10]        5 comments  /www.facebook.com/photo/?fbid=1558514452983712
+[02:14:10]        5 comments  /www.facebook.com/photo/?fbid=1558514402983717
+[02:14:10]        0 comments  tzpt5F8yvS2M7bcEAwfrA2f3aydmvVfrca4fXUuv8h1Chl
+[02:14:10]   SNAPSHOT facebook_pagcor.ph_2026-10-22T02-14.json  7 post(s), 32 comment(s)
+[02:14:10]   ok: 7 post(s), 32 comment(s)
+[02:14:16] [26/47] facebook/pidsgovph: topping up (4 of 8 posts)
+[02:14:16] [26/47] facebook/pidsgovph  https://www.facebook.com/pidsgovph
+[02:18:17]        1 comments  /www.facebook.com/photo/?fbid=1255348986629102
+[02:18:17]        0 comments  4p2CkiPMvBKhqewiAtpSTnQ1EbzyiaWSDnzBqZvqahdUul
+[02:18:17]        0 comments  eFEW28ZbNY2zgaKgvkiAWXpcQgUFLyfGKJgsRqGXqUZtsl
+[02:18:17]        0 comments  https://www.facebook.com/reel/1861578188174924
+[02:18:17]   SNAPSHOT facebook_pidsgovph_2026-10-22T02-18.json  4 post(s), 1 comment(s)
+[02:18:17]   ok: 4 post(s), 1 comment(s)
+[02:18:23] [27/47] facebook/portsauthorityph: the last attempt was empty, retrying
+[02:18:23] [27/47] facebook/portsauthorityph  https://www.facebook.com/portsauthorityph
+[02:22:57]        0 comments  /www.facebook.com/photo/?fbid=1344173567906532
+[02:22:57]        0 comments  https://www.facebook.com/reel/2383636805774817
+[02:22:57]        0 comments  NsGNgLPUFnur5a2iHCn1Lx7cJGzLQc6HsmNC4TYiYtKzFl
+[02:22:57]        1 comments  /www.facebook.com/photo/?fbid=1434592908864597
+[02:22:57]        0 comments  quDhCNdEFohf4M2Be9gKAaisp79NTVeBnEgxkqquTA35Rl
+[02:22:57]   SNAPSHOT facebook_portsauthorityph_2026-10-22T02-22.json  5 post(s), 1 comment(s)
+[02:22:57]   ok: 5 post(s), 1 comment(s)
+[02:23:03] [28/47] facebook/dostpchrd: topping up (5 of 8 posts)
+[02:23:03] [28/47] facebook/dostpchrd  https://www.facebook.com/dostpchrd
+[02:28:01]        2 comments  //www.facebook.com/photo/?fbid=855251583308622
+[02:28:01]        0 comments  /www.facebook.com/photo/?fbid=1573207588179681
+[02:28:01]        0 comments  /www.facebook.com/photo/?fbid=1573207584846348
+[02:28:01]       11 comments  /www.facebook.com/photo/?fbid=1433374898984282
+[02:28:01]       11 comments  /www.facebook.com/photo/?fbid=1433376198984152
+[02:28:01]       11 comments  /www.facebook.com/photo/?fbid=1433376045650834
+[02:28:01]       11 comments  /www.facebook.com/photo/?fbid=1433375838984188
+[02:28:01]       11 comments  /www.facebook.com/photo/?fbid=1433375402317565
+[02:28:01]   SNAPSHOT facebook_dostpchrd_2026-10-22T02-28.json  8 post(s), 57 comment(s)
+[02:28:01]   ok: 8 post(s), 57 comment(s)
+[02:28:07] [29/47] facebook/DOSTASTI: topping up (5 of 8 posts)
+[02:28:07] [29/47] facebook/DOSTASTI  https://www.facebook.com/DOSTASTI
+[02:32:22]        1 comments  /www.facebook.com/photo/?fbid=1282962737201232
+[02:32:22]        0 comments  w9WbYgo3GFhLB4hn7f8cQTyuAc7D2edAMydAXuAzAEtqUl
+[02:32:22]        0 comments  ebvT83K1KuX9MzjDJY2jQMGBGW74ab3cJJ5oaW6pVLPsrl
+[02:32:22]        0 comments  EWSpubvzHpNCnE5Hsskt9nU5aLw1aqnGamJxoMbudeGp2l
+[02:32:22]        0 comments  /www.facebook.com/photo/?fbid=1152395807361821
+[02:32:22]   SNAPSHOT facebook_DOSTASTI_2026-10-22T02-32.json  5 post(s), 1 comment(s)
+[02:32:22]   ok: 5 post(s), 1 comment(s)
+[02:32:28] [30/47] facebook/PHIVOLCS: already collected (8 post(s)), skipping
+[02:32:29] [31/47] facebook/nationalmuseumofthephilippines: topping up (5 of 8 posts)
+[02:32:29] [31/47] facebook/nationalmuseumofthephilippines  https://www.facebook.com/nationalmuseumofthephilippines
+[02:36:26]        0 comments  /www.facebook.com/photo/?fbid=1542689981219609
+[02:36:26]        6 comments  //www.facebook.com/photo/?fbid=589691726519444
+[02:36:26]        0 comments  bHYCKDViTwr3VuhAEBPVFH1H9ARgj5EHLSrrXBVnihpTfl
+[02:36:26]        0 comments  McJuxwSw5MFKnD3NgCguyZ4aucCx9wQ6yJncyCavG5Wpyl
+[02:36:26]        0 comments  /www.facebook.com/photo/?fbid=1562776539210953
+[02:36:26]   SNAPSHOT facebook_nationalmuseumofthephilippines_2026-10-22T02-36.json  5 post(s), 6 comment(s)
+[02:36:26]   ok: 5 post(s), 6 comment(s)
+[02:36:32] [32/47] facebook/professionalregulationcommission: topping up (7 of 8 posts)
+[02:36:32] [32/47] facebook/professionalregulationcommission  https://www.facebook.com/professionalregulationcommission
+[02:37:44]     capture failed: orca eval: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[02:37:44]   error: no posts captured
+[02:37:50] [33/47] facebook/pcsoofficialsocialmedia: already collected (8 post(s)), skipping
+[02:37:50] [34/47] facebook/nsc.gov.ph: topping up (4 of 8 posts)
+[02:37:50] [34/47] facebook/nsc.gov.ph  https://www.facebook.com/nsc.gov.ph
+[02:42:16]        1 comments  /www.facebook.com/photo/?fbid=1431402842365143
+[02:42:16]       11 comments  //www.facebook.com/photo/?fbid=675996007905834
+[02:42:16]        7 comments  /www.facebook.com/photo/?fbid=1584664097039016
+[02:42:16]        0 comments  3a5h25ccdCcJ7H9U75wzPK8VmJHzaaCTf5AS7g4BphHbjl
+[02:42:16]   SNAPSHOT facebook_nsc.gov.ph_2026-10-22T02-42.json  4 post(s), 19 comment(s)
+[02:42:16]   ok: 4 post(s), 19 comment(s)
+[02:42:22] [35/47] facebook/PhilippineNavy: already collected (8 post(s)), skipping
+[02:42:22] [36/47] facebook/piopaf: already collected (8 post(s)), skipping
+[02:42:22] [37/47] facebook/DDBgov: already collected (8 post(s)), skipping
+[02:42:22] [38/47] facebook/DOST.FNRI: already collected (8 post(s)), skipping
+[02:42:22] [39/47] facebook/OfficialLRTA: topping up (6 of 8 posts)
+[02:42:22] [39/47] facebook/OfficialLRTA  https://www.facebook.com/OfficialLRTA
+[02:47:58]        2 comments  //www.facebook.com/photo/?fbid=881049070719762
+[02:47:58]        6 comments  //www.facebook.com/photo/?fbid=881048747386461
+[02:47:58]        0 comments  https://www.facebook.com/reel/1694674664965935
+[02:47:58]        0 comments  jA7a31oY7CGZFPjbkahXp6hHNyMrcY8Bd92M2qqLeVc3gl
+[02:47:58]        6 comments  /www.facebook.com/photo/?fbid=1550181703806492
+[02:47:58]        0 comments  C8wVW1zKyY5pEFg86XDVm8G48fWBNSkN11pGpznQrwM5Cl
+[02:47:58]   SNAPSHOT facebook_OfficialLRTA_2026-10-22T02-47.json  6 post(s), 14 comment(s)
+[02:47:58]   ok: 6 post(s), 14 comment(s)
+[02:48:04] [40/47] facebook/nncofficial: topping up (3 of 8 posts)
+[02:48:04] [40/47] facebook/nncofficial  https://www.facebook.com/nncofficial
+[02:50:39]        3 comments  /www.facebook.com/photo/?fbid=1049437740546977
+[02:50:39]        6 comments  /www.facebook.com/photo/?fbid=1489241496566597
+[02:50:39]   SNAPSHOT facebook_nncofficial_2026-10-22T02-50.json  2 post(s), 9 comment(s)
+[02:50:39]   ok: 2 post(s), 9 comment(s)
+[02:50:45] [41/47] facebook/pnagovph: topping up (2 of 8 posts)
+[02:50:45] [41/47] facebook/pnagovph  https://www.facebook.com/pnagovph
+[02:52:19]        3 comments  /www.facebook.com/photo/?fbid=1095964642579989
+[02:52:19]        0 comments  /www.facebook.com/photo/?fbid=1534543705388745
+[02:52:19]   SNAPSHOT facebook_pnagovph_2026-10-22T02-52.json  2 post(s), 3 comment(s)
+[02:52:19]   ok: 2 post(s), 3 comment(s)
+[02:52:26] [42/47] facebook/PhStockExchange: already collected (8 post(s)), skipping
+[02:52:26] [43/47] facebook/OfficialPDIC: topping up (4 of 8 posts)
+[02:52:26] [43/47] facebook/OfficialPDIC  https://www.facebook.com/OfficialPDIC
+[02:56:17]        0 comments  /www.facebook.com/photo/?fbid=1439974734944071
+[02:56:17]        2 comments  //www.facebook.com/photo/?fbid=183767193898171
+[02:56:17]        1 comments  /www.facebook.com/photo/?fbid=1443740074567537
+[02:56:17]        0 comments  KJAMsnV3MjG4Fw3HN1JbEeBVtFYLcwSLjVo8dwBfFd9GYl
+[02:56:17]   SNAPSHOT facebook_OfficialPDIC_2026-10-22T02-56.json  4 post(s), 3 comment(s)
+[02:56:17]   ok: 4 post(s), 3 comment(s)
+[02:56:23] [44/47] facebook/sugarregulatoryadmin: the last attempt was empty, retrying
+[02:56:23] [44/47] facebook/sugarregulatoryadmin  https://www.facebook.com/sugarregulatoryadmin
+[02:57:57]        0 comments  //www.facebook.com/photo/?fbid=637909582553167
+[02:57:57]        0 comments  //www.facebook.com/photo/?fbid=107506255593505
+[02:57:57]   SNAPSHOT facebook_sugarregulatoryadmin_2026-10-22T02-57.json  2 post(s), 0 comment(s)
+[02:57:57]   ok: 2 post(s), 0 comment(s)
+[02:58:03] [45/47] facebook/ITDIDOSTUpdates: the last attempt was empty, retrying
+[02:58:03] [45/47] facebook/ITDIDOSTUpdates  https://www.facebook.com/ITDIDOSTUpdates
+[03:01:25]        0 comments  /www.facebook.com/photo/?fbid=1415857407238253
+[03:01:25]        0 comments  JXmYFkPvaAeuhsdmdwmDX5z5rgKvgo1nREwhVKoX5rAxyl
+[03:01:25]        0 comments  J5LP9bKfG8Yn7puMs8jvDzLuYJ25qjaHTVzDFt53YrqGHl
+[03:01:25]        0 comments  /www.facebook.com/photo/?fbid=1542007544623238
+[03:01:25]   SNAPSHOT facebook_ITDIDOSTUpdates_2026-10-22T03-01.json  4 post(s), 0 comment(s)
+[03:01:25]   ok: 4 post(s), 0 comment(s)
+[03:01:31] [46/47] facebook/pnacph: topping up (4 of 8 posts)
+[03:01:31] [46/47] facebook/pnacph  https://www.facebook.com/pnacph
+[03:04:35]        0 comments  //www.facebook.com/photo/?fbid=230517219253630
+[03:04:35]        0 comments  //www.facebook.com/photo/?fbid=163231089315577
+[03:04:35]        4 comments  /www.facebook.com/photo/?fbid=1427452396226767
+[03:04:35]        0 comments  NNG1MPEY9i91Kdf3UuM4z1GGBQEaRqR9bAzevtGzHovNkl
+[03:04:35]   SNAPSHOT facebook_pnacph_2026-10-22T03-04.json  4 post(s), 4 comment(s)
+[03:04:35]   ok: 4 post(s), 4 comment(s)
+[03:04:41] [47/47] facebook/civildefensePH: the last attempt was empty, retrying
+[03:04:41] [47/47] facebook/civildefensePH  https://www.facebook.com/civildefensePH
+[03:07:51]        0 comments  /www.facebook.com/photo/?fbid=1636206718549093
+[03:07:51]        0 comments  kCrxdckiWWeMThoo6GenPAj5A9Awsx5sbN1RzRaLhDvkFl
+[03:07:51]        0 comments  https://www.facebook.com/reel/2338814763537101
+[03:07:51]   SNAPSHOT facebook_civildefensePH_2026-10-22T03-07.json  3 post(s), 0 comment(s)
+[03:07:51]   ok: 3 post(s), 0 comment(s)
+[03:07:57] === facebook worker finished: 24 account(s) collected ===

@@ -73,14 +73,15 @@ def main(argv=None) -> int:
             source["adjudicated"] += 1
 
     # the language passes over the rows the engine decided on its own
-    for f in sorted(glob.glob(os.path.join(ROOT, "data", "interim", "lang_auto",
-                                           "out_*.jsonl"))):
-        for d in read_jsonl(f):
-            cid = d.get("comment_id")
-            lang = d.get("language")
-            if cid and lang in VALID and cid not in labels:
-                labels[cid] = lang
-                source["language pass"] += 1
+    for pattern in ("lang_auto", "lang_auto2"):
+        for f in sorted(glob.glob(os.path.join(ROOT, "data", "interim", pattern,
+                                               "out_*.jsonl"))):
+            for d in read_jsonl(f):
+                cid = d.get("comment_id")
+                lang = d.get("language")
+                if cid and lang in VALID and cid not in labels:
+                    labels[cid] = lang
+                    source["language pass"] += 1
 
     # the pool's own rows, so the artifact covers everything that is shipped
     pool_ids = set()

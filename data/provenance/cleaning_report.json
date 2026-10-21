@@ -1,12 +1,12 @@
 {
-  "n_loaded": 2468,
-  "n_kept": 1682,
-  "n_excluded": 786,
+  "n_loaded": 2959,
+  "n_kept": 1737,
+  "n_excluded": 1222,
   "excluded_by_reason": {
-    "X_OFFICIAL": 37,
-    "X_LANG": 3,
-    "X_DUP_EXACT": 661,
-    "X_DUP_NEAR": 5,
-    "X_SPAM": 80
+    "X_OFFICIAL": 48,
+    "X_LANG": 9,
+    "X_DUP_EXACT": 1055,
+    "X_DUP_NEAR": 23,
+    "X_SPAM": 87
   }
 }

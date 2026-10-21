@@ -112,7 +112,7 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 
 | File | Grain | What it is |
 |---|---|---|
-| `government_agencies.csv` | one row per (agency, platform) | **The canonical registry.** Pre-filled: 32 Facebook accounts, 10 YouTube channels, 5 X accounts - 47 rows, 38 policy domains, official accounts confirmed against each agency's own website. |
+| `government_agencies.csv` | one row per (agency, platform) | **The canonical registry.** Pre-filled: 47 Facebook accounts, 10 YouTube channels, 5 X accounts - 62 rows|
 | `collection_log.csv` | one row per collection run | Audit trail: tool, user agent, delay, counts, errors. |
 
 ### `src/` and `tools/`
