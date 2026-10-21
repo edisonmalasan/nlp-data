@@ -183,6 +183,26 @@ def main(argv=None) -> int:
 
     suffix = "" if args.mode in ("recent", "") else f"_{args.mode}"
     log = WorkerLog(os.path.join(LOG_DIR, f"{args.platform}{suffix}.log"))
+    heartbeat = os.path.join(PROGRESS_DIR, f"heartbeat_{args.platform}{suffix}.json")
+
+    def beat(state, **extra):
+        """The worker's state, written outside the log.
+
+        A worker can die without a word - the browser helper can take the
+        process down with it - and then the log simply stops. The heartbeat
+        is written every time the state changes, so a dead worker is
+        visible instead of looking like a slow one.
+        """
+        try:
+            with io.open(heartbeat, "w", encoding="utf-8", newline="") as fh:
+                json.dump({"platform": args.platform, "tab": args.tab,
+                           "mode": args.mode, "state": state,
+                           "updated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                           **extra}, fh, indent=2, ensure_ascii=False)
+        except Exception:
+            pass
+
+    beat("starting")
     log(f"=== worker: {args.platform} on tab {args.tab}, {args.posts} posts, "
         f"mode={args.mode} ===")
 
@@ -219,12 +239,15 @@ def main(argv=None) -> int:
 
             log(f"[{i}/{len(registry)}] {key}  {row.get('official_account_url', '')}")
             tee = Tee(log)
+            beat("collecting", source_page=row["source_page"])
             try:
                 # the collector prints as it goes; capture that into the log
                 with contextlib.redirect_stdout(tee):
                     n_posts, n_comments, err = run_all.run_one(
                         page, row, args.posts, notes, args.mode)
-            except Exception as e:
+            except BaseException as e:
+                # a hard exit - the browser helper can take the process down
+                # with it - must not stop the rest of the run
                 n_posts, n_comments, err = 0, 0, f"{type(e).__name__}: {e}"
                 log(f"  FAILED: {err}")
                 traceback.print_exc()
@@ -244,9 +267,12 @@ def main(argv=None) -> int:
             else:
                 done += 1
                 log(f"  ok: {n_posts} post(s), {n_comments} comment(s)")
+            beat("collected" if not err else "failed",
+                 source_page=row["source_page"], accounts_done=done)
             time.sleep(args.pause)
 
         log(f"=== {args.platform} worker finished: {done} account(s) collected ===")
+        beat("finished", accounts_done=done)
         return 0
     except SystemExit:
         raise

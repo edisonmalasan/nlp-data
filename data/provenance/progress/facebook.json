@@ -12,22 +12,22 @@
     "updated_at": "2026-10-21T10:32:04"
   },
   "facebook/bfp": {
-    "posts": 4,
-    "comments": 12,
-    "last_error": "no posts captured",
-    "updated_at": "2026-10-21T10:57:36"
+    "posts": 12,
+    "comments": 25,
+    "last_error": "",
+    "updated_at": "2026-10-21T14:18:45"
   },
   "facebook/dti": {
-    "posts": 3,
-    "comments": 0,
-    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
-    "updated_at": "2026-10-21T10:58:21"
-  },
-  "facebook/ndrrmc": {
-    "posts": 8,
+    "posts": 11,
     "comments": 0,
     "last_error": "",
-    "updated_at": "2026-10-21T10:51:05"
+    "updated_at": "2026-10-21T14:24:40"
+  },
+  "facebook/ndrrmc": {
+    "posts": 16,
+    "comments": 7,
+    "last_error": "",
+    "updated_at": "2026-10-21T14:12:59"
   },
   "facebook/doh": {
     "posts": 8,
@@ -54,27 +54,63 @@
     "updated_at": "2026-10-21T10:45:55"
   },
   "facebook/denr": {
-    "posts": 0,
+    "posts": 6,
     "comments": 0,
-    "last_error": "no posts captured",
-    "updated_at": "2026-10-21T11:08:27"
+    "last_error": "",
+    "updated_at": "2026-10-21T14:28:14"
   },
   "facebook/dacentralphilippines": {
-    "posts": 0,
-    "comments": 0,
-    "last_error": "no posts captured",
-    "updated_at": "2026-10-21T11:13:57"
+    "posts": 8,
+    "comments": 53,
+    "last_error": "",
+    "updated_at": "2026-10-21T14:35:02"
   },
   "facebook/DOFPH": {
-    "posts": 0,
-    "comments": 0,
-    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
-    "updated_at": "2026-10-21T09:07:41"
+    "posts": 8,
+    "comments": 10,
+    "last_error": "",
+    "updated_at": "2026-10-21T14:39:33"
   },
   "facebook/DOSTph": {
-    "posts": 0,
+    "posts": 5,
+    "comments": 12,
+    "last_error": "",
+    "updated_at": "2026-10-21T14:43:38"
+  },
+  "facebook/OfficeOfTheVicePresidentPH": {
+    "posts": 8,
+    "comments": 41,
+    "last_error": "",
+    "updated_at": "2026-10-21T14:49:30"
+  },
+  "facebook/birgovph": {
+    "posts": 3,
     "comments": 0,
-    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
-    "updated_at": "2026-10-21T09:08:16"
+    "last_error": "",
+    "updated_at": "2026-10-21T14:52:26"
+  },
+  "facebook/officialbureauofimmigration": {
+    "posts": 2,
+    "comments": 5,
+    "last_error": "",
+    "updated_at": "2026-10-21T14:54:04"
+  },
+  "facebook/BangkoSentralngPilipinas": {
+    "posts": 4,
+    "comments": 4,
+    "last_error": "",
+    "updated_at": "2026-10-21T14:57:31"
+  },
+  "facebook/PhilHealthofficial": {
+    "posts": 8,
+    "comments": 50,
+    "last_error": "",
+    "updated_at": "2026-10-21T15:04:26"
+  },
+  "facebook/NationalBureauofInvestigationOfficial": {
+    "posts": 1,
+    "comments": 0,
+    "last_error": "",
+    "updated_at": "2026-10-21T15:05:53"
   }
 }
