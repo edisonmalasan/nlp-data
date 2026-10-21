@@ -4595,3 +4595,9 @@
 [08:57:56] 32 registered facebook accounts
 [08:57:56] [1/32] facebook/dost_pagasa: topping up (3 of 20 posts)
 [08:57:56] [1/32] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[08:59:39]     capture failed: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[08:59:39]   error: no posts captured
+[08:59:44] [2/32] facebook/doh: topping up (12 of 20 posts)
+[08:59:44] [2/32] facebook/doh  https://www.facebook.com/DOHgovPH
+[09:00:18]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[09:00:19]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
