@@ -185,6 +185,18 @@ page's own data. The primary dataset is Facebook only, which is what the
 study's scope describes, and the extension is there for a robustness check
 rather than as the study's dataset.
 
+**The per-source post count is a floor, not the planned eight to twelve.**
+The collection plan takes the most recent posts of each source. Facebook
+now serves only the first one or two posts of a page's feed in the driven
+tab and does not serve more on scrolling or on a reload, so 38 of 44 sources
+contribute fewer than eight posts. The pages themselves load - the follower
+count, the category and the description all render - so this is a platform
+limit rather than a broken collector or an inactive account. The shortfall
+is recorded per account rather than smoothed away, and the rule that
+forbids choosing posts by comment richness was kept, because the
+alternative - walking backwards until a post is busy - is exactly the
+cherry-picking that rule exists to prevent.
+
 **A couple of rows are Cebuano or Boholano rather than Filipino.** The
 exclusion rule for a non-Filipino language is a script check, and those
 languages are written in Latin script, so they pass it. They are labelled

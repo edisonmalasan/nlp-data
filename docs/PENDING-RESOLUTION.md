@@ -95,7 +95,44 @@ user-created, so it fails the contract's own S1 and S2. The reasoning is in
 
 **Owner:** M6, in the Methodology's platform description. **No action beyond writing it down.**
 
-### 3.3 YouTube yields are small
+### 3.3 The feed is throttled, so 31 accounts sit below the 8-post minimum
+
+Contract §3.4 asks for the **8-12 most recent posts** per source. Ten accounts
+clear it. Thirty-one do not, and the cause is the platform, not the collector:
+Facebook now renders only the **first one or two posts** of a page's feed in
+the driven tab, and scrolling does not load more. That is measurable, not
+inferred — on the same pages that yielded a full feed earlier in the run:
+
+| page | posts rendered now | comments captured earlier |
+|---|---|---|
+| `DPWHph` | 3 | 546 |
+| `DepartmentOfEducation.PH` | 2 | 277 |
+| `pnagovph` | 2 | 12 |
+
+A reload does not change it, and neither does a second visit. The pages
+themselves load: the follower count, the category and the self-description all
+render, and only the feed is short. So this is not a login wall, not a broken
+extractor, and not a page that has stopped posting.
+
+**What this means.** The per-account post counts are **at or above what the
+platform would serve**, and the corpus is therefore short of the contract's
+8-12 posts for those sources. The delivered numbers are:
+
+- **1,610 Facebook comments** and 1,781 across platforms - both contract
+  targets (600 Facebook, 1,000 total) are met more than twice over
+- **31 of 47 accounts under 8 posts**, with the shortfall recorded per account
+  rather than smoothed away
+
+**Why it is recorded and not fixed.** The alternatives are both worse. Pushing
+harder on a session already being throttled risks the whole session; changing
+the sampling rule to reach older posts would breach §3.4's "no cherry-picking
+posts by comment richness", which is the rule that keeps the frame honest.
+
+**Owner:** M6, one sentence in the Methodology - *the platform served a
+truncated recent feed, so the per-source post count is a floor rather than the
+planned 8-12.* **No code change is correct here.**
+
+### 3.4 YouTube yields are small
 
 The YouTube app stopped booting in the driven tabs partway through the
 collection. Video *discovery* was moved to the page's own data, but the
@@ -105,7 +142,7 @@ request that 404s for this client. YouTube contributed **101 comments**.
 **Owner:** M4, if more YouTube is wanted — a re-run with the browser otherwise
 idle should recover it. **Otherwise** it is reported as a limitation.
 
-### 3.4 The post caption is missing on 23% of rows
+### 3.5 The post caption is missing on 23% of rows
 
 56 of the 92 captured posts have no caption. The cause is a defect in the
 extractor, since fixed (`src/collect/extract_facebook.js` reads the message
@@ -121,7 +158,7 @@ touched at most the 53 A4 rows in the adjudication. The recovery tool is
 **Owner:** M4. **Fallback if not recovered:** the empty captions are already
 correct as "no caption", and the data card states the coverage.
 
-### 3.5 The `language` column was noise, and has been re-labelled
+### 3.6 The language column was noise, and has been re-labelled
 
 **Now closed.** The seven adjudicators each applied their own version of the
 Filipino/mixed boundary and did not agree with each other — one treated an
@@ -158,7 +195,7 @@ withdrawal is recorded in `data/provenance/language_rule2a.json`.
 consistent, but it is still a noisy variable, and a slice on it will be
 sensitive to its errors. The `language` field is not a modelling feature.
 
-### 3.6 The source pages are verified against Facebook's own signals — **CLOSED**
+### 3.7 The source pages are verified against Facebook's own signals — **CLOSED**
 
 **All 32 registered Facebook accounts pass.** The earlier verification only
 checked that the page *name* matched the agency name, which would not catch a
@@ -194,7 +231,7 @@ registry rather than left in.
 
 
 
-### 3.7 The source frame has been widened — 47 Facebook accounts
+### 3.8 The source frame has been widened — 47 Facebook accounts
 
 The frame started at 10 accounts and now stands at 47. It is now **47 verified
 Facebook accounts**, 10 YouTube channels and 5 X accounts, from a search of

@@ -2,32 +2,32 @@
   "facebook/dost_pagasa": {
     "posts": 3,
     "comments": 0,
-    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
-    "updated_at": "2026-10-22T17:34:53"
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T18:36:19"
   },
   "facebook/doh": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-22T17:35:17"
+    "updated_at": "2026-10-22T18:36:37"
   },
   "facebook/dswd": {
-    "posts": 4,
-    "comments": 44,
+    "posts": 5,
+    "comments": 55,
     "last_error": "",
-    "updated_at": "2026-10-22T17:36:07"
+    "updated_at": "2026-10-22T18:37:26"
   },
   "facebook/deped": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-22T17:36:24"
+    "updated_at": "2026-10-22T18:37:43"
   },
   "facebook/dpwh": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-22T17:36:42"
+    "updated_at": "2026-10-22T18:38:01"
   },
   "facebook/dilg": {
     "posts": 0,

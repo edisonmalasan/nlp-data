@@ -824,3 +824,22 @@
 [18:05:29]   SNAPSHOT facebook_civildefensePH_2026-10-22T18-05.json  2 post(s), 0 comment(s)
 [18:05:29]   ok: 2 post(s), 0 comment(s)
 [18:05:35] === facebook worker finished: 13 account(s) collected ===
+[18:36:06] === worker: facebook on tab 0, 8 posts, mode=invites ===
+[18:36:07] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.facebook.com/pnagovph
+[18:36:07] 47 registered facebook accounts
+[18:36:07] [1/47] facebook/dost_pagasa: the last attempt was empty, retrying
+[18:36:07] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[18:36:19]   error: no post permalinks found on the account page
+[18:36:25] [2/47] facebook/doh: topping up (1 of 8 posts)
+[18:36:25] [2/47] facebook/doh  https://www.facebook.com/DOHgovPH
+[18:36:37]   error: no post permalinks found on the account page
+[18:36:43] [3/47] facebook/dswd: topping up (1 of 8 posts)
+[18:36:43] [3/47] facebook/dswd  https://www.facebook.com/dswdserves
+[18:37:26]       11 comments  GxWryWdyHUxMGTW5AoW6G6mtp4h9vGU3Wsn8yzKp4Yy5hl
+[18:37:26]   SNAPSHOT facebook_dswd_2026-10-22T18-37.json  1 post(s), 11 comment(s)
+[18:37:26]   ok: 1 post(s), 11 comment(s)
+[18:37:32] [4/47] facebook/deped: topping up (1 of 8 posts)
+[18:37:32] [4/47] facebook/deped  https://www.facebook.com/DepartmentOfEducation.PH
+[18:37:43]   error: no post permalinks found on the account page
+[18:37:49] [5/47] facebook/dpwh: topping up (1 of 8 posts)
+[18:37:49] [5/47] facebook/dpwh  https://www.facebook.com/dpwhph

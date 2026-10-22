@@ -1,121 +1,20 @@
-[17:34:13]   could not join the job object; children will outlive a forced kill
-[17:34:13] ===== cycle 1 =====
-[17:34:13] starting facebook/invites on tab 0, 8 posts
-[17:34:14] === worker: facebook on tab 0, 8 posts, mode=invites ===
-[17:34:16] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.facebook.com/dacentralphilippines
-[17:34:17] 47 registered facebook accounts
-[17:34:17] [1/47] facebook/dost_pagasa: the last attempt was empty, retrying
-[17:34:17] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
-[17:34:53]   FAILED: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
-[17:34:53]   error: OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
-[17:34:59] [2/47] facebook/doh: topping up (1 of 8 posts)
-[17:34:59] [2/47] facebook/doh  https://www.facebook.com/DOHgovPH
-[17:35:17]   error: no post permalinks found on the account page
-[17:35:23] [3/47] facebook/dswd: topping up (1 of 8 posts)
-[17:35:23] [3/47] facebook/dswd  https://www.facebook.com/dswdserves
-[17:36:07]   ok: 1 post(s), 11 comment(s)
-[17:36:13] [4/47] facebook/deped: topping up (1 of 8 posts)
-[17:36:13] [4/47] facebook/deped  https://www.facebook.com/DepartmentOfEducation.PH
-[17:36:24]   error: no post permalinks found on the account page
-[17:36:30] [5/47] facebook/dpwh: topping up (1 of 8 posts)
-[17:36:30] [5/47] facebook/dpwh  https://www.facebook.com/dpwhph
-[17:36:42]   error: no post permalinks found on the account page
-[17:36:48] [6/47] facebook/dilg: the last attempt was empty, retrying
-[17:36:48] [6/47] facebook/dilg  https://www.facebook.com/dilg.philippines
-[17:36:59]   error: no post permalinks found on the account page
-[17:37:05] [7/47] facebook/ndrrmc  https://www.facebook.com/NDRRMC
-[17:38:23]   error: no post permalinks found on the account page
-[17:38:29] [8/47] facebook/bfp  https://www.facebook.com/DILGBFP
-[17:38:39]   error: no post permalinks found on the account page
-[17:38:45] [9/47] facebook/dti: topping up (1 of 8 posts)
-[17:38:45] [9/47] facebook/dti  https://www.facebook.com/DTI.Philippines
-[17:39:30]   ok: 1 post(s), 14 comment(s)
-[17:39:36] [10/47] facebook/denr  https://www.facebook.com/DENROfficial
-[17:39:47]   error: no post permalinks found on the account page
-[17:39:53] [11/47] facebook/dacentralphilippines  https://www.facebook.com/dacentralphilippines
-[17:40:04]   error: no post permalinks found on the account page
-[17:40:10] [12/47] facebook/DOFPH  https://www.facebook.com/DOFPH
-[17:40:22]   error: no post permalinks found on the account page
-[17:40:28] [13/47] facebook/DOSTph  https://www.facebook.com/DOSTph
-[17:40:39]   error: no post permalinks found on the account page
-[17:40:45] [14/47] facebook/OfficeOfTheVicePresidentPH: topping up (1 of 8 posts)
-[17:40:45] [14/47] facebook/OfficeOfTheVicePresidentPH  https://www.facebook.com/OfficeOfTheVicePresidentPH
-[17:40:57]   error: no post permalinks found on the account page
-[17:41:03] [15/47] facebook/birgovph: topping up (1 of 8 posts)
-[17:41:03] [15/47] facebook/birgovph  https://www.facebook.com/birgovph
-[17:41:47]   ok: 1 post(s), 11 comment(s)
-[17:41:53] [16/47] facebook/officialbureauofimmigration  https://www.facebook.com/officialbureauofimmigration
-[17:42:04]   error: no post permalinks found on the account page
-[17:42:10] [17/47] facebook/BangkoSentralngPilipinas  http://www.facebook.com/BangkoSentralngPilipinas
-[17:42:21]   error: no post permalinks found on the account page
-[17:42:28] [18/47] facebook/PhilHealthofficial: topping up (1 of 8 posts)
-[17:42:28] [18/47] facebook/PhilHealthofficial  https://www.facebook.com/PhilHealthOfficial
-[17:43:12]   ok: 1 post(s), 10 comment(s)
-[17:43:18] [19/47] facebook/NationalBureauofInvestigationOfficial  https://www.facebook.com/NationalBureauofInvestigationOfficial
-[17:43:29]   error: no post permalinks found on the account page
-[17:43:35] [20/47] facebook/civilservicegovph  https://www.facebook.com/civilservicegovph
-[17:43:47]   error: no post permalinks found on the account page
-[17:43:53] [21/47] facebook/fdagovph: topping up (3 of 8 posts)
-[17:43:53] [21/47] facebook/fdagovph  https://web.facebook.com/fdagovph
-[17:45:47]   ok: 3 post(s), 23 comment(s)
-[17:45:53] [22/47] facebook/nationalyouthcommission: topping up (1 of 8 posts)
-[17:45:53] [22/47] facebook/nationalyouthcommission  https://www.facebook.com/nationalyouthcommission
-[17:47:11]   ok: 2 post(s), 1 comment(s)
-[17:47:17] [23/47] facebook/CCCPhl  https://www.facebook.com/CCCPhl
-[17:47:29]   error: no post permalinks found on the account page
-[17:47:35] [24/47] facebook/boiphilippines  https://www.facebook.com/boiphilippines
-[17:47:46]   error: no post permalinks found on the account page
-[17:47:52] [25/47] facebook/pagcor.ph  https://www.facebook.com/pagcor.ph
-[17:48:04]   error: no post permalinks found on the account page
-[17:48:10] [26/47] facebook/pidsgovph  https://www.facebook.com/pidsgovph
-[17:51:01]   ok: 3 post(s), 11 comment(s)
-[17:51:07] [27/47] facebook/portsauthorityph  https://www.facebook.com/portsauthorityph
-[17:54:02]   ok: 2 post(s), 0 comment(s)
-[17:54:08] [28/47] facebook/dostpchrd  https://www.facebook.com/dostpchrd
-[17:54:57]   ok: 1 post(s), 0 comment(s)
-[17:55:03] [29/47] facebook/DOSTASTI  https://www.facebook.com/DOSTASTI
-[17:55:47]   ok: 1 post(s), 1 comment(s)
-[17:55:53] [30/47] facebook/PHIVOLCS  https://www.facebook.com/PHIVOLCS
-[17:56:04]   error: no post permalinks found on the account page
-[17:56:10] [31/47] facebook/nationalmuseumofthephilippines  https://www.facebook.com/nationalmuseumofthephilippines
-[17:56:22]   error: no post permalinks found on the account page
-[17:56:28] [32/47] facebook/professionalregulationcommission  https://www.facebook.com/professionalregulationcommission
-[17:57:11]   ok: 1 post(s), 5 comment(s)
-[17:57:17] [33/47] facebook/pcsoofficialsocialmedia  https://www.facebook.com/pcsoofficialsocialmedia
-[17:57:28]   error: no post permalinks found on the account page
-[17:57:34] [34/47] facebook/nsc.gov.ph  https://www.facebook.com/nsc.gov.ph
-[17:57:46]   error: no post permalinks found on the account page
-[17:57:52] [35/47] facebook/PhilippineNavy  https://www.facebook.com/PhilippineNavy
-[17:58:04]   error: no post permalinks found on the account page
-[17:58:10] [36/47] facebook/piopaf  https://www.facebook.com/piopaf
-[18:00:27]   ok: 2 post(s), 10 comment(s)
-[18:00:33] [37/47] facebook/DDBgov  https://www.facebook.com/DDBgov
-[18:00:45]   error: no post permalinks found on the account page
-[18:00:51] [38/47] facebook/DOST.FNRI  https://facebook.com/DOST.FNRI
-[18:01:02]   error: no post permalinks found on the account page
-[18:01:08] [39/47] facebook/OfficialLRTA  https://www.facebook.com/OfficialLRTA
-[18:01:19]   error: no post permalinks found on the account page
-[18:01:25] [40/47] facebook/nncofficial  https://www.facebook.com/nncofficial
-[18:01:36]   error: no post permalinks found on the account page
-[18:01:42] [41/47] facebook/pnagovph  https://www.facebook.com/pnagovph
-[18:01:53]   error: no post permalinks found on the account page
-[18:01:59] [42/47] facebook/PhStockExchange  https://www.facebook.com/PhStockExchange
-[18:02:10]   error: no post permalinks found on the account page
-[18:02:16] [43/47] facebook/OfficialPDIC  https://www.facebook.com/OfficialPDIC
-[18:02:27]   error: no post permalinks found on the account page
-[18:02:33] [44/47] facebook/sugarregulatoryadmin  https://www.facebook.com/sugarregulatoryadmin
-[18:02:44]   error: no post permalinks found on the account page
-[18:02:50] [45/47] facebook/ITDIDOSTUpdates  https://www.facebook.com/ITDIDOSTUpdates
-[18:03:01]   error: no post permalinks found on the account page
-[18:03:07] [46/47] facebook/pnacph  https://www.facebook.com/pnacph
-[18:03:18]   error: no post permalinks found on the account page
-[18:03:24] [47/47] facebook/civildefensePH  https://www.facebook.com/civildefensePH
-[18:05:29]   ok: 2 post(s), 0 comment(s)
-[18:05:35] === facebook worker finished: 13 account(s) collected ===
-[18:05:55]   facebook/invites finished with code 0
-[18:05:55] starting facebook/recent on tab 0, 12 posts
-[18:05:55] === worker: facebook on tab 0, 12 posts, mode=recent ===
-[18:05:55] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.facebook.com/civildefensePH/posts/pfbid06cybJFxQs92kppBjxk4cvqRp9bYXPeisbqWuZp3aJufjr7upo7PHQi1rctKMnkG5l
-[18:05:55] 47 registered facebook accounts
-[18:05:55] [1/47] facebook/dost_pagasa: topping up (6 of 12 posts)
-[18:05:55] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[18:36:06]   could not join the job object; children will outlive a forced kill
+[18:36:06] ===== cycle 1 =====
+[18:36:06] starting facebook/invites on tab 0, 8 posts
+[18:36:06] === worker: facebook on tab 0, 8 posts, mode=invites ===
+[18:36:07] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.facebook.com/pnagovph
+[18:36:07] 47 registered facebook accounts
+[18:36:07] [1/47] facebook/dost_pagasa: the last attempt was empty, retrying
+[18:36:07] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[18:36:19]   error: no post permalinks found on the account page
+[18:36:25] [2/47] facebook/doh: topping up (1 of 8 posts)
+[18:36:25] [2/47] facebook/doh  https://www.facebook.com/DOHgovPH
+[18:36:37]   error: no post permalinks found on the account page
+[18:36:43] [3/47] facebook/dswd: topping up (1 of 8 posts)
+[18:36:43] [3/47] facebook/dswd  https://www.facebook.com/dswdserves
+[18:37:26]   ok: 1 post(s), 11 comment(s)
+[18:37:32] [4/47] facebook/deped: topping up (1 of 8 posts)
+[18:37:32] [4/47] facebook/deped  https://www.facebook.com/DepartmentOfEducation.PH
+[18:37:43]   error: no post permalinks found on the account page
+[18:37:49] [5/47] facebook/dpwh: topping up (1 of 8 posts)
+[18:37:49] [5/47] facebook/dpwh  https://www.facebook.com/dpwhph

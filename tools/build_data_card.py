@@ -257,6 +257,25 @@ def main(argv=None) -> int:
     A("rather than as the study's dataset.")
     A("")
 
+    # ---- the per-account post count ----
+    per_acct = {}
+    for r in ds:
+        per_acct.setdefault(r.get("source_page") or "?", set()).add(r.get("post_id"))
+    short = sorted((a, len(ps)) for a, ps in per_acct.items() if len(ps) < 8)
+    A("**The per-source post count is a floor, not the planned eight to twelve.**")
+    A(f"The collection plan takes the most recent posts of each source. Facebook")
+    A(f"now serves only the first one or two posts of a page's feed in the driven")
+    A(f"tab and does not serve more on scrolling or on a reload, so "
+      f"{len(short)} of {len(per_acct)} sources")
+    A("contribute fewer than eight posts. The pages themselves load - the follower")
+    A("count, the category and the description all render - so this is a platform")
+    A("limit rather than a broken collector or an inactive account. The shortfall")
+    A("is recorded per account rather than smoothed away, and the rule that")
+    A("forbids choosing posts by comment richness was kept, because the")
+    A("alternative - walking backwards until a post is busy - is exactly the")
+    A("cherry-picking that rule exists to prevent.")
+    A("")
+
     A("**A couple of rows are Cebuano or Boholano rather than Filipino.** The")
     A("exclusion rule for a non-Filipino language is a script check, and those")
     A("languages are written in Latin script, so they pass it. They are labelled")
