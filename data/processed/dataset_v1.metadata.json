@@ -3,20 +3,20 @@
   "dataset_version": "1.0",
   "contract_version": "1.8-draft",
   "guideline_version": "1.0-draft",
-  "built_at": "2026-10-22T10:13:19.879645+00:00",
+  "built_at": "2026-10-22T12:17:05.621602+00:00",
   "class_counts": {
-    "actionable": 290,
-    "other": 1320
+    "actionable": 287,
+    "other": 1332
   },
   "counts_by_split": {
-    "train": 1127,
-    "dev": 242,
-    "test": 241
+    "train": 1133,
+    "dev": 243,
+    "test": 243
   },
   "split_seed": 42,
   "cohens_kappa": null,
   "verification_counts": {
-    "auto": 1781
+    "auto": 1790
   },
   "task": {
     "definition": "actionable = the comment identifies a concrete action the agency could be asked to take, or that the commenter proposes the agency take",
@@ -28,31 +28,31 @@
   },
   "counts": {
     "primary_facebook": {
-      "n_rows": 1610,
-      "actionable": 290,
-      "other": 1320,
-      "actionable_rate": 0.1801
+      "n_rows": 1619,
+      "actionable": 287,
+      "other": 1332,
+      "actionable_rate": 0.1773
     },
     "extended_all_platforms": {
-      "n_rows": 1781,
-      "actionable": 293,
-      "other": 1488,
-      "actionable_rate": 0.1645
+      "n_rows": 1790,
+      "actionable": 289,
+      "other": 1501,
+      "actionable_rate": 0.1615
     }
   },
   "platforms": {
-    "facebook": 1610,
+    "facebook": 1619,
     "youtube": 101,
     "x": 70
   },
   "strata": {
-    "recent": 1750,
+    "recent": 1759,
     "invites": 31
   },
   "languages": {
     "mixed": 404,
-    "fil": 775,
-    "eng": 602
+    "fil": 779,
+    "eng": 607
   },
   "agencies": {
     "n_source_accounts": 50,
@@ -124,8 +124,8 @@
       },
       "PhilHealthofficial": {
         "rows": 37,
-        "actionable": 15,
-        "other": 22
+        "actionable": 14,
+        "other": 23
       },
       "PhilippineNavy": {
         "rows": 10,
@@ -169,8 +169,8 @@
       },
       "dilg": {
         "rows": 152,
-        "actionable": 31,
-        "other": 121
+        "actionable": 30,
+        "other": 122
       },
       "dilg_x": {
         "rows": 12,
@@ -183,9 +183,9 @@
         "other": 73
       },
       "dost_pagasa": {
-        "rows": 34,
+        "rows": 35,
         "actionable": 1,
-        "other": 33
+        "other": 34
       },
       "dost_pagasa_x": {
         "rows": 10,
@@ -194,18 +194,18 @@
       },
       "dost_pagasa_yt": {
         "rows": 101,
-        "actionable": 3,
-        "other": 98
+        "actionable": 2,
+        "other": 99
       },
       "dostpchrd": {
         "rows": 18,
-        "actionable": 3,
-        "other": 15
+        "actionable": 2,
+        "other": 16
       },
       "dpwh": {
         "rows": 502,
-        "actionable": 106,
-        "other": 396
+        "actionable": 103,
+        "other": 399
       },
       "dpwh_x": {
         "rows": 17,
@@ -239,8 +239,8 @@
       },
       "nationalmuseumofthephilippines": {
         "rows": 22,
-        "actionable": 5,
-        "other": 17
+        "actionable": 6,
+        "other": 16
       },
       "nationalyouthcommission": {
         "rows": 2,
@@ -248,14 +248,14 @@
         "other": 2
       },
       "ndrrmc": {
-        "rows": 13,
+        "rows": 14,
         "actionable": 2,
-        "other": 11
+        "other": 12
       },
       "nncofficial": {
-        "rows": 4,
-        "actionable": 1,
-        "other": 3
+        "rows": 11,
+        "actionable": 3,
+        "other": 8
       },
       "nsc.gov.ph": {
         "rows": 12,
@@ -310,7 +310,7 @@
     }
   },
   "posts": {
-    "n_posts": 197,
+    "n_posts": 201,
     "largest_posts": [
       {
         "post_id": "fb_deped_c7adea76301e5bdc",
@@ -359,35 +359,35 @@
     "method": "LLM-assisted annotation with human verification",
     "engine": "src/annotate/auto_annotator.py",
     "confidence_threshold": 0.85,
-    "adjudicated_rows": 1345,
-    "auto_decided_rows": 436,
+    "adjudicated_rows": 1353,
+    "auto_decided_rows": 437,
     "human_verified_rows": 0,
     "human_verification_pending": true,
     "blinded_relabel_pending": true,
     "reliability_statistic": "intra-annotator (test-retest) Cohen's kappa"
   },
   "lineage": {
-    "n_raw_captured": 3309,
-    "n_candidate_pool": 1610,
-    "n_labeled": 1610,
-    "n_usable_final": 1610,
+    "n_raw_captured": 3476,
+    "n_candidate_pool": 1619,
+    "n_labeled": 1619,
+    "n_usable_final": 1619,
     "n_excluded_by_reason": {
       "X_OFFICIAL": 53,
-      "X_LANG": 9,
-      "X_DUP_EXACT": 1481,
-      "X_DUP_NEAR": 54,
+      "X_LANG": 11,
+      "X_DUP_EXACT": 1636,
+      "X_DUP_NEAR": 55,
       "X_SPAM": 102
     },
-    "n_excluded_total": 1699,
+    "n_excluded_total": 1857,
     "all_platforms": {
-      "n_raw_captured": 3513,
-      "n_candidate_pool": 1781,
-      "n_excluded_total": 1732,
+      "n_raw_captured": 3680,
+      "n_candidate_pool": 1790,
+      "n_excluded_total": 1890,
       "n_excluded_by_reason": {
         "X_OFFICIAL": 69,
-        "X_LANG": 9,
-        "X_DUP_EXACT": 1497,
-        "X_DUP_NEAR": 54,
+        "X_LANG": 11,
+        "X_DUP_EXACT": 1652,
+        "X_DUP_NEAR": 55,
         "X_SPAM": 103
       }
     },

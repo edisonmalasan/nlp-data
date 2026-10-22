@@ -686,6 +686,7 @@ fb_dost_pagasa_0085,fil
 fb_dost_pagasa_0091,eng
 fb_dost_pagasa_0106,fil
 fb_dost_pagasa_0109,eng
+fb_dost_pagasa_0126,fil
 fb_dostasti_0001,eng
 fb_dostasti_0002,fil
 fb_dostasti_0003,eng
@@ -1350,10 +1351,18 @@ fb_ndrrmc_0013,mixed
 fb_ndrrmc_0014,eng
 fb_ndrrmc_0017,eng
 fb_ndrrmc_0018,eng
+fb_ndrrmc_0020,fil
 fb_nncofficial_0001,eng
 fb_nncofficial_0002,eng
 fb_nncofficial_0003,eng
 fb_nncofficial_0008,eng
+fb_nncofficial_0046,eng
+fb_nncofficial_0047,eng
+fb_nncofficial_0072,eng
+fb_nncofficial_0073,eng
+fb_nncofficial_0074,fil
+fb_nncofficial_0075,eng
+fb_nncofficial_0076,fil
 fb_nsc_gov_ph_0002,eng
 fb_nsc_gov_ph_0003,eng
 fb_nsc_gov_ph_0004,mixed

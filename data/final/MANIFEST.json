@@ -1,6 +1,6 @@
 {
   "package": "nlp-actionable-comments-v1",
-  "built_at": "2026-10-22T10:13:28.953314+00:00",
+  "built_at": "2026-10-22T12:17:18.320501+00:00",
   "builder": "tools/build_release.py",
   "dataset_version": "1.0",
   "guideline_version": "1.0-draft",
@@ -9,17 +9,17 @@
     "0": "other"
   },
   "counts": {
-    "n_rows": 1610,
-    "actionable": 290,
-    "other": 1320,
-    "actionable_rate": 0.1801,
+    "n_rows": 1619,
+    "actionable": 287,
+    "other": 1332,
+    "actionable_rate": 0.1773,
     "n_human_verified": 0,
     "human_verified_rate": 0.0
   },
   "split_counts": {
-    "train": 1127,
-    "dev": 242,
-    "test": 241
+    "train": 1133,
+    "dev": 243,
+    "test": 243
   },
   "files": [
     {
@@ -31,44 +31,44 @@
     {
       "source": "data/processed/dataset_v1.csv",
       "packaged_as": "dataset_v1.csv",
-      "bytes": 1398917,
-      "sha256": "745c42d4bf7b1faf64d2196056a45e12ebefdf82c7b4c993014afbe5d82dd562"
+      "bytes": 1405355,
+      "sha256": "f3de20c6801bded9e81e7f0996a50f59cbca383fb500990212666101cd2ee244"
     },
     {
       "source": "data/processed/dataset_v1_ext.csv",
       "packaged_as": "dataset_v1_ext.csv",
-      "bytes": 1554824,
-      "sha256": "afe03f03fd09e46d9b921edd059e5795f88077306b8357c6fbf7f5de8ed5adbe"
+      "bytes": 1561382,
+      "sha256": "7b04c051ebec33eb633543b42c7e930ed25b089e551a942e6f675b9b777552c1"
     },
     {
       "source": "data/processed/posts_v1.csv",
       "packaged_as": "posts_v1.csv",
-      "bytes": 54806,
-      "sha256": "bd5b955773efbfe15cd0b5ee8d8e2da47d70a9df7714fcf132773cace02dbda3"
+      "bytes": 55665,
+      "sha256": "a2718e06fe296a490c9017bd358bb053a25538ff06ac20f93d9539953a8057f6"
     },
     {
       "source": "data/processed/dataset_v1.metadata.json",
       "packaged_as": "dataset_v1.metadata.json",
-      "bytes": 8536,
-      "sha256": "a2ad349d03f276fa1127e53f5863212118c25b892fa6a967a1542cfd6a0b398d"
+      "bytes": 8539,
+      "sha256": "820223a2ad113d56798f82ce574505b405d1d3a4927ea6852cc3cbe5f1932211"
     },
     {
       "source": "data/processed/splits/train.csv",
       "packaged_as": "train.csv",
-      "bytes": 76504,
-      "sha256": "33438ad1415215c2eefa4cff987c5ce48a2c6006dd1d44617f50fcea2d973ff4"
+      "bytes": 76717,
+      "sha256": "b37648ec5e1e9929a0c008652fd258a09ce62b73e89faa6915fb3dfb02f59666"
     },
     {
       "source": "data/processed/splits/dev.csv",
       "packaged_as": "dev.csv",
-      "bytes": 19359,
-      "sha256": "1525dd0e57af7fbea0dee440915d8c78913c30ed6d7d20540ce87a29b1f9776e"
+      "bytes": 20456,
+      "sha256": "ec53dfc13adbcb0a47c871d939d8301f1817ac43f3ae95f0d182f6228aef29e1"
     },
     {
       "source": "data/processed/splits/test.csv",
       "packaged_as": "test.csv",
-      "bytes": 21050,
-      "sha256": "de57b003c4f1d72cf08ddeefa969db45b7313122ceb07fc515920964e97966d3"
+      "bytes": 20459,
+      "sha256": "d067ef22d62e5344eed02a5b212c9358f0238e928818f68fc7293dd7c7dae3eb"
     },
     {
       "source": "data/provenance/government_agencies.csv",

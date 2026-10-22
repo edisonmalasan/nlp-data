@@ -6307,3 +6307,8 @@
 [18:24:56]   ok: 7 post(s), 4 comment(s)
 [18:25:02] [8/47] facebook/bfp: topping up (9 of 12 posts)
 [18:25:02] [8/47] facebook/bfp  https://www.facebook.com/DILGBFP
+[20:16:50] === worker: facebook on tab 0, 12 posts, mode=recent ===
+[20:16:51] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.facebook.com/pnagovph?_rdr
+[20:16:51] 47 registered facebook accounts
+[20:16:51] [1/47] facebook/dost_pagasa: topping up (8 of 12 posts)
+[20:16:51] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
