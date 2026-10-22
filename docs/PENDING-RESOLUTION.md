@@ -247,7 +247,7 @@ So that nobody re-opens them:
   and every collected post came from the registered page (§3.6).
 - **The `language` column.** Re-labelled against one written convention for
   every row, with the residue visible rather than assumed away (§3.5).
-- **The 1,000-comment target and the 600 Facebook target.** 1,737 usable, 1,610 Facebook. Both met.
+- **The 1,000-comment target and the 600 Facebook target.** 1,781 usable, 1,610 Facebook. Both met.
 - **The class-balance window (15%–65% actionable) and the ≥150 per class.** 18.0% actionable, 290 actionable / 1,320 other.
 - **The four cells the research question needs.** All populated: 44% of the
   actionable comments carry a politeness marker and **56% carry none**, and only
