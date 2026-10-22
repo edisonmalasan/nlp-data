@@ -73,7 +73,10 @@ def main(argv=None) -> int:
             source["adjudicated"] += 1
 
     # the language passes over the rows the engine decided on its own
-    for pattern in ("lang_auto", "lang_auto2"):
+    for pattern in sorted(
+            os.path.basename(d.rstrip("/\\"))
+            for d in glob.glob(os.path.join(ROOT, "data", "interim", "lang_auto*"))
+            if os.path.isdir(d)):
         for f in sorted(glob.glob(os.path.join(ROOT, "data", "interim", pattern,
                                                "out_*.jsonl"))):
             for d in read_jsonl(f):

@@ -5,30 +5,30 @@
     "dev": 0.15,
     "test": 0.15
   },
-  "n_labeled": 1566,
+  "n_labeled": 1610,
   "n_unlabeled_skipped": 0,
   "counts": {
-    "train": 1097,
-    "dev": 235,
-    "test": 234
+    "train": 1127,
+    "dev": 242,
+    "test": 241
   },
   "class_prior": {
     "train": {
-      "actionable": 0.1814,
-      "other": 0.8186,
-      "n": 1097
+      "actionable": 0.1801,
+      "other": 0.8199,
+      "n": 1127
     },
     "dev": {
-      "actionable": 0.183,
-      "other": 0.817,
-      "n": 235
+      "actionable": 0.1818,
+      "other": 0.8182,
+      "n": 242
     },
     "test": {
-      "actionable": 0.1795,
-      "other": 0.8205,
-      "n": 234
+      "actionable": 0.1784,
+      "other": 0.8216,
+      "n": 241
     }
   },
-  "test_vs_train_prior_drift": 0.0019,
+  "test_vs_train_prior_drift": 0.0017,
   "grouped_by": "post_id"
 }

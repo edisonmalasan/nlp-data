@@ -13,15 +13,15 @@ media, labelled `actionable` (1) or `other` (0).
 
 | | |
 |---|---|
-| **Rows** | 1,566 |
-| **Distinct comments** | 1,566 |
-| **Distinct posts** | 168 |
+| **Rows** | 1,610 |
+| **Distinct comments** | 1,610 |
+| **Distinct posts** | 181 |
 | **Agencies (source accounts)** | 44 |
-| **Platforms** | facebook (1566) |
-| **Sampling strata** | recent (1544), invites (22) |
-| **Label `1` (actionable)** | 284 (18.1%) |
-| **Label `0` (other)** | 1,282 (81.9%) |
-| **Comment length (chars)** | median 73, p90 162 |
+| **Platforms** | facebook (1610) |
+| **Sampling strata** | recent (1579), invites (31) |
+| **Label `1` (actionable)** | 290 (18.0%) |
+| **Label `0` (other)** | 1,320 (82.0%) |
+| **Comment length (chars)** | median 73, p90 161 |
 | **Split** | 70 / 15 / 15, grouped by `post_id`, seed 42 |
 
 ### The label definition — the one thing to get right
@@ -69,54 +69,55 @@ labelled robustness analysis.
 
 | Platform | Rows | Share |
 |---|---|---|
-| facebook | 1,566 | 100.0% |
+| facebook | 1,610 | 100.0% |
 
 ### Per language
 
 | Language | Rows | Share |
 |---|---|---|
-| fil | 724 | 46.2% |
-| eng | 486 | 31.0% |
-| mixed | 356 | 22.7% |
+| fil | 735 | 45.7% |
+| eng | 506 | 31.4% |
+| mixed | 369 | 22.9% |
 
 ### Per sampling stratum
 
 | Stratum | Rows | Share |
 |---|---|---|
-| recent | 1,544 | 98.6% |
-| invites | 22 | 1.4% |
+| recent | 1,579 | 98.1% |
+| invites | 31 | 1.9% |
 
 ### Per agency
 
 | Source account | Rows | actionable | other | actionable % |
 |---|---|---|---|---|
-| dpwh | 502 | 105 | 397 | 20.9% |
-| deped | 268 | 29 | 239 | 10.8% |
-| dilg | 152 | 30 | 122 | 19.7% |
-| doh | 77 | 5 | 72 | 6.5% |
-| OfficeOfTheVicePresidentPH | 39 | 0 | 39 | 0.0% |
-| professionalregulationcommission | 36 | 8 | 28 | 22.2% |
-| PhilHealthofficial | 35 | 14 | 21 | 40.0% |
+| dpwh | 502 | 106 | 396 | 21.1% |
+| deped | 268 | 28 | 240 | 10.4% |
+| dilg | 152 | 31 | 121 | 20.4% |
+| doh | 77 | 4 | 73 | 5.2% |
+| OfficeOfTheVicePresidentPH | 47 | 1 | 46 | 2.1% |
+| PhilHealthofficial | 37 | 15 | 22 | 40.5% |
+| professionalregulationcommission | 36 | 9 | 27 | 25.0% |
+| dost_pagasa | 34 | 1 | 33 | 2.9% |
+| dacentralphilippines | 33 | 15 | 18 | 45.5% |
 | fdagovph | 33 | 13 | 20 | 39.4% |
-| dost_pagasa | 32 | 1 | 31 | 3.1% |
-| dacentralphilippines | 32 | 15 | 17 | 46.9% |
-| bfp | 29 | 8 | 21 | 27.6% |
-| dswd | 24 | 5 | 19 | 20.8% |
-| birgovph | 24 | 3 | 21 | 12.5% |
+| bfp | 32 | 7 | 25 | 21.9% |
+| dswd | 28 | 6 | 22 | 21.4% |
+| birgovph | 25 | 3 | 22 | 12.0% |
+| piopaf | 24 | 2 | 22 | 8.3% |
 | nationalmuseumofthephilippines | 22 | 5 | 17 | 22.7% |
 | dti | 19 | 13 | 6 | 68.4% |
 | pagcor.ph | 18 | 1 | 17 | 5.6% |
-| dostpchrd | 18 | 2 | 16 | 11.1% |
-| BangkoSentralngPilipinas | 16 | 2 | 14 | 12.5% |
-| piopaf | 16 | 2 | 14 | 12.5% |
+| dostpchrd | 18 | 3 | 15 | 16.7% |
+| BangkoSentralngPilipinas | 17 | 2 | 15 | 11.8% |
 | PHIVOLCS | 15 | 4 | 11 | 26.7% |
+| officialbureauofimmigration | 15 | 2 | 13 | 13.3% |
 | OfficialLRTA | 15 | 3 | 12 | 20.0% |
 | ndrrmc | 13 | 2 | 11 | 15.4% |
 | nsc.gov.ph | 12 | 1 | 11 | 8.3% |
 | DOSTph | 11 | 1 | 10 | 9.1% |
 | pidsgovph | 11 | 0 | 11 | 0.0% |
 | civilservicegovph | 11 | 0 | 11 | 0.0% |
-| officialbureauofimmigration | 10 | 2 | 8 | 20.0% |
+| denr | 10 | 1 | 9 | 10.0% |
 | PhilippineNavy | 10 | 1 | 9 | 10.0% |
 | NationalBureauofInvestigationOfficial | 9 | 3 | 6 | 33.3% |
 | boiphilippines | 8 | 0 | 8 | 0.0% |
@@ -124,7 +125,7 @@ labelled robustness analysis.
 | DOSTASTI | 7 | 0 | 7 | 0.0% |
 | DOFPH | 6 | 1 | 5 | 16.7% |
 | DOST.FNRI | 4 | 1 | 3 | 25.0% |
-| nncofficial | 4 | 0 | 4 | 0.0% |
+| nncofficial | 4 | 1 | 3 | 25.0% |
 | pnagovph | 3 | 2 | 1 | 66.7% |
 | OfficialPDIC | 3 | 0 | 3 | 0.0% |
 | pnacph | 3 | 0 | 3 | 0.0% |
@@ -132,7 +133,6 @@ labelled robustness analysis.
 | nationalyouthcommission | 2 | 0 | 2 | 0.0% |
 | CCCPhl | 2 | 0 | 2 | 0.0% |
 | pcsoofficialsocialmedia | 2 | 0 | 2 | 0.0% |
-| denr | 1 | 0 | 1 | 0.0% |
 | portsauthorityph | 1 | 0 | 1 | 0.0% |
 
 ## 4. Known limitations — read this before drawing conclusions
@@ -145,18 +145,18 @@ than the rest.
 
 | Post | Comments | actionable | actionable % |
 |---|---|---|---|
-| d_c7adea76301e5bdc | 209 | 11 | 5.3% |
-| h_24364576a353a509 | 204 | 52 | 25.5% |
-| h_c6df40e102162fdf | 106 | 18 | 17.0% |
+| d_c7adea76301e5bdc | 209 | 10 | 4.8% |
+| h_24364576a353a509 | 204 | 53 | 26.0% |
+| h_c6df40e102162fdf | 106 | 19 | 17.9% |
 | h_77fb0b7cb1f05e9e | 85 | 9 | 10.6% |
 | g_55360bfda32fa270 | 85 | 15 | 17.6% |
 | h_8da3cbe8f169597b | 32 | 9 | 28.1% |
 | h_80b98a13f1a42f4f | 30 | 6 | 20.0% |
-| h_a5eff28a3c3e499b | 29 | 5 | 17.2% |
+| h_a5eff28a3c3e499b | 29 | 4 | 13.8% |
 | h_3f0026fd16fae3dc | 23 | 2 | 8.7% |
 | d_2d702ca032c46ec7 | 21 | 10 | 47.6% |
 
-The ten largest posts hold **824 of 1,566 rows (52.6%)**.
+The ten largest posts hold **824 of 1,610 rows (51.2%)**.
 A random-split classifier can therefore score well by recognising *which post a
 comment came from* rather than what it says. The split is grouped by `post_id`
 precisely so that a post's comments never straddle two splits — otherwise the
@@ -172,7 +172,7 @@ computed from surface markers, used only to describe the corpus. The label comes
 from the annotator.
 
 **The post caption is missing on some rows.** `post_text` is the post context -
-the caption of the post the comment sits on. It is empty for 487 of 1,566 rows (31%), because the extractor that
+the caption of the post the comment sits on. It is empty for 513 of 1,610 rows (32%), because the extractor that
 reads the caption was corrected after those captures were made. No caption is
 **wrong**: the ones that are present are real captions. This does not touch the
 modelling text field, which is `comment_text_norm` alone, and `post_text` is
@@ -238,7 +238,7 @@ the browser profile.
 | `data/final/dataset_v1.metadata.json` | Counts, class balance, lineage, and the exclusion ledger summary. |
 | `data/final/MANIFEST.json` | The file list and checksums for the package. |
 
-The extension file holds 1,737 rows across 1737 comments.
+The extension file holds 1,781 rows across 1781 comments.
 
 **The split files are authoritative.** The `split` column in the dataset is a
 mirror. If they ever disagree, the files win and it is a bug to fix.

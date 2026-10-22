@@ -2,151 +2,283 @@
   "facebook/dost_pagasa": {
     "posts": 3,
     "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-21T06:46:42"
+    "last_error": "OrcaError: orca goto: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.",
+    "updated_at": "2026-10-22T17:34:53"
   },
   "facebook/doh": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:47:02"
+    "updated_at": "2026-10-22T17:35:17"
   },
   "facebook/dswd": {
-    "posts": 3,
-    "comments": 33,
+    "posts": 4,
+    "comments": 44,
     "last_error": "",
-    "updated_at": "2026-10-21T06:47:55"
+    "updated_at": "2026-10-22T17:36:07"
   },
   "facebook/deped": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:48:14"
+    "updated_at": "2026-10-22T17:36:24"
   },
   "facebook/dpwh": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:48:34"
+    "updated_at": "2026-10-22T17:36:42"
   },
   "facebook/dilg": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:48:53"
+    "updated_at": "2026-10-22T17:36:59"
   },
   "facebook/ndrrmc": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:49:13"
+    "updated_at": "2026-10-22T17:38:23"
   },
   "facebook/bfp": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:49:32"
+    "updated_at": "2026-10-22T17:38:39"
   },
   "facebook/dti": {
-    "posts": 2,
-    "comments": 28,
+    "posts": 3,
+    "comments": 42,
     "last_error": "",
-    "updated_at": "2026-10-21T06:50:26"
+    "updated_at": "2026-10-22T17:39:30"
   },
   "facebook/denr": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:50:45"
+    "updated_at": "2026-10-22T17:39:47"
   },
   "facebook/dacentralphilippines": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:51:04"
+    "updated_at": "2026-10-22T17:40:04"
   },
   "facebook/DOFPH": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:51:23"
+    "updated_at": "2026-10-22T17:40:22"
   },
   "facebook/DOSTph": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:51:45"
+    "updated_at": "2026-10-22T17:40:39"
   },
   "facebook/OfficeOfTheVicePresidentPH": {
     "posts": 1,
     "comments": 6,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:52:04"
+    "updated_at": "2026-10-22T17:40:57"
   },
   "facebook/birgovph": {
-    "posts": 2,
-    "comments": 22,
+    "posts": 3,
+    "comments": 33,
     "last_error": "",
-    "updated_at": "2026-10-21T06:52:56"
+    "updated_at": "2026-10-22T17:41:47"
   },
   "facebook/officialbureauofimmigration": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:53:18"
+    "updated_at": "2026-10-22T17:42:04"
   },
   "facebook/BangkoSentralngPilipinas": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:53:41"
+    "updated_at": "2026-10-22T17:42:21"
   },
   "facebook/PhilHealthofficial": {
-    "posts": 2,
-    "comments": 20,
+    "posts": 3,
+    "comments": 30,
     "last_error": "",
-    "updated_at": "2026-10-21T06:54:35"
+    "updated_at": "2026-10-22T17:43:12"
   },
   "facebook/NationalBureauofInvestigationOfficial": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:54:55"
+    "updated_at": "2026-10-22T17:43:29"
   },
   "facebook/civilservicegovph": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:55:15"
+    "updated_at": "2026-10-22T17:43:47"
   },
   "facebook/fdagovph": {
-    "posts": 5,
-    "comments": 46,
+    "posts": 8,
+    "comments": 69,
     "last_error": "",
-    "updated_at": "2026-10-21T06:57:14"
+    "updated_at": "2026-10-22T17:45:47"
   },
   "facebook/nationalyouthcommission": {
-    "posts": 1,
-    "comments": 1,
+    "posts": 3,
+    "comments": 2,
     "last_error": "",
-    "updated_at": "2026-10-21T06:39:11"
+    "updated_at": "2026-10-22T17:47:11"
   },
   "facebook/CCCPhl": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:39:31"
+    "updated_at": "2026-10-22T17:47:29"
   },
   "facebook/boiphilippines": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:39:53"
+    "updated_at": "2026-10-22T17:47:46"
   },
   "facebook/pagcor.ph": {
     "posts": 0,
     "comments": 0,
     "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:40:14"
+    "updated_at": "2026-10-22T17:48:04"
+  },
+  "facebook/pidsgovph": {
+    "posts": 3,
+    "comments": 11,
+    "last_error": "",
+    "updated_at": "2026-10-22T17:51:01"
+  },
+  "facebook/portsauthorityph": {
+    "posts": 2,
+    "comments": 0,
+    "last_error": "",
+    "updated_at": "2026-10-22T17:54:02"
+  },
+  "facebook/dostpchrd": {
+    "posts": 1,
+    "comments": 0,
+    "last_error": "",
+    "updated_at": "2026-10-22T17:54:57"
+  },
+  "facebook/DOSTASTI": {
+    "posts": 1,
+    "comments": 1,
+    "last_error": "",
+    "updated_at": "2026-10-22T17:55:47"
+  },
+  "facebook/PHIVOLCS": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T17:56:04"
+  },
+  "facebook/nationalmuseumofthephilippines": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T17:56:22"
+  },
+  "facebook/professionalregulationcommission": {
+    "posts": 1,
+    "comments": 5,
+    "last_error": "",
+    "updated_at": "2026-10-22T17:57:11"
+  },
+  "facebook/pcsoofficialsocialmedia": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T17:57:28"
+  },
+  "facebook/nsc.gov.ph": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T17:57:46"
+  },
+  "facebook/PhilippineNavy": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T17:58:04"
+  },
+  "facebook/piopaf": {
+    "posts": 2,
+    "comments": 10,
+    "last_error": "",
+    "updated_at": "2026-10-22T18:00:27"
+  },
+  "facebook/DDBgov": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T18:00:45"
+  },
+  "facebook/DOST.FNRI": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T18:01:02"
+  },
+  "facebook/OfficialLRTA": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T18:01:19"
+  },
+  "facebook/nncofficial": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T18:01:36"
+  },
+  "facebook/pnagovph": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T18:01:53"
+  },
+  "facebook/PhStockExchange": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T18:02:10"
+  },
+  "facebook/OfficialPDIC": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T18:02:27"
+  },
+  "facebook/sugarregulatoryadmin": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T18:02:44"
+  },
+  "facebook/ITDIDOSTUpdates": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T18:03:01"
+  },
+  "facebook/pnacph": {
+    "posts": 0,
+    "comments": 0,
+    "last_error": "no post permalinks found on the account page",
+    "updated_at": "2026-10-22T18:03:18"
+  },
+  "facebook/civildefensePH": {
+    "posts": 2,
+    "comments": 0,
+    "last_error": "",
+    "updated_at": "2026-10-22T18:05:29"
   }
 }
