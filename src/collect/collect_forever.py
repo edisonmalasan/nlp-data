@@ -79,6 +79,79 @@ def _pid_alive(pid):
         return False
 
 
+def die_with_parent():
+    """Make every child of this process die when it dies.
+
+    subprocess.Popen children outlive a killed parent, and `Stop-Process
+    -Force` runs no handler. Three orphaned discovery runs therefore kept
+    driving the browser after their supervisors were killed, alongside the
+    next supervisor - and two drivers close the runtime's connection, so
+    every account in every run then reported as empty. A Windows job object
+    with KILL_ON_JOB_CLOSE is the only reliable way to take the children
+    with the parent. It is best-effort: on a platform without it, the lock
+    in take_lock() still keeps a second supervisor out.
+    """
+    if os.name != "nt":
+        return
+    import ctypes
+    from ctypes import wintypes
+
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+
+    class JOBOBJECT_BASIC_LIMIT_INFORMATION(ctypes.Structure):
+        _fields_ = [
+            ("PerProcessUserTimeLimit", ctypes.c_int64),
+            ("PerJobUserTimeLimit", ctypes.c_int64),
+            ("LimitFlags", wintypes.DWORD),
+            ("MinimumWorkingSetSize", ctypes.c_size_t),
+            ("MaximumWorkingSetSize", ctypes.c_size_t),
+            ("ActiveProcessLimit", wintypes.DWORD),
+            ("Affinity", ctypes.c_size_t),
+            ("PriorityClass", wintypes.DWORD),
+            ("SchedulingClass", wintypes.DWORD),
+        ]
+
+    class IO_COUNTERS(ctypes.Structure):
+        _fields_ = [
+            ("ReadOperationCount", ctypes.c_uint64),
+            ("WriteOperationCount", ctypes.c_uint64),
+            ("OtherOperationCount", ctypes.c_uint64),
+            ("ReadTransferCount", ctypes.c_uint64),
+            ("WriteTransferCount", ctypes.c_uint64),
+            ("OtherTransferCount", ctypes.c_uint64),
+        ]
+
+    class JOBOBJECT_EXTENDED_LIMIT_INFORMATION(ctypes.Structure):
+        _fields_ = [
+            ("BasicLimitInformation", JOBOBJECT_BASIC_LIMIT_INFORMATION),
+            ("IoInfo", IO_COUNTERS),
+            ("ProcessMemoryLimit", ctypes.c_size_t),
+            ("JobMemoryLimit", ctypes.c_size_t),
+            ("PeakProcessMemoryUsed", ctypes.c_size_t),
+            ("PeakJobMemoryUsed", ctypes.c_size_t),
+        ]
+
+    JobObjectExtendedLimitInformation = 9
+    JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE = 0x2000
+
+    job = kernel32.CreateJobObjectW(None, None)
+    if not job:
+        log("  no job object; children will outlive a forced kill")
+        return
+    info = JOBOBJECT_EXTENDED_LIMIT_INFORMATION()
+    info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE
+    ok = kernel32.SetInformationJobObject(
+        job, JobObjectExtendedLimitInformation,
+        ctypes.byref(info), ctypes.sizeof(info))
+    if not ok:
+        log("  could not set the job object; children will outlive a forced kill")
+        return
+    if not kernel32.AssignProcessToJobObject(job, kernel32.GetCurrentProcess()):
+        log("  could not join the job object; children will outlive a forced kill")
+        return
+    log("  children will die with this process")
+
+
 def take_lock():
     """Claim the browser for this process, or refuse to start.
 
@@ -162,6 +235,7 @@ def write_heartbeat(state):
 def main(argv=None) -> int:
     if not take_lock():
         return 2
+    die_with_parent()
     try:
         return _run(argv)
     finally:

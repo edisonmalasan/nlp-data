@@ -368,6 +368,20 @@ def write_registry(rows, fields):
 
 
 def main(argv=None) -> int:
+    # One process drives the browser. Three discovery runs once outlived
+    # their killed supervisors and kept navigating the same tab, which
+    # closed the runtime's connection and made the collector report every
+    # account as empty. The lock makes that impossible.
+    import browser_lock
+    if not browser_lock.take("this discovery", log=print):
+        return 2
+    try:
+        return _main(argv)
+    finally:
+        browser_lock.release()
+
+
+def _main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Find official pages from agency websites")
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--only", default=None)

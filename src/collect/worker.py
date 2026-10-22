@@ -170,6 +170,16 @@ def merge_progress() -> dict:
 
 
 def main(argv=None) -> int:
+    import browser_lock
+    if not browser_lock.take("this worker", log=print):
+        return 2
+    try:
+        return _run(argv)
+    finally:
+        browser_lock.release()
+
+
+def _run(argv=None) -> int:
     ap = argparse.ArgumentParser(description="One collection worker, one tab")
     ap.add_argument("--platform", required=True,
                     choices=["facebook", "youtube", "x", "reddit"])

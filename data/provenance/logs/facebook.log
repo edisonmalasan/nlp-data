@@ -6185,3 +6185,31 @@
 [16:53:11] 47 registered facebook accounts
 [16:53:11] [1/47] facebook/dost_pagasa: topping up (6 of 12 posts)
 [16:53:11] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[16:57:58]     capture failed: orca eval: runtime_unavailable The Orca runtime closed the connection before responding. Restart Orca and try again.
+[16:57:58]   error: no posts captured
+[16:58:04] [2/47] facebook/doh: already collected (12 post(s)), skipping
+[16:58:04] [3/47] facebook/dswd: topping up (8 of 12 posts)
+[16:58:04] [3/47] facebook/dswd  https://www.facebook.com/dswdserves
+[16:59:01]   error: no posts captured
+[16:59:07] [4/47] facebook/deped: already collected (12 post(s)), skipping
+[16:59:07] [5/47] facebook/dpwh: already collected (12 post(s)), skipping
+[16:59:07] [6/47] facebook/dilg: already collected (12 post(s)), skipping
+[16:59:07] [7/47] facebook/ndrrmc: topping up (8 of 12 posts)
+[16:59:07] [7/47] facebook/ndrrmc  https://www.facebook.com/NDRRMC
+[17:01:17]   error: no posts captured
+[17:01:23] [8/47] facebook/bfp: topping up (9 of 12 posts)
+[17:01:23] [8/47] facebook/bfp  https://www.facebook.com/DILGBFP
+[17:09:07] === worker: facebook on tab 0, 12 posts, mode=recent ===
+[17:09:08] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.facebook.com/dpwhph/
+[17:09:08] 47 registered facebook accounts
+[17:09:08] [1/47] facebook/dost_pagasa: topping up (6 of 12 posts)
+[17:09:08] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[17:12:52]        5 comments  /www.facebook.com/photo/?fbid=1404302578408058
+[17:12:52]        0 comments  xvsWYf1dv1wNTStGS3JmGxySKJwQM7zvUm23Hb7ysvXnRl
+[17:12:52]        0 comments  NHCAqtHu3jxJtCwLW5ehed85SuyfaynnqSpC4c9NYnKP9l
+[17:12:52]        0 comments  /www.facebook.com/photo/?fbid=1593777432793904
+[17:12:52]   SNAPSHOT facebook_dost_pagasa_2026-10-22T17-12.json  4 post(s), 5 comment(s)
+[17:12:52]   ok: 4 post(s), 5 comment(s)
+[17:12:58] [2/47] facebook/doh: already collected (12 post(s)), skipping
+[17:12:58] [3/47] facebook/dswd: topping up (8 of 12 posts)
+[17:12:58] [3/47] facebook/dswd  https://www.facebook.com/dswdserves
