@@ -853,3 +853,9 @@
 [18:38:53]   error: no post permalinks found on the account page
 [18:38:59] [9/47] facebook/dti: topping up (1 of 8 posts)
 [18:38:59] [9/47] facebook/dti  https://www.facebook.com/DTI.Philippines
+[19:29:09] === worker: facebook on tab 0, 8 posts, mode=invites ===
+[19:29:09] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.facebook.com/pnagovph?_rdr
+[19:29:09] 47 registered facebook accounts
+[19:29:09] [1/47] facebook/dost_pagasa: the last attempt was empty, retrying
+[19:29:09] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[19:29:24]   error: no post permalinks found on the account page

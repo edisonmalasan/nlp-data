@@ -1,3 +1,9 @@
-[19:18:18]   could not join the job object; children will outlive a forced kill
-[19:18:18] ===== cycle 1 =====
-[19:18:18] starting facebook/invites on tab 0, 8 posts
+[19:29:09]   could not join the job object; children will outlive a forced kill
+[19:29:09] ===== cycle 1 =====
+[19:29:09] starting facebook/invites on tab 0, 8 posts
+[19:29:09] === worker: facebook on tab 0, 8 posts, mode=invites ===
+[19:29:09] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.facebook.com/pnagovph?_rdr
+[19:29:09] 47 registered facebook accounts
+[19:29:09] [1/47] facebook/dost_pagasa: the last attempt was empty, retrying
+[19:29:09] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
+[19:29:24]   error: no post permalinks found on the account page

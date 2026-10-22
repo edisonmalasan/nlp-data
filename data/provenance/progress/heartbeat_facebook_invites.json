@@ -2,7 +2,8 @@
   "platform": "facebook",
   "tab": 0,
   "mode": "invites",
-  "state": "collecting",
-  "updated_at": "2026-10-22T18:38:59",
-  "source_page": "dti"
+  "state": "failed",
+  "updated_at": "2026-10-22T19:29:24",
+  "source_page": "dost_pagasa",
+  "accounts_done": 0
 }

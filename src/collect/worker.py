@@ -170,6 +170,48 @@ def merge_progress() -> dict:
     return merged
 
 
+def fresh_tab(log):
+    """A brand new tab, because a used one stops serving the feed.
+
+    A Facebook page serves its full recent feed only on the FIRST load in a
+    tab. Every load after that in the same tab renders the page header and
+    one or two posts, and neither scrolling nor a reload brings the rest
+    back. That is measurable: on the pages below, a tab that had been used
+    served 2 to 6 post permalinks, and a tab created for the same page served
+    the full 12.
+
+    | page                    | used tab | fresh tab |
+    |-------------------------|----------|-----------|
+    | pnagovph                |    2     |    12     |
+    | sugarregulatoryadmin    |    2     |    12     |
+    | nncofficial             |    6     |    12     |
+    | civildefensePH          |    3     |    12     |
+
+    So each account is collected in a tab created for it, and the tab is
+    closed afterwards. Forty-seven extra tabs per pass is cheap; the posts
+    are the point.
+    """
+    try:
+        subprocess.run(["orca", "tab", "create", "--url", "about:blank"],
+                       capture_output=True, text=True, timeout=90)
+    except (OSError, subprocess.SubprocessError) as e:
+        log(f"  could not create a tab: {e}")
+        return None
+    time.sleep(2.0)
+    tabs = ob.list_tabs()
+    return tabs[-1]["browserPageId"] if tabs else None
+
+
+def close_tab(page, log):
+    try:
+        subprocess.run(["orca", "tab", "close", "--page", page],
+                       capture_output=True, text=True, timeout=90)
+    except (OSError, subprocess.SubprocessError):
+        pass
+
+
+
+
 def main(argv=None) -> int:
     import browser_lock
     if not browser_lock.take("this worker", log=print):
@@ -213,44 +255,6 @@ def _run(argv=None) -> int:
         except Exception:
             pass
 
-def fresh_tab(log):
-    """A brand new tab, because a used one stops serving the feed.
-
-    A Facebook page serves its full recent feed only on the FIRST load in a
-    tab. Every load after that in the same tab renders the page header and
-    one or two posts, and neither scrolling nor a reload brings the rest
-    back. That is measurable: on the pages below, a tab that had been used
-    served 2 to 6 post permalinks, and a tab created for the same page served
-    the full 12.
-
-    | page                    | used tab | fresh tab |
-    |-------------------------|----------|-----------|
-    | pnagovph                |    2     |    12     |
-    | sugarregulatoryadmin    |    2     |    12     |
-    | nncofficial             |    6     |    12     |
-    | civildefensePH          |    3     |    12     |
-
-    So each account is collected in a tab created for it, and the tab is
-    closed afterwards. Forty-seven extra tabs per pass is cheap; the posts
-    are the point.
-    """
-    try:
-        subprocess.run(["orca", "tab", "create", "--url", "about:blank"],
-                       capture_output=True, text=True, timeout=90)
-    except (OSError, subprocess.SubprocessError) as e:
-        log(f"  could not create a tab: {e}")
-        return None
-    time.sleep(2.0)
-    tabs = ob.list_tabs()
-    return tabs[-1]["browserPageId"] if tabs else None
-
-
-def close_tab(page, log):
-    try:
-        subprocess.run(["orca", "tab", "close", "--page", page],
-                       capture_output=True, text=True, timeout=90)
-    except (OSError, subprocess.SubprocessError):
-        pass
 
 
     beat("starting")

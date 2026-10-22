@@ -341,7 +341,23 @@ def _run(argv=None) -> int:
         if args.cycles and cycle >= args.cycles:
             log("finished the requested number of cycles")
             return 0
-        time.sleep(5)
+
+        # Wait out the rest of the cycle. --cycle-seconds used to set only the
+        # deadline that the "the cycle is over" line tested, so a cycle whose
+        # accounts were all skipped ran straight into the next one and the
+        # collector drove the browser back to back for hours. That is the one
+        # thing a throttled session does not need: the platform serves a full
+        # feed to a session that has been idle and one or two posts to a
+        # session that has been busy.
+        remaining = deadline - time.time()
+        if remaining > 0:
+            log(f"  resting for {int(remaining // 60)} min "
+                f"({int(remaining)}s) before the next cycle")
+            while remaining > 0:
+                time.sleep(min(remaining, 300))
+                remaining = deadline - time.time()
+        else:
+            log("  this cycle overran its interval; the next one starts now")
     return 0
 
 
