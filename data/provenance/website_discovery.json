@@ -1,6 +1,6 @@
 {
   "n_sites": 185,
-  "n_accepted": 4,
+  "n_accepted": 6,
   "results": [
     {
       "agency": "Department of Agriculture",
@@ -52,6 +52,104 @@
       "site": "https://dotr.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/nationalyouthcommission",
+      "reason": "already in the registry"
+    },
+    {
+      "agency": "Department of Tourism",
+      "site": "https://tourism.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Office of the Vice President",
+      "site": "https://www.ovp.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Presidential Communications Operations Office",
+      "site": "https://www.pco.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "National Disaster Risk Reduction and Management Council",
+      "site": "https://www.ndrrmc.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Philippine Information Agency",
+      "site": "https://www.pia.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Official Gazette",
+      "site": "https://www.officialgazette.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Bureau of Internal Revenue",
+      "site": "https://www.bir.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Bureau of the Treasury",
+      "site": "https://www.btreasury.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Bureau of Immigration",
+      "site": "https://immigration.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/officialbureauofimmigration",
+      "reason": "already in the registry"
+    },
+    {
+      "agency": "Social Security System",
+      "site": "https://www.sss.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Bangko Sentral ng Pilipinas",
+      "site": "https://www.bsp.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Government Service Insurance System",
+      "site": "https://www.gsis.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Philippine Health Insurance Corporation",
+      "site": "https://www.philhealth.gov.ph",
+      "ok": false,
+      "reason": "no verified facebook page linked"
+    },
+    {
+      "agency": "Land Transportation Office",
+      "site": "https://lto.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Philippine National Police",
+      "site": "https://pnp.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "National Bureau of Investigation",
+      "site": "https://nbi.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/NationalBureauofInvestigationOfficial",
       "reason": "already in the registry"
     }
   ]
