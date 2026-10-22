@@ -2,7 +2,8 @@
   "platform": "facebook",
   "tab": 0,
   "mode": "recent",
-  "state": "collecting",
-  "updated_at": "2026-10-22T05:20:07",
-  "source_page": "denr"
+  "state": "failed",
+  "updated_at": "2026-10-22T06:33:38",
+  "source_page": "pidsgovph",
+  "accounts_done": 19
 }
