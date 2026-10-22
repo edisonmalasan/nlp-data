@@ -289,13 +289,15 @@ def _run(argv=None) -> int:
         # not touch it.
         deadline = time.time() + args.cycle_seconds
 
-        # The queue. The most recent posts first, because that is the frame
-        # the paper describes; then the request-inviting stratum, which is
-        # the contract's pre-registered stratified collection and the one
-        # that raises the yield of actionable rows; then the other
-        # platforms.
-        queue = [("facebook", "recent", args.posts)]
-        queue += [("facebook", "invites", args.invites_posts)]
+        # The queue. The request-inviting stratum comes first, because it
+        # is the scarce class: an agency's routine post draws a handful of
+        # comments and no requests, while a post that itself invites replies
+        # ("what do you think?", "any questions?") draws the actionable ones.
+        # The recent stratum follows: it keeps the corpus current and it is
+        # cheap once every account is already topped up, because an account
+        # that is full is skipped without a page load.
+        queue = [("facebook", "invites", args.invites_posts)]
+        queue += [("facebook", "recent", args.posts)]
         queue += [(pl, "recent", args.posts) for pl in args.platforms
                   if pl != "facebook"]
 

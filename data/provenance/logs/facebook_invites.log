@@ -679,3 +679,8 @@
 [06:57:22] [22/32] facebook/nationalyouthcommission: topping up (1 of 8 posts)
 [06:57:22] [22/32] facebook/nationalyouthcommission  https://www.facebook.com/nationalyouthcommission
 [06:58:07]        0 comments  https://www.facebook.com/photo/
+[17:34:14] === worker: facebook on tab 0, 8 posts, mode=invites ===
+[17:34:16] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.facebook.com/dacentralphilippines
+[17:34:17] 47 registered facebook accounts
+[17:34:17] [1/47] facebook/dost_pagasa: the last attempt was empty, retrying
+[17:34:17] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH
