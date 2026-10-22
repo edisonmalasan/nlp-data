@@ -49,10 +49,67 @@ sys.path.insert(0, HERE)
 PY = sys.executable
 PROVENANCE = os.path.join(ROOT, "data", "provenance")
 HEARTBEAT = os.path.join(PROVENANCE, "collector_heartbeat.json")
+LOCK = os.path.join(PROVENANCE, "collector.lock")
 
 
 def log(msg):
     print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
+
+
+def _pid_alive(pid):
+    """Is that process still running? Signal 0 is not usable on Windows -
+    os.kill(pid, 0) TERMINATES the process there - so ask the kernel
+    directly instead."""
+    if pid <= 0:
+        return False
+    if os.name == "nt":
+        import ctypes
+        PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        kernel32 = ctypes.windll.kernel32
+        handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION,
+                                      False, pid)
+        if not handle:
+            return False
+        kernel32.CloseHandle(handle)
+        return True
+    try:
+        os.kill(pid, 0)
+        return True
+    except OSError:
+        return False
+
+
+def take_lock():
+    """Claim the browser for this process, or refuse to start.
+
+    The browser can only be driven by one process at a time. A second
+    supervisor does not fail loudly: it closes the runtime's connection and
+    every account in BOTH runs starts reporting as empty or blocked. Refusing
+    to start is the only safe behaviour."""
+    if os.path.exists(LOCK):
+        try:
+            holder = int(io.open(LOCK, encoding="utf-8").read().strip() or 0)
+        except (ValueError, OSError):
+            holder = 0
+        if holder and holder != os.getpid() and _pid_alive(holder):
+            log(f"another supervisor is already running (pid {holder})")
+            log("the browser is driven by one process at a time, so this "
+                "one exits rather than closing its connection")
+            return False
+        log(f"taking over a stale lock from pid {holder}")
+    os.makedirs(PROVENANCE, exist_ok=True)
+    with io.open(LOCK, "w", encoding="utf-8", newline="") as fh:
+        fh.write(str(os.getpid()))
+    return True
+
+
+def release_lock():
+    try:
+        holder = int(io.open(LOCK, encoding="utf-8").read().strip() or 0)
+        if holder == os.getpid():
+            os.remove(LOCK)
+    except (ValueError, OSError):
+        pass
 
 
 def run(label, argv, timeout=3600):
@@ -103,6 +160,15 @@ def write_heartbeat(state):
 
 
 def main(argv=None) -> int:
+    if not take_lock():
+        return 2
+    try:
+        return _run(argv)
+    finally:
+        release_lock()
+
+
+def _run(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Collect continuously")
     ap.add_argument("--cycles", type=int, default=0,
                     help="0 = run until stopped")

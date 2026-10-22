@@ -1,12 +1,25 @@
 {
   "n_sites": 185,
-  "n_accepted": 1,
+  "n_accepted": 2,
   "results": [
     {
       "agency": "Department of Agriculture",
       "site": "https://www.da.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/dacentralphilippines",
+      "reason": "already in the registry"
+    },
+    {
+      "agency": "Department of Energy",
+      "site": "https://www.doe.gov.ph",
+      "ok": false,
+      "reason": "site unreachable"
+    },
+    {
+      "agency": "Department of Finance",
+      "site": "https://www.dof.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/DOFPH",
       "reason": "already in the registry"
     }
   ]
