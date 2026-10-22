@@ -1,6 +1,6 @@
 {
   "n_sites": 185,
-  "n_accepted": 2,
+  "n_accepted": 4,
   "results": [
     {
       "agency": "Department of Agriculture",
@@ -20,6 +20,38 @@
       "site": "https://www.dof.gov.ph",
       "ok": true,
       "url": "https://www.facebook.com/DOFPH",
+      "reason": "already in the registry"
+    },
+    {
+      "agency": "Department of Foreign Affairs",
+      "site": "https://www.dfa.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Department of Labor and Employment",
+      "site": "https://www.dole.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Department of Justice",
+      "site": "https://www.doj.gov.ph",
+      "ok": false,
+      "reason": "no facebook link on the site"
+    },
+    {
+      "agency": "Department of Science and Technology",
+      "site": "https://www.dost.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/DOSTph",
+      "reason": "already in the registry"
+    },
+    {
+      "agency": "Department of Transportation",
+      "site": "https://dotr.gov.ph",
+      "ok": true,
+      "url": "https://www.facebook.com/nationalyouthcommission",
       "reason": "already in the registry"
     }
   ]

@@ -6180,3 +6180,8 @@
 [06:30:19] [26/47] facebook/pidsgovph  https://www.facebook.com/pidsgovph
 [06:33:37]     capture failed: orca goto: unparseable output: 
 [06:33:37]   error: no posts captured
+[16:53:11] === worker: facebook on tab 0, 12 posts, mode=recent ===
+[16:53:11] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.pco.gov.ph/
+[16:53:11] 47 registered facebook accounts
+[16:53:11] [1/47] facebook/dost_pagasa: topping up (6 of 12 posts)
+[16:53:11] [1/47] facebook/dost_pagasa  https://www.facebook.com/PAGASA.DOST.GOV.PH

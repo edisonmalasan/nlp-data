@@ -182,6 +182,9 @@ def _run(argv=None) -> int:
                          "request-inviting stratum")
     ap.add_argument("--discover-every", type=int, default=3,
                     help="re-check the source frame every N cycles")
+    ap.add_argument("--skip-discovery", action="store_true",
+                    help="start straight into collection, without the "
+                         "source frame re-check")
     args = ap.parse_args(argv)
 
     state = {"cycle": 0, "started_at": datetime.now(timezone.utc).isoformat(),
@@ -193,7 +196,9 @@ def _run(argv=None) -> int:
         log(f"===== cycle {cycle} =====")
 
         # ---- 1. the source frame, now and then -------------------------
-        if cycle == 1 or (args.discover_every and cycle % args.discover_every == 0):
+        first = cycle == 1 and not args.skip_discovery
+        later = cycle > 1 and args.discover_every and cycle % args.discover_every == 0
+        if first or later:
             log("re-checking the source frame for new official accounts")
             code, out, err = run("discover", [PY, os.path.join(HERE, "discover_from_websites.py"),
                                               "--apply"], timeout=5400)
