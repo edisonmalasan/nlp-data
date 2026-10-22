@@ -186,12 +186,14 @@ study's scope describes, and the extension is there for a robustness check
 rather than as the study's dataset.
 
 **The per-source post count is a floor, not the planned eight to twelve.**
-The collection plan takes the most recent posts of each source. Facebook
-now serves only the first one or two posts of a page's feed in the driven
-tab and does not serve more on scrolling or on a reload, so 38 of 44 sources
+The collection plan takes the most recent posts of each source. Under
+continuous collection Facebook serves only the first one or two posts of
+a page's feed and does not serve more on scrolling or on a reload, so 38 of 44 sources
 contribute fewer than eight posts. The pages themselves load - the follower
-count, the category and the description all render - so this is a platform
-limit rather than a broken collector or an inactive account. The shortfall
+count, the category and the description all render - and a tab created for
+the page serves the whole feed after the session has rested, which is what
+identifies this as a rate limit rather than a broken collector or an
+inactive account. The shortfall
 is recorded per account rather than smoothed away, and the rule that
 forbids choosing posts by comment richness was kept, because the
 alternative - walking backwards until a post is busy - is exactly the

@@ -30,6 +30,7 @@ import contextlib
 import io
 import json
 import os
+import subprocess
 import sys
 import time
 import traceback
@@ -212,6 +213,46 @@ def _run(argv=None) -> int:
         except Exception:
             pass
 
+def fresh_tab(log):
+    """A brand new tab, because a used one stops serving the feed.
+
+    A Facebook page serves its full recent feed only on the FIRST load in a
+    tab. Every load after that in the same tab renders the page header and
+    one or two posts, and neither scrolling nor a reload brings the rest
+    back. That is measurable: on the pages below, a tab that had been used
+    served 2 to 6 post permalinks, and a tab created for the same page served
+    the full 12.
+
+    | page                    | used tab | fresh tab |
+    |-------------------------|----------|-----------|
+    | pnagovph                |    2     |    12     |
+    | sugarregulatoryadmin    |    2     |    12     |
+    | nncofficial             |    6     |    12     |
+    | civildefensePH          |    3     |    12     |
+
+    So each account is collected in a tab created for it, and the tab is
+    closed afterwards. Forty-seven extra tabs per pass is cheap; the posts
+    are the point.
+    """
+    try:
+        subprocess.run(["orca", "tab", "create", "--url", "about:blank"],
+                       capture_output=True, text=True, timeout=90)
+    except (OSError, subprocess.SubprocessError) as e:
+        log(f"  could not create a tab: {e}")
+        return None
+    time.sleep(2.0)
+    tabs = ob.list_tabs()
+    return tabs[-1]["browserPageId"] if tabs else None
+
+
+def close_tab(page, log):
+    try:
+        subprocess.run(["orca", "tab", "close", "--page", page],
+                       capture_output=True, text=True, timeout=90)
+    except (OSError, subprocess.SubprocessError):
+        pass
+
+
     beat("starting")
     log(f"=== worker: {args.platform} on tab {args.tab}, {args.posts} posts, "
         f"mode={args.mode} ===")
@@ -250,17 +291,23 @@ def _run(argv=None) -> int:
             log(f"[{i}/{len(registry)}] {key}  {row.get('official_account_url', '')}")
             tee = Tee(log)
             beat("collecting", source_page=row["source_page"])
+            # a tab of its own, because the first load in a tab is the only
+            # one that serves the page's full recent feed
+            acct_page = fresh_tab(log) or page
             try:
                 # the collector prints as it goes; capture that into the log
                 with contextlib.redirect_stdout(tee):
                     n_posts, n_comments, err = run_all.run_one(
-                        page, row, args.posts, notes, args.mode)
+                        acct_page, row, args.posts, notes, args.mode)
             except BaseException as e:
                 # a hard exit - the browser helper can take the process down
                 # with it - must not stop the rest of the run
                 n_posts, n_comments, err = 0, 0, f"{type(e).__name__}: {e}"
                 log(f"  FAILED: {err}")
                 traceback.print_exc()
+            finally:
+                if acct_page != page:
+                    close_tab(acct_page, log)
             if tee.buf.strip():
                 log(tee.buf.strip())
 

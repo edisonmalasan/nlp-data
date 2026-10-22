@@ -256,6 +256,9 @@ def _run(argv=None) -> int:
                          "request-inviting stratum")
     ap.add_argument("--discover-every", type=int, default=3,
                     help="re-check the source frame every N cycles")
+    ap.add_argument("--pause", type=float, default=6.0,
+                    help="seconds the worker waits between accounts; raise "
+                         "it when the platform is rate-limiting")
     ap.add_argument("--skip-discovery", action="store_true",
                     help="start straight into collection, without the "
                          "source frame re-check")
@@ -304,7 +307,8 @@ def _run(argv=None) -> int:
         for platform, mode, posts in queue:
             cmd = [PY, os.path.join(HERE, "worker.py"),
                    "--platform", platform, "--tab", "0",
-                   "--posts", str(posts), "--mode", mode, "--pause", "6"]
+                   "--posts", str(posts), "--mode", mode,
+                   "--pause", str(args.pause)]
             log(f"starting {platform}/{mode} on tab 0, {posts} posts")
             p = subprocess.Popen(cmd, cwd=ROOT)
             # Wait for the worker to finish, even past the deadline. Two

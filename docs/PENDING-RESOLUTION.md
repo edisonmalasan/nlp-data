@@ -114,6 +114,28 @@ themselves load: the follower count, the category and the self-description all
 render, and only the feed is short. So this is not a login wall, not a broken
 extractor, and not a page that has stopped posting.
 
+**It is a rate limit, and the shape of it is worth recording.** A tab created
+for the page sometimes serves the whole feed, and a tab that has already
+loaded something does not. After the collector had been paused, a tab created
+for the account returned **12 permalinks** on `pnagovph`,
+`sugarregulatoryadmin`, `nncofficial` and `civildefensePH`, against 2, 2, 6
+and 3 in a used tab. Twenty minutes of continuous driving later, a fresh tab
+returned **2, 2 and 3** again. So the limit follows the session's recent
+activity, not the tab and not the page, and a fresh tab buys a full feed only
+while the session is rested.
+
+Two defects were found and fixed on the way, and they matter when the limit
+lifts:
+
+1. **The account page was loaded twice.** `run_one` navigated to the account
+   and `capture_account` navigated to the same page again, so the first, good
+   load was spent on a page that was immediately replaced. The navigation now
+   happens once.
+2. **Each account now gets its own tab**, created for it and closed after.
+   A tab's first load is the one that carries the full feed.
+
+Neither fix makes the limit go away; both remove self-inflicted damage.
+
 **What this means.** The per-account post counts are **at or above what the
 platform would serve**, and the corpus is therefore short of the contract's
 8-12 posts for those sources. The delivered numbers are:
@@ -126,11 +148,15 @@ platform would serve**, and the corpus is therefore short of the contract's
 **Why it is recorded and not fixed.** The alternatives are both worse. Pushing
 harder on a session already being throttled risks the whole session; changing
 the sampling rule to reach older posts would breach §3.4's "no cherry-picking
-posts by comment richness", which is the rule that keeps the frame honest.
+posts by comment richness", which is the rule that keeps the frame honest. The
+collector therefore runs at a deliberately slow cadence — one account at a
+time, with a long pause between them and a long waiting cycle — so that it
+picks up whatever the platform will serve instead of forcing it.
 
 **Owner:** M6, one sentence in the Methodology - *the platform served a
-truncated recent feed, so the per-source post count is a floor rather than the
-planned 8-12.* **No code change is correct here.**
+truncated recent feed under continuous collection, so the per-source post count
+is a floor rather than the planned 8-12.* **No further code change is correct
+here; the lever is resting the session.**
 
 ### 3.4 YouTube yields are small
 

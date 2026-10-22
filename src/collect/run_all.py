@@ -147,11 +147,24 @@ def run_one(page, row, posts, notes, mode="recent"):
     source_page = row["source_page"]
     url = ACCOUNT_URL[platform](row)
 
-    ob.goto(page, url, settle=5.0)
-    time.sleep(2.0)
+    # Facebook is captured from the account page, and the account page does
+    # its own discovery as part of that. Discovering first and failing on an
+    # empty result would reject the accounts that capture_account can still
+    # collect.
+    use_account_capture = (platform == "facebook" and mode != "invites")
 
-    # the page has to render before anything can be read from it
-    ob.wait_for_content(page, ob.profile_markers(), timeout=20.0)
+    # A Facebook page serves its full recent feed only on the FIRST load in a
+    # tab; a second load of the same page in the same tab renders the header
+    # and one or two posts. capture_account opens the account page itself, so
+    # navigating here first would spend the tab's one good load on a page
+    # that is about to be replaced -- and the capture then sees two posts
+    # where twelve were available.
+    if not use_account_capture:
+        ob.goto(page, url, settle=5.0)
+        time.sleep(2.0)
+
+        # the page has to render before anything can be read from it
+        ob.wait_for_content(page, ob.profile_markers(), timeout=20.0)
 
     extract_js = ob.load_extract_js(EXTRACTORS[platform])
 
@@ -159,12 +172,6 @@ def run_one(page, row, posts, notes, mode="recent"):
         # the channel's videos tab is what lists the videos
         ob.goto(page, url.rstrip("/") + "/videos", settle=5.0)
         time.sleep(2.0)
-
-    # Facebook is captured from the account page, and the account page does
-    # its own discovery as part of that. Discovering first and failing on an
-    # empty result would reject the accounts that capture_account can still
-    # collect.
-    use_account_capture = (platform == "facebook" and mode != "invites")
 
     urls = []
     if not use_account_capture:
