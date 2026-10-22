@@ -5,12 +5,12 @@
     "dev": 0.15,
     "test": 0.15
   },
-  "n_labeled": 1619,
+  "n_labeled": 1618,
   "n_unlabeled_skipped": 0,
   "counts": {
     "train": 1133,
     "dev": 243,
-    "test": 243
+    "test": 242
   },
   "class_prior": {
     "train": {
@@ -24,11 +24,11 @@
       "n": 243
     },
     "test": {
-      "actionable": 0.177,
-      "other": 0.823,
-      "n": 243
+      "actionable": 0.1777,
+      "other": 0.8223,
+      "n": 242
     }
   },
-  "test_vs_train_prior_drift": 0.0004,
+  "test_vs_train_prior_drift": 0.0003,
   "grouped_by": "post_id"
 }

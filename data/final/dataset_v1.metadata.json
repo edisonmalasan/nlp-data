@@ -1,22 +1,22 @@
 {
   "dataset": "nlp-actionable-comments-v1",
   "dataset_version": "1.0",
-  "contract_version": "1.8-draft",
+  "contract_version": "1.9-draft",
   "guideline_version": "1.0-draft",
-  "built_at": "2026-10-22T12:17:05.621602+00:00",
+  "built_at": "2026-10-22T12:32:28.864867+00:00",
   "class_counts": {
     "actionable": 287,
-    "other": 1332
+    "other": 1331
   },
   "counts_by_split": {
     "train": 1133,
     "dev": 243,
-    "test": 243
+    "test": 242
   },
   "split_seed": 42,
   "cohens_kappa": null,
   "verification_counts": {
-    "auto": 1790
+    "auto": 1789
   },
   "task": {
     "definition": "actionable = the comment identifies a concrete action the agency could be asked to take, or that the commenter proposes the agency take",
@@ -28,31 +28,31 @@
   },
   "counts": {
     "primary_facebook": {
-      "n_rows": 1619,
+      "n_rows": 1618,
       "actionable": 287,
-      "other": 1332,
-      "actionable_rate": 0.1773
+      "other": 1331,
+      "actionable_rate": 0.1774
     },
     "extended_all_platforms": {
-      "n_rows": 1790,
+      "n_rows": 1789,
       "actionable": 289,
-      "other": 1501,
+      "other": 1500,
       "actionable_rate": 0.1615
     }
   },
   "platforms": {
-    "facebook": 1619,
+    "facebook": 1618,
     "youtube": 101,
     "x": 70
   },
   "strata": {
-    "recent": 1759,
+    "recent": 1758,
     "invites": 31
   },
   "languages": {
     "mixed": 404,
     "fil": 779,
-    "eng": 607
+    "eng": 606
   },
   "agencies": {
     "n_source_accounts": 50,
@@ -168,9 +168,9 @@
         "other": 240
       },
       "dilg": {
-        "rows": 152,
+        "rows": 151,
         "actionable": 30,
-        "other": 122
+        "other": 121
       },
       "dilg_x": {
         "rows": 12,
@@ -359,7 +359,7 @@
     "method": "LLM-assisted annotation with human verification",
     "engine": "src/annotate/auto_annotator.py",
     "confidence_threshold": 0.85,
-    "adjudicated_rows": 1353,
+    "adjudicated_rows": 1352,
     "auto_decided_rows": 437,
     "human_verified_rows": 0,
     "human_verification_pending": true,
@@ -367,27 +367,27 @@
     "reliability_statistic": "intra-annotator (test-retest) Cohen's kappa"
   },
   "lineage": {
-    "n_raw_captured": 3476,
-    "n_candidate_pool": 1619,
-    "n_labeled": 1619,
-    "n_usable_final": 1619,
+    "n_raw_captured": 3496,
+    "n_candidate_pool": 1618,
+    "n_labeled": 1618,
+    "n_usable_final": 1618,
     "n_excluded_by_reason": {
       "X_OFFICIAL": 53,
       "X_LANG": 11,
-      "X_DUP_EXACT": 1636,
-      "X_DUP_NEAR": 55,
+      "X_DUP_EXACT": 1656,
+      "X_DUP_NEAR": 56,
       "X_SPAM": 102
     },
-    "n_excluded_total": 1857,
+    "n_excluded_total": 1878,
     "all_platforms": {
-      "n_raw_captured": 3680,
-      "n_candidate_pool": 1790,
-      "n_excluded_total": 1890,
+      "n_raw_captured": 3700,
+      "n_candidate_pool": 1789,
+      "n_excluded_total": 1911,
       "n_excluded_by_reason": {
         "X_OFFICIAL": 69,
         "X_LANG": 11,
-        "X_DUP_EXACT": 1652,
-        "X_DUP_NEAR": 55,
+        "X_DUP_EXACT": 1672,
+        "X_DUP_NEAR": 56,
         "X_SPAM": 103
       }
     },

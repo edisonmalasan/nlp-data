@@ -13,14 +13,14 @@ media, labelled `actionable` (1) or `other` (0).
 
 | | |
 |---|---|
-| **Rows** | 1,619 |
-| **Distinct comments** | 1,619 |
+| **Rows** | 1,618 |
+| **Distinct comments** | 1,618 |
 | **Distinct posts** | 185 |
 | **Agencies (source accounts)** | 44 |
-| **Platforms** | facebook (1619) |
-| **Sampling strata** | recent (1588), invites (31) |
+| **Platforms** | facebook (1618) |
+| **Sampling strata** | recent (1587), invites (31) |
 | **Label `1` (actionable)** | 287 (17.7%) |
-| **Label `0` (other)** | 1,332 (82.3%) |
+| **Label `0` (other)** | 1,331 (82.3%) |
 | **Comment length (chars)** | median 73, p90 161 |
 | **Split** | 70 / 15 / 15, grouped by `post_id`, seed 42 |
 
@@ -69,21 +69,21 @@ labelled robustness analysis.
 
 | Platform | Rows | Share |
 |---|---|---|
-| facebook | 1,619 | 100.0% |
+| facebook | 1,618 | 100.0% |
 
 ### Per language
 
 | Language | Rows | Share |
 |---|---|---|
-| fil | 739 | 45.6% |
-| eng | 511 | 31.6% |
+| fil | 739 | 45.7% |
+| eng | 510 | 31.5% |
 | mixed | 369 | 22.8% |
 
 ### Per sampling stratum
 
 | Stratum | Rows | Share |
 |---|---|---|
-| recent | 1,588 | 98.1% |
+| recent | 1,587 | 98.1% |
 | invites | 31 | 1.9% |
 
 ### Per agency
@@ -92,7 +92,7 @@ labelled robustness analysis.
 |---|---|---|---|---|
 | dpwh | 502 | 103 | 399 | 20.5% |
 | deped | 268 | 28 | 240 | 10.4% |
-| dilg | 152 | 30 | 122 | 19.7% |
+| dilg | 151 | 30 | 121 | 19.9% |
 | doh | 77 | 4 | 73 | 5.2% |
 | OfficeOfTheVicePresidentPH | 47 | 1 | 46 | 2.1% |
 | PhilHealthofficial | 37 | 14 | 23 | 37.8% |
@@ -156,7 +156,7 @@ than the rest.
 | h_3f0026fd16fae3dc | 23 | 2 | 8.7% |
 | d_2d702ca032c46ec7 | 21 | 10 | 47.6% |
 
-The ten largest posts hold **824 of 1,619 rows (50.9%)**.
+The ten largest posts hold **824 of 1,618 rows (50.9%)**.
 A random-split classifier can therefore score well by recognising *which post a
 comment came from* rather than what it says. The split is grouped by `post_id`
 precisely so that a post's comments never straddle two splits — otherwise the
@@ -172,7 +172,7 @@ computed from surface markers, used only to describe the corpus. The label comes
 from the annotator.
 
 **The post caption is missing on some rows.** `post_text` is the post context -
-the caption of the post the comment sits on. It is empty for 517 of 1,619 rows (32%), because the extractor that
+the caption of the post the comment sits on. It is empty for 516 of 1,618 rows (32%), because the extractor that
 reads the caption was corrected after those captures were made. No caption is
 **wrong**: the ones that are present are real captions. This does not touch the
 modelling text field, which is `comment_text_norm` alone, and `post_text` is
@@ -252,7 +252,7 @@ the browser profile.
 | `data/final/dataset_v1.metadata.json` | Counts, class balance, lineage, and the exclusion ledger summary. |
 | `data/final/MANIFEST.json` | The file list and checksums for the package. |
 
-The extension file holds 1,790 rows across 1790 comments.
+The extension file holds 1,789 rows across 1789 comments.
 
 **The split files are authoritative.** The `split` column in the dataset is a
 mirror. If they ever disagree, the files win and it is a bug to fix.

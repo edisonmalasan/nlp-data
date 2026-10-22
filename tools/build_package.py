@@ -171,7 +171,7 @@ def main(argv=None) -> int:
     meta = {
         "dataset": "nlp-actionable-comments-v1",
         "dataset_version": "1.0",
-        "contract_version": "1.8-draft",
+        "contract_version": "1.9-draft",
         "guideline_version": "1.0-draft",
         "built_at": datetime.now(timezone.utc).isoformat(),
         "class_counts": {"actionable": stats(primary)["actionable"],

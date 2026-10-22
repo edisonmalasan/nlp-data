@@ -63,8 +63,14 @@ def is_near_duplicate(a: str, b: str) -> bool:
 
 
 def dedupe(rows: list, key_field: str = "dedup_key", text_field: str = "comment_text_norm",
-           group_field: str = "source_page", post_field: str = "post_id") -> tuple:
+           group_field: str = "source_page", post_field: str = "post_id",
+           exact_only: bool = False) -> tuple:
     """Remove exact and near duplicates.
+
+    `exact_only` skips the near-duplicate rules. The pipeline uses it for the
+    sweep that runs after the PII scrub, where the near rules have already
+    had their turn on the un-redacted text and re-running them on redacted
+    text would drop rows for a reason the ledger did not anticipate.
 
     Returns (kept_rows, removed_rows). Each removed row carries a `_reason`
     key holding the reason code, and `_dup_of` naming the row it lost to.
@@ -92,8 +98,8 @@ def dedupe(rows: list, key_field: str = "dedup_key", text_field: str = "comment_
             continue
 
         # ---------- near duplicate: keep the longer ----------
-        near = [other for other in bucket
-                if is_near_duplicate(text, other.get(text_field) or "")]
+        near = [] if exact_only else [other for other in bucket
+                                      if is_near_duplicate(text, other.get(text_field) or "")]
 
         if near:
             # how many KEPT rows in this group are near-identical to this one
@@ -123,7 +129,8 @@ def dedupe(rows: list, key_field: str = "dedup_key", text_field: str = "comment_
     return kept, removed
 
 
-def dedupe_dataset(rows: list) -> tuple:
+def dedupe_dataset(rows: list, exact_only: bool = False) -> tuple:
     """Convenience wrapper using the contract's column names."""
     return dedupe(rows, key_field="dedup_key", text_field="comment_text_norm",
-                  group_field="source_page", post_field="post_id")
+                  group_field="source_page", post_field="post_id",
+                  exact_only=exact_only)

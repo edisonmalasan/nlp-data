@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Contract version | `1.8-draft` |
+| Contract version | `1.9-draft` |
 | Status | **DRAFT — awaiting adviser + team sign-off** |
 | Created | 2026-10-20 |
 | Owner / Producer | Member 4 — **Edison Yin Malasan** (data collection, scraping, annotation) |
@@ -577,6 +577,14 @@ Rationale: exact-dedup alone leaves template spammers ("Good morning sir/ma'am, 
 
 **All deduplication happens before the train/dev/test split.** If a duplicate pair is split across train and test, the model is evaluated on text it has seen. §12.4 makes this a hard validation check.
 
+### 7.4 Exact duplicates in the delivered text
+
+§5.6's cleaning order puts the PII scrub last, because the interim layer keeps the verbatim text. The scrub can therefore collapse two comments that were distinct when 7.1 ran onto one delivered text: two people who each wrote nothing but their name both become `<NAME>`, and two comments that differ only in a phone number become identical.
+
+**Rule:** after the scrub, recompute `dedup_key` from `comment_text_norm` and apply 7.1 again, keeping the earliest captured and dropping the rest with reason `X_DUP_EXACT`. Apply **only** the exact rule, not 7.2: the near-duplicate rules have already run on the un-redacted text, and re-running them on a shorter, redacted text would remove rows for a reason the ledger was not designed to record.
+
+Rationale: 7.3 protects the split, and it can only protect the split against duplicates it can see. The text the model sees is the scrubbed text, so that is the text duplicates must be judged on. Without this rule a redacted form can appear in train and in test while every earlier check reports no duplicates.
+
 ---
 
 ## 8. Spam, low-value, and automated-content filters
@@ -900,6 +908,7 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 
 | Version | Date | Author | Change |
 |---|---|---|---|
+| `1.9-draft` | 2026-10-22 | M4 (MALASAN) | Added §7.4. The PII scrub runs last, so it can collapse two distinct comments onto one delivered text — two people who each wrote only their name both become `<NAME>`. 7.1's key was computed before the scrub and could not see that, and the corpus did carry one such pair across train and test. The scrub is now followed by an exact-only dedup sweep on `comment_text_norm`, with reason `X_DUP_EXACT`, because 7.3 can only protect the split against duplicates it can see. |
 | `1.0-draft` | 2026-10-20 | M4 (MALASAN) | Initial contract drafted from `NLP-PLAN.pdf` and `NLP-Final-Paper.pdf`. Schema, dedup/spam/PII rules, annotation interface, splits, validation, schedule. |
 | `1.8-draft` | 2026-10-20 | M4 (MALASAN) | Collection method switched to a computer-use agent reading the rendered DOM in the researcher's own signed-in browser. Section 3.2 rewritten around that route, with the `collection_method` values, the lazy-loading warning that truncated threads silently lose comments, and the sampling note. The source registry is pre-filled with 10 agencies across 38 policy domains. |
 | `1.7-draft` | 2026-10-20 | M4 (MALASAN) | Corrected the §5.6 reconciliation identity. It was written as a single linear chain, which made `n_candidate_pool + Σ exclusions = n_labeled` — that would make the labeled set larger than the pool it came from. The cleaning branch and the labeling branch are two separate equalities now. |

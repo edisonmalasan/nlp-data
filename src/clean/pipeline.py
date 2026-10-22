@@ -130,6 +130,24 @@ def clean(rows: list) -> tuple:
     for _r in survivors:
         _r["n_tokens"] = str(token_count(_r.get("comment_text_norm") or ""))
 
+    # ---------- stage 2f: exact duplicates in the DELIVERED text ----------
+    # The redaction can collapse two distinct comments onto one text: two
+    # people who each wrote nothing but their name both become <NAME>, and
+    # two comments that differ only in a phone number become identical. The
+    # sweep at 2d ran before the scrub and cannot see that, so without this
+    # the delivered file can carry the same text twice - in the worst case
+    # once in train and once in test, which is the leak contract 7.3 exists
+    # to prevent.
+    #
+    # Exact only. The near-duplicate rules already had their turn on the
+    # un-redacted text, and re-running them here would remove rows for a
+    # reason the ledger was not designed to record, on a shorter text that
+    # makes everything look more alike.
+    for _r in survivors:
+        _r["dedup_key"] = dedup_key(_r.get("comment_text_norm") or "")
+    survivors, scrubbed_dups = dedupe_dataset(survivors, exact_only=True)
+    ledger.extend(scrubbed_dups)
+
     return survivors, ledger
 
 
