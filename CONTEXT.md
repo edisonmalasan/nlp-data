@@ -10,9 +10,9 @@ then `DATA_CONTRACT.md` for the binding rules.
 | Institution | Saint Louis University · School of Accountancy, Management, Computing and Information Studies |
 | Academic year | 2026–2027 · CSE 30-9712 Special Topics 1 |
 | Owner | Member 4 (MALASAN) — the dataset producer |
-| Contract version | `1.5-draft` — see `DATA_CONTRACT.md` §17 |
-| Dataset schema | **40 columns** — see `DATA_CONTRACT.md` §5.2 |
-| Validation | **17 checks**, V-01…V-17 — see `DATA_CONTRACT.md` §14 |
+| Contract version | `2.0-draft` — see `DATA_CONTRACT.md` §17 |
+| Dataset schema | **34 columns** — see `DATA_CONTRACT.md` §5.2 |
+| Validation | **17 checks**, V-01…V-17 (18 assertions, including V-01b) — see `DATA_CONTRACT.md` §14 |
 
 ---
 
@@ -101,7 +101,7 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 
 | File | Grain | What it is |
 |---|---|---|
-| `dataset_v1.csv` | one row per usable comment | **The dataset.** 40 columns, labeled, Facebook-only. |
+| `dataset_v1.csv` | one row per usable comment | **The dataset.** 34 columns, labeled, Facebook-only. |
 | `dataset_v1_ext.csv` | one row per usable comment | Same schema across all platforms. Optional extension. |
 | `posts_v1.csv` | one row per source post | Post context master. Join on `post_id`. |
 | `splits/train.csv` `dev.csv` `test.csv` | one row per comment | **Authoritative** split assignment. Join on `comment_id`. |
@@ -138,26 +138,25 @@ Full step-by-step with checkboxes: **`docs/STAGES.md`**.
 
 ---
 
-## 4. The dataset schema (40 columns)
+## 4. The dataset schema (34 columns)
 
 | # | Column | Notes |
 |---|---|---|
 | 1 | `comment_id` | Unique, stable, `<platform>_<source_page>_<seq4>`. Never renumbered. |
-| 2–4 | `platform`, `source_page`, `source_page_name` | Where the comment came from. |
+| 2–4 | `platform`, `source_page`, `source_page_name` | Where the comment came from. `source_page_name` is the registry's display name. |
 | 5–7 | `agency_id`, `agency`, `agency_abbr` | **The Philippine government entity.** `agency_id` is the FK into `government_agencies.csv`. |
-| 8–13 | `post_id`, `post_url`, `post_date`, `post_text`, `post_media_type`, `post_topic` | **Post context.** |
-| 14–16 | `is_reply`, `parent_comment_id`, `parent_comment_text` | **Thread context.** |
-| 17–19 | `comment_text`, `comment_text_norm`, `context_text_norm` | **Text.** `comment_text` is verbatim; `comment_text_norm` is the modeling field. |
-| 20–21 | `dedup_key`, `n_tokens` | Dedup and length. |
-| 22 | `language` | `fil` / `eng` / `mixed`. |
-| 23–24 | `label`, `label_str` | **The target.** `1` = actionable, `0` = other. |
-| 25–30 | `annotator_id`, `label_2`, `agreement`, `adjudicated_by`, `adjudication_note`, `guideline_version` | Annotation trace. |
-| 31–32 | `source_snapshot`, `collected_at` | Provenance. |
-| 33 | `pii_redacted` | Whether the scrub touched the row. |
-| 34 | `verification` | `auto` / `human_verified` / `human_labeled`. |
-| 35 | `split` | Mirror of the split files. The files are authoritative. |
-| 36 | `notes` | Free text. |
-| 37–39 | `annotation_rule`, `annotation_evidence`, `annotation_confidence` | **Why each label was assigned.** |
+| 8–11 | `post_id`, `post_url`, `post_date`, `post_text` | **Post context.** `post_date` is the earliest capture's date, shared by every comment on the post. |
+| 12–14 | `comment_text`, `comment_text_norm`, `context_text_norm` | **Text.** `comment_text` is verbatim; `comment_text_norm` is the modeling field; `context_text_norm` is the post caption only. |
+| 15–16 | `dedup_key`, `n_tokens` | Dedup and length. |
+| 17 | `language` | `fil` / `eng` / `mixed`. |
+| 18–19 | `label`, `label_str` | **The target.** `1` = actionable, `0` = other. |
+| 20–25 | `annotator_id`, `label_2`, `agreement`, `adjudicated_by`, `adjudication_note`, `guideline_version` | Annotation trace. `label_2`/`agreement` are populated on the reliability sample. |
+| 26–27 | `source_snapshot`, `collected_at` | Provenance. |
+| 28 | `pii_redacted` | Whether the scrub touched the row. |
+| 29 | `split` | Mirror of the split files. The files are authoritative. |
+| 30 | `verification` | `auto` / `llm_verified` / `human_verified` / `human_labeled`. |
+| 31–33 | `annotation_rule`, `annotation_evidence`, `annotation_confidence` | **Why each label was assigned.** |
+| 34 | `stratum` | `recent` or `invites` — which post-selection stratum the post came from. |
 
 ---
 
@@ -205,10 +204,10 @@ authoritative; the `split` column is only a mirror.
 |---|---|---|
 | Confidence threshold for auto-deciding a label | `0.85` | `auto_annotator.py` |
 | Random audit sample of confident rows | `10%` (seed `42`) | `auto_annotator.py` |
-| Blinded re-label pass | `20%` of rows (≥ 200) | guidelines §8.2 |
-| Washout before the re-label pass | `≥ 7 days` | guidelines §8.2 |
+| Blinded re-label pass | `20%` of rows (332 of 1,657) | guidelines §8.2 |
+| Washout before the re-label pass | `0 days` in this release; κ is reported as an upper bound | guidelines §10.1 |
 | Reliability gate (Cohen's κ) | `≥ 0.60` | guidelines §10.1 |
-| Human verification sample | `≥ 100` rows, blind | guidelines §8.5 |
+| Independent verification sample | `120` rows, blind, method `llm_verified` | guidelines §8.5 |
 | Target usable comments | `≥ 1,000` combined | contract §3.4 |
 | Target Facebook-only usable comments | `≥ 600` | contract §3.4 |
 | Minimum per class | `≥ 150` | contract §9 |
@@ -291,10 +290,10 @@ python tools/build_release.py --build --zip
 | **Other** | Label `0`. Everything else. |
 | **Action object** | The thing that should be changed or fixed. Its presence separates an actionable wish from a general one. |
 | **Marker** | A politeness/request word. Evidence, never the definition. |
-| **Post context** | The source post's text and metadata, plus the parent comment for replies. Shown to every adjudicator. |
+| **Post context** | The source post's text and metadata. The corpus is top-level comments only, so no parent comment is shown. |
 | **Adjudication** | Deciding a row the engine was not sure about, by applying the guidelines. |
-| **Blinded re-label pass** | Re-labeling a subset after a washout, without seeing the first answer. The basis of κ. |
-| **Gold set** | A fixed, human-checked subset used to measure the engine's accuracy. |
+| **Blinded re-label pass** | Re-labeling a subset without seeing the first answer. The basis of κ. |
+| **Gold set** | A fixed, independently checked subset used to measure an annotator's accuracy. |
 | **Prior** | The natural fraction of actionable comments in collected data, before any balancing. |
 | **Mixed / code-switched** | A comment containing both Filipino and English in meaningful proportion. |
 | **Lineage** | The row-count chain from raw capture to final dataset. Must reconcile exactly. |

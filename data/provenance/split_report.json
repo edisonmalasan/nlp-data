@@ -14,21 +14,21 @@
   },
   "class_prior": {
     "train": {
-      "actionable": 0.1792,
-      "other": 0.8208,
+      "actionable": 0.1705,
+      "other": 0.8295,
       "n": 1161
     },
     "dev": {
-      "actionable": 0.1774,
-      "other": 0.8226,
+      "actionable": 0.1694,
+      "other": 0.8306,
       "n": 248
     },
     "test": {
-      "actionable": 0.1774,
-      "other": 0.8226,
+      "actionable": 0.1694,
+      "other": 0.8306,
       "n": 248
     }
   },
-  "test_vs_train_prior_drift": 0.0018,
+  "test_vs_train_prior_drift": 0.0011,
   "grouped_by": "post_id"
 }

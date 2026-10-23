@@ -65,16 +65,20 @@ def count_labels(path: str) -> dict:
     rows = csv_rows(path)
     actionable = sum(1 for r in rows if r.get("label") == "1")
     other = sum(1 for r in rows if r.get("label") == "0")
-    verified = sum(
+    llm_verified = sum(1 for r in rows if r.get("verification") == "llm_verified")
+    human_verified = sum(
         1 for r in rows if r.get("verification", "") in ("human_verified", "human_labeled")
     )
+    verified = llm_verified + human_verified
     return {
         "n_rows": len(rows),
         "actionable": actionable,
         "other": other,
         "actionable_rate": round(actionable / len(rows), 4) if rows else 0.0,
-        "n_human_verified": verified,
-        "human_verified_rate": round(verified / len(rows), 4) if rows else 0.0,
+        "n_verified": verified,
+        "verified_rate": round(verified / len(rows), 4) if rows else 0.0,
+        "n_llm_verified": llm_verified,
+        "n_human_verified": human_verified,
     }
 
 
@@ -187,7 +191,8 @@ def do_build(args) -> int:
     print(f"Package written to {FINAL}")
     print(f"  {stats['n_rows']} rows  ({stats['actionable']} actionable / {stats['other']} other)")
     print(f"  splits: {splits}")
-    print(f"  human-verified: {stats['n_human_verified']} ({stats['human_verified_rate']:.1%})")
+    print(f"  verified: {stats['n_verified']} ({stats['verified_rate']:.1%}) "
+          f"[llm={stats['n_llm_verified']} human={stats['n_human_verified']}]")
     print(f"  files: {len(manifest_files)} + MANIFEST.json")
 
     if args.zip:

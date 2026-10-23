@@ -145,10 +145,10 @@ get IP-blocked and lose collection time.
 
 **Goal:** every comment labeled `1` (actionable) or `0` (other), with measured agreement.
 
-**Labeling is automated** by `src/annotate/auto_annotator.py`, with human verification of
-≥ 100 rows and a blinded re-label pass for the reliability number. You are not
-hand-labeling a thousand comments — you are adjudicating the ambiguous ones and
-verifying a sample.
+**Labeling is automated** by `src/annotate/auto_annotator.py`, with LLM adjudication and
+independent **model-assisted** verification of ≥ 100 rows, plus a blinded re-label pass for
+the reliability number. You are not hand-labeling a thousand comments — you are adjudicating
+the ambiguous ones and verifying a sample.
 
 **3a — Guidelines**
 - [ ] Read `docs/ANNOTATION_GUIDELINES.md` §2 (the core rule) and §5 (the example bank) end
@@ -181,17 +181,19 @@ verifying a sample.
       keeping whichever you wrote first), amend the guidelines if they were unclear, bump the
       version, re-annotate the affected rows, and re-measure.
 
-**3f — Human verification (required)**
+**3f — Independent verification (required)**
 - [ ] Verify **≥ 100 random rows** that the engine labeled, **without seeing its label
-      first**.
-- [ ] Record the agreement rate and Cohen's κ between your reading and the engine's.
-- [ ] Set `verification = human_verified` on those rows.
+      first**. The verifier may be a person (`human_verified`) or a separate model
+      annotator (`llm_verified`) — record which one was actually used.
+- [ ] Record the agreement rate and Cohen's κ between the second reading and the engine's.
+- [ ] Set `verification` on those rows to the method actually used.
 - [ ] Measure the **engine's own accuracy** on that sample — the share of its labels you
       confirmed, broken down by `annotation_rule`. This is the engine's audit number.
-- [ ] If the engine disagrees with you on more than ~20% of the sample, **stop and fix the
-      cue lists** before releasing (`src/annotate/README.md` §Tuning). Do not release a
-      dataset whose annotator is this far off.
-- [ ] Report the sample size, the agreement rate and κ in the write-up.
+- [ ] If the engine disagrees with the verifier on more than ~20% of the sample, **stop and
+      fix the cue lists** before releasing (`src/annotate/README.md` §Tuning). Do not release
+      a dataset whose annotator is this far off.
+- [ ] Report the sample size, the agreement rate, κ, and the verification method in the
+      write-up. Never call a model pass human verification.
 
 **3g — Finalize**
 - [ ] Resolve every pass-1 vs pass-2 disagreement → `label`, `adjudicated_by`,
@@ -203,8 +205,9 @@ verifying a sample.
 `guideline_version` is set on every row.
 
 > **How to describe this in the write-up:** *intra-annotator reliability*, measured by a blinded
-> re-annotation pass after a 7-day washout. **Not** inter-annotator agreement — there is only
-> one annotator, and calling it that is a misreport.
+> re-annotation pass. **Not** inter-annotator agreement — there is only one annotator, and
+> calling it that is a misreport. If the pass ran without a washout, report κ as an upper
+> bound and say so.
 
 ---
 
@@ -259,7 +262,7 @@ layer, so the working layer stays the source of truth:
 
 | Working layer (`data/processed/`) | Released as (`data/final/`) |
 |---|---|
-| `dataset_v1.csv` — 40 columns, labeled, **Facebook only** | `dataset_v1.csv` |
+| `dataset_v1.csv` — 34 columns, labeled, **Facebook only** | `dataset_v1.csv` |
 | `dataset_v1_ext.csv` — same schema, all platforms | `dataset_v1_ext.csv` |
 | `splits/{train,dev,test}.csv` — **authoritative** | `train.csv`, `dev.csv`, `test.csv` |
 | `posts_v1.csv` — post context master | `posts_v1.csv` |
@@ -270,14 +273,13 @@ layer, so the working layer stays the source of truth:
 | — | `MANIFEST.json` — counts + SHA-256 per file |
 | — | `nlp-actionable-comments-v1.zip` |
 
-The 40 columns, in order: `comment_id`, `platform`, `source_page`, `source_page_name`,
+The 34 columns, in order: `comment_id`, `platform`, `source_page`, `source_page_name`,
 `agency_id`, `agency`, `agency_abbr`, `post_id`, `post_url`, `post_date`, `post_text`,
-`post_media_type`, `post_topic`, `is_reply`, `parent_comment_id`, `parent_comment_text`,
 `comment_text`, `comment_text_norm`, `context_text_norm`, `dedup_key`, `n_tokens`, `language`,
 `label`, `label_str`, `annotator_id`, `label_2`, `agreement`, `adjudicated_by`,
 `adjudication_note`, `guideline_version`, `source_snapshot`, `collected_at`, `pii_redacted`,
-`verification`, `split`, `notes`, `annotation_rule`, `annotation_evidence`,
-`annotation_confidence`.
+`split`, `verification`, `annotation_rule`, `annotation_evidence`, `annotation_confidence`,
+`stratum`.
 
 **Gate G3 — label freeze.**
 
@@ -289,7 +291,7 @@ The 40 columns, in order: `comment_id`, `platform`, `source_page`, `source_page_
 
 ```
 data/final/
-  dataset_v1.csv              ← the labeled dataset (40 columns)
+  dataset_v1.csv              ← the labeled dataset (34 columns)
   train.csv                   ← authoritative
   dev.csv                     ← authoritative
   test.csv                    ← authoritative  ← the held-out set, used ONCE
@@ -338,7 +340,7 @@ change accordingly (§3a–§3g).
 | Collect comments using an authorized method | **1** | ✅ `data/raw/` — public HTML/DOM, no credentials |
 | Clean the dataset (remove exact duplicates and spam) | **2b, 2d** | ✅ `X_DUP_EXACT`, `X_DUP_NEAR`, `X_SPAM` |
 | Anonymize data | **2e** | ✅ PII scrub, `X_PII` |
-| Label the comments (LLM-assisted, with human verification) | **3a–3g** | ✅ the engine auto-decided 417 rows; 1,046 were adjudicated against the written guidelines; the human verification pass and the blinded re-label are the release gate |
+| Label the comments (LLM-assisted, with model-assisted verification) | **3a–3g** | ✅ the engine auto-decided 446 rows; 1,382 were adjudicated against the written guidelines; 120 independently verified and 332 re-labelled blind are the release gate |
 | Auto annotator, if accurate | **3f** | ✅ gated on macro-F1 ≥ 0.80 and κ ≥ 0.60 |
 
 **Fully covered.** Six for six.

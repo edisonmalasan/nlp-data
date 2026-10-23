@@ -271,13 +271,28 @@ def write_csv(path: str, rows: list, fields: list, append: bool = False) -> None
 
 
 def append_log(row: dict) -> None:
+    """Record one run, replacing any earlier entry for the same run.
+
+    `to_interim` is re-run over the same raw snapshots on every clean, so a
+    plain append duplicates the whole log each time this repository is rebuilt.
+    The log is keyed by (run_id, platform, source_page): a re-read updates the
+    entry instead of appending a second copy.
+    """
     os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)
-    new = not os.path.exists(LOG_PATH)
-    with io.open(LOG_PATH, "a", encoding="utf-8", newline="") as fh:
+    row = {f: row.get(f, "") for f in LOG_FIELDS}
+    rows = []
+    if os.path.exists(LOG_PATH):
+        with io.open(LOG_PATH, encoding="utf-8", newline="") as fh:
+            rows = list(csv.DictReader(fh))
+    key = (row["run_id"], row["platform"], row["source_page"])
+    rows = [r for r in rows
+            if (r.get("run_id"), r.get("platform"), r.get("source_page")) != key]
+    rows.append(row)
+    with io.open(LOG_PATH, "w", encoding="utf-8", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=LOG_FIELDS, extrasaction="ignore")
-        if new:
-            w.writeheader()
-        w.writerow({f: row.get(f, "") for f in LOG_FIELDS})
+        w.writeheader()
+        for r in rows:
+            w.writerow({f: r.get(f, "") for f in LOG_FIELDS})
 
 
 def reconcile_posts(post_rows, comment_rows):

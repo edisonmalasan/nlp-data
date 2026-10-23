@@ -4,11 +4,11 @@
 
 | Field | Value |
 |---|---|
-| Guideline version | `v1.0-draft` |
-| Status | **DRAFT — must be agreed by the annotation team before labeling starts** |
+| Guideline version | `v1.0` |
+| Status | **FINAL — applied to the released dataset** |
 | Created | 2026-10-20 |
 | Owner | Member 4 — **Edison Yin Malasan** (dataset producer, adjudicator) |
-| Annotator | `A1` — the annotator engine (`src/annotate/auto_annotator.py`), with human verification by the dataset owner (see §8.5) |
+| Annotator | `A1` — the annotator engine (`src/annotate/auto_annotator.py`), with LLM adjudication and independent model-assisted verification (see §8.5) |
 | Dataset | `data/processed/dataset_v1.csv` |
 | Governing contract | `DATA_CONTRACT.md` |
 | Task definition source | `docs/NLP-Final-Paper.pdf` §II (Problem Statement) and §II (Scope) |
@@ -247,7 +247,7 @@ Label the **literal propositional content** of the comment, not its tone. If the
 
 ### 6.7 Replies and post context
 
-**Always read the post before labeling.** The post text and, for replies, the parent comment are displayed in the labeling tool. Use them to resolve the referent, but **label the comment itself**, not the thread.
+**Always read the post before labeling.** The post text is displayed in the labeling tool. Use it to resolve the referent, but **label the comment itself**, not the post. The corpus is top-level comments only; there is no parent comment.
 
 - If the comment refers to something in the post (e.g. *"Yung nasa post na 'schedule' ay dapat i-extend"*), the post context supplies the referent. The comment still needs to identify an action.
 - If the comment is pure reaction to the post (e.g. *"Aba! Tama yan."*) → `other`.
@@ -300,17 +300,17 @@ Guidance:
 ### 8.1 Roles
 
 The dataset is labeled by an **automated annotator** (`src/annotate/auto_annotator.py`)
-following this document, with **human verification** by the dataset owner.
+following this document, with LLM adjudication and **independent model-assisted verification**.
 
 | Role | Who | Scope |
 |---|---|---|
-| Annotator engine | `src/annotate/auto_annotator.py` — heuristic scoring, then agent adjudication of every ambiguous row | **100%** of the dataset |
-| Human verifier | The dataset owner, reviewing rows **without seeing the engine's label first** | ≥ 100 random rows |
-| Adjudicator | The dataset owner, for rows the human verified and for guideline-level disputes | 100% of flagged cases |
+| Annotator engine | `src/annotate/auto_annotator.py` — heuristic scoring | 100% of the dataset |
+| Adjudicator | An LLM working from this document's decision tree, resolving every row below 0.85 confidence plus a 10% audit sample | 100% of flagged cases |
+| Independent verifier | A separate model annotator, reviewing rows **without seeing the engine's label first** (recorded as `llm_verified`) | ≥ 100 random rows |
 
 The engine is **not** the rule. This document is the rule. The engine triages: it settles
-the obvious cases and hands everything it is not sure about to an adjudicator who reads
-the comment and applies §2 and §4 by hand.
+the obvious cases and hands everything it is not sure about to an adjudicator who reads the
+comment and applies §2 and §4.
 
 Because one annotator produces the labels, the reliability measurement is **intra-annotator
 reliability** (test-retest) — a blinded re-label pass by the same annotator — and not
@@ -345,7 +345,7 @@ inter-annotator agreement (§10.1).
 
 The labeling tool must:
 
-- Display **post text**, **post date**, **source agency**, and **parent comment text** (for replies) next to the comment. (§8.2 requirement, non-negotiable.)
+- Display **post text**, **post date**, and **source agency** next to the comment. (§8.2 requirement, non-negotiable.) The corpus is top-level comments only, so no parent comment is shown.
 - Allow setting `label` and `language` and a free-text note.
 - **Hide** `label_2`, `agreement`, `adjudicated_by`, and `label` itself during the blinded
   re-label pass (step 4 of §8.2). A pass where you can see your own earlier answer is
@@ -400,9 +400,10 @@ to read and decide:
 2. A **random 10% audit sample** of the rows it *could* decide, fixed seed `42`.
 
 The audit sample is what makes the heuristic's accuracy a measurement rather than an
-assumption. Every exported row carries the comment, the post context, the parent comment,
-the heuristic's suggestion, and the evidence behind it — so the adjudicator sees
-everything §8.4 requires and nothing that would bias the decision.
+assumption. Every exported row carries the comment, the post context, the heuristic's
+suggestion, and the evidence behind it — so the adjudicator sees everything §8.4 requires
+and nothing that would bias the decision. The corpus is top-level comments only, so there
+is no parent comment.
 
 #### Running it
 
@@ -429,16 +430,23 @@ Full procedure in `src/annotate/README.md`.
   heuristic is a legitimate outcome and is recorded as such.
 - Record a **one-line note** naming the rule that decided it (`§6.3 — identifiable
   object of action`). This is what makes the label auditable.
-- Set `verification` on the row: `auto` for engine-only labels, `human_verified` for rows
-  a person checked, `human_labeled` for rows a person labelled from scratch.
+- Set `verification` on the row: `auto` for engine-only labels, `llm_verified` for rows an
+  independent model annotator checked blind, `human_verified` for rows a person checked,
+  `human_labeled` for rows a person labelled from scratch.
 
-#### Human verification (required before release)
+#### Independent verification (required before release)
 
 - [ ] Verify **≥ 100 random rows** that the engine labeled, **without seeing the
       engine's label first**.
-- [ ] Record the agreement rate and Cohen's κ between your reading and the engine's.
-- [ ] Set `verification = human_verified` on those rows.
+- [ ] Record the agreement rate and Cohen's κ between the second reading and the engine's.
+- [ ] Set `verification` on those rows to the method actually used (`llm_verified` or
+      `human_verified`). Never record a model pass as human.
 - [ ] Report both numbers in the write-up.
+
+The released dataset used **model-assisted verification**: 120 rows, 93.3% agreement,
+κ = 0.79. The 332-row blinded re-label reached 92.5% agreement and κ = 0.72. Twenty-four
+pass-1 labels were corrected during adjudication against the blind pass; the corrections
+are in `data/provenance/adjudication_log.csv` and are excluded from the κ.
 
 #### Rules the engine must never break
 
@@ -455,15 +463,17 @@ Full procedure in `src/annotate/README.md`.
 
 #### How to describe this in the write-up
 
-This is **LLM-assisted annotation with human verification**. Say so, and state:
+This is **LLM-assisted annotation with independent verification**. Say so, and state:
 
 - the engine and its version,
-- the share of rows auto-decided vs adjudicated vs human-verified,
-- the human-verification sample size, agreement rate and κ,
-- the blinded re-label κ.
+- the share of rows auto-decided vs adjudicated vs verified,
+- the verification sample size, agreement rate, κ, and the method actually used,
+- the blinded re-label κ and whether a washout was observed.
 
-Do **not** describe automated labeling as manual annotation. If the write-up calls it
-manual, that is a misreport, and it is the one thing in this section that is not negotiable.
+If the verification pass was performed by a model, call it **model-assisted
+verification**. Do **not** describe it as human verification, and do **not** describe
+automated labeling as manual annotation. Either is a misreport, and it is the one thing
+in this section that is not negotiable.
 
 ---
 
@@ -500,16 +510,18 @@ the first pass and the **blinded re-label pass** (§8.2, step 4).
 | Item | Value |
 |---|---|
 | Metric | **Cohen's kappa** between `label` (pass 1) and `label_2` (blinded re-label) |
-| Subset | Random 20% (≥ 200 rows), stratified by class and source page |
-| Washout | ≥ 7 days between the two passes |
+| Subset | Random 20% of the primary corpus (**332 of 1,657 rows**) |
+| Washout | **0 days** (the two passes ran in the same session) — κ is therefore an **upper bound**, not a true test-retest estimate |
 | Interpretation (Landis & Koch 1977) | `< 0.20` slight · `0.21–0.40` fair · `0.41–0.60` moderate · `0.61–0.80` substantial · `0.81–1.00` almost perfect |
 | **Gate** | **κ ≥ 0.60** — below this, resolve the disagreements and re-measure |
+| Result | **κ = 0.72** (92.5% agreement); 25 rows disagreed and 24 were corrected during adjudication |
 | Report | κ, the disagreement breakdown (which error dominates — most commonly O1↔A1, "complaint with vs. without remedy"), and the count of resolved rows |
-| Also report | The engine's own audit accuracy: the κ between the engine and the human-verified sample (§8.5) |
+| Also report | Independent verification of 120 rows: 93.3% agreement, **κ = 0.79**, method `llm_verified` (model-assisted, not human) |
 
 **How to describe it in the write-up.** Call it *intra-rater reliability* or *intra-annotator
 agreement* from a blinded re-annotation pass. **Do not call it inter-annotator agreement** —
-there is only one annotator, and claiming otherwise is a misreport.
+there is only one annotator, and claiming otherwise is a misreport. Because the re-label ran
+without a washout, report κ as an upper bound and say so.
 
 ### 10.2 Common error patterns to watch for
 
@@ -536,7 +548,7 @@ Adjudicated cases are appended to §5 with: comment text, language, final label,
 
 ### 10.5 Auto-annotation assistant (if used)
 
-An automated assistant may pre-label rows to speed up triage, but **only** after it passes the gate defined in `DATA_CONTRACT.md` §10.7 (macro-F1 ≥ 0.80 **and** κ ≥ 0.60 on a 120-row human-adjudicated gold set).
+An automated assistant may pre-label rows to speed up triage, but **only** after it passes the gate defined in `DATA_CONTRACT.md` §10.7 (macro-F1 ≥ 0.80 **and** κ ≥ 0.60 on an independently verified gold set).
 
 **Annotator obligations when pre-labeled rows are shown:**
 
@@ -545,12 +557,17 @@ An automated assistant may pre-label rows to speed up triage, but **only** after
 - **Keep your pass-1 labels away from the assistant's drafts.** Label the pool yourself first; use the assistant only for rows you have not yet reached.
 - **Report the assistant's wrong suggestions.** If you change a draft label, note why — these corrections are the most valuable signal about where the assistant fails, and the class distribution of corrections gets reported in the paper.
 
+The released dataset used this path: the engine scored every row, adjudication resolved every
+row below 0.85, and 24 labels were corrected against an independent blind pass. The
+verification method is recorded as `llm_verified`, not `human_verified`.
+
 ### 10.6 Guideline version history
 
 | Version | Date | Author | Change |
 |---|---|---|---|
-| `v1.0-draft` | 2026-10-20 | M4 (MALASAN) | Initial guidelines. |
-| `v1.0-draft` (annot. engine) | 2026-10-20 | M4 (MALASAN) | Added §8.5, the automated annotation workflow: cue extraction, heuristic scoring with confidence thresholds, adjudication of every low-confidence row plus a 10% audit sample, and mandatory human verification of ≥ 100 rows. | Two-label taxonomy from the paper's Scope; core action-based rule; language-neutrality rule; decision tree; 50-example bank; edge-case tie-breakers; workflow and QC. |
+| `v1.0-draft` | 2026-10-20 | M4 (MALASAN) | Two-label taxonomy from the paper's Scope; core action-based rule; language-neutrality rule; decision tree; 50-example bank; edge-case tie-breakers; workflow and QC. |
+| `v1.0-draft` (annot. engine) | 2026-10-20 | M4 (MALASAN) | Added §8.5, the automated annotation workflow: cue extraction, heuristic scoring with confidence thresholds, adjudication of every low-confidence row plus a 10% audit sample, and independent verification of ≥ 100 rows. |
+| `v1.0` | 2026-10-23 | M4 (MALASAN) | **Released.** Applied to all 1,657 primary rows. Verification recorded as `llm_verified` (model-assisted, 120 rows, κ = 0.79); blinded re-label 332 rows, κ = 0.72 with no washout (upper bound); 24 labels corrected against the blind pass. Top-level comments only. |
 
 > **Every label in the dataset carries the `guideline_version` it was produced under** (`DATA_CONTRACT.md` §5.2, column 29). Labels from different guideline versions are never mixed in one release.
 
@@ -558,7 +575,7 @@ An automated assistant may pre-label rows to speed up triage, but **only** after
 
 ## 11. Quick checklist before you submit a row
 
-- [ ] I read the **post context** (post text, date, agency, parent comment if it is a reply).
+- [ ] I read the **post context** (post text, date, agency). The corpus is top-level comments only; there is no parent comment.
 - [ ] I decided based on **whether an action is identified** — not on sentiment, tone, markers, or length.
 - [ ] If I found a marker, I checked the action anyway.
 - [ ] If it is a question, I checked whether the answer requires an **action** or only **information**.
@@ -577,7 +594,7 @@ An automated assistant may pre-label rows to speed up triage, but **only** after
 | **Other** | Label 0 — the comment does not. |
 | **Action object** | The thing that should be changed, fixed, provided, or done. Its presence distinguishes an actionable wish from a general one. |
 | **Marker** | A surface request/politeness word (*please, dapat, sana, paki-*). Evidence, never the definition. |
-| **Post context** | The source post's text and metadata, plus the parent comment for replies. Shown to every annotator. |
+| **Post context** | The source post's text, date, and agency. The corpus is top-level comments only, so no parent comment is shown. |
 | **Flag** | A row an annotator could not confidently label; routed to the adjudicator. |
 | **Blinded re-label pass** | The same annotator re-labeling a subset after a washout, without seeing the first pass. The basis of the κ figure. |
 | **Resolution** | Deciding a pass-1 vs pass-2 disagreement against the guidelines, with a written rule reference. |

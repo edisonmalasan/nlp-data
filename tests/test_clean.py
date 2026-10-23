@@ -54,12 +54,8 @@ def run() -> list:
     check("dedup key empty", dedup_key(""), "")
 
     # ---- context (contract 6.3) ----
-    check("context both", build_context("Post text", "Parent text"),
-          "[POST] Post text [COMMENT_PARENT] Parent text")
-    check("context post only", build_context("Post text", ""), "[POST] Post text")
-    check("context parent only", build_context("", "Parent text"),
-          "[COMMENT_PARENT] Parent text")
-    check("context none", build_context("", ""), "")
+    check("context post", build_context("Post text"), "[POST] Post text")
+    check("context none", build_context(""), "")
 
     # ---- near duplicate (contract 7.2) ----
     check("identical is near", is_near_duplicate("fix the road please", "fix the road please"), True)

@@ -98,9 +98,7 @@ def clean(rows: list) -> tuple:
         row["comment_text_norm"] = norm
         row["dedup_key"] = dedup_key(norm)
         row["n_tokens"] = token_count(norm)
-        row["context_text_norm"] = build_context(
-            row.get("post_text", ""), row.get("parent_comment_text", "")
-        )
+        row["context_text_norm"] = build_context(row.get("post_text", ""))
         if not norm:
             dup = dict(row)
             dup["_reason"] = "X_EMPTY"

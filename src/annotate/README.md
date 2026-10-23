@@ -51,8 +51,6 @@ Each line of `batch_NNN.jsonl` carries everything needed to apply the guideline:
   "comment_id": "fb_dost_pagasa_0007",
   "comment_text": "Sana maayos ang kalsada.",
   "post_text": "PAGASA: ... advisory ...",
-  "parent_comment_text": "",
-  "is_reply": "false",
   "heuristic_label": 1,
   "heuristic_confidence": 0.6,
   "heuristic_rule": "request_marker + object_only",
@@ -92,22 +90,26 @@ python src/annotate/auto_annotator.py apply \
 Rows with no decision keep their heuristic label and are reported as a warning. **Every
 row must have a decision before release.**
 
-### 4. Human verification (required before release)
+### 4. Independent verification (required before release)
 
-The paper needs a human-checked number. Verify a **random sample of ≥ 100 rows** that the
-assistant labelled, without seeing the assistant's label first. Report:
+Verify a **random sample of ≥ 100 rows** that the assistant labelled, without seeing the
+assistant's label first. The verifier may be a person or a separate model annotator; record
+which one was used. Report:
 
 - how many rows were verified,
 - the agreement rate,
-- Cohen's κ between the human reading and the assistant's label.
+- Cohen's κ between the second reading and the assistant's label,
+- the method actually used.
 
-Set `verification` on those rows to `human_verified`.
+Set `verification` on those rows to `llm_verified` or `human_verified` — never record a model
+pass as human. The released dataset used `llm_verified`: 120 rows, 93.3% agreement, κ = 0.79.
 
 ### 5. Blinded re-label pass (reliability)
 
-See `docs/ANNOTATION_GUIDELINES.md` §8.3. After a **≥ 7-day washout**, re-label the same
-20% sample **blind** (the `label` column must be hidden) and compute Cohen's κ between
-`label` and `label_2`. Gate: **κ ≥ 0.60**.
+See `docs/ANNOTATION_GUIDELINES.md` §8.3. Re-label the same 20% sample **blind** (the `label`
+column must be hidden) and compute Cohen's κ between `label` and `label_2`. Gate: **κ ≥ 0.60**.
+A washout of ≥ 7 days is preferred; if the pass runs without one, report κ as an upper bound.
+The released dataset re-labelled 332 rows with no washout: κ = 0.72 (upper bound).
 
 ## Files
 

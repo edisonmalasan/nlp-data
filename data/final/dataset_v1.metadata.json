@@ -1,12 +1,12 @@
 {
   "dataset": "nlp-actionable-comments-v1",
   "dataset_version": "1.0",
-  "contract_version": "1.9-draft",
-  "guideline_version": "1.0-draft",
-  "built_at": "2026-10-23T00:38:08.703208+00:00",
+  "contract_version": "2.0-draft",
+  "guideline_version": "v1.0",
+  "built_at": "2026-10-23T02:24:04.463060+00:00",
   "class_counts": {
-    "actionable": 296,
-    "other": 1361
+    "actionable": 282,
+    "other": 1375
   },
   "counts_by_split": {
     "train": 1161,
@@ -14,10 +14,18 @@
     "test": 248
   },
   "split_seed": 42,
-  "cohens_kappa": null,
+  "cohens_kappa": 0.7225,
   "verification_counts": {
-    "auto": 1828
+    "auto": 1521,
+    "llm_verified": 136
   },
+  "verification_method": "llm_assisted",
+  "verification_agreement": 0.9333,
+  "verification_kappa": 0.792,
+  "verified_n": 120,
+  "verified_agreement": 0.9333,
+  "relabel_n": 332,
+  "relabel_washout_days": 0,
   "task": {
     "definition": "actionable = the comment identifies a concrete action the agency could be asked to take, or that the commenter proposes the agency take",
     "labels": {
@@ -29,33 +37,31 @@
   "counts": {
     "primary_facebook": {
       "n_rows": 1657,
-      "actionable": 296,
-      "other": 1361,
-      "actionable_rate": 0.1786
+      "actionable": 282,
+      "other": 1375,
+      "actionable_rate": 0.1702
     },
     "extended_all_platforms": {
       "n_rows": 1828,
-      "actionable": 299,
-      "other": 1529,
-      "actionable_rate": 0.1636
+      "actionable": 285,
+      "other": 1543,
+      "actionable_rate": 0.1559
     }
   },
   "platforms": {
-    "facebook": 1657,
-    "youtube": 101,
-    "x": 70
+    "facebook": 1657
   },
   "strata": {
-    "recent": 1797,
+    "recent": 1626,
     "invites": 31
   },
   "languages": {
-    "mixed": 409,
-    "fil": 795,
-    "eng": 624
+    "mixed": 374,
+    "fil": 755,
+    "eng": 528
   },
   "agencies": {
-    "n_source_accounts": 50,
+    "n_source_accounts": 44,
     "per_account": {
       "BangkoSentralngPilipinas": {
         "rows": 19,
@@ -84,8 +90,8 @@
       },
       "DOSTASTI": {
         "rows": 8,
-        "actionable": 1,
-        "other": 7
+        "actionable": 0,
+        "other": 8
       },
       "DOSTph": {
         "rows": 11,
@@ -104,8 +110,8 @@
       },
       "OfficialLRTA": {
         "rows": 15,
-        "actionable": 3,
-        "other": 12
+        "actionable": 2,
+        "other": 13
       },
       "OfficialPDIC": {
         "rows": 3,
@@ -124,8 +130,8 @@
       },
       "PhilHealthofficial": {
         "rows": 37,
-        "actionable": 14,
-        "other": 23
+        "actionable": 12,
+        "other": 25
       },
       "PhilippineNavy": {
         "rows": 10,
@@ -134,13 +140,13 @@
       },
       "bfp": {
         "rows": 39,
-        "actionable": 9,
-        "other": 30
+        "actionable": 8,
+        "other": 31
       },
       "birgovph": {
         "rows": 34,
-        "actionable": 3,
-        "other": 31
+        "actionable": 2,
+        "other": 32
       },
       "boiphilippines": {
         "rows": 8,
@@ -154,8 +160,8 @@
       },
       "dacentralphilippines": {
         "rows": 33,
-        "actionable": 15,
-        "other": 18
+        "actionable": 14,
+        "other": 19
       },
       "denr": {
         "rows": 10,
@@ -164,18 +170,13 @@
       },
       "deped": {
         "rows": 268,
-        "actionable": 28,
-        "other": 240
+        "actionable": 26,
+        "other": 242
       },
       "dilg": {
         "rows": 151,
-        "actionable": 29,
-        "other": 122
-      },
-      "dilg_x": {
-        "rows": 12,
-        "actionable": 0,
-        "other": 12
+        "actionable": 28,
+        "other": 123
       },
       "doh": {
         "rows": 77,
@@ -187,60 +188,35 @@
         "actionable": 1,
         "other": 35
       },
-      "dost_pagasa_x": {
-        "rows": 10,
-        "actionable": 0,
-        "other": 10
-      },
-      "dost_pagasa_yt": {
-        "rows": 101,
-        "actionable": 3,
-        "other": 98
-      },
       "dostpchrd": {
         "rows": 18,
-        "actionable": 2,
-        "other": 16
+        "actionable": 4,
+        "other": 14
       },
       "dpwh": {
         "rows": 502,
-        "actionable": 105,
-        "other": 397
-      },
-      "dpwh_x": {
-        "rows": 17,
-        "actionable": 0,
-        "other": 17
+        "actionable": 100,
+        "other": 402
       },
       "dswd": {
         "rows": 28,
         "actionable": 6,
         "other": 22
       },
-      "dswd_x": {
-        "rows": 10,
-        "actionable": 0,
-        "other": 10
-      },
       "dti": {
         "rows": 19,
-        "actionable": 14,
-        "other": 5
-      },
-      "dti_x": {
-        "rows": 21,
-        "actionable": 0,
-        "other": 21
+        "actionable": 13,
+        "other": 6
       },
       "fdagovph": {
         "rows": 33,
-        "actionable": 14,
-        "other": 19
+        "actionable": 15,
+        "other": 18
       },
       "nationalmuseumofthephilippines": {
         "rows": 22,
-        "actionable": 6,
-        "other": 16
+        "actionable": 5,
+        "other": 17
       },
       "nationalyouthcommission": {
         "rows": 2,
@@ -254,8 +230,8 @@
       },
       "nncofficial": {
         "rows": 14,
-        "actionable": 4,
-        "other": 10
+        "actionable": 5,
+        "other": 9
       },
       "nsc.gov.ph": {
         "rows": 14,
@@ -304,8 +280,8 @@
       },
       "professionalregulationcommission": {
         "rows": 37,
-        "actionable": 8,
-        "other": 29
+        "actionable": 7,
+        "other": 30
       }
     }
   },
@@ -356,15 +332,15 @@
   },
   "annotation": {
     "annotator_id": "A1",
-    "method": "LLM-assisted annotation with human verification",
+    "method": "LLM-assisted annotation with independent model verification",
     "engine": "src/annotate/auto_annotator.py",
     "confidence_threshold": 0.85,
-    "adjudicated_rows": 1382,
-    "auto_decided_rows": 446,
+    "adjudicated_rows": 1292,
+    "auto_decided_rows": 365,
+    "verified_rows": 136,
     "human_verified_rows": 0,
-    "human_verification_pending": true,
-    "blinded_relabel_pending": true,
-    "reliability_statistic": "intra-annotator (test-retest) Cohen's kappa"
+    "verification_pending": false,
+    "reliability_statistic": "Cohen's kappa, pass 1 vs blinded re-label"
   },
   "lineage": {
     "n_raw_captured": 4415,

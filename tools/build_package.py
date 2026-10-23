@@ -40,12 +40,12 @@ METADATA = os.path.join(PROCESSED, "dataset_v1.metadata.json")
 LEDGER = os.path.join(INTERIM, "exclusion_ledger.csv")
 POOL = os.path.join(PROCESSED, "candidate_pool.csv")
 CLEANING = os.path.join(PROVENANCE, "cleaning_report.json")
+RELIABILITY = os.path.join(PROVENANCE, "reliability.json")
 
 POST_FIELDS = [
     "post_id", "platform", "source_page", "source_page_name", "agency_id",
     "agency", "agency_abbr", "post_url", "post_date", "post_text",
-    "post_media_type", "post_topic", "source_snapshot", "collected_at",
-    "n_comments",
+    "source_snapshot", "collected_at", "n_comments",
 ]
 
 
@@ -117,8 +117,6 @@ def main(argv=None) -> int:
             "post_url": r.get("post_url", ""),
             "post_date": r.get("post_date", ""),
             "post_text": r.get("post_text", ""),
-            "post_media_type": r.get("post_media_type", ""),
-            "post_topic": r.get("post_topic", ""),
             "source_snapshot": r.get("source_snapshot", ""),
             "collected_at": r.get("collected_at", ""),
             "n_comments": "0",
@@ -149,7 +147,7 @@ def main(argv=None) -> int:
             cleaning = {}
 
     per_agency = defaultdict(lambda: Counter())
-    for r in rows:
+    for r in primary:
         per_agency[r.get("source_page", "")][r.get("label")] += 1
 
     # the per-platform lineage, so the reconciliation in V-16 holds for the
@@ -166,20 +164,34 @@ def main(argv=None) -> int:
         sp = os.path.join(PROCESSED, "splits", f"{name}.csv")
         counts_by_split[name] = len(read_rows(sp))
 
-    verification_counts = dict(Counter(r.get("verification", "") for r in rows))
+    verification_counts = dict(Counter(r.get("verification", "") for r in primary))
+
+    reliability = {}
+    if os.path.exists(RELIABILITY):
+        try:
+            reliability = json.load(io.open(RELIABILITY, encoding="utf-8"))
+        except Exception:
+            reliability = {}
 
     meta = {
         "dataset": "nlp-actionable-comments-v1",
         "dataset_version": "1.0",
-        "contract_version": "1.9-draft",
-        "guideline_version": "1.0-draft",
+        "contract_version": "2.0-draft",
+        "guideline_version": "v1.0",
         "built_at": datetime.now(timezone.utc).isoformat(),
         "class_counts": {"actionable": stats(primary)["actionable"],
                          "other": stats(primary)["other"]},
         "counts_by_split": counts_by_split,
         "split_seed": 42,
-        "cohens_kappa": None,
+        "cohens_kappa": reliability.get("relabel_kappa"),
         "verification_counts": verification_counts,
+        "verification_method": reliability.get("verification_method", ""),
+        "verification_agreement": reliability.get("verification_agreement"),
+        "verification_kappa": reliability.get("verification_kappa"),
+        "verified_n": reliability.get("verified_n"),
+        "verified_agreement": reliability.get("verification_agreement"),
+        "relabel_n": reliability.get("relabel_n"),
+        "relabel_washout_days": reliability.get("relabel_washout_days"),
         "task": {
             "definition": "actionable = the comment identifies a concrete action "
                           "the agency could be asked to take, or that the commenter "
@@ -191,9 +203,9 @@ def main(argv=None) -> int:
             "primary_facebook": stats(primary),
             "extended_all_platforms": stats(rows),
         },
-        "platforms": dict(Counter(r.get("platform") for r in rows)),
-        "strata": dict(Counter(r.get("stratum") or "recent" for r in rows)),
-        "languages": dict(Counter(r.get("language") for r in rows)),
+        "platforms": dict(Counter(r.get("platform") for r in primary)),
+        "strata": dict(Counter(r.get("stratum") or "recent" for r in primary)),
+        "languages": dict(Counter(r.get("language") for r in primary)),
         "agencies": {
             "n_source_accounts": len(per_agency),
             "per_account": {
@@ -211,18 +223,23 @@ def main(argv=None) -> int:
         },
         "annotation": {
             "annotator_id": "A1",
-            "method": "LLM-assisted annotation with human verification",
+            "method": reliability.get(
+                "method_label",
+                "LLM-assisted annotation with independent model verification"),
             "engine": "src/annotate/auto_annotator.py",
             "confidence_threshold": 0.85,
-            "adjudicated_rows": sum(1 for r in rows
+            "adjudicated_rows": sum(1 for r in primary
                                     if r.get("adjudicated_by") == "llm_adjudicator"),
-            "auto_decided_rows": sum(1 for r in rows
+            "auto_decided_rows": sum(1 for r in primary
                                      if r.get("adjudicated_by") == "auto_annotator"),
-            "human_verified_rows": sum(1 for r in rows
-                                       if r.get("verification") == "human_verified"),
-            "human_verification_pending": True,
-            "blinded_relabel_pending": True,
-            "reliability_statistic": "intra-annotator (test-retest) Cohen's kappa",
+            "verified_rows": sum(1 for r in primary
+                                 if r.get("verification") in
+                                 ("llm_verified", "human_verified", "human_labeled")),
+            "human_verified_rows": sum(1 for r in primary
+                                       if r.get("verification") in
+                                       ("human_verified", "human_labeled")),
+            "verification_pending": not reliability.get("relabel_kappa"),
+            "reliability_statistic": "Cohen's kappa, pass 1 vs blinded re-label",
         },
         "lineage": {
             # the chain the contract reconciles (5.6), for the PRIMARY

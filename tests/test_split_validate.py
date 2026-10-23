@@ -36,8 +36,7 @@ AGENCY_HDR = ["agency_id", "agency_name", "agency_abbr", "agency_type",
 
 POSTS_HDR = ["post_id", "platform", "source_page", "source_page_name", "agency_id",
               "agency", "agency_abbr", "post_url", "post_date", "post_text",
-              "post_media_type", "post_topic", "source_snapshot", "collected_at",
-              "n_comments"]
+              "source_snapshot", "collected_at", "n_comments"]
 
 
 def _build_corpus(tmp):
@@ -60,20 +59,18 @@ def _build_corpus(tmp):
                 "agency_abbr": "DOST-PAGASA", "post_id": post_id,
                 "post_url": f"https://facebook.com/p/{post_id}",
                 "post_date": "2026-10-20", "post_text": f"Advisory {post_id}",
-                "post_media_type": "text", "post_topic": "weather",
-                "is_reply": "false", "parent_comment_id": "", "parent_comment_text": "",
                 "comment_text": text, "comment_text_norm": text,
                 "context_text_norm": f"[POST] Advisory {post_id}",
                 "dedup_key": f"comment {cid} sa post {post_id}",
                 "n_tokens": len(text.split()), "language": "fil", "label": label,
                 "label_str": "actionable" if label == "1" else "other",
                 "annotator_id": "A1", "label_2": "", "agreement": "",
-                "adjudicated_by": "", "adjudication_note": "",
-                "guideline_version": "v1.0-draft", "source_snapshot": "run1",
+                "adjudicated_by": "auto_annotator", "adjudication_note": "",
+                "guideline_version": "v1.0", "source_snapshot": "run1",
                 "collected_at": "2026-10-20T00:00:00Z", "pii_redacted": "false",
-                "verification": "auto", "split": "", "notes": "",
+                "verification": "auto", "split": "",
                 "annotation_rule": "adjudicated", "annotation_evidence": "test",
-                "annotation_confidence": "1.0",
+                "annotation_confidence": "1.0", "stratum": "recent",
             })
             rows.append(r)
 
@@ -93,7 +90,7 @@ def _build_corpus(tmp):
             w.writerow([pid, "facebook", "pagasa", "PAGASA", "dost_pagasa",
                         "Philippine Atmospheric...", "DOST-PAGASA",
                         f"https://facebook.com/p/{pid}", "2026-10-20",
-                        f"Advisory {pid}", "text", "weather", "run1",
+                        f"Advisory {pid}", "run1",
                         "2026-10-20T00:00:00Z", "30"])
 
     agencies = os.path.join(tmp, "agencies.csv")
@@ -182,13 +179,14 @@ def run() -> list:
         candidate = len(rows)
         raw = candidate + sum(excl.values())
         meta = {
-            "dataset_version": "v1", "guideline_version": "v1.0-draft", "split_seed": 42,
+            "dataset_version": "v1", "guideline_version": "v1.0", "split_seed": 42,
             "class_counts": {"actionable": n_act, "other": n_oth,
                               "actionable_rate": round(n_act / len(rows), 4)},
             "counts_by_split": {k: len(v) for k, v in splits.items()},
             "cohens_kappa": 0.78,
-            "verification_counts": {"auto": len(rows) - 120, "human_verified": 120,
-                                     "human_labeled": 0},
+            "verification_method": "llm_assisted",
+            "verification_counts": {"auto": len(rows) - 120, "llm_verified": 120,
+                                     "human_verified": 0, "human_labeled": 0},
             "lineage": {
                 "n_raw_captured": raw, "n_extracted_to_interim": raw,
                 "n_excluded_by_reason": excl, "n_candidate_pool": candidate,

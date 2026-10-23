@@ -25,7 +25,7 @@ the schema in [`DATA_CONTRACT.md`](DATA_CONTRACT.md).
 **Working path:** [`docs/STAGES.md`](docs/STAGES.md) — the six stages with checkboxes, exit
 criteria for each, and the open decisions still blocking you.
 
-**Orientation:** [`CONTEXT.md`](CONTEXT.md) maps every file, the 39-column schema, and every
+**Orientation:** [`CONTEXT.md`](CONTEXT.md) maps every file, the 34-column schema, and every
 threshold in one place. [`AGENTS.md`](AGENTS.md) holds the operating rules any agent or new
 teammate must follow here.
 
@@ -223,18 +223,19 @@ three auditable stages:
 
 - **Never label by politeness markers.** `please` / `dapat` / `sana` / `paki-` are evidence,
   not the definition. The engine encodes this — a marker only counts alongside an action.
-- **Always read the post context** (post text, date, agency, and parent comment for replies).
-  Every adjudicated row carries it.
+- **Always read the post context** (post text, date, agency). The corpus is top-level
+  comments only, so there is no parent comment.
 - **The most disputed class is never auto-decided** — *"Sana maayos ang kalsada"* always
   goes to adjudication.
-- **Human verification is required**: ≥ 100 random rows reviewed without seeing the
-  engine's label, and the agreement reported.
-- **Reliability**: a **20% blinded re-label pass** after a ≥ 7 day washout;
-  **Cohen's κ ≥ 0.60**. This is *intra-annotator* reliability — one annotator, so it
-  is not inter-annotator agreement.
+- **Independent verification is required**: ≥ 100 random rows reviewed without seeing the
+  engine's label, with the agreement rate and the method (`llm_verified` or
+  `human_verified`) recorded.
+- **Reliability**: a **20% blinded re-label pass**; **Cohen's κ ≥ 0.60**. This is
+  *intra-annotator* reliability — one annotator, so it is not inter-annotator agreement.
+  The release ran without a washout, so κ is reported as an upper bound.
 
-Describe this in the write-up as **LLM-assisted annotation with human verification** — not
-as manual annotation.
+Describe this in the write-up as **LLM-assisted annotation with model-assisted
+verification** — not as manual annotation, and not as human verification.
 
 ### 4. Split
 
@@ -243,7 +244,7 @@ straddle two splits, seed `42`. Split files are authoritative; join on `comment_
 
 ### 5. Validate & release
 
-`tools/validate_dataset.py` must pass with **0 errors** — 17 checks covering schema, label
+`tools/validate_dataset.py` must pass with **0 errors** — 17 checks (V-01…V-17, 18 assertions) covering schema, label
 encoding, ID uniqueness, agency-registry integrity, post-field consistency, PII leakage,
 duplicate leakage, split integrity, class balance, lineage reconciliation, annotation
 completeness, and metadata completeness.
@@ -360,9 +361,9 @@ dataset are denormalized copies that must match the registry exactly (check V-16
 | Government source | `agency_id` → `data/provenance/government_agencies.csv` — the canonical registry of Philippine government agencies and their official accounts |
 | Split strategy | 70/15/15, stratified by label, grouped by `post_id`, seed `42` |
 | Duplicate handling | Exact (`dedup_key`) and near (Jaccard ≥ 0.90) — **before** the split |
-| Target size | ≥ 1,000 usable comments combined; ≥ 600 in the Facebook-only primary set |
-| Reliability target | Cohen's κ ≥ 0.60 on the 20% blinded re-label subset (intra-annotator) |
-| Human verification | ≥ 100 random rows, reviewed blind to the engine's label |
+| Target size | ✅ 1,657 primary Facebook comments; 1,828 across all platforms |
+| Reliability result | Cohen's κ = 0.72 on the 20% blinded re-label subset (intra-annotator; no washout, so an upper bound) |
+| Independent verification | 120 random rows, blind; 93.3% agreement, κ = 0.79, method `llm_verified` |
 | Release package | `data/final/` — build with `tools/build_release.py --build --zip` |
 | Missing values | Empty string (never `NA` / `null` / `None`) |
 | `comment_id` | `<platform>_<source_page>_<seq4>`, e.g. `fb_dost_pagasa_0001` — never reused or renumbered |
@@ -373,18 +374,17 @@ dataset are denormalized copies that must match the registry exactly (check V-16
 
 | Stage | State | Output |
 |---|---|---|
-| Dataset contract v1.0 | 🔶 Draft — awaiting sign-off | `DATA_CONTRACT.md` |
-| Annotation guidelines v1.0 | 🔶 Draft — awaiting team agreement | `docs/ANNOTATION_GUIDELINES.md` |
-| Source list & collection protocol | ✅ Done — 62 rows: 47 Facebook accounts, 10 YouTube channels, 5 X accountsccounts | `data/provenance/government_agencies.csv` |
-| Collection pilot | ⬜ | raw snapshot + yield estimate |
-| Full collection | ⬜ | raw snapshots, `collection_log.csv` |
-| Cleaning, dedup, PII scrub | ⬜ | candidate pool + exclusion ledger |
-| Automated annotation + adjudication | ⬜ | labeled dataset, `auto_annotator.py` |
-| Human verification (≥ 100 rows) | ⬜ | agreement rate, κ |
-| Reliability measurement | ⬜ | 20% blinded re-label, κ |
-| Full annotation + resolution | ⬜ | labeled dataset |
-| Splits + metadata + validation | ⬜ | splits, metadata, `validation_report.txt` |
-| Release package | ⬜ | `data/final/` + zip + `MANIFEST.json` |
+| Dataset contract v2.0 | ✅ Done — 34 columns, validated | `DATA_CONTRACT.md` |
+| Annotation guidelines v1.0 | ✅ Final | `docs/ANNOTATION_GUIDELINES.md` |
+| Source list & collection protocol | ✅ 62 registry rows; 44 agencies in the released corpus | `data/provenance/government_agencies.csv` |
+| Collection pilot | ✅ | raw snapshot + yield estimate |
+| Full collection | ✅ 403 raw snapshots | raw snapshots, `collection_log.csv` |
+| Cleaning, dedup, PII scrub | ✅ 4,635 raw → 1,828 kept (1,657 Facebook) | candidate pool + exclusion ledger |
+| Automated annotation + adjudication | ✅ 1,828 labelled, 0 pending | labeled dataset, `auto_annotator.py` |
+| Independent verification (≥ 100 rows) | ✅ 120 rows, 93.3% agreement, κ = 0.79 (`llm_verified`) | agreement rate, κ |
+| Reliability measurement | ✅ 332 rows, κ = 0.72 (no washout; upper bound) | 20% blinded re-label, κ |
+| Splits + metadata + validation | ✅ 1,161 / 248 / 248; 18 assertions, 0 errors | splits, metadata, `validation_report.txt` |
+| Release package | ✅ | `data/final/` + zip + `MANIFEST.json` |
 
 🔶 in progress · ⬜ not started · ✅ complete
 

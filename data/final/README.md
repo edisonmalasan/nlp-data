@@ -1,110 +1,82 @@
-# `data/final/` — the release package
+# Release package — actionable-suggestion dataset
 
-This is the **single artifact the modeling stage receives**. Everything the model
-development stage needs is here, and nothing else is.
+**For Member 5 (model development).** This package is final. Do not clean, annotate,
+deduplicate, or re-split it. If something looks wrong, raise it with Member 4.
 
-Build it with:
+- Study: *Detecting Actionable Suggestions in Filipino-English Code-Switched Government
+  Social Media Comments*
+- Labels: `1` = actionable suggestion/request, `0` = other
+- Schema: 34 columns (`DATA_CONTRACT.md` §5.2). Contract `2.0-draft`, guidelines `v1.0`.
+- Primary corpus: **1,657 Facebook comments**, 282 actionable (17.0%), 44 agencies.
+- Reliability: Cohen's κ = **0.72** on a 332-row blinded re-label (92.5% agreement);
+  κ = **0.79** on a 120-row independent verification sample (93.3% agreement).
+  The re-label had no washout, so κ is an upper bound. Verification was
+  **model-assisted** (`llm_verified`), not human.
 
-```bash
-python tools/build_release.py --check          # is it ready?
-python tools/build_release.py --build          # assemble the package
-python tools/build_release.py --build --zip    # and zip it
-```
+## Files
 
-When it is done, `data/final/` contains a folder you can compress and hand over as-is.
+| File | Rows | What it is | What you use it for |
+|---|---:|---|---|
+| `dataset_v1.csv` | 1,657 | **Primary dataset.** Facebook only, one row per usable comment, 34 columns, labeled. | Train and evaluate both models. This is the file the paper reports on. |
+| `dataset_v1_ext.csv` | 1,828 | Same schema, all platforms (Facebook + YouTube + X). | Optional robustness extension only. Not the headline result. |
+| `train.csv` / `dev.csv` / `test.csv` | 1,161 / 248 / 248 | **Authoritative split assignment.** Each row carries `comment_id`, `split`, `platform`, `source_page`, `post_id`, `label`. | Join on `comment_id`. Both models must score the same `test.csv`. |
+| `posts_v1.csv` | 212 | Post context master: one row per source post. | Join on `post_id` if you need post text or date. Do not merge `post_text` into the feature space. |
+| `dataset_v1.metadata.json` | — | Counts, class balance, per-agency distribution, split counts, lineage, reliability, verification method. | Read the numbers; do not recompute them. |
+| `government_agencies.csv` | 62 | Agency registry: `agency_id`, name, abbreviation, account. | Look up which agency a row came from. |
+| `ANNOTATION_GUIDELINES.md` | — | The labeling rules the dataset was produced under. | Cite the definition; do not re-label. |
+| `MANIFEST.json` | — | Build timestamp and SHA-256 for every file. | Verify integrity. |
 
----
-
-## What lands here
-
-| File | What it is |
-|---|---|
-| `dataset_v1.csv` | **The dataset.** One row per usable comment, 40 columns, labeled. Facebook-only — matches the study's framing. |
-| `dataset_v1_ext.csv` | The same schema across all platforms. Optional extension. |
-| `posts_v1.csv` | Post context master. Join on `post_id`. |
-| `train.csv` · `dev.csv` · `test.csv` | **Authoritative** split assignment. Join on `comment_id`. |
-| `dataset_v1.metadata.json` | Counts, class distribution, per-agency counts, provenance, reliability, lineage. |
-| `government_agencies.csv` | Which Philippine government agency each row came from. |
-| `ANNOTATION_GUIDELINES.md` | The rules the labels were produced under. |
-| `README.md` | This file. |
-| `MANIFEST.json` | Build timestamp, row counts, and a SHA-256 for every file above. |
-| `nlp-actionable-comments-v1.zip` | The archive, if you built with `--zip`. |
-
----
-
-## How to load it
+## Load it
 
 ```python
 import pandas as pd
 
-ds = pd.read_csv("data/final/dataset_v1.csv")
-splits = pd.concat(
-    [pd.read_csv(f"data/final/{s}.csv") for s in ("train", "dev", "test")],
-    ignore_index=True,
-)
-
-df = ds.merge(splits[["comment_id", "split"]], on="comment_id",
+ds = pd.read_csv("dataset_v1.csv")
+split = pd.concat([pd.read_csv(f"{s}.csv") for s in ("train", "dev", "test")],
+                  ignore_index=True)
+df = ds.merge(split[["comment_id", "split"]], on="comment_id",
               how="inner", validate="one_to_one")
 
-tr = df[df.split == "train"]
-dv = df[df.split == "dev"]
-te = df[df.split == "test"]
+train = df[df.split == "train"]
+dev   = df[df.split == "dev"]
+test  = df[df.split == "test"]
 
-X_tr, y_tr = tr["comment_text_norm"], tr["label"]
-X_dv, y_dv = dv["comment_text_norm"], dv["label"]
-X_te, y_te = te["comment_text_norm"], te["label"]
+X_train, y_train = train["comment_text_norm"], train["label"]
+X_test,  y_test  = test["comment_text_norm"],  test["label"]
 ```
 
----
+## Three rules
 
-## The three rules
-
-1. **Both models score the same `test.csv`.** One identical held-out test set — that is
-   the entire basis of the comparison.
-2. **The text field is `comment_text_norm` only.** Do not concatenate `post_text` or
-   `context_text_norm` into the feature space; that would add a third, unreported
-   variable. `context_text_norm` is there for a separately-labelled robustness analysis.
-3. **`pos_label=1` on every metric call.** Flipped, every number inverts.
+1. **The modeling text is `comment_text_norm` only.** Never concatenate `post_text` or
+   `context_text_norm` into the primary models; that adds a third, unreported variable.
+2. **Both models score the same `test.csv`.** The split files are authoritative; the
+   `split` column is a mirror.
+3. **`pos_label=1` on every metric.** A flipped label invalidates every number.
 
 ```python
 from sklearn.metrics import classification_report, f1_score, confusion_matrix
 
-print(classification_report(y_te, pred, pos_label=1, zero_division=0))
-print(f1_score(y_te, pred, pos_label=1))
-print(confusion_matrix(y_te, pred, labels=[0, 1]))   # [[TN, FP], [FN, TP]]
+print(classification_report(y_test, pred, pos_label=1, zero_division=0))
+print(f1_score(y_test, pred, pos_label=1))
+print(confusion_matrix(y_test, pred, labels=[0, 1]))   # [[TN, FP], [FN, TP]]
 ```
 
----
+## Columns you will touch
 
-## Columns worth knowing
-
-| Column | Notes |
+| Column | Use |
 |---|---|
-| `label` | `1` = actionable, `0` = other. The target. |
-| `label_str` | Human-readable mirror of `label`. |
-| `comment_text` | Verbatim, original casing, emoji, typos preserved. |
-| `comment_text_norm` | Lightly normalized. **This is the modeling field.** |
-| `context_text_norm` | Post + parent comment context. Annotation aid and robustness analysis only. |
-| `agency_id` → `government_agencies.csv` | The Philippine government entity the row came from. |
-| `language` | `fil` / `eng` / `mixed`. |
-| `verification` | How the label was produced: `auto`, `human_verified`, or `human_labeled`. |
-| `annotation_rule` | The rule that produced the label, e.g. `request_marker + action_verb`. |
-| `annotation_evidence` | The cues that fired, or the adjudicator's note. |
-| `annotation_confidence` | Engine confidence (`1.0` for adjudicated rows). |
-| `label_2`, `agreement` | The blinded re-label reading and whether the two passes matched. |
-| `guideline_version` | The ruleset the label was produced under. |
-| `split` | Mirror of the split files. The files are authoritative. |
+| `label` | Target: `1` actionable, `0` other. |
+| `comment_text_norm` | Primary feature text. |
+| `context_text_norm` | Post context only. Annotation aid / optional ablation, not a primary feature. |
+| `language` | `fil`, `eng`, or `mixed`. |
+| `agency_id` | Agency key. |
+| `split` | Mirror of the split files. |
+| `label_2`, `agreement` | Second blinded reading and match flag. Available for error analysis. |
+| `verification` | `auto` or `llm_verified`. |
+| `annotation_rule`, `annotation_evidence`, `annotation_confidence` | Label provenance. |
 
----
+## What is already done for you
 
-## Before you release
-
-- [ ] `python tools/validate_dataset.py` → **0 errors**
-- [ ] `python tools/build_release.py --check` → **READY TO RELEASE**
-- [ ] The row-count reconciliation holds:
-      `n_raw_captured = n_candidate_pool + Σ exclusions` and
-      `n_candidate_pool = n_labeled = n_usable_final = train+dev+test`
-- [ ] Reliability κ ≥ 0.60 on the re-labeled subset
-- [ ] Human-verified sample ≥ 100 rows, and the rate is recorded in the metadata
-- [ ] The usable-comment count is recorded — it fills the `<number>` placeholder in the
-      study's Scope section
+Collection, cleaning, deduplication, PII scrubbing, labeling, adjudication, verification,
+splitting, and validation (V-01…V-17, 0 errors). The corpus is **top-level comments
+only**; there are no replies. Do not re-collect or re-clean.

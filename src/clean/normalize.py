@@ -105,21 +105,15 @@ def dedup_key(text: str) -> str:
     return WS_RE.sub(" ", key).strip()
 
 
-def build_context(post_text: str = "", parent_comment_text: str = "") -> str:
-    """Contract 6.3. Assemble the post + parent context.
+def build_context(post_text: str = "") -> str:
+    """Contract 6.3. Normalize the post caption as context.
 
-    Empty segments are dropped entirely, not left as empty brackets.
+    The corpus is top-level comments only (contract 12), so there is no
+    parent-comment segment to append. An empty caption yields the empty
+    string, not an empty bracket.
     """
-    parts = []
     post_n = normalize_text(post_text or "")
-    parent_n = normalize_text(parent_comment_text or "")
-
-    if post_n:
-        parts.append(f"{POST_MARK} {post_n}")
-    if parent_n:
-        parts.append(f"{PARENT_MARK} {parent_n}")
-
-    return " ".join(parts)
+    return f"{POST_MARK} {post_n}" if post_n else ""
 
 
 def token_count(text: str) -> int:

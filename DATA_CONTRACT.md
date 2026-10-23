@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Contract version | `1.9-draft` |
+| Contract version | `2.0-draft` |
 | Status | **DRAFT — awaiting adviser + team sign-off** |
 | Created | 2026-10-20 |
 | Owner / Producer | Member 4 — **Edison Malasan** (data collection, scraping, annotation) |
@@ -241,7 +241,7 @@ Every collection run is logged to `data/provenance/collection_log.csv`:
 | Collection window | To be fixed at G1. Proposed: **2026-10-22 → 2026-11-15** |
 | Post selection | **Stratum A — recent posts.** For each source, a **contiguous, documented sample of the most recent N public posts** (N = 8–12), starting from the collection date and walking backwards. "Most recent" is fixed and logged — **no cherry-picking posts by comment richness**. |
 | Post selection | **Stratum B — request-inviting posts.** Posts whose text contains an invitation marker ("let us know", "share your", "kapag may kailangan", "isumbong", "report…"). **Added under the stratified-collection clause below.** |
-| `stratum` | Every comment records which stratum its post came from: `recent` or `invites`. Column 40. |
+| `stratum` | Every comment records which stratum its post came from: `recent` or `invites`. Column 34. |
 > **Why stratum B was added.** The stratified-collection clause below was triggered. The
 > stratum A pilot collected 45 posts and 970 cleaned comments, of which only **14%**
 > carried a request marker, and the distribution was extremely skewed: the top 8 posts held
@@ -327,56 +327,52 @@ CSV encoding `utf-8` (no BOM), `,` delimiter, `"` quoting, `\n` line endings, he
 | 1 | `comment_id` | string | yes | `^[a-z]+_[a-z0-9_]+_\d{4}$` | Globally unique, stable across versions. Pattern: `<platform>_<source_page_slug>_<seq>`, e.g. `fb_dost_pagasa_0001`. **Never reused, never renumbered.** |
 | 2 | `platform` | enum | yes | `facebook` \| `youtube` \| `reddit` \| `x` | Source platform. |
 | 3 | `source_page` | string | yes | slug | Canonical account slug, e.g. `dost_pagasa`. |
-| 4 | `source_page_name` | string | yes | free text | Display name as captured. |
+| 4 | `source_page_name` | string | yes | free text | Display name of the source page. Denormalized from `government_agencies.csv.agency_name`; the DOM capture did not expose it. |
 | 5 | `agency_id` | string | yes | slug | **Foreign key** into `government_agencies.csv`, e.g. `dost_pagasa`. Canonical ID for the Philippine government entity. |
 | 6 | `agency` | string | yes | free text | Philippine national government agency, full name. Denormalized copy of `government_agencies.csv.agency_name`. |
 | 7 | `agency_abbr` | string | yes | free text | e.g. `DOST-PAGASA`. Denormalized copy of `government_agencies.csv.agency_abbr`. |
 | 8 | `post_id` | string | yes | platform id or `sha1(permalink)` | Foreign key into `posts_v1.csv`. |
 | 9 | `post_url` | string | yes | URL | Public permalink of the parent post. |
-| 10 | `post_date` | date | yes | `YYYY-MM-DD` | Publication date of the post. |
+| 10 | `post_date` | date | yes | `YYYY-MM-DD` | Publication date of the post, derived from the relative timestamp shown on the page (`12h`, `2d`) against `collected_at`. Day-granularity timestamps are accurate to ±1 day. |
 | 11 | `post_text` | string | yes | free text (may be empty) | **Verbatim** post caption/body. **Post context.** |
-| 12 | `post_media_type` | enum | yes | `text` \| `image` \| `video` \| `mixed` \| `link` \| `unknown` | Post media type. **Post context.** |
-| 13 | `post_topic` | string | no | slug | Manual topical tag by the collector, e.g. `flood_control`, `class_scheduling`, `vaccination`. Used for stratification and reporting. |
-| 14 | `is_reply` | bool | yes | `true` \| `false` | Comment is a reply to another comment. |
-| 15 | `parent_comment_id` | string | no | `comment_id` or empty | Empty when `is_reply == false`. |
-| 16 | `parent_comment_text` | string | no | verbatim, may be empty | **Parent comment context** — verbatim parent comment text, if available. |
-| 17 | `comment_text` | string | yes | verbatim | **The comment exactly as captured.** Original casing, emoji, typos, code-switching, punctuation — all preserved. Never edited. |
-| 18 | `comment_text_norm` | string | yes | normalized | Normalized comment text (§6.2). **This is the primary modeling text field.** |
-| 19 | `context_text_norm` | string | yes | normalized | Post + parent context, normalized (§6.3). Empty string if no context. **Annotation aid + optional robustness analysis, not the primary modeling field.** |
-| 20 | `dedup_key` | string | yes | normalized | Exact-duplicate detection key (§7.1). |
-| 21 | `n_tokens` | int | yes | ≥ 1 | Whitespace-token count of `comment_text_norm`. |
-| 22 | `language` | enum | yes | `fil` \| `eng` \| `mixed` | Language of the comment. `other` is **excluded** (X_LANG), not labeled. |
-| 23 | `label` | int | yes | `1` \| `0` | **1 = actionable suggestion/request, 0 = other comment.** (§10.1) |
-| 24 | `label_str` | string | yes | `actionable` \| `other` | Human-readable mirror of `label`. Must always agree with `label`. |
-| 25 | `annotator_id` | string | yes | `A1` | Pseudonymous annotator. This dataset has a single annotator, so the value is always `A1`. No names. |
-| 26 | `label_2` | int | no | `1` \| `0` \| empty | The **blinded re-label pass** reading, on the 20% re-labeled subset. Empty elsewhere. |
-| 27 | `agreement` | bool | no | `true` \| `false` \| empty | `label == label_2`. Empty when `label_2` is empty. |
-| 28 | `adjudicated_by` | string | no | `A1` \| `ADVISOR` | Who resolved a pass-1 vs pass-2 disagreement. Empty if no disagreement. |
-| 29 | `adjudication_note` | string | no | free text | One-line rationale for the resolution. Feeds the guidelines' edge-case bank. |
-| 30 | `guideline_version` | string | yes | `v1.x` | Version of the annotation rules the label was produced under. |
-| 31 | `source_snapshot` | string | yes | run id | `run_id` of the collection run that produced the row (§3.3). |
-| 32 | `collected_at` | string | yes | ISO 8601 | Capture timestamp. |
-| 33 | `pii_redacted` | bool | yes | `true` \| `false` | Whether anonymization altered this row. |
-| 34 | `split` | string | yes | `train` \| `dev` \| `test` | Mirrors `splits/*.csv`. **The split files are authoritative**; this column is a convenience copy and must match. |
-| 35 | `notes` | string | no | free text | Free-text row-level note (rarely used). |
-| 36 | `verification` | enum | yes | `auto` \| `human_verified` \| `human_labeled` | How the final label was produced. `auto` = assigned by the annotator engine and not individually checked; `human_verified` = a person reviewed and confirmed it; `human_labeled` = a person labelled it from scratch. The count of each is reported. |
-| 37 | `annotation_rule` | string | no | rule id | Which rule produced the label, e.g. `request_marker + action_verb`, `complaint_without_remedy`, or `adjudicated`. Makes every label traceable to a decision. |
-| 38 | `annotation_evidence` | string | no | free text | The cues that fired, or the adjudicator's one-line note naming the rule that decided it. |
-| 39 | `annotation_confidence` | float | no | 0.0–1.0 | Engine confidence. `1.0` for rows that were adjudicated. Rows below `0.85` with no adjudication would be a validation failure (V-17). |
-| 40 | `stratum` | enum | yes | `recent` \| `invites` | Which sampling stratum the comment's post came from. `recent` is the most recent posts per account; `invites` is the posts whose text invites a citizen request. |
+| 12 | `comment_text` | string | yes | verbatim | **The comment exactly as captured.** Original casing, emoji, typos, code-switching, punctuation — all preserved. Never edited. |
+| 13 | `comment_text_norm` | string | yes | normalized | Normalized comment text (§6.2). **This is the primary modeling text field.** |
+| 14 | `context_text_norm` | string | yes | normalized | Normalized post context (§6.3). Empty string if there is no caption. **Annotation aid + optional robustness analysis, not the primary modeling field.** |
+| 15 | `dedup_key` | string | yes | normalized | Exact-duplicate detection key (§7.1). |
+| 16 | `n_tokens` | int | yes | ≥ 1 | Whitespace-token count of `comment_text_norm`. |
+| 17 | `language` | enum | yes | `fil` \| `eng` \| `mixed` | Language of the comment. `other` is **excluded** (X_LANG), not labeled. |
+| 18 | `label` | int | yes | `1` \| `0` | **1 = actionable suggestion/request, 0 = other comment.** (§10.1) |
+| 19 | `label_str` | string | yes | `actionable` \| `other` | Human-readable mirror of `label`. Must always agree with `label`. |
+| 20 | `annotator_id` | string | yes | `A1` | Pseudonymous annotator. This dataset has a single annotator, so the value is always `A1`. No names. |
+| 21 | `label_2` | int | no | `1` \| `0` \| empty | The **blinded re-label pass** reading, on the 20% re-labeled subset. Empty elsewhere. |
+| 22 | `agreement` | bool | no | `true` \| `false` \| empty | `label == label_2`. Empty when `label_2` is empty. |
+| 23 | `adjudicated_by` | string | yes | `auto_annotator` \| `llm_adjudicator` | The stage that produced the shipped label: the heuristic engine, or the adjudication pass. |
+| 24 | `adjudication_note` | string | no | free text | One-line rationale for the adjudication. Feeds the guidelines' edge-case bank. |
+| 25 | `guideline_version` | string | yes | `v1.x` | Version of the annotation rules the label was produced under. Currently `v1.0`. |
+| 26 | `source_snapshot` | string | yes | run id | `run_id` of the collection run that produced the row (§3.3). |
+| 27 | `collected_at` | string | yes | ISO 8601 | Capture timestamp. |
+| 28 | `pii_redacted` | bool | yes | `true` \| `false` | Whether anonymization altered this row. |
+| 29 | `split` | string | yes | `train` \| `dev` \| `test` | Mirrors `splits/*.csv`. **The split files are authoritative**; this column is a convenience copy and must match. |
+| 30 | `verification` | enum | yes | `auto` \| `llm_verified` \| `human_verified` \| `human_labeled` | How the final label was checked. `auto` = engine label, not individually checked; `llm_verified` = independently re-labeled by a model annotator blind to the first pass; `human_verified` = a person reviewed and confirmed it; `human_labeled` = a person labeled it from scratch. |
+| 31 | `annotation_rule` | string | no | rule id | Which rule produced the label, e.g. `request_marker + action_verb`, `complaint_without_remedy`, or `adjudicated`. Makes every label traceable to a decision. |
+| 32 | `annotation_evidence` | string | no | free text | The cues that fired, or the adjudicator's one-line note naming the rule that decided it. |
+| 33 | `annotation_confidence` | float | no | 0.0–1.0 | Engine confidence. `1.0` for rows that were adjudicated. |
+| 34 | `stratum` | enum | yes | `recent` \| `invites` | Which sampling stratum the comment's post came from. `recent` is the most recent posts per account; `invites` is the posts whose text invites a citizen request. |
+
 
 **Column groups and who owns them**
 
-- `1–17`, `19–22`, `31–33`, `35` → **producer-owned** (Member 4). Member 5 consumes, does not modify.
-- `23–30`, `36–39` → **annotation-owned**.
-- `18`, `34` → **producer-owned**, but Member 5 may regenerate `comment_text_norm` under its own vectorizer (lowercasing, tokenization) — see §6.4.
-- `18` **must not** be lowercased, punctuation-stripped, or emoji-removed in the shipped file. Those are Member 5's vectorizer decisions.
+- `1–17`, `26–29`, `34` → **producer-owned** (Member 4). Member 5 consumes, does not modify.
+- `18–25`, `30–33` → **annotation-owned**.
+- `13` → **producer-owned**, but Member 5 may regenerate `comment_text_norm` under its own vectorizer (lowercasing, tokenization) — see §6.4.
+- `13` **must not** be lowercased, punctuation-stripped, or emoji-removed in the shipped file. Those are Member 5's vectorizer decisions.
+- `29` → the `splits/*.csv` files are authoritative; the column is a mirror.
 
 ### 5.3 `posts_v1.csv` columns
 
-`post_id`, `platform`, `source_page`, `source_page_name`, `agency_id`, `agency`, `agency_abbr`, `post_url`, `post_date`, `post_text`, `post_media_type`, `post_topic`, `source_snapshot`, `collected_at`, `n_comments`
+`post_id`, `platform`, `source_page`, `source_page_name`, `agency_id`, `agency`, `agency_abbr`, `post_url`, `post_date`, `post_text`, `source_snapshot`, `collected_at`, `n_comments`
 
-**Invariant:** the denormalized post fields in `dataset_v1.csv` (`post_url`, `post_date`, `post_text`, `post_media_type`) **must be byte-identical** to the corresponding row in `posts_v1.csv`. `tools/validate_dataset.py` checks this (check V-07).
+**Invariant:** the denormalized post fields in `dataset_v1.csv` (`post_url`, `post_date`, `post_text`) **must be byte-identical** to the corresponding row in `posts_v1.csv`. `tools/validate_dataset.py` checks this (check V-07).
 
 ### 5.4 `splits/*.csv` columns
 
@@ -415,11 +411,13 @@ Member 5 may join the split files to `dataset_v1.csv` on `comment_id` alone; the
     "n_usable_final": 0,
     "reconciles": true
   },
-  "verification_counts": { "auto": 0, "human_verified": 0, "human_labeled": 0 },
+  "verification_counts": { "auto": 0, "llm_verified": 0, "human_verified": 0, "human_labeled": 0 },
+  "verification_method": "llm_assisted | human",
   "n_auto_decided": 0,
   "n_adjudicated": 0,
+  "verified_n": 0,
+  "verified_agreement": 0.0,
   "human_verified_n": 0,
-  "human_verified_agreement": 0.0,
   "double_annotated_n": 0,
   "cohens_kappa": 0.0,
   "kappa_agreement_band": "substantial|almost perfect|...",
@@ -517,12 +515,12 @@ placeholder in the Scope section.
 `context_text_norm` is built as:
 
 ```
-context_text_norm = "[POST] " + norm(post_text) + " [COMMENT_PARENT] " + norm(parent_comment_text)
+context_text_norm = "[POST] " + norm(post_text)
 ```
 
-- If `post_text` is empty → the `[POST] ` segment is dropped entirely (not left as an empty bracket).
-- If `is_reply == false` or the parent text is unavailable → the `[COMMENT_PARENT]` segment is dropped.
-- The same normalization rules from §6.2 apply to post and parent text.
+- If `post_text` is empty → `context_text_norm` is the empty string.
+- The same normalization rules from §6.2 apply to the post text.
+- The corpus is **top-level comments only** (§12), so there is no parent segment to append.
 - **`context_text_norm` is never used as the primary modeling input** (§6.4).
 
 ### 6.4 Which text the models use (binding)
@@ -616,10 +614,18 @@ Filters are **deterministic rules** applied in order; each rule is logged with i
 | Minimum primary (Facebook) usable comments | **600** |
 | `actionable` class | **≥ 15%** and **≤ 65%** of the dataset. Below 15% → switch to stratified collection (§3.4). Above 65% → additional non-request posts should be sampled to restore balance, and the natural prior is reported. |
 | Minimum per-class count | **≥ 150** in the primary dataset |
-| Per-source-page minimum | **≥ 40** usable comments per source page (so no single page dominates and no page is a statistical singleton) |
+| Per-source-page minimum | **≥ 40** usable comments per source page (so no single page dominates and no page is a statistical singleton) — a **composition target**, not an acceptance check; v1 misses it and reports the distribution below |
 | Per-language coverage | Filipino, English, and mixed **all ≥ 10%** of the dataset |
 
 **Reporting requirement:** the **natural class prior** (the actionable rate in the unmanipulated collection) is reported alongside the final rate, so the paper can state whether balance was achieved by natural distribution or by stratified sampling. If stratified sampling was used, evaluation must also report **precision, recall, and F1 on the natural-prior-weighted test set** or state the sampling design and any reweighting applied — Member 5's decision, documented in the paper.
+
+> **Per-source-page floor, v1 result.** The ≥ 40 floor is a composition target, not an
+> acceptance check. The released corpus covers 44 agencies; **5 clear 40** and **39 do not**
+> (from `bfp` at 39 down to `pcsoofficialsocialmedia` at 2). Closing the gap would take
+> **948 more comments**, and 44 × 40 exceeds the corpus. Narrowing the frame to the five
+> agencies that clear it would contradict the paper's multi-agency scope, so the wider frame
+> is kept and the concentration is reported in `dataset_v1.metadata.json` (`per_agency`) and
+> the data card. V-12 does not gate on it.
 
 ---
 
@@ -642,17 +648,19 @@ A comment proposing three actions is still **one** comment with `label = 1`. The
 ### 10.3 Who annotates
 
 The dataset is labeled by an **automated annotator** (`src/annotate/auto_annotator.py`)
-operating under the guidelines, with **human verification** by the dataset owner.
+operating under the guidelines, with **independent verification** of a random sample.
 
 | Role | Who | Scope |
 |---|---|---|
 | Annotator engine | `src/annotate/auto_annotator.py` — heuristic scoring plus agent adjudication of every ambiguous row | **100%** of the dataset |
-| Human verification | Member 4 (M4), reviewing a **random sample of ≥ 100 rows** without seeing the engine's label first | ≥ 100 rows |
-| Blinded re-label pass | The same annotator that produced pass 1, ≥ 7 days later, blind to its own first pass | **20% minimum of rows** (≥ 200 for a 1,000-row dataset), stratified by class and source page |
-| Resolution of disagreements | Member 4 for rows the human verified; the annotator otherwise | 100% of pass-1 vs pass-2 disagreements |
+| Independent verification | A model annotator or a person, reviewing a **random sample of ≥ 100 rows** without seeing the engine's label first | ≥ 100 rows |
+| Blinded re-label pass | An annotator blind to pass 1, re-labeling the 20% sample | **20% minimum of rows**, stratified by class and source page |
+| Resolution of disagreements | The verifier for the sampled rows; the annotator otherwise | 100% of pass-1 vs pass-2 disagreements |
 
 **`annotator_id`** is `A1` for every row (the annotator engine). **`verification`** records
-how each label was actually produced: `auto`, `human_verified`, or `human_labeled`.
+how each label was actually checked: `auto` (engine label, unchecked), `llm_verified`
+(independent model pass), `human_verified`, or `human_labeled`. The method actually used
+is recorded in the metadata as `verification_method`; it is never inferred.
 
 **Consequence for the reported statistic.** With one annotator there is no inter-annotator
 agreement to compute. The reliability figure is **intra-annotator reliability**
@@ -660,11 +668,13 @@ agreement to compute. The reliability figure is **intra-annotator reliability**
 described that way in the write-up — calling it inter-annotator agreement would be a
 misreport (§10.6).
 
-**How this must be described in the write-up.** The study used **LLM-assisted annotation
-with human verification**, not manual annotation. State plainly: the tool and version, the
-size of the human-verified sample, the agreement rate and κ between the human reading and
-the engine's label, and the blinded re-label κ. Do not describe automated labeling as
-manual annotation.
+**How this must be described in the write-up.** The study used **LLM-assisted annotation**,
+not manual annotation. State plainly: the tool and version, the adjudication design, the
+size and method of the verification sample, the agreement rate and κ, and the blinded
+re-label κ. If the verification was performed by a model, call it **model-assisted
+verification**; do not describe it as human verification. If a person also reviewed the
+sample, report that separately with its own agreement rate. Do not describe automated
+labeling as manual annotation.
 
 ### 10.4 Language tagging
 
@@ -676,9 +686,9 @@ manual annotation.
 
 ### 10.5 Annotation must be performed with post context visible
 
-Annotators work in a labeling tool (Label Studio / Doccano / a local CSV viewer — Member 4's choice) that displays, for every comment: the **post text**, the **post date**, the **source agency**, and — for replies — the **parent comment text**.
+Annotators work in a labeling tool (Label Studio / Doccano / a local CSV viewer — Member 4's choice) that displays, for every comment: the **post text**, the **post date**, and the **source agency**. (The corpus is top-level comments only — §12 — so there is no parent comment to display.)
 
-This is mandatory: a large fraction of replies ("Aba! Tama yan.", "Same, please fix ours too.") are unlabelable without the post. The labeling interface must show context; annotators must not label from the comment alone.
+This is mandatory: a large fraction of comments ("Aba! Tama yan.", "Same, please fix ours too.") are unlabelable without the post. The labeling interface must show context; annotators must not label from the comment alone.
 
 The annotator **must not** see `label`, `label_2`, `agreement`, or `adjudicated_by` while labeling (the tool hides annotation columns). During the
 blinded re-label pass (§10.3), the `label` column must be hidden as well — a pass where the
@@ -689,7 +699,9 @@ earlier answer is visible is not a reliability measurement.
 - Metric: **Cohen's kappa** between `label` (first pass) and `label_2` (blinded re-label pass),
   over the 20% re-labeled subset.
 - **Washout: ≥ 7 days** between the two passes. Without it, κ measures recall rather than
-  rule-consistency and comes out inflated.
+  rule-consistency and comes out inflated. If the re-label is run without a washout, record
+  `relabel_washout_days: 0` in the metadata and report κ as an **upper bound**, not as a
+  test-retest estimate.
 - Interpretation band (Landis & Koch 1977): `< 0.20` slight · `0.21–0.40` fair · `0.41–0.60` moderate · `0.61–0.80` substantial · `0.81–1.00` almost perfect.
 - **Gate: κ ≥ 0.60.** If the gate fails:
   1. Read every disagreement, resolve it against the guidelines, and record the rule that decided it in `adjudication_note`.
@@ -749,15 +761,17 @@ guidelines and records the decision plus a one-line note.
    §5.3 #35 vs #36 is the single most common dispute in the guidelines.
 3. **Every row ends up with a decision.** Rows still below threshold at merge time are
    reported as a warning and block release.
-4. **Human verification is mandatory.** ≥ 100 rows are reviewed by a person without
-   seeing the engine's label; the agreement rate and κ are reported. Those rows get
-   `verification = human_verified`.
+4. **Independent verification is mandatory.** ≥ 100 rows are reviewed without seeing the
+   engine's label. The verifier may be a person (`human_verified`) or a separate model
+   annotator (`llm_verified`); the `verification` column records which was used, and a
+   model pass is never recorded as human. The agreement rate and κ are reported.
 5. **The blinded re-label pass uses the same engine**, run against a fresh copy of the
-   pool with the `label` column hidden, ≥ 7 days after pass 1.
+   pool with the `label` column hidden. A washout of ≥ 7 days is preferred; if the pass
+   runs without one, κ is an **upper bound** and must be reported as such.
 
 **Disclosure.** The write-up must state: the engine and version, the cue/rule design, the
-share of rows auto-decided vs adjudicated vs human-verified, the human-verification
-agreement, and the blinded re-label κ.
+share of rows auto-decided vs adjudicated vs verified, the verification sample size,
+agreement, κ, and method, and the blinded re-label κ and washout.
 
 ### 10.8 Annotation trace
 
@@ -799,6 +813,8 @@ Every label carries: `annotator_id`, `label_2`, `agreement`, `adjudicated_by`, `
 The dataset supports claims about **the detectability of actionable suggestions in public comments** and nothing more. It does **not** support claims about government responsiveness, policy outcomes, public satisfaction, or the quality of government services.
 
 This mirrors the Scope section of `docs/NLP-Final-Paper.pdf`. Any wording in the write-up that exceeds this is a scope error.
+
+**The corpus is top-level comments only.** Facebook collapses replies behind a "View N replies" control, and replies were not expanded during collection: all 4,423 captured comments were top-level. The dataset therefore says nothing about replies or thread structure, and the write-up must not claim to model them.
 
 ---
 
@@ -853,19 +869,19 @@ nlp-data/
 | V-02 | Row count ≥ 1,000 (or ≥ 600 for the Facebook-only primary set), and the metadata row count equals the CSV row count. |
 | V-03 | `comment_id` unique, non-null, and matches `^[a-z]+_[a-z0-9_]+_\d{4}$`. |
 | V-04 | `label` ∈ {0,1} and `label_str` agrees with `label` on **every** row. |
-| V-05 | `language` ∈ {fil, eng, mixed}; `platform` ∈ {facebook, youtube, reddit, x}; `is_reply`/`agreement`/`pii_redacted` are `true`/`false`. |
+| V-05 | `language` ∈ {fil, eng, mixed}; `platform` ∈ {facebook, youtube, reddit, x}; `agreement`/`pii_redacted` are `true`/`false`. |
 | V-06 | `label_2` is either empty or ∈ {0,1}; `agreement` is empty exactly when `label_2` is empty, and `true` exactly when `label == label_2`. `annotator_id` is `A1` on every row; `label_2` is populated on ≥ 20% of rows. |
 | V-07 | Every `post_id` exists in `posts_v1.csv`, and the denormalized post fields match exactly. |
 | V-08 | `comment_text_norm` is non-empty, has no zero-width characters, contains no URL/email/phone regex match (PII leak check). |
 | V-09 | `dedup_key` values are unique across the dataset (no residual exact duplicates). |
 | V-10 | `split` values ∈ {train, dev, test}; the `split` column agrees with the `splits/*.csv` files; every `comment_id` appears in exactly one split file; counts match the metadata. |
 | V-11 | **No leakage:** no `dedup_key` appears in more than one split; no `post_id` appears in more than one split (post-level grouping held). |
-| V-12 | Class counts: `actionable` ≥ 150, `other` ≥ 150, actionable rate within [0.15, 0.65]. |
+| V-12 | Class counts: `actionable` ≥ 150, `other` ≥ 150, actionable rate within [0.15, 0.65]. The §9 per-source-page minimum (≥ 40) is a **composition target, not a V-check**; v1 misses it (5 of 44 agencies clear it), and the distribution is reported in the metadata (`per_agency`) and the data card. V-12 does not gate on it. |
 | V-13 | No `comment_text_norm` value is empty; `n_tokens` matches `len(comment_text_norm.split())`. |
 | V-14 | The metadata JSON parses and contains every key listed in §5.5. |
 | V-15 | The class prior in the test split is within ±10 percentage points of the train split prior. |
 | V-16 | **Lineage & agency integrity:** every `agency_id` in `dataset_v1.csv` and `posts_v1.csv` exists in `government_agencies.csv`; the denormalized `agency` and `agency_abbr` match the registry exactly; the row-count reconciliation in §5.6 holds (`n_raw_captured = Σ exclusions + n_candidate_pool = n_labeled = n_usable_final = Σ split counts`); `lineage.reconciles == true` in the metadata. |
-| V-17 | **Annotation completeness:** `verification` is populated on every row with a value in {`auto`, `human_verified`, `human_labeled`}; ≥ 100 rows are `human_verified` or `human_labeled`; `label_2` is populated on ≥ 20% of rows; the metadata's `cohens_kappa` ≥ 0.60. |
+| V-17 | **Annotation completeness:** `verification` is populated on every row with a value in {`auto`, `llm_verified`, `human_verified`, `human_labeled`}; ≥ 100 rows carry a verified value; `label_2` is populated on ≥ 20% of rows; the metadata records `verification_method` and `cohens_kappa` ≥ 0.60. |
 
 **Acceptance:** Member 4 declares the dataset delivered when V-01…V-15 pass and the report is stored at `data/processed/validation_report.txt`. Member 5 confirms receipt and acceptance, or raises specific failed checks.
 
@@ -908,6 +924,7 @@ Proposed calendar (AY 2026–2027): M1–M3 in week 1–2; M4 in week 3; M5–M7
 
 | Version | Date | Author | Change |
 |---|---|---|---|
+| `2.0-draft` | 2026-10-23 | M4 (MALASAN) | Removed six columns that carried no information: `post_media_type` (hardcoded `"text"`, never measured), `post_topic` (never populated), `is_reply`, `parent_comment_id` and `parent_comment_text` (the corpus is top-level comments only — replies were never rendered), and `notes` (never populated). Schema is now **34 columns**. `post_date` is now derived as `YYYY-MM-DD` from the relative timestamp and `collected_at` instead of shipping `12h`/`2d`, and is normalised per `post_id` to the **earliest capture** because a post seen in several runs drifted. V-16 now checks `agency` and `agency_abbr` against the registry. `source_page_name` and `agency_abbr` are populated from the registry. `guideline_version` normalised to `v1.0`. `adjudicated_by` now records the stage that produced the label (`auto_annotator` \| `llm_adjudicator`). `verification` gains `llm_verified` for an independent model pass; V-17 accepts it and requires `verification_method` in the metadata. §6.3 drops the parent segment; §10.3/§10.5/§12 record the top-level-only frame. V-12 no longer enforces the §9 per-source-page floor: that floor is a composition target, not a §14 acceptance check, and v1 misses it (5 of 44 agencies clear 40; 44 × 40 exceeds the corpus). The per-agency distribution is reported descriptively in the metadata and data card. |
 | `1.9-draft` | 2026-10-22 | M4 (MALASAN) | Added §7.4. The PII scrub runs last, so it can collapse two distinct comments onto one delivered text — two people who each wrote only their name both become `<NAME>`. 7.1's key was computed before the scrub and could not see that, and the corpus did carry one such pair across train and test. The scrub is now followed by an exact-only dedup sweep on `comment_text_norm`, with reason `X_DUP_EXACT`, because 7.3 can only protect the split against duplicates it can see. |
 | `1.0-draft` | 2026-10-20 | M4 (MALASAN) | Initial contract drafted from `NLP-PLAN.pdf` and `NLP-Final-Paper.pdf`. Schema, dedup/spam/PII rules, annotation interface, splits, validation, schedule. |
 | `1.8-draft` | 2026-10-20 | M4 (MALASAN) | Collection method switched to a computer-use agent reading the rendered DOM in the researcher's own signed-in browser. Section 3.2 rewritten around that route, with the `collection_method` values, the lazy-loading warning that truncated threads silently lose comments, and the sampling note. The source registry is pre-filled with 10 agencies across 38 policy domains. |

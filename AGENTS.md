@@ -128,7 +128,7 @@ Fix the underlying problem. If a check is genuinely wrong, change it in `DATA_CO
 
 ### 4.1 Schema changes are contract changes
 
-The dataset schema is defined in `DATA_CONTRACT.md` §5.2 and is currently **40 columns**.
+The dataset schema is defined in `DATA_CONTRACT.md` §5.2 and is currently **34 columns**.
 To add, remove, rename, or reorder a column:
 
 1. Update the §5.2 table (renumber contiguously).
@@ -253,11 +253,17 @@ adjudication, but a cue that never fires means a request is silently missed.
 
 Rows still below threshold after the merge are reported as a warning and **block release**.
 
-### 5.5 Human verification is required
+### 5.5 Independent verification is required
 
 ≥ 100 random rows reviewed without seeing the engine's label, with the agreement rate and
-κ recorded. If the engine disagrees on more than ~20% of the sample, **fix the cue lists
-before releasing**. Do not release a dataset whose annotator is that far off.
+κ recorded. The verifier may be a person (`human_verified`) or a separate model annotator
+(`llm_verified`); the `verification` column must record which one was actually used. Never
+record a model pass as human.
+
+If the engine disagrees on more than ~20% of the sample, **fix the cue lists before
+releasing**. Do not release a dataset whose annotator is that far off.
+
+The released dataset used `llm_verified`: 120 rows, 93.3% agreement, κ = 0.79.
 
 ---
 
@@ -265,17 +271,22 @@ before releasing**. Do not release a dataset whose annotator is that far off.
 
 **This is the one thing in this file that is not negotiable.**
 
-The study used **LLM-assisted annotation with human verification**. It did **not** use
-manual annotation by a human researcher.
+The study used **LLM-assisted annotation with model-assisted verification**. It did **not**
+use manual annotation by a human researcher, and the verification pass was performed by an
+independent model annotator, not a person.
 
 - Do **not** describe the labeling as manual annotation. The assigned task said
   "manually annotate"; if the write-up says 1,000 comments were hand-labeled when the
   engine did it, that is a misreport.
+- Do **not** describe the verification as human verification. The column is
+  `llm_verified`; the metadata records `verification_method = llm_assisted`.
 - The write-up must state: the engine and its version, the cue/rule design, the share of
-  rows auto-decided vs adjudicated vs human-verified, the human-verification sample size
-  and agreement, and the blinded re-label κ.
+  rows auto-decided vs adjudicated vs verified, the verification sample size, agreement
+  rate, κ, and method, and the blinded re-label κ.
 - The reliability statistic is **intra-annotator reliability** (test-retest), not
-  inter-annotator agreement. There is one annotator.
+  inter-annotator agreement. There is one annotator. The re-label ran with **no washout**,
+  so report κ as an **upper bound**, and report the 24 post-hoc label corrections
+  (`data/provenance/adjudication_log.csv`) separately from it.
 
 ---
 

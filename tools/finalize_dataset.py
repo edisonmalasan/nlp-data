@@ -115,6 +115,13 @@ def stage_apply():
                    "--scored", SCORED,
                    "--decisions", DECISIONS,
                    "--out", FULL], allow_fail=True)
+
+
+def stage_package():
+    # build_package must run twice: once after apply so that dataset_v1.csv
+    # exists for the splitter, and again after the split so that the split
+    # column and counts_by_split in the metadata are current. Running it only
+    # inside apply leaves counts_by_split describing the previous split.
     run("package", [PY, os.path.join(ROOT, "tools", "build_package.py")],
         allow_fail=True)
 
@@ -152,6 +159,7 @@ STAGES = {
     "clean": stage_clean,
     "score": stage_score,
     "apply": stage_apply,
+    "package": stage_package,
     "split": stage_split,
     "validate": stage_validate,
     "release": stage_release,
@@ -165,7 +173,8 @@ def main(argv=None) -> int:
                     choices=list(STAGES) + ["all"])
     args = ap.parse_args(argv)
 
-    order = ["clean", "score", "apply", "split", "validate", "release", "report"]
+    order = ["clean", "score", "apply", "package", "split", "package",
+             "validate", "release", "report"]
     chosen = order if args.stage == "all" else [args.stage]
     for s in chosen:
         STAGES[s]()

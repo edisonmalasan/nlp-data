@@ -1,0 +1,28 @@
+{
+  "verification_method": "llm_assisted",
+  "method_label": "LLM-assisted annotation with independent model verification",
+  "verifier": "independent model pass (7 annotator agents, blind to pass 1)",
+  "verified_n": 120,
+  "verification_agreement": 0.9333,
+  "verification_kappa": 0.792,
+  "verification_confusion": {
+    "TP": 20,
+    "FP": 6,
+    "FN": 2,
+    "TN": 92
+  },
+  "relabel_n": 332,
+  "relabel_agreement": 0.9247,
+  "relabel_kappa": 0.7225,
+  "relabel_confusion": {
+    "TP": 41,
+    "FP": 20,
+    "FN": 5,
+    "TN": 266
+  },
+  "relabel_washout_days": 0,
+  "generated_at": "2026-10-23T02:09:36.501241+00:00",
+  "post_adjudication_corrections": 24,
+  "post_adjudication_log": "data/provenance/adjudication_log.csv",
+  "note": "cohens_kappa values are the pre-adjudication agreement between pass 1 and the blind pass; label corrections made during adjudication are recorded separately and do not inflate them"
+}

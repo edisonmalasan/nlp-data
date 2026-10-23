@@ -115,7 +115,7 @@ For each post URL:
 5. Write it all into the snapshot JSON (format below).
 
 **`post_text` is not optional.** It is the context the annotator needs, and without it a
-large share of replies cannot be labeled at all.
+large share of comments cannot be labelled well.
 
 ### Scroll discipline
 
@@ -195,6 +195,10 @@ dropping comments.
 | `comments[].comment_text` | yes | Verbatim |
 | `comments[].author_name` | no | Used only to detect agency accounts |
 | `comments[].parent_comment_text` | for replies | The text it replies to |
+
+> **Delivered-schema note.** `is_reply` and `parent_comment_text` are **raw-capture** fields.
+> Cleaning uses them to exclude replies; the released dataset is **top-level comments only**
+> and does not contain them. The delivered schema is 34 columns (`DATA_CONTRACT.md` §5.2).
 
 `post_id` and `comment_id` are **generated** by the pipeline, not by you. Leave `post_id`
 empty.

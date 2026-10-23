@@ -51,6 +51,7 @@ import re
 import sys
 import unicodedata
 from dataclasses import dataclass, field, asdict
+from datetime import datetime, timedelta
 from typing import Iterable
 
 # The language of the rows the engine decided on its own. The adjudicated
@@ -354,8 +355,9 @@ def score(cues: Cues) -> Suggestion:
 def build_review_batches(rows: list, batch_size: int, out_dir: str) -> dict:
     """Write the rows that need adjudication to JSONL batches.
 
-    Each batch carries the comment, the post context and the parent comment,
-    because GUIDELINES 8.3 requires the annotator to see post context.
+    Each batch carries the comment and the post context, because GUIDELINES
+    8.3 requires the annotator to see post context. The corpus is top-level
+    comments only, so there is no parent comment to carry.
     """
     os.makedirs(out_dir, exist_ok=True)
 
@@ -383,8 +385,6 @@ def build_review_batches(rows: list, batch_size: int, out_dir: str) -> dict:
                     "comment_id": r["comment_id"],
                     "comment_text": r.get("comment_text", ""),
                     "post_text": r.get("post_text", ""),
-                    "parent_comment_text": r.get("parent_comment_text", ""),
-                    "is_reply": r.get("is_reply", "false"),
                     "heuristic_label": r["label"],
                     "heuristic_confidence": r["confidence"],
                     "heuristic_rule": r["rule"],
@@ -467,25 +467,23 @@ def cmd_score(args) -> int:
     return 0
 
 
-# The contract fixes the schema: DATA_CONTRACT.md 5.2, 40 columns, in this
+# The contract fixes the schema: DATA_CONTRACT.md 5.2, 34 columns, in this
 # order. The delivered dataset has exactly these columns, in this order, and
 # nothing else.
 CONTRACT_COLUMNS = [
     "comment_id", "platform", "source_page", "source_page_name", "agency_id",
     "agency", "agency_abbr",
-    "post_id", "post_url", "post_date", "post_text", "post_media_type",
-    "post_topic",
-    "is_reply", "parent_comment_id", "parent_comment_text", "comment_text",
-    "comment_text_norm", "context_text_norm", "dedup_key", "n_tokens",
-    "language", "label", "label_str",
+    "post_id", "post_url", "post_date", "post_text",
+    "comment_text", "comment_text_norm", "context_text_norm", "dedup_key",
+    "n_tokens", "language", "label", "label_str",
     "annotator_id", "label_2", "agreement", "adjudicated_by",
     "adjudication_note", "guideline_version",
-    "source_snapshot", "collected_at", "pii_redacted", "split", "notes",
+    "source_snapshot", "collected_at", "pii_redacted", "split",
     "verification", "annotation_rule", "annotation_evidence",
     "annotation_confidence", "stratum",
 ]
 
-GUIDELINE_VERSION = "1.0-draft"
+GUIDELINE_VERSION = "v1.0"
 # one annotator: the annotation engine, with the adjudication applied
 # against the written guidelines (DATA_CONTRACT.md 10.1)
 ANNOTATOR_ID = "A1"
@@ -531,8 +529,56 @@ def read_agency_index():
     return idx
 
 
+_RELATIVE_RE = re.compile(r"^\s*(\d+)\s*([smhdwy])\s*$", re.I)
+_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def derive_post_date(relative: str, collected_at: str) -> str:
+    """Turn the page's relative timestamp into the contract's YYYY-MM-DD.
+
+    The DOM shows `12h` / `2d`, not a date. The capture time is known, so the
+    publication date is `collected_at - delta`. Hour stamps are exact to the
+    day; day/week/year stamps are accurate to about +/-1 day, which is what
+    contract 5.2 column 10 states.
+    """
+    collected = None
+    if collected_at:
+        try:
+            collected = datetime.fromisoformat(collected_at.replace("Z", "+00:00"))
+        except ValueError:
+            collected = None
+
+    s = (relative or "").strip().lower()
+    if _DATE_RE.match(s):
+        return s
+    if collected is None:
+        return ""
+
+    if s in ("", "just now", "now", "ngayon lang"):
+        delta = timedelta(0)
+    elif s in ("yesterday", "kahapon"):
+        delta = timedelta(days=1)
+    else:
+        m = _RELATIVE_RE.match(s)
+        if not m:
+            # an unparseable label still has a bound: the post is not newer
+            # than the capture, so the capture date is the safe fallback
+            return collected.date().isoformat()
+        n, unit = int(m.group(1)), m.group(2).lower()
+        delta = {
+            "s": timedelta(seconds=n),
+            "m": timedelta(minutes=n),   # Facebook uses m = minutes
+            "h": timedelta(hours=n),
+            "d": timedelta(days=n),
+            "w": timedelta(weeks=n),
+            "y": timedelta(days=365 * n),
+        }[unit]
+
+    return (collected - delta).date().isoformat()
+
+
 def conform_to_contract(rows, decisions):
-    """Give every row the contract's 40 columns, in the contract's order.
+    """Give every row the contract's 34 columns, in the contract's order.
 
     The columns the contract adds are filled here, and the columns that are
     not in the contract are dropped: the delivered dataset is the contract's
@@ -545,9 +591,13 @@ def conform_to_contract(rows, decisions):
         agency, abbr = agency_index.get(aid, ("", ""))
         r["agency"] = agency
         r["agency_abbr"] = abbr
-        r.setdefault("post_topic", "")
+        # source_page_name is a denormalized copy of the registry name; the
+        # DOM capture never exposed the display name (contract 5.2 col 4)
+        r["source_page_name"] = agency or r.get("source_page_name", "")
+        # the page shows a relative timestamp; the contract wants a date
+        r["post_date"] = derive_post_date(r.get("post_date", ""),
+                                          r.get("collected_at", ""))
         r.setdefault("stratum", "recent")
-
         # the language of an adjudicated row comes from the adjudication; the
         # rest are assigned by the rule in language.py
         cid = r.get("comment_id")
@@ -569,11 +619,32 @@ def conform_to_contract(rows, decisions):
             r["adjudication_note"] = ""
 
         r["annotator_id"] = ANNOTATOR_ID
-        # label_2 and agreement are populated by the blinded re-label pass
-        r["label_2"] = ""
-        r["agreement"] = ""
+        # label_2 and agreement are populated by the blinded re-label pass;
+        # setdefault keeps a merge that already ran from being wiped by a
+        # second apply
+        r.setdefault("label_2", "")
+        r.setdefault("agreement", "")
         r["guideline_version"] = GUIDELINE_VERSION
-        r.setdefault("notes", "")
+
+    # post_date is a property of the post, not of the run that happened to
+    # capture a comment. A post can appear in several runs, and the relative
+    # stamp drifts (`2d` on two different days), so deriving the date from
+    # each run's collected_at gives one post two dates. The earliest capture
+    # is the closest to publication and the least stale, so it wins for every
+    # comment on that post. This is what V-07 compares against posts_v1.csv.
+    earliest = {}
+    for r in rows:
+        pid = r.get("post_id")
+        if not pid:
+            continue
+        key = r.get("collected_at") or "9999"
+        if pid not in earliest or key < earliest[pid][0]:
+            earliest[pid] = (key, r.get("post_date") or "")
+    for r in rows:
+        pid = r.get("post_id")
+        if pid in earliest and earliest[pid][1]:
+            r["post_date"] = earliest[pid][1]
+
     return rows
 
 

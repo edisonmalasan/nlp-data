@@ -19,8 +19,8 @@ media, labelled `actionable` (1) or `other` (0).
 | **Agencies (source accounts)** | 44 |
 | **Platforms** | facebook (1657) |
 | **Sampling strata** | recent (1626), invites (31) |
-| **Label `1` (actionable)** | 296 (17.9%) |
-| **Label `0` (other)** | 1,361 (82.1%) |
+| **Label `1` (actionable)** | 282 (17.0%) |
+| **Label `0` (other)** | 1,375 (83.0%) |
 | **Comment length (chars)** | median 72, p90 161 |
 | **Split** | 70 / 15 / 15, grouped by `post_id`, seed 42 |
 
@@ -58,7 +58,7 @@ labelled robustness analysis.
 |---|---|
 | `comment_text_norm` | **The only modeling text field** |
 | `post_text` | the post the comment is on — annotation context only |
-| `context_text_norm` | the parent comment for a reply — annotation context only |
+| `context_text_norm` | the post caption - annotation context only |
 | `label` | the ground truth |
 | `language` | `fil` / `eng` / `mixed` — for the code-switching analysis |
 | `stratum` | the sampling stratum the row came from |
@@ -90,38 +90,38 @@ labelled robustness analysis.
 
 | Source account | Rows | actionable | other | actionable % |
 |---|---|---|---|---|
-| dpwh | 502 | 105 | 397 | 20.9% |
-| deped | 268 | 28 | 240 | 10.4% |
-| dilg | 151 | 29 | 122 | 19.2% |
+| dpwh | 502 | 100 | 402 | 19.9% |
+| deped | 268 | 26 | 242 | 9.7% |
+| dilg | 151 | 28 | 123 | 18.5% |
 | doh | 77 | 4 | 73 | 5.2% |
 | OfficeOfTheVicePresidentPH | 47 | 1 | 46 | 2.1% |
-| bfp | 39 | 9 | 30 | 23.1% |
-| PhilHealthofficial | 37 | 14 | 23 | 37.8% |
-| professionalregulationcommission | 37 | 8 | 29 | 21.6% |
+| bfp | 39 | 8 | 31 | 20.5% |
+| PhilHealthofficial | 37 | 12 | 25 | 32.4% |
+| professionalregulationcommission | 37 | 7 | 30 | 18.9% |
 | dost_pagasa | 36 | 1 | 35 | 2.8% |
-| birgovph | 34 | 3 | 31 | 8.8% |
-| dacentralphilippines | 33 | 15 | 18 | 45.5% |
-| fdagovph | 33 | 14 | 19 | 42.4% |
+| birgovph | 34 | 2 | 32 | 5.9% |
+| dacentralphilippines | 33 | 14 | 19 | 42.4% |
+| fdagovph | 33 | 15 | 18 | 45.5% |
 | dswd | 28 | 6 | 22 | 21.4% |
 | piopaf | 28 | 2 | 26 | 7.1% |
-| nationalmuseumofthephilippines | 22 | 6 | 16 | 27.3% |
-| dti | 19 | 14 | 5 | 73.7% |
+| nationalmuseumofthephilippines | 22 | 5 | 17 | 22.7% |
+| dti | 19 | 13 | 6 | 68.4% |
 | BangkoSentralngPilipinas | 19 | 2 | 17 | 10.5% |
 | pagcor.ph | 18 | 1 | 17 | 5.6% |
-| dostpchrd | 18 | 2 | 16 | 11.1% |
+| dostpchrd | 18 | 4 | 14 | 22.2% |
 | officialbureauofimmigration | 16 | 2 | 14 | 12.5% |
 | PHIVOLCS | 15 | 4 | 11 | 26.7% |
-| OfficialLRTA | 15 | 3 | 12 | 20.0% |
+| OfficialLRTA | 15 | 2 | 13 | 13.3% |
 | ndrrmc | 14 | 2 | 12 | 14.3% |
 | nsc.gov.ph | 14 | 3 | 11 | 21.4% |
-| nncofficial | 14 | 4 | 10 | 28.6% |
+| nncofficial | 14 | 5 | 9 | 35.7% |
 | DOSTph | 11 | 1 | 10 | 9.1% |
 | pidsgovph | 11 | 0 | 11 | 0.0% |
 | civilservicegovph | 11 | 0 | 11 | 0.0% |
 | denr | 10 | 1 | 9 | 10.0% |
 | PhilippineNavy | 10 | 1 | 9 | 10.0% |
 | NationalBureauofInvestigationOfficial | 9 | 3 | 6 | 33.3% |
-| DOSTASTI | 8 | 1 | 7 | 12.5% |
+| DOSTASTI | 8 | 0 | 8 | 0.0% |
 | boiphilippines | 8 | 0 | 8 | 0.0% |
 | DDBgov | 8 | 2 | 6 | 25.0% |
 | DOFPH | 6 | 1 | 5 | 16.7% |
@@ -145,13 +145,13 @@ than the rest.
 
 | Post | Comments | actionable | actionable % |
 |---|---|---|---|
-| d_c7adea76301e5bdc | 209 | 10 | 4.8% |
-| h_24364576a353a509 | 204 | 53 | 26.0% |
-| h_c6df40e102162fdf | 106 | 19 | 17.9% |
+| d_c7adea76301e5bdc | 209 | 9 | 4.3% |
+| h_24364576a353a509 | 204 | 49 | 24.0% |
+| h_c6df40e102162fdf | 106 | 18 | 17.0% |
 | h_77fb0b7cb1f05e9e | 85 | 9 | 10.6% |
-| g_55360bfda32fa270 | 85 | 15 | 17.6% |
-| h_8da3cbe8f169597b | 32 | 8 | 25.0% |
-| h_80b98a13f1a42f4f | 30 | 6 | 20.0% |
+| g_55360bfda32fa270 | 85 | 14 | 16.5% |
+| h_8da3cbe8f169597b | 32 | 7 | 21.9% |
+| h_80b98a13f1a42f4f | 30 | 7 | 23.3% |
 | h_a5eff28a3c3e499b | 29 | 4 | 13.8% |
 | h_3f0026fd16fae3dc | 23 | 2 | 8.7% |
 | d_2d702ca032c46ec7 | 21 | 10 | 47.6% |
@@ -230,23 +230,33 @@ are counted here rather than quietly filtered.
 
 ## 5. How the labels were produced
 
-**LLM-assisted annotation with human verification.** This is not manual
-annotation by a human researcher, and the write-up must not describe it that way.
+**LLM-assisted annotation with model-assisted verification.** This is not manual
+annotation by a human researcher. The verification pass was performed by an
+independent model annotator blind to the first pass, not by a human. The
+dataset records `verification = llm_verified`, and the metadata records
+`verification_method = 'llm_assisted'`. The write-up
+must say **model-assisted verification**, never human verification.
 
 | Stage | What happened |
 |---|---|
 | 1. Cue extraction | The engine extracts request markers, action verbs, strong request frames, action objects, complaint markers, gratitude, reaction, information questions and refusals from each comment. |
 | 2. Heuristic scoring | Each comment gets a suggested label, a confidence and the rule that fired. |
 | 3. Adjudication | Every row below 0.85 confidence was adjudicated against `docs/ANNOTATION_GUIDELINES.md` by an LLM working from the written decision tree, plus a random 10% audit sample of the rows the engine could decide. |
-| 4. Human verification | A random sample of at least 100 rows is re-read by the researcher, blind, and the agreement rate and Cohen's κ are recorded. |
-| 5. Blinded re-label | After a washout of at least 7 days, 20% of the rows are re-labelled blind and κ is computed between `label` and `label_2`. |
+| 4. Verification | 120 rows re-read blind; agreement 93.3%; Cohen's κ = 0.79. 136 rows carry `verification = llm_verified` after adjudication. |
+| 5. Blinded re-label | 332 rows re-labelled blind; κ = 0.72. Washout: 0 days. |
+
+Twenty-four pass-1 labels were corrected during adjudication against the blind
+pass. The corrections are listed in `data/provenance/adjudication_log.csv` and
+are not included in the κ, which measures the pre-adjudication agreement.
 
 The disputed class — a request marker with an object but no action verb, for
 example *"Sana maayos ang kalsada"* — is never auto-decided. It always routes
 to adjudication, because it is where the guidelines disagree most.
 
 **The reliability statistic is intra-annotator reliability (test-retest), not
-inter-annotator agreement.** There is one annotator.
+inter-annotator agreement.** There is one annotator. The re-label ran without a
+washout, so κ is an upper bound rather than a true test-retest estimate. A
+human spot-check is still recommended before the paper claims human verification.
 
 ## 6. Provenance
 

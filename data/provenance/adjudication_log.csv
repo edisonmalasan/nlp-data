@@ -1,0 +1,25 @@
+comment_id,label_before,label_after,reason
+fb_dilg_0037,1,0,6.4 sarcastic rhetorical question; no action
+fb_professionalregulationcommission_0031,1,0,6.1 status/information question
+fb_dostpchrd_0024,0,1,3.1 A1 imperative to stop importation
+fb_dpwh_0369,1,0,6.3 general wish; no identifiable action object
+fb_dacentralphilippines_0031,1,0,6.1 procedure question (how to avail)
+fb_dpwh_0141,1,0,3.2 O1 criticism of PR; no proposed remedy
+fb_dostasti_0025,1,0,6.1 personal application query; no action
+fb_fdagovph_0025,0,1,3.1 A1 asks FDA to verify product legitimacy
+fb_dpwh_0498,1,0,3.2 O3 general call for action; no specific measure
+fb_dpwh_0473,0,1,3.1 A2 proposes portion-by-portion road works
+fb_deped_0155,1,0,3.2 O7 greeting/status; no request
+fb_philhealthofficial_0002,1,0,6.1 information questions on registration/coverage
+fb_birgovph_0023,1,0,6.1 procedural question (print/laminate)
+fb_dpwh_0303,1,0,6.4 rhetorical challenge; no proposal
+fb_nncofficial_0002,0,1,3.1 A2 imperative to change nutrition messaging
+fb_dti_0007,1,0,6.1 asks where to file a complaint; information
+fb_dostpchrd_0002,0,1,3.1 A1 imperative to verify research
+fb_dpwh_0179,1,0,3.2 O3 political commentary; no request
+fb_dpwh_0143,1,0,3.2 O4 praise; no request
+fb_deped_0037,1,0,3.2 O3 general call for unity; no action
+fb_bfp_0022,1,0,6.1 asks whether a complaint can be filed; information
+fb_officiallrta_0007,1,0,6.1 information question about promo fares
+fb_philhealthofficial_0008,1,0,3.2 O3 status statement; no request
+fb_nationalmuseumofthephilippines_0015,1,0,6.1 information questions on passport availability
