@@ -7,8 +7,8 @@
 | Contract version | `1.9-draft` |
 | Status | **DRAFT — awaiting adviser + team sign-off** |
 | Created | 2026-10-20 |
-| Owner / Producer | Member 4 — **Edison Yin Malasan** (data collection, scraping, annotation) |
-| Consumers | Member 5 — **Jim Hendrix Bag-eo** (model development) · Member 6 — **Henri Louis Agustin** (results, conclusion, final editing) |
+| Owner / Producer | Member 4 — **Edison Malasan** (data collection, scraping, annotation) |
+| Consumers | Member 5 — (model development) · Member 6 —  (results, conclusion, final editing) |
 | Applies to | `data/processed/dataset_v1.csv`, `data/processed/dataset_v1_ext.csv`, `data/processed/posts_v1.csv` |
 | Governing documents | `docs/NLP-PLAN.pdf` (task assignment), `docs/NLP-Final-Paper.pdf` (scope, objectives, RQ), `docs/ANNOTATION_GUIDELINES.md` (label rules) |
 | Related outputs | `data/processed/dataset_v1.metadata.json`, `docs/DATA_CARD.md` |
