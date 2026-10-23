@@ -255,8 +255,10 @@ to adjudication, because it is where the guidelines disagree most.
 
 **The reliability statistic is intra-annotator reliability (test-retest), not
 inter-annotator agreement.** There is one annotator. The re-label ran without a
-washout, so κ is an upper bound rather than a true test-retest estimate. A
-human spot-check is still recommended before the paper claims human verification.
+washout, so κ is an upper bound rather than a true test-retest estimate. The
+`llm_verified` flag records a model pass; if the paper wants to claim human
+verification, a person must spot-check the labels first. The released dataset does
+not support that claim.
 
 ## 6. Provenance
 
@@ -278,14 +280,14 @@ the browser profile.
 
 | File | What it is |
 |---|---|
-| `data/final/dataset_v1.csv` | **The primary dataset.** Facebook only, the full 40-column contract schema. |
+| `data/final/dataset_v1.csv` | **The primary dataset.** Facebook only, the full 34-column contract schema. |
 | `data/final/dataset_v1_ext.csv` | The same schema, all platforms. |
-| `data/final/splits/{train,dev,test}.csv` | The authoritative splits, 70/15/15, grouped by `post_id`, seed 42. |
+| `data/final/train.csv`, `dev.csv`, `test.csv` | The authoritative splits, 70/15/15, grouped by `post_id`, seed 42. |
 | `data/final/posts_v1.csv` | The posts the comments belong to. |
 | `data/final/dataset_v1.metadata.json` | Counts, class balance, lineage, and the exclusion ledger summary. |
 | `data/final/MANIFEST.json` | The file list and checksums for the package. |
 
-The extension file holds 1,828 rows across 1828 comments.
+The extension file holds 1,828 rows, one per comment, across all platforms.
 
 **The split files are authoritative.** The `split` column in the dataset is a
 mirror. If they ever disagree, the files win and it is a bug to fix.
