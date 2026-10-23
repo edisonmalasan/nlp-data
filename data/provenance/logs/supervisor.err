@@ -1,0 +1,70 @@
+Traceback (most recent call last):
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 300, in _run
+    acct_page = fresh_tab(log) or page
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 201, in fresh_tab
+    tabs = ob.list_tabs()
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 144, in list_tabs
+    r = orca("tab", "list")
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 116, in orca
+    raise OrcaError(f"orca {argv[0]}: {err.get('code', '')} {err.get('message', '')}")
+orca_browser.OrcaError: orca tab: runtime_unavailable Could not read Orca runtime metadata at C:\Users\Edison\AppData\Roaming\orca\orca-runtime.json. Start the Orca app first.
+Traceback (most recent call last):
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 265, in _run
+    tabs = ensure_tabs(args.tab + 1)
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 113, in ensure_tabs
+    tabs = ob.list_tabs()
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 144, in list_tabs
+    r = orca("tab", "list")
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 116, in orca
+    raise OrcaError(f"orca {argv[0]}: {err.get('code', '')} {err.get('message', '')}")
+orca_browser.OrcaError: orca tab: runtime_unavailable Could not read Orca runtime metadata at C:\Users\Edison\AppData\Roaming\orca\orca-runtime.json. Start the Orca app first.
+Traceback (most recent call last):
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 265, in _run
+    tabs = ensure_tabs(args.tab + 1)
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 113, in ensure_tabs
+    tabs = ob.list_tabs()
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 144, in list_tabs
+    r = orca("tab", "list")
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 116, in orca
+    raise OrcaError(f"orca {argv[0]}: {err.get('code', '')} {err.get('message', '')}")
+orca_browser.OrcaError: orca tab: runtime_unavailable Could not read Orca runtime metadata at C:\Users\Edison\AppData\Roaming\orca\orca-runtime.json. Start the Orca app first.
+Traceback (most recent call last):
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 265, in _run
+    tabs = ensure_tabs(args.tab + 1)
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 113, in ensure_tabs
+    tabs = ob.list_tabs()
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 144, in list_tabs
+    r = orca("tab", "list")
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 116, in orca
+    raise OrcaError(f"orca {argv[0]}: {err.get('code', '')} {err.get('message', '')}")
+orca_browser.OrcaError: orca tab: runtime_unavailable Could not read Orca runtime metadata at C:\Users\Edison\AppData\Roaming\orca\orca-runtime.json. Start the Orca app first.
+Traceback (most recent call last):
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 265, in _run
+    tabs = ensure_tabs(args.tab + 1)
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 113, in ensure_tabs
+    tabs = ob.list_tabs()
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 144, in list_tabs
+    r = orca("tab", "list")
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 116, in orca
+    raise OrcaError(f"orca {argv[0]}: {err.get('code', '')} {err.get('message', '')}")
+orca_browser.OrcaError: orca tab: runtime_unavailable Could not read Orca runtime metadata at C:\Users\Edison\AppData\Roaming\orca\orca-runtime.json. Start the Orca app first.
+Traceback (most recent call last):
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 265, in _run
+    tabs = ensure_tabs(args.tab + 1)
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 113, in ensure_tabs
+    tabs = ob.list_tabs()
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 144, in list_tabs
+    r = orca("tab", "list")
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 116, in orca
+    raise OrcaError(f"orca {argv[0]}: {err.get('code', '')} {err.get('message', '')}")
+orca_browser.OrcaError: orca tab: runtime_unavailable Could not read Orca runtime metadata at C:\Users\Edison\AppData\Roaming\orca\orca-runtime.json. Start the Orca app first.
+Traceback (most recent call last):
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 265, in _run
+    tabs = ensure_tabs(args.tab + 1)
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\worker.py", line 113, in ensure_tabs
+    tabs = ob.list_tabs()
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 144, in list_tabs
+    r = orca("tab", "list")
+  File "C:\Users\Edison\Desktop\nlp-data\src\collect\orca_browser.py", line 116, in orca
+    raise OrcaError(f"orca {argv[0]}: {err.get('code', '')} {err.get('message', '')}")
+orca_browser.OrcaError: orca tab: runtime_unavailable Could not read Orca runtime metadata at C:\Users\Edison\AppData\Roaming\orca\orca-runtime.json. Start the Orca app first.

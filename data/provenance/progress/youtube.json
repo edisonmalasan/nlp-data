@@ -1,44 +1,50 @@
 {
   "youtube/OfficeOfTheVicePresidentPH_yt": {
-    "posts": 1,
-    "comments": 0,
-    "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:12:10"
+    "posts": 13,
+    "comments": 33,
+    "last_error": "",
+    "updated_at": "2026-10-23T00:42:22"
   },
   "youtube/deped_yt": {
-    "posts": 10,
+    "posts": 34,
     "comments": 0,
     "last_error": "",
-    "updated_at": "2026-10-21T06:48:12"
+    "updated_at": "2026-10-23T05:04:58"
   },
   "youtube/dti_yt": {
-    "posts": 5,
-    "comments": 14,
+    "posts": 17,
+    "comments": 56,
     "last_error": "",
-    "updated_at": "2026-10-21T06:38:00"
+    "updated_at": "2026-10-23T00:06:14"
   },
   "youtube/dswd_yt": {
-    "posts": 5,
-    "comments": 1,
+    "posts": 17,
+    "comments": 9,
     "last_error": "",
-    "updated_at": "2026-10-21T06:51:50"
+    "updated_at": "2026-10-23T00:13:08"
   },
   "youtube/doh_yt": {
-    "posts": 5,
-    "comments": 0,
+    "posts": 17,
+    "comments": 1,
     "last_error": "",
-    "updated_at": "2026-10-21T06:55:35"
+    "updated_at": "2026-10-23T00:20:18"
   },
   "youtube/dpwh_yt": {
-    "posts": 0,
-    "comments": 0,
-    "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:08:28"
+    "posts": 12,
+    "comments": 53,
+    "last_error": "",
+    "updated_at": "2026-10-23T00:27:28"
   },
   "youtube/bfp_yt": {
-    "posts": 0,
-    "comments": 0,
-    "last_error": "no post permalinks found on the account page",
-    "updated_at": "2026-10-21T06:09:43"
+    "posts": 12,
+    "comments": 1,
+    "last_error": "",
+    "updated_at": "2026-10-23T00:35:21"
+  },
+  "youtube/dost_pagasa_yt": {
+    "posts": 12,
+    "comments": 137,
+    "last_error": "",
+    "updated_at": "2026-10-22T23:51:47"
   }
 }

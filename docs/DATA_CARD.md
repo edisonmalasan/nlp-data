@@ -13,15 +13,15 @@ media, labelled `actionable` (1) or `other` (0).
 
 | | |
 |---|---|
-| **Rows** | 1,618 |
-| **Distinct comments** | 1,618 |
-| **Distinct posts** | 185 |
+| **Rows** | 1,657 |
+| **Distinct comments** | 1,657 |
+| **Distinct posts** | 196 |
 | **Agencies (source accounts)** | 44 |
-| **Platforms** | facebook (1618) |
-| **Sampling strata** | recent (1587), invites (31) |
-| **Label `1` (actionable)** | 287 (17.7%) |
-| **Label `0` (other)** | 1,331 (82.3%) |
-| **Comment length (chars)** | median 73, p90 161 |
+| **Platforms** | facebook (1657) |
+| **Sampling strata** | recent (1626), invites (31) |
+| **Label `1` (actionable)** | 296 (17.9%) |
+| **Label `0` (other)** | 1,361 (82.1%) |
+| **Comment length (chars)** | median 72, p90 161 |
 | **Split** | 70 / 15 / 15, grouped by `post_id`, seed 42 |
 
 ### The label definition — the one thing to get right
@@ -69,71 +69,71 @@ labelled robustness analysis.
 
 | Platform | Rows | Share |
 |---|---|---|
-| facebook | 1,618 | 100.0% |
+| facebook | 1,657 | 100.0% |
 
 ### Per language
 
 | Language | Rows | Share |
 |---|---|---|
-| fil | 739 | 45.7% |
-| eng | 510 | 31.5% |
-| mixed | 369 | 22.8% |
+| fil | 755 | 45.6% |
+| eng | 528 | 31.9% |
+| mixed | 374 | 22.6% |
 
 ### Per sampling stratum
 
 | Stratum | Rows | Share |
 |---|---|---|
-| recent | 1,587 | 98.1% |
+| recent | 1,626 | 98.1% |
 | invites | 31 | 1.9% |
 
 ### Per agency
 
 | Source account | Rows | actionable | other | actionable % |
 |---|---|---|---|---|
-| dpwh | 502 | 103 | 399 | 20.5% |
+| dpwh | 502 | 105 | 397 | 20.9% |
 | deped | 268 | 28 | 240 | 10.4% |
-| dilg | 151 | 30 | 121 | 19.9% |
+| dilg | 151 | 29 | 122 | 19.2% |
 | doh | 77 | 4 | 73 | 5.2% |
 | OfficeOfTheVicePresidentPH | 47 | 1 | 46 | 2.1% |
+| bfp | 39 | 9 | 30 | 23.1% |
 | PhilHealthofficial | 37 | 14 | 23 | 37.8% |
-| professionalregulationcommission | 36 | 9 | 27 | 25.0% |
-| dost_pagasa | 35 | 1 | 34 | 2.9% |
+| professionalregulationcommission | 37 | 8 | 29 | 21.6% |
+| dost_pagasa | 36 | 1 | 35 | 2.8% |
+| birgovph | 34 | 3 | 31 | 8.8% |
 | dacentralphilippines | 33 | 15 | 18 | 45.5% |
-| fdagovph | 33 | 13 | 20 | 39.4% |
-| bfp | 32 | 7 | 25 | 21.9% |
+| fdagovph | 33 | 14 | 19 | 42.4% |
 | dswd | 28 | 6 | 22 | 21.4% |
-| birgovph | 25 | 3 | 22 | 12.0% |
-| piopaf | 24 | 2 | 22 | 8.3% |
+| piopaf | 28 | 2 | 26 | 7.1% |
 | nationalmuseumofthephilippines | 22 | 6 | 16 | 27.3% |
-| dti | 19 | 13 | 6 | 68.4% |
+| dti | 19 | 14 | 5 | 73.7% |
+| BangkoSentralngPilipinas | 19 | 2 | 17 | 10.5% |
 | pagcor.ph | 18 | 1 | 17 | 5.6% |
 | dostpchrd | 18 | 2 | 16 | 11.1% |
-| BangkoSentralngPilipinas | 17 | 2 | 15 | 11.8% |
+| officialbureauofimmigration | 16 | 2 | 14 | 12.5% |
 | PHIVOLCS | 15 | 4 | 11 | 26.7% |
-| officialbureauofimmigration | 15 | 2 | 13 | 13.3% |
 | OfficialLRTA | 15 | 3 | 12 | 20.0% |
 | ndrrmc | 14 | 2 | 12 | 14.3% |
-| nsc.gov.ph | 12 | 1 | 11 | 8.3% |
+| nsc.gov.ph | 14 | 3 | 11 | 21.4% |
+| nncofficial | 14 | 4 | 10 | 28.6% |
 | DOSTph | 11 | 1 | 10 | 9.1% |
 | pidsgovph | 11 | 0 | 11 | 0.0% |
 | civilservicegovph | 11 | 0 | 11 | 0.0% |
-| nncofficial | 11 | 3 | 8 | 27.3% |
 | denr | 10 | 1 | 9 | 10.0% |
 | PhilippineNavy | 10 | 1 | 9 | 10.0% |
 | NationalBureauofInvestigationOfficial | 9 | 3 | 6 | 33.3% |
+| DOSTASTI | 8 | 1 | 7 | 12.5% |
 | boiphilippines | 8 | 0 | 8 | 0.0% |
 | DDBgov | 8 | 2 | 6 | 25.0% |
-| DOSTASTI | 7 | 0 | 7 | 0.0% |
 | DOFPH | 6 | 1 | 5 | 16.7% |
+| portsauthorityph | 6 | 0 | 6 | 0.0% |
+| CCCPhl | 4 | 1 | 3 | 25.0% |
 | DOST.FNRI | 4 | 1 | 3 | 25.0% |
+| pnacph | 4 | 0 | 4 | 0.0% |
 | pnagovph | 3 | 2 | 1 | 66.7% |
 | OfficialPDIC | 3 | 0 | 3 | 0.0% |
-| pnacph | 3 | 0 | 3 | 0.0% |
 | PhStockExchange | 3 | 0 | 3 | 0.0% |
 | nationalyouthcommission | 2 | 0 | 2 | 0.0% |
-| CCCPhl | 2 | 0 | 2 | 0.0% |
 | pcsoofficialsocialmedia | 2 | 0 | 2 | 0.0% |
-| portsauthorityph | 1 | 0 | 1 | 0.0% |
 
 ## 4. Known limitations — read this before drawing conclusions
 
@@ -146,7 +146,7 @@ than the rest.
 | Post | Comments | actionable | actionable % |
 |---|---|---|---|
 | d_c7adea76301e5bdc | 209 | 10 | 4.8% |
-| h_24364576a353a509 | 204 | 51 | 25.0% |
+| h_24364576a353a509 | 204 | 53 | 26.0% |
 | h_c6df40e102162fdf | 106 | 19 | 17.9% |
 | h_77fb0b7cb1f05e9e | 85 | 9 | 10.6% |
 | g_55360bfda32fa270 | 85 | 15 | 17.6% |
@@ -156,7 +156,7 @@ than the rest.
 | h_3f0026fd16fae3dc | 23 | 2 | 8.7% |
 | d_2d702ca032c46ec7 | 21 | 10 | 47.6% |
 
-The ten largest posts hold **824 of 1,618 rows (50.9%)**.
+The ten largest posts hold **824 of 1,657 rows (49.7%)**.
 A random-split classifier can therefore score well by recognising *which post a
 comment came from* rather than what it says. The split is grouped by `post_id`
 precisely so that a post's comments never straddle two splits — otherwise the
@@ -172,7 +172,7 @@ computed from surface markers, used only to describe the corpus. The label comes
 from the annotator.
 
 **The post caption is missing on some rows.** `post_text` is the post context -
-the caption of the post the comment sits on. It is empty for 516 of 1,618 rows (32%), because the extractor that
+the caption of the post the comment sits on. It is empty for 553 of 1,657 rows (33%), because the extractor that
 reads the caption was corrected after those captures were made. No caption is
 **wrong**: the ones that are present are real captions. This does not touch the
 modelling text field, which is `comment_text_norm` alone, and `post_text` is
@@ -188,7 +188,7 @@ rather than as the study's dataset.
 **The per-source post count is a floor, not the planned eight to twelve.**
 The collection plan takes the most recent posts of each source. Under
 continuous collection Facebook serves only the first one or two posts of
-a page's feed and does not serve more on scrolling or on a reload, so 38 of 44 sources
+a page's feed and does not serve more on scrolling or on a reload, so 37 of 44 sources
 contribute fewer than eight posts. The pages themselves load - the follower
 count, the category and the description all render - and a tab created for
 the page serves the whole feed after the session has rested, which is what
@@ -198,6 +198,29 @@ is recorded per account rather than smoothed away, and the rule that
 forbids choosing posts by comment richness was kept, because the
 alternative - walking backwards until a post is busy - is exactly the
 cherry-picking that rule exists to prevent.
+
+**Only five of the agencies clear the contract's forty-comment floor.**
+Contract 11 asks for at least forty usable comments per source page, so
+that no page dominates and no page is a statistical singleton.
+5 of 44 agencies clear it:
+
+| agency | rows |
+|---|---|
+| `dpwh` | 502 |
+| `deped` | 268 |
+| `dilg` | 151 |
+| `doh` | 77 |
+| `OfficeOfTheVicePresidentPH` | 47 |
+
+The other 39 sit between 2 and 39 rows, and the three largest
+agencies hold 56% of the corpus. This matters for how the
+results can be read: the model learns most of its vocabulary from one or two
+agencies and is then tested on thirty others, so a good score is not by
+itself evidence that the method generalises across government. Treat the
+per-agency numbers as the honest unit of analysis, not the pooled F1.
+
+The column was empty in every row until 2026-10-23, so this concentration
+went unseen while the dataset was being built; see the open register, §3.9.
 
 **A couple of rows are Cebuano or Boholano rather than Filipino.** The
 exclusion rule for a non-Filipino language is a script check, and those
@@ -252,7 +275,7 @@ the browser profile.
 | `data/final/dataset_v1.metadata.json` | Counts, class balance, lineage, and the exclusion ledger summary. |
 | `data/final/MANIFEST.json` | The file list and checksums for the package. |
 
-The extension file holds 1,789 rows across 1789 comments.
+The extension file holds 1,828 rows across 1828 comments.
 
 **The split files are authoritative.** The `split` column in the dataset is a
 mirror. If they ever disagree, the files win and it is a bug to fix.

@@ -342,7 +342,13 @@ def main(argv=None) -> int:
     if os.path.exists(args.agencies):
         agency_ids = {a.get("agency_id", "") for a in read_csv(args.agencies)}
     unknown_agency = [r.get("comment_id") for r in rows
-                       if r.get("agency_id") and r.get("agency_id") not in agency_ids]
+                      if r.get("agency_id") and r.get("agency_id") not in agency_ids]
+    # agency_id is a required column (contract 5.2 col 5) and the only join to
+    # the registry that holds each account's verification evidence. A row with
+    # no agency_id is unattributable, so it fails here rather than passing on
+    # the strength of the rows that do have one.
+    missing_agency = [r.get("comment_id") for r in rows
+                      if not (r.get("agency_id") or "").strip()]
     lineage = meta.get("lineage", {}) if meta else {}
     n_raw = lineage.get("n_raw_captured", 0)
     n_cand = lineage.get("n_candidate_pool", 0)
@@ -361,8 +367,8 @@ def main(argv=None) -> int:
         and (n_split == 0 or n_split == n_use)
     )
     rep.add("V-16", "lineage reconciles and every agency_id is in the registry",
-            not unknown_agency and reconciles,
-            f"unknown_agency={len(unknown_agency)} "
+            not unknown_agency and not missing_agency and reconciles,
+            f"missing_agency={len(missing_agency)} unknown_agency={len(unknown_agency)} "
             f"raw={n_raw} candidate={n_cand} excluded={sum_excl} labeled={n_lab} "
             f"usable={n_use} rows={len(rows)} split_total={n_split} reconciles={reconciles}")
 

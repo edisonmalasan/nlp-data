@@ -1,9 +1,9 @@
 [PASS] V-01  schema matches the contract exactly
          40 columns (expected order from contract)
 [PASS] V-01b  dataset parses as CSV
-         1618 rows
+         1657 rows
 [PASS] V-02  row count meets the target
-         1618 rows, need >= 600
+         1657 rows, need >= 600
 [PASS] V-03  comment_id unique, non-null, well-formed
          bad_format=0 duplicates=0 empty=0
 [PASS] V-04  label in {0,1} and label_str agrees
@@ -22,17 +22,17 @@
          missing=[] column_mismatch=0 in_multiple_splits=0
 [PASS] V-11  no duplicate and no post straddles two splits
          duplicate_leak=0 post_leak=0
-[PASS] V-12  class balance and per-agency minimums
-         actionable=287 other=1331 rate=0.177 agencies_under_40=[]
+[FAIL] V-12  class balance and per-agency minimums
+         actionable=296 other=1361 rate=0.179 agencies_under_40=['dswd', 'dost_pagasa', 'bfp', 'dti', 'ndrrmc', 'denr', 'dacentralphilippines', 'DOSTph', 'birgovph', 'BangkoSentralngPilipinas', 'PhilHealthofficial', 'NationalBureauofInvestigationOfficial', 'fdagovph', 'pagcor.ph', 'pidsgovph', 'DOSTASTI', 'PHIVOLCS', 'nationalmuseumofthephilippines', 'professionalregulationcommission', 'DOFPH', 'officialbureauofimmigration', 'civilservicegovph', 'nationalyouthcommission', 'CCCPhl', 'boiphilippines', 'dostpchrd', 'pcsoofficialsocialmedia', 'nsc.gov.ph', 'PhilippineNavy', 'piopaf', 'DDBgov', 'DOST.FNRI', 'OfficialLRTA', 'nncofficial', 'pnagovph', 'OfficialPDIC', 'pnacph', 'PhStockExchange', 'portsauthorityph']
 [PASS] V-13  n_tokens matches the normalized text
          0 mismatches
 [PASS] V-14  metadata is complete
          all required keys present
 [PASS] V-15  test class prior within 0.10 of train
-         train=0.177 test=0.178 drift=0.000
+         train=0.179 test=0.177 drift=0.002
 [PASS] V-16  lineage reconciles and every agency_id is in the registry
-         unknown_agency=0 raw=3496 candidate=1618 excluded=1878 labeled=1618 usable=1618 rows=1618 split_total=1618 reconciles=True
+         missing_agency=0 unknown_agency=0 raw=4415 candidate=1657 excluded=2758 labeled=1657 usable=1657 rows=1657 split_total=1657 reconciles=True
 [FAIL] V-17  annotation completeness, human verification and reliability
-         bad_verification=0 human_verified=0 (need >= 100) relabeled=0/1618 (need >= 20%) kappa=None (need >= 0.6)
+         bad_verification=0 human_verified=0 (need >= 100) relabeled=0/1657 (need >= 20%) kappa=None (need >= 0.6)
 
-18 checks, 1 errors
+18 checks, 2 errors

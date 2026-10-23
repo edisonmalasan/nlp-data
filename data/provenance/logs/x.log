@@ -16,3 +16,100 @@
 [06:01:10] [4/5] x/dilg_x: already collected (5 post(s)), skipping
 [06:01:10] [5/5] x/dti_x: already collected (5 post(s)), skipping
 [06:01:10] === x worker finished: 0 account(s) collected ===
+[00:42:57] === worker: x on tab 0, 12 posts, mode=recent ===
+[00:42:58] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.facebook.com/pnagovph?_rdr
+[00:42:58] 5 registered x accounts
+[00:42:58] [1/5] x/dost_pagasa_x: topping up (5 of 12 posts)
+[00:42:58] [1/5] x/dost_pagasa_x  https://x.com/dost_pagasa
+[00:43:34]        0 comments  st_pagasa/status/2113196768674689083/analytics
+[00:43:59]        0 comments  dost_pagasa/status/2113196768674689083/photo/1
+[00:44:19]        1 comments  //x.com/dost_pagasa/status/2113196768674689083
+[00:44:38]        0 comments  st_pagasa/status/2113196978247250240/analytics
+[00:44:56]        0 comments  dost_pagasa/status/2113196978247250240/photo/4
+[00:45:14]        0 comments  dost_pagasa/status/2113196978247250240/photo/3
+[00:45:33]        0 comments  dost_pagasa/status/2113196978247250240/photo/2
+[00:45:51]        0 comments  dost_pagasa/status/2113196978247250240/photo/1
+[00:46:11]        1 comments  //x.com/dost_pagasa/status/2113196978247250240
+[00:46:29]        0 comments  st_pagasa/status/2113221890106126834/analytics
+[00:46:48]        0 comments  dost_pagasa/status/2113221890106126834/photo/1
+[00:47:07]        1 comments  //x.com/dost_pagasa/status/2113221890106126834
+[00:47:07]   SNAPSHOT x_dost_pagasa_x_2026-10-23T00-47.json  12 post(s), 3 comment(s)
+[00:47:08]   ok: 12 post(s), 3 comment(s)
+[00:47:33] [2/5] x/dswd_x: topping up (5 of 12 posts)
+[00:47:33] [2/5] x/dswd_x  https://x.com/dswdserves
+[00:48:07]        0 comments  swdserves/status/2113165655994515634/analytics
+[00:48:25]        0 comments  /dswdserves/status/2113165655994515634/photo/3
+[00:48:43]        0 comments  /dswdserves/status/2113165655994515634/photo/2
+[00:49:02]        0 comments  /dswdserves/status/2113165655994515634/photo/1
+[00:49:21]        1 comments  ://x.com/dswdserves/status/2113165655994515634
+[00:49:39]        0 comments  swdserves/status/2113184689171087715/analytics
+[00:49:58]        0 comments  /dswdserves/status/2113184689171087715/photo/1
+[00:50:17]        1 comments  ://x.com/dswdserves/status/2113184689171087715
+[00:50:36]        0 comments  swdserves/status/2113196540932378688/analytics
+[00:50:54]        0 comments  /dswdserves/status/2113196540932378688/photo/1
+[00:51:13]        1 comments  ://x.com/dswdserves/status/2113196540932378688
+[00:51:32]        0 comments  swdserves/status/2113223893771243829/analytics
+[00:51:32]   SNAPSHOT x_dswd_x_2026-10-23T00-51.json  12 post(s), 3 comment(s)
+[00:51:32]   ok: 12 post(s), 3 comment(s)
+[00:51:57] [3/5] x/dpwh_x: topping up (5 of 12 posts)
+[00:51:57] [3/5] x/dpwh_x  https://x.com/DPWHph
+[00:52:30]        0 comments  om/DPWHph/status/2112728258957697101/analytics
+[00:52:49]        0 comments  .com/DPWHph/status/2112728258957697101/photo/4
+[00:53:16]        0 comments  .com/DPWHph/status/2112728258957697101/photo/3
+[00:53:35]        0 comments  .com/DPWHph/status/2112728258957697101/photo/2
+[00:53:53]        0 comments  .com/DPWHph/status/2112728258957697101/photo/1
+[00:54:13]        1 comments  ttps://x.com/DPWHph/status/2112728258957697101
+[00:54:31]        0 comments  om/DPWHph/status/2112796995085853172/analytics
+[00:54:50]        0 comments  .com/DPWHph/status/2112796995085853172/photo/4
+[00:55:08]        0 comments  .com/DPWHph/status/2112796995085853172/photo/3
+[00:55:26]        0 comments  .com/DPWHph/status/2112796995085853172/photo/2
+[00:55:45]        0 comments  .com/DPWHph/status/2112796995085853172/photo/1
+[00:56:04]        1 comments  ttps://x.com/DPWHph/status/2112796995085853172
+[00:56:04]   SNAPSHOT x_dpwh_x_2026-10-23T00-56.json  12 post(s), 2 comment(s)
+[00:56:04]   ok: 12 post(s), 2 comment(s)
+[00:56:29] [4/5] x/dilg_x: topping up (5 of 12 posts)
+[00:56:29] [4/5] x/dilg_x  https://x.com/DILGPhilippines
+[00:57:03]        0 comments  ilippines/status/1982727850622062910/analytics
+[00:57:21]        0 comments  Philippines/status/1982727850622062910/photo/4
+[00:57:39]        0 comments  Philippines/status/1982727850622062910/photo/3
+[00:57:58]        0 comments  Philippines/status/1982727850622062910/photo/2
+[00:58:16]        0 comments  Philippines/status/1982727850622062910/photo/1
+[00:58:35]        1 comments  com/DILGPhilippines/status/1982727850622062910
+[00:58:54]        0 comments  ilippines/status/1983358060371620049/analytics
+[00:59:12]        0 comments  Philippines/status/1983358060371620049/photo/1
+[00:59:31]        1 comments  com/DILGPhilippines/status/1983358060371620049
+[00:59:50]        0 comments  ilippines/status/2075033871490658731/analytics
+[01:00:08]        0 comments  Philippines/status/2075033871490658731/photo/1
+[01:00:27]        1 comments  com/DILGPhilippines/status/2075033871490658731
+[01:00:27]   SNAPSHOT x_dilg_x_2026-10-23T01-00.json  12 post(s), 3 comment(s)
+[01:00:28]   ok: 12 post(s), 3 comment(s)
+[01:00:53] [5/5] x/dti_x: topping up (5 of 12 posts)
+[01:00:53] [5/5] x/dti_x  https://x.com/DtiPhilippines
+[01:01:26]        0 comments  ilippines/status/1946080511329513571/analytics
+[01:01:46]        1 comments  .com/DtiPhilippines/status/1946080511329513571
+[01:02:07]        0 comments  ilippines/status/1964228468184695131/analytics
+[01:02:28]        1 comments  .com/DtiPhilippines/status/1964228468184695131
+[01:02:46]        0 comments  ilippines/status/1964228465517089056/analytics
+[01:03:05]        0 comments  Philippines/status/1964228465517089056/photo/1
+[01:03:25]        1 comments  .com/DtiPhilippines/status/1964228465517089056
+[01:03:47]        0 comments  ilippines/status/1976515658914619785/analytics
+[01:04:08]        0 comments  Philippines/status/1976515658914619785/photo/1
+[01:04:28]        1 comments  .com/DtiPhilippines/status/1976515658914619785
+[01:04:47]        0 comments  ilippines/status/1988124318401019927/analytics
+[01:05:07]        1 comments  .com/DtiPhilippines/status/1988124318401019927
+[01:05:07]   SNAPSHOT x_dti_x_2026-10-23T01-05.json  12 post(s), 5 comment(s)
+[01:05:08]   ok: 12 post(s), 5 comment(s)
+[01:05:33] === x worker finished: 5 account(s) collected ===
+[05:05:38] === worker: x on tab 0, 12 posts, mode=recent ===
+[05:05:38] tab [0] da224547-e544-4021-87fb-60ef4d163296  https://www.facebook.com/pnagovph?_rdr
+[05:05:38] 5 registered x accounts
+[05:05:38] [1/5] x/dost_pagasa_x: already collected (12 post(s)), skipping
+[05:05:38] [2/5] x/dswd_x: already collected (12 post(s)), skipping
+[05:05:38] [3/5] x/dpwh_x: already collected (12 post(s)), skipping
+[05:05:38] [4/5] x/dilg_x: already collected (12 post(s)), skipping
+[05:05:38] [5/5] x/dti_x: already collected (12 post(s)), skipping
+[05:05:38] === x worker finished: 0 account(s) collected ===
+[06:45:00] === worker: x on tab 0, 12 posts, mode=recent ===
+[06:45:03] worker crashed: OrcaError: orca tab: runtime_unavailable Could not read Orca runtime metadata at C:\Users\Edison\AppData\Roaming\orca\orca-runtime.json. Start the Orca app first.
+[08:07:13] === worker: x on tab 0, 12 posts, mode=recent ===
+[08:07:13] worker crashed: OrcaError: orca tab: runtime_unavailable Could not read Orca runtime metadata at C:\Users\Edison\AppData\Roaming\orca\orca-runtime.json. Start the Orca app first.

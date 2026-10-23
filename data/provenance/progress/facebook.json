@@ -1,33 +1,33 @@
 {
   "facebook/dost_pagasa": {
-    "posts": 66,
-    "comments": 128,
+    "posts": 74,
+    "comments": 141,
     "last_error": "",
-    "updated_at": "2026-10-22T20:24:22"
+    "updated_at": "2026-10-23T06:00:14"
   },
   "facebook/dswd": {
-    "posts": 39,
-    "comments": 54,
+    "posts": 49,
+    "comments": 66,
     "last_error": "",
-    "updated_at": "2026-10-22T20:31:01"
+    "updated_at": "2026-10-23T06:10:11"
   },
   "facebook/bfp": {
-    "posts": 33,
-    "comments": 134,
+    "posts": 57,
+    "comments": 243,
     "last_error": "",
-    "updated_at": "2026-10-22T17:25:56"
+    "updated_at": "2026-10-23T06:26:27"
   },
   "facebook/dti": {
-    "posts": 20,
+    "posts": 29,
     "comments": 0,
     "last_error": "",
-    "updated_at": "2026-10-22T17:28:53"
+    "updated_at": "2026-10-23T06:31:00"
   },
   "facebook/ndrrmc": {
-    "posts": 31,
+    "posts": 37,
     "comments": 11,
     "last_error": "",
-    "updated_at": "2026-10-22T18:24:56"
+    "updated_at": "2026-10-23T06:14:10"
   },
   "facebook/doh": {
     "posts": 8,
@@ -54,16 +54,16 @@
     "updated_at": "2026-10-21T10:45:55"
   },
   "facebook/denr": {
-    "posts": 29,
-    "comments": 18,
-    "last_error": "",
-    "updated_at": "2026-10-22T17:33:37"
+    "posts": 42,
+    "comments": 24,
+    "last_error": "no posts captured",
+    "updated_at": "2026-10-23T06:37:40"
   },
   "facebook/dacentralphilippines": {
-    "posts": 23,
-    "comments": 140,
-    "last_error": "",
-    "updated_at": "2026-10-22T05:31:46"
+    "posts": 34,
+    "comments": 166,
+    "last_error": "no posts captured",
+    "updated_at": "2026-10-23T06:43:55"
   },
   "facebook/DOFPH": {
     "posts": 20,
@@ -72,213 +72,213 @@
     "updated_at": "2026-10-22T03:59:36"
   },
   "facebook/DOSTph": {
-    "posts": 23,
+    "posts": 27,
     "comments": 31,
     "last_error": "",
-    "updated_at": "2026-10-22T05:34:48"
+    "updated_at": "2026-10-23T02:20:39"
   },
   "facebook/OfficeOfTheVicePresidentPH": {
-    "posts": 22,
-    "comments": 75,
+    "posts": 33,
+    "comments": 97,
     "last_error": "",
-    "updated_at": "2026-10-22T05:41:49"
+    "updated_at": "2026-10-23T02:25:24"
   },
   "facebook/birgovph": {
-    "posts": 32,
-    "comments": 20,
+    "posts": 42,
+    "comments": 30,
     "last_error": "",
-    "updated_at": "2026-10-22T05:49:02"
+    "updated_at": "2026-10-23T02:29:51"
   },
   "facebook/officialbureauofimmigration": {
-    "posts": 37,
-    "comments": 48,
+    "posts": 50,
+    "comments": 69,
     "last_error": "",
-    "updated_at": "2026-10-22T05:54:14"
+    "updated_at": "2026-10-23T02:33:21"
   },
   "facebook/BangkoSentralngPilipinas": {
-    "posts": 26,
-    "comments": 43,
-    "last_error": "",
-    "updated_at": "2026-10-22T06:00:53"
-  },
-  "facebook/PhilHealthofficial": {
-    "posts": 17,
-    "comments": 59,
-    "last_error": "",
-    "updated_at": "2026-10-22T06:07:55"
-  },
-  "facebook/NationalBureauofInvestigationOfficial": {
-    "posts": 6,
-    "comments": 0,
-    "last_error": "",
-    "updated_at": "2026-10-22T06:09:23"
-  },
-  "facebook/civilservicegovph": {
-    "posts": 15,
-    "comments": 33,
-    "last_error": "",
-    "updated_at": "2026-10-22T06:13:21"
-  },
-  "facebook/fdagovph": {
-    "posts": 25,
-    "comments": 65,
-    "last_error": "",
-    "updated_at": "2026-10-22T06:17:22"
-  },
-  "facebook/nationalyouthcommission": {
-    "posts": 15,
-    "comments": 20,
-    "last_error": "",
-    "updated_at": "2026-10-22T06:19:50"
-  },
-  "facebook/CCCPhl": {
-    "posts": 36,
-    "comments": 16,
-    "last_error": "",
-    "updated_at": "2026-10-22T06:23:49"
-  },
-  "facebook/boiphilippines": {
-    "posts": 20,
-    "comments": 15,
-    "last_error": "",
-    "updated_at": "2026-10-22T06:27:14"
-  },
-  "facebook/pagcor.ph": {
-    "posts": 21,
-    "comments": 92,
-    "last_error": "no posts captured",
-    "updated_at": "2026-10-22T06:30:13"
-  },
-  "facebook/pidsgovph": {
-    "posts": 14,
-    "comments": 4,
-    "last_error": "no posts captured",
-    "updated_at": "2026-10-22T06:33:37"
-  },
-  "facebook/portsauthorityph": {
-    "posts": 15,
-    "comments": 1,
-    "last_error": "",
-    "updated_at": "2026-10-22T02:22:57"
-  },
-  "facebook/dostpchrd": {
-    "posts": 17,
-    "comments": 70,
-    "last_error": "",
-    "updated_at": "2026-10-22T02:28:01"
-  },
-  "facebook/DOSTASTI": {
-    "posts": 20,
-    "comments": 4,
-    "last_error": "",
-    "updated_at": "2026-10-22T02:32:22"
-  },
-  "facebook/PHIVOLCS": {
-    "posts": 8,
-    "comments": 9,
-    "last_error": "",
-    "updated_at": "2026-10-21T16:29:22"
-  },
-  "facebook/nationalmuseumofthephilippines": {
-    "posts": 20,
-    "comments": 24,
-    "last_error": "",
-    "updated_at": "2026-10-22T02:36:26"
-  },
-  "facebook/professionalregulationcommission": {
-    "posts": 21,
-    "comments": 62,
-    "last_error": "no posts captured",
-    "updated_at": "2026-10-22T02:37:44"
-  },
-  "facebook/pcsoofficialsocialmedia": {
-    "posts": 8,
-    "comments": 5,
-    "last_error": "",
-    "updated_at": "2026-10-21T16:44:23"
-  },
-  "facebook/nsc.gov.ph": {
-    "posts": 16,
+    "posts": 47,
     "comments": 75,
     "last_error": "",
-    "updated_at": "2026-10-22T02:42:16"
+    "updated_at": "2026-10-23T02:40:22"
   },
-  "facebook/PhilippineNavy": {
-    "posts": 8,
-    "comments": 52,
+  "facebook/PhilHealthofficial": {
+    "posts": 25,
+    "comments": 63,
     "last_error": "",
-    "updated_at": "2026-10-21T16:52:52"
+    "updated_at": "2026-10-23T02:44:35"
   },
-  "facebook/piopaf": {
-    "posts": 8,
-    "comments": 55,
+  "facebook/NationalBureauofInvestigationOfficial": {
+    "posts": 10,
+    "comments": 0,
     "last_error": "",
-    "updated_at": "2026-10-21T16:58:03"
+    "updated_at": "2026-10-23T02:47:28"
   },
-  "facebook/DDBgov": {
-    "posts": 8,
-    "comments": 27,
+  "facebook/civilservicegovph": {
+    "posts": 24,
+    "comments": 54,
     "last_error": "",
-    "updated_at": "2026-10-21T17:03:23"
+    "updated_at": "2026-10-23T02:52:55"
   },
-  "facebook/DOST.FNRI": {
-    "posts": 8,
-    "comments": 7,
+  "facebook/fdagovph": {
+    "posts": 45,
+    "comments": 92,
     "last_error": "",
-    "updated_at": "2026-10-21T17:08:23"
+    "updated_at": "2026-10-23T03:00:17"
   },
-  "facebook/OfficialLRTA": {
-    "posts": 22,
-    "comments": 53,
+  "facebook/nationalyouthcommission": {
+    "posts": 21,
+    "comments": 28,
     "last_error": "",
-    "updated_at": "2026-10-22T02:47:58"
+    "updated_at": "2026-10-23T03:02:58"
   },
-  "facebook/nncofficial": {
-    "posts": 11,
+  "facebook/CCCPhl": {
+    "posts": 50,
+    "comments": 56,
+    "last_error": "",
+    "updated_at": "2026-10-23T03:07:16"
+  },
+  "facebook/boiphilippines": {
+    "posts": 40,
+    "comments": 35,
+    "last_error": "",
+    "updated_at": "2026-10-23T03:13:28"
+  },
+  "facebook/pagcor.ph": {
+    "posts": 27,
+    "comments": 116,
+    "last_error": "",
+    "updated_at": "2026-10-23T03:16:28"
+  },
+  "facebook/pidsgovph": {
+    "posts": 30,
+    "comments": 20,
+    "last_error": "",
+    "updated_at": "2026-10-23T03:22:16"
+  },
+  "facebook/portsauthorityph": {
+    "posts": 27,
+    "comments": 15,
+    "last_error": "",
+    "updated_at": "2026-10-23T03:27:35"
+  },
+  "facebook/dostpchrd": {
+    "posts": 31,
+    "comments": 90,
+    "last_error": "",
+    "updated_at": "2026-10-23T03:32:04"
+  },
+  "facebook/DOSTASTI": {
+    "posts": 37,
+    "comments": 17,
+    "last_error": "",
+    "updated_at": "2026-10-23T03:38:06"
+  },
+  "facebook/PHIVOLCS": {
+    "posts": 18,
+    "comments": 12,
+    "last_error": "",
+    "updated_at": "2026-10-23T03:41:41"
+  },
+  "facebook/nationalmuseumofthephilippines": {
+    "posts": 30,
     "comments": 36,
     "last_error": "",
-    "updated_at": "2026-10-22T02:50:39"
+    "updated_at": "2026-10-23T03:45:49"
   },
-  "facebook/pnagovph": {
-    "posts": 8,
-    "comments": 12,
+  "facebook/professionalregulationcommission": {
+    "posts": 35,
+    "comments": 90,
     "last_error": "",
-    "updated_at": "2026-10-22T02:52:19"
+    "updated_at": "2026-10-23T03:51:58"
   },
-  "facebook/PhStockExchange": {
-    "posts": 14,
-    "comments": 7,
-    "last_error": "",
-    "updated_at": "2026-10-21T21:24:46"
-  },
-  "facebook/OfficialPDIC": {
-    "posts": 12,
+  "facebook/pcsoofficialsocialmedia": {
+    "posts": 18,
     "comments": 9,
     "last_error": "",
-    "updated_at": "2026-10-22T02:56:17"
+    "updated_at": "2026-10-23T03:57:07"
+  },
+  "facebook/nsc.gov.ph": {
+    "posts": 24,
+    "comments": 111,
+    "last_error": "",
+    "updated_at": "2026-10-23T04:00:19"
+  },
+  "facebook/PhilippineNavy": {
+    "posts": 24,
+    "comments": 74,
+    "last_error": "",
+    "updated_at": "2026-10-23T04:08:15"
+  },
+  "facebook/piopaf": {
+    "posts": 20,
+    "comments": 81,
+    "last_error": "",
+    "updated_at": "2026-10-23T04:13:19"
+  },
+  "facebook/DDBgov": {
+    "posts": 28,
+    "comments": 95,
+    "last_error": "",
+    "updated_at": "2026-10-23T04:20:18"
+  },
+  "facebook/DOST.FNRI": {
+    "posts": 26,
+    "comments": 37,
+    "last_error": "",
+    "updated_at": "2026-10-23T04:26:25"
+  },
+  "facebook/OfficialLRTA": {
+    "posts": 28,
+    "comments": 57,
+    "last_error": "",
+    "updated_at": "2026-10-23T04:29:50"
+  },
+  "facebook/nncofficial": {
+    "posts": 27,
+    "comments": 83,
+    "last_error": "",
+    "updated_at": "2026-10-23T04:34:46"
+  },
+  "facebook/pnagovph": {
+    "posts": 20,
+    "comments": 23,
+    "last_error": "",
+    "updated_at": "2026-10-22T23:25:38"
+  },
+  "facebook/PhStockExchange": {
+    "posts": 27,
+    "comments": 13,
+    "last_error": "",
+    "updated_at": "2026-10-23T04:42:21"
+  },
+  "facebook/OfficialPDIC": {
+    "posts": 16,
+    "comments": 13,
+    "last_error": "",
+    "updated_at": "2026-10-23T04:44:13"
   },
   "facebook/sugarregulatoryadmin": {
-    "posts": 6,
+    "posts": 10,
     "comments": 0,
     "last_error": "",
-    "updated_at": "2026-10-22T02:57:57"
+    "updated_at": "2026-10-23T04:46:07"
   },
   "facebook/ITDIDOSTUpdates": {
-    "posts": 12,
+    "posts": 20,
     "comments": 0,
     "last_error": "",
-    "updated_at": "2026-10-22T03:01:25"
+    "updated_at": "2026-10-23T04:50:00"
   },
   "facebook/pnacph": {
-    "posts": 11,
-    "comments": 12,
+    "posts": 19,
+    "comments": 22,
     "last_error": "",
-    "updated_at": "2026-10-22T03:04:35"
+    "updated_at": "2026-10-23T04:53:22"
   },
   "facebook/civildefensePH": {
-    "posts": 11,
+    "posts": 18,
     "comments": 0,
     "last_error": "",
-    "updated_at": "2026-10-22T03:07:51"
+    "updated_at": "2026-10-23T04:56:59"
   }
 }

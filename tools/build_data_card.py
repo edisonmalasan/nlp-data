@@ -278,6 +278,34 @@ def main(argv=None) -> int:
     A("cherry-picking that rule exists to prevent.")
     A("")
 
+    # ---- the per-agency floor ----
+    per_agency = Counter(r.get("agency_id") or "?" for r in ds)
+    over_ag = sorted(((a, k) for a, k in per_agency.items() if k >= 40),
+                     key=lambda x: (-x[1], x[0]))
+    thin_ag = [a for a, k in per_agency.items() if k < 40]
+    top3 = sum(k for _, k in sorted(per_agency.items(),
+                                    key=lambda x: -x[1])[:3])
+    A("**Only five of the agencies clear the contract's forty-comment floor.**")
+    A("Contract 11 asks for at least forty usable comments per source page, so")
+    A("that no page dominates and no page is a statistical singleton.")
+    A(f"{len(over_ag)} of {len(per_agency)} agencies clear it:")
+    A("")
+    A("| agency | rows |")
+    A("|---|---|")
+    for a, k in over_ag:
+        A(f"| `{a}` | {k} |")
+    A("")
+    A(f"The other {len(thin_ag)} sit between 2 and 39 rows, and the three largest")
+    A(f"agencies hold {top3 / len(ds):.0%} of the corpus. This matters for how the")
+    A("results can be read: the model learns most of its vocabulary from one or two")
+    A("agencies and is then tested on thirty others, so a good score is not by")
+    A("itself evidence that the method generalises across government. Treat the")
+    A("per-agency numbers as the honest unit of analysis, not the pooled F1.")
+    A("")
+    A("The column was empty in every row until 2026-10-23, so this concentration")
+    A("went unseen while the dataset was being built; see the open register, §3.9.")
+    A("")
+
     A("**A couple of rows are Cebuano or Boholano rather than Filipino.** The")
     A("exclusion rule for a non-Filipino language is a script check, and those")
     A("languages are written in Latin script, so they pass it. They are labelled")

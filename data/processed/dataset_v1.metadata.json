@@ -3,20 +3,20 @@
   "dataset_version": "1.0",
   "contract_version": "1.9-draft",
   "guideline_version": "1.0-draft",
-  "built_at": "2026-10-22T12:32:28.864867+00:00",
+  "built_at": "2026-10-23T00:38:08.703208+00:00",
   "class_counts": {
-    "actionable": 287,
-    "other": 1331
+    "actionable": 296,
+    "other": 1361
   },
   "counts_by_split": {
-    "train": 1133,
-    "dev": 243,
-    "test": 242
+    "train": 1161,
+    "dev": 248,
+    "test": 248
   },
   "split_seed": 42,
   "cohens_kappa": null,
   "verification_counts": {
-    "auto": 1789
+    "auto": 1828
   },
   "task": {
     "definition": "actionable = the comment identifies a concrete action the agency could be asked to take, or that the commenter proposes the agency take",
@@ -28,44 +28,44 @@
   },
   "counts": {
     "primary_facebook": {
-      "n_rows": 1618,
-      "actionable": 287,
-      "other": 1331,
-      "actionable_rate": 0.1774
+      "n_rows": 1657,
+      "actionable": 296,
+      "other": 1361,
+      "actionable_rate": 0.1786
     },
     "extended_all_platforms": {
-      "n_rows": 1789,
-      "actionable": 289,
-      "other": 1500,
-      "actionable_rate": 0.1615
+      "n_rows": 1828,
+      "actionable": 299,
+      "other": 1529,
+      "actionable_rate": 0.1636
     }
   },
   "platforms": {
-    "facebook": 1618,
+    "facebook": 1657,
     "youtube": 101,
     "x": 70
   },
   "strata": {
-    "recent": 1758,
+    "recent": 1797,
     "invites": 31
   },
   "languages": {
-    "mixed": 404,
-    "fil": 779,
-    "eng": 606
+    "mixed": 409,
+    "fil": 795,
+    "eng": 624
   },
   "agencies": {
     "n_source_accounts": 50,
     "per_account": {
       "BangkoSentralngPilipinas": {
-        "rows": 17,
+        "rows": 19,
         "actionable": 2,
-        "other": 15
+        "other": 17
       },
       "CCCPhl": {
-        "rows": 2,
-        "actionable": 0,
-        "other": 2
+        "rows": 4,
+        "actionable": 1,
+        "other": 3
       },
       "DDBgov": {
         "rows": 8,
@@ -83,8 +83,8 @@
         "other": 3
       },
       "DOSTASTI": {
-        "rows": 7,
-        "actionable": 0,
+        "rows": 8,
+        "actionable": 1,
         "other": 7
       },
       "DOSTph": {
@@ -133,14 +133,14 @@
         "other": 9
       },
       "bfp": {
-        "rows": 32,
-        "actionable": 7,
-        "other": 25
+        "rows": 39,
+        "actionable": 9,
+        "other": 30
       },
       "birgovph": {
-        "rows": 25,
+        "rows": 34,
         "actionable": 3,
-        "other": 22
+        "other": 31
       },
       "boiphilippines": {
         "rows": 8,
@@ -169,8 +169,8 @@
       },
       "dilg": {
         "rows": 151,
-        "actionable": 30,
-        "other": 121
+        "actionable": 29,
+        "other": 122
       },
       "dilg_x": {
         "rows": 12,
@@ -183,9 +183,9 @@
         "other": 73
       },
       "dost_pagasa": {
-        "rows": 35,
+        "rows": 36,
         "actionable": 1,
-        "other": 34
+        "other": 35
       },
       "dost_pagasa_x": {
         "rows": 10,
@@ -194,8 +194,8 @@
       },
       "dost_pagasa_yt": {
         "rows": 101,
-        "actionable": 2,
-        "other": 99
+        "actionable": 3,
+        "other": 98
       },
       "dostpchrd": {
         "rows": 18,
@@ -204,8 +204,8 @@
       },
       "dpwh": {
         "rows": 502,
-        "actionable": 103,
-        "other": 399
+        "actionable": 105,
+        "other": 397
       },
       "dpwh_x": {
         "rows": 17,
@@ -224,8 +224,8 @@
       },
       "dti": {
         "rows": 19,
-        "actionable": 13,
-        "other": 6
+        "actionable": 14,
+        "other": 5
       },
       "dti_x": {
         "rows": 21,
@@ -234,8 +234,8 @@
       },
       "fdagovph": {
         "rows": 33,
-        "actionable": 13,
-        "other": 20
+        "actionable": 14,
+        "other": 19
       },
       "nationalmuseumofthephilippines": {
         "rows": 22,
@@ -253,19 +253,19 @@
         "other": 12
       },
       "nncofficial": {
-        "rows": 11,
-        "actionable": 3,
-        "other": 8
+        "rows": 14,
+        "actionable": 4,
+        "other": 10
       },
       "nsc.gov.ph": {
-        "rows": 12,
-        "actionable": 1,
+        "rows": 14,
+        "actionable": 3,
         "other": 11
       },
       "officialbureauofimmigration": {
-        "rows": 15,
+        "rows": 16,
         "actionable": 2,
-        "other": 13
+        "other": 14
       },
       "pagcor.ph": {
         "rows": 18,
@@ -283,14 +283,14 @@
         "other": 11
       },
       "piopaf": {
-        "rows": 24,
+        "rows": 28,
         "actionable": 2,
-        "other": 22
+        "other": 26
       },
       "pnacph": {
-        "rows": 3,
+        "rows": 4,
         "actionable": 0,
-        "other": 3
+        "other": 4
       },
       "pnagovph": {
         "rows": 3,
@@ -298,19 +298,19 @@
         "other": 1
       },
       "portsauthorityph": {
-        "rows": 1,
+        "rows": 6,
         "actionable": 0,
-        "other": 1
+        "other": 6
       },
       "professionalregulationcommission": {
-        "rows": 36,
-        "actionable": 9,
-        "other": 27
+        "rows": 37,
+        "actionable": 8,
+        "other": 29
       }
     }
   },
   "posts": {
-    "n_posts": 201,
+    "n_posts": 212,
     "largest_posts": [
       {
         "post_id": "fb_deped_c7adea76301e5bdc",
@@ -359,36 +359,36 @@
     "method": "LLM-assisted annotation with human verification",
     "engine": "src/annotate/auto_annotator.py",
     "confidence_threshold": 0.85,
-    "adjudicated_rows": 1352,
-    "auto_decided_rows": 437,
+    "adjudicated_rows": 1382,
+    "auto_decided_rows": 446,
     "human_verified_rows": 0,
     "human_verification_pending": true,
     "blinded_relabel_pending": true,
     "reliability_statistic": "intra-annotator (test-retest) Cohen's kappa"
   },
   "lineage": {
-    "n_raw_captured": 3496,
-    "n_candidate_pool": 1618,
-    "n_labeled": 1618,
-    "n_usable_final": 1618,
+    "n_raw_captured": 4415,
+    "n_candidate_pool": 1657,
+    "n_labeled": 1657,
+    "n_usable_final": 1657,
     "n_excluded_by_reason": {
-      "X_OFFICIAL": 53,
-      "X_LANG": 11,
-      "X_DUP_EXACT": 1656,
-      "X_DUP_NEAR": 56,
-      "X_SPAM": 102
+      "X_LANG": 35,
+      "X_OFFICIAL": 69,
+      "X_DUP_EXACT": 2468,
+      "X_DUP_NEAR": 76,
+      "X_SPAM": 110
     },
-    "n_excluded_total": 1878,
+    "n_excluded_total": 2758,
     "all_platforms": {
-      "n_raw_captured": 3700,
-      "n_candidate_pool": 1789,
-      "n_excluded_total": 1911,
+      "n_raw_captured": 4635,
+      "n_candidate_pool": 1828,
+      "n_excluded_total": 2807,
       "n_excluded_by_reason": {
-        "X_OFFICIAL": 69,
-        "X_LANG": 11,
-        "X_DUP_EXACT": 1672,
-        "X_DUP_NEAR": 56,
-        "X_SPAM": 103
+        "X_OFFICIAL": 101,
+        "X_LANG": 35,
+        "X_DUP_EXACT": 2484,
+        "X_DUP_NEAR": 76,
+        "X_SPAM": 111
       }
     },
     "collection_method": "browser_dom_session",

@@ -269,7 +269,38 @@ def _run(argv=None) -> int:
 
         registry = [r for r in run_all.read_registry() if r["platform"] == args.platform]
         progress = load_progress(args.platform, args.mode)
-        log(f"{len(registry)} registered {args.platform} accounts")
+
+        def collected_comments(row):
+            """Distinct comments this account has contributed, across snapshots.
+
+            Counts each post once, so re-collecting the same post does not
+            inflate the account's standing in the queue.
+            """
+            seen = {}
+            for path in run_all.existing_snapshots(row["platform"],
+                                                   row["source_page"],
+                                                   args.mode):
+                try:
+                    snap = json.load(io.open(path, encoding="utf-8"))
+                except Exception:
+                    continue
+                for p in snap.get("posts", []):
+                    pid = p.get("post_id") or p.get("post_url") or ""
+                    if pid and pid not in seen:
+                        seen[pid] = p.get("n_comments", 0)
+            return sum(seen.values())
+
+        # Contract 11 sets a per-source-page floor of 40 usable comments, and
+        # the corpus misses it badly: 39 of 44 agencies were under it, with
+        # three agencies holding over half the rows. Under the platform's rate
+        # limit only a few accounts get a full feed per session, so the queue
+        # goes thin-first: the agencies furthest from their floor get the good
+        # loads, and an agency that already has hundreds of comments waits.
+        # This changes the order accounts are visited, not which posts are
+        # taken from any of them.
+        registry.sort(key=lambda r: (collected_comments(r), r["source_page"]))
+
+        log(f"{len(registry)} registered {args.platform} accounts, thin first")
 
         notes = args.notes or (f"collection run via orca built-in browser, "
                                f"{args.posts} posts/account")

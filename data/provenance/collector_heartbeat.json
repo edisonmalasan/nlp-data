@@ -1,30 +1,30 @@
 {
-  "cycle": 6,
-  "started_at": "2026-10-22T11:18:18.439814+00:00",
+  "cycle": 4,
+  "started_at": "2026-10-22T11:29:09.597628+00:00",
   "raw": {
     "facebook": {
-      "posts": 1020,
-      "comments": 3397
+      "posts": 1578,
+      "comments": 4423
     },
     "youtube": {
-      "posts": 37,
-      "comments": 125
+      "posts": 145,
+      "comments": 400
     },
     "x": {
-      "posts": 25,
-      "comments": 98
+      "posts": 85,
+      "comments": 114
     }
   },
   "pool": {
-    "rows": 1790,
+    "rows": 1828,
     "residual_duplicate_keys": 0,
     "excluded_by_reason": {
-      "X_OFFICIAL": 69,
-      "X_LANG": 11,
-      "X_DUP_EXACT": 1565,
-      "X_DUP_NEAR": 55,
-      "X_SPAM": 103
+      "X_LANG": 35,
+      "X_OFFICIAL": 101,
+      "X_DUP_EXACT": 2484,
+      "X_DUP_NEAR": 76,
+      "X_SPAM": 111
     }
   },
-  "updated_at": "2026-10-22T11:27:38.227699+00:00"
+  "updated_at": "2026-10-23T00:07:58.914166+00:00"
 }

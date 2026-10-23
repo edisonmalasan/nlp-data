@@ -160,6 +160,13 @@ def flatten(snap: dict, path: str, source_page: str, platform: str,
     collected_at = snap.get("collected_at") or now_iso()
     snap_id = snap.get("raw_snapshot_id") or run_id
 
+    # The snapshot records the agency it belongs to, so prefer that over the
+    # --agency-id flag. The flag is optional and the orchestrator does not
+    # pass it, and trusting the flag alone blanked agency_id on every row -
+    # a required column, and the only join back to the registry that holds
+    # each account's verification evidence.
+    agency_id = (snap.get("agency_id") or "").strip() or agency_id
+
     # the sampling stratum this snapshot was collected under: stratum A is the
     # most recent posts, stratum B is the posts that invite a citizen request
     stratum = "invites" if "stratum=invites" in (snap.get("notes") or "") else "recent"

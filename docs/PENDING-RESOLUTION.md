@@ -75,13 +75,19 @@ is done.
 These are **not** defects to be fixed. They are properties of the corpus that the
 Methodology and Limitations must state. Each one is in the data card.
 
-### 3.1 The corpus is concentrated in a few posts
+### 3.1 The corpus is concentrated in a few posts, and in a few agencies
 
 Ten posts hold **49%** of the rows; the two largest are a DepEd webinar and a
 DPWH bridge-repair thread where most comments are check-ins and reaction. The
 split is grouped by `post_id`, so a model cannot score well by recognising
 *which post* a comment came from — but the distribution is a real limitation and
 the write-up must say so rather than smooth it over.
+
+The same is true one level up. Three agencies — DPWH, DepEd and DILG — hold
+**56%** of the rows, and DPWH alone holds 30%. The train split is 43% DPWH, so
+the model learns most of its vocabulary from one agency's commenters and is
+then tested on thirty others. This only became visible once `agency_id` was
+populated; see §3.9.
 
 **Owner:** M6 (AGUSTIN), in Results and Discussion. **No action beyond writing it down.**
 
@@ -140,7 +146,7 @@ Neither fix makes the limit go away; both remove self-inflicted damage.
 platform would serve**, and the corpus is therefore short of the contract's
 8-12 posts for those sources. The delivered numbers are:
 
-- **1,618 Facebook comments** and 1,789 across platforms - both contract
+- **1,657 Facebook comments** and 1,828 across platforms - both contract
   targets (600 Facebook, 1,000 total) are met more than twice over
 - **31 of 47 accounts under 8 posts**, with the shortfall recorded per account
   rather than smoothed away
@@ -202,7 +208,7 @@ variable changed.
 A consistency check (`tools/language_consistency.py`) finds the template
 families that received more than one label, so the residue is visible rather
 than assumed away. **Every row in the delivered dataset is now labelled
-against that one convention** - 1,789 from the re-label, the rest from the
+against that one convention** - 1,828 from the re-label, the rest from the
 adjudication of the rows added since and a language pass over the rows the
 engine decided on its own. No row falls back to the rule, which was only about
 71% accurate against the adjudicated labels. Seven families still split, and they are genuine linguistic
@@ -291,14 +297,57 @@ documented, and the dataset exceeds every contract target without these.
 
 | # | Question | Who | Why it matters |
 |---|---|---|---|
-| 4.1 | Is the primary dataset Facebook-only? | M4 + M5 | It is now: `dataset_v1.csv` is the 1,618 Facebook rows, `dataset_v1_ext.csv` is all 1,421. The paper's scope is Facebook, so this matches. But M5 must be told which file to model on. |
-| 4.2 | Which file does M5 model on? | M5 | `dataset_v1.csv` (Facebook, 1,618 rows, 287 actionable). The extension file is there for a robustness analysis, not for the headline number. |
+| 4.1 | Is the primary dataset Facebook-only? | M4 + M5 | It is now: `dataset_v1.csv` is the 1,657 Facebook rows, `dataset_v1_ext.csv` is all 1,421. The paper's scope is Facebook, so this matches. But M5 must be told which file to model on. |
+| 4.2 | Which file does M5 model on? | M5 | `dataset_v1.csv` (Facebook, 1,657 rows, 296 actionable). The extension file is there for a robustness analysis, not for the headline number. |
 | 4.3 | Does M5 slice the results by `language`? | M5 | The `language` column is now assigned against one written convention for every row, so it is internally consistent (§3.5). It is still a *noisy* variable, and because the study is about code-switching, a slice on it will be sensitive to its errors. The convention is `data/interim/language_convention.md`. |
 | 4.4 | Is the "invites" stratum reported separately? | M6 | It is recorded on every row in `stratum`, so it can be excluded and reported separately. The headline number should be the whole dataset, with the stratum reported as a design detail. |
 | 4.5 | Is the collection still running, and does it need a stop? | M4 | The corpus has no ceiling, so the collection runs as a loop (`src/collect/collect_forever.py`). It has to be stopped before the label freeze (§1.1), because a row collected after the freeze would have no label. |
 | 4.6 | Is the wider frame worth reporting as a design change? | M6 | The frame grew from 10 accounts to 46 during collection (§3.7). That is a systematic widening, not a change of subject, and the number belongs in the Methodology's source description. |
 
 ---
+
+### 3.9 The per-source-page floor is missed — 5 of 44 agencies clear it
+
+Contract §11 sets a floor of **≥ 40 usable comments per source page**, so that no
+page dominates and no page is a statistical singleton. The corpus misses it.
+**Five of 44 agencies** clear the floor —
+
+| agency | rows |
+|---|---|
+| `dpwh` | 502 |
+| `deped` | 268 |
+| `dilg` | 151 |
+| `doh` | 77 |
+| `OfficeOfTheVicePresidentPH` | 47 |
+
+— and 39 do not, from `bfp` at 39 down to `pcsoofficialsocialmedia` at 2.
+Bringing every agency to 40 would take **948 more rows**.
+
+**Why it went unnoticed.** `agency_id` was empty in every row until 2026-10-23.
+The join back to the registry was decorative, and V-12's per-agency branch had
+nothing to count, so the check passed on its class-balance branch alone and
+reported `agencies_under_40=[]`. `to_interim.py` took the id from an optional
+`--agency-id` flag that the orchestrator never passed, and the raw snapshots
+were carrying the right value the whole time. With the column populated, V-12
+now fails and names the 39 agencies.
+
+**What is being done.** The collector's queue is now **thin-first**: accounts
+are visited in ascending order of the comments they have already contributed, so
+the scarce full-feed loads go to the agencies furthest from the floor instead of
+to DPWH, which already has 502 rows. This changes the order accounts are
+visited, not which posts are taken from any of them, so it does not touch the
+sampling rule.
+
+**What is not being done.** Lowering the floor. §11 is an acceptance criterion;
+redefining it to fit the data is the inversion the contract exists to prevent.
+
+**Open question for M1 with M6.** If collection cannot close the gap, the honest
+options are (a) narrow the frame to the agencies that clear 40 — five agencies,
+1,045 rows — and say so, or (b) keep the wider frame and state in the
+limitations that the per-page floor is missed. That is a sampling decision, not
+a collection one.
+
+**Owner:** M1 with M6. **Holds the release gate on V-12 until collection closes the gap or the frame is narrowed.**
 
 ## 5. Closed — for the record
 
@@ -310,8 +359,8 @@ So that nobody re-opens them:
   and every collected post came from the registered page (§3.6).
 - **The `language` column.** Re-labelled against one written convention for
   every row, with the residue visible rather than assumed away (§3.5).
-- **The 1,000-comment target and the 600 Facebook target.** 1,789 usable, 1,618 Facebook. Both met.
-- **The class-balance window (15%–65% actionable) and the ≥150 per class.** 17.7% actionable, 287 actionable / 1,331 other.
+- **The 1,000-comment target and the 600 Facebook target.** 1,828 usable, 1,657 Facebook. Both met.
+- **The class-balance window (15%–65% actionable) and the ≥150 per class.** 17.9% actionable, 296 actionable / 1,361 other.
 - **The four cells the research question needs.** All populated: 44% of the
   actionable comments carry a politeness marker and **56% carry none**, and only
   3.5% of the other comments carry one. The study's question is therefore
@@ -319,8 +368,8 @@ So that nobody re-opens them:
 - **The source frame.** 47 Facebook accounts, 0 LGUs, 0 unregistered accounts.
 - **Privacy.** 0 email or phone hits; the author's name is not a column.
 - **The identifier scheme.** `<platform>_<source_page>_<seq4>`, unique across
-  1,789 rows, never reused.
-- **No duplicates in the delivered dataset.** 1,618 rows, 1,618 distinct
+  1,828 rows, never reused.
+- **No duplicates in the delivered dataset.** 1,657 rows, 1,657 distinct
   dedup keys, 0 residual duplicates, and every removal from the raw layer is
   counted with a reason code.
 
