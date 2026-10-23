@@ -128,7 +128,7 @@ Fix the underlying problem. If a check is genuinely wrong, change it in `DATA_CO
 
 ### 4.1 Schema changes are contract changes
 
-The dataset schema is defined in `DATA_CONTRACT.md` §5.2 and is currently **39 columns**.
+The dataset schema is defined in `DATA_CONTRACT.md` §5.2 and is currently **40 columns**.
 To add, remove, rename, or reorder a column:
 
 1. Update the §5.2 table (renumber contiguously).
