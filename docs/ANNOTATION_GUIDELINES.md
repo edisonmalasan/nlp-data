@@ -2,16 +2,16 @@
 
 **Labeling rules for the "actionable suggestion / request" dataset**
 
-| Field | Value |
-|---|---|
-| Guideline version | `v1.0` |
-| Status | **FINAL — applied to the released dataset** |
-| Created | 2026-10-20 |
-| Owner | Member 4 — **Edison Yin Malasan** (dataset producer, adjudicator) |
-| Annotator | `A1` — the annotator engine (`src/annotate/auto_annotator.py`), with LLM adjudication and independent model-assisted verification (see §8.5) |
-| Dataset | `data/processed/dataset_v1.csv` |
-| Governing contract | `DATA_CONTRACT.md` |
-| Task definition source | `docs/NLP-Final-Paper.pdf` §II (Problem Statement) and §II (Scope) |
+| Field                  | Value                                                                                                                                        |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Guideline version      | `v1.0`                                                                                                                                       |
+| Status                 | **FINAL — applied to the released dataset**                                                                                                  |
+| Created                | 2026-10-20                                                                                                                                   |
+| Owner                  | Member 4 — **Edison Malasan** (dataset producer, adjudicator)                                                                                |
+| Annotator              | `A1` — the annotator engine (`src/annotate/auto_annotator.py`), with LLM adjudication and independent model-assisted verification (see §8.5) |
+| Dataset                | `data/processed/dataset_v1.csv`                                                                                                              |
+| Governing contract     | `DATA_CONTRACT.md`                                                                                                                           |
+| Task definition source | `docs/NLP-Final-Paper.pdf` §II (Problem Statement) and §II (Scope)                                                                           |
 
 ---
 
@@ -36,22 +36,22 @@ Ask: **"Does this comment point to something specific that the agency could be a
 
 **Never define the label by surface markers.**
 
-Politeness/request markers — *please*, *dapat*, *sana*, *paki-*, *pakisana*, *can you*, *could you*, *should*, *need to*, *humble request* — are **evidence**, not **the definition**.
+Politeness/request markers — _please_, _dapat_, _sana_, _paki-_, _pakisana_, _can you_, _could you_, _should_, _need to_, _humble request_ — are **evidence**, not **the definition**.
 
-> ❌ "A comment with *please* or *dapat* is actionable."
-> ✅ "A comment that identifies a concrete action is actionable. *Please* might be in it, or it might not."
+> ❌ "A comment with _please_ or _dapat_ is actionable."
+> ✅ "A comment that identifies a concrete action is actionable. _Please_ might be in it, or it might not."
 
 **Why this matters (and why it is your problem, not just the modeler's):** the paper's research question asks whether adding these very markers as features improves detection over a plain TF-IDF baseline. If you label by marker, the answer becomes "yes, obviously" and the study proves nothing. The dataset must contain plenty of `actionable` comments **without** any politeness marker, and plenty of `other` comments **with** them. When you notice you are about to label because of a marker, slow down and re-apply §2.1.
 
 Examples of what this means in practice:
 
-| Comment | Marker present? | Correct label | Why |
-|---|---|---|---|
-| *Please fix the damaged road in our barangay.* | yes | **actionable** | Identifies a concrete action (repair the road). |
-| *Hindi naman, kailangan nating ayusin ang kalsada para sa mga mag-aaral.* | no | **actionable** | Identifies an action (fix the road for students) even without a politeness marker. |
-| *Sana i-improve na ng DepEd ang sistema ng enrollment.* | yes (*sana*) | **actionable** | Identifies an action (improve the enrollment system). |
-| *Please vote for our team.* | yes | **other** | A politeness marker is present, but the comment asks the reader to vote — it does not ask the agency to take an administrative/public-service action. |
-| *Salamat sa mga doctor, mabuting trabaho po.* | yes (*mabuting*, *po*) | **other** | Compliment/feedback, no action identified. |
+| Comment                                                                   | Marker present?        | Correct label  | Why                                                                                                                                                   |
+| ------------------------------------------------------------------------- | ---------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| _Please fix the damaged road in our barangay._                            | yes                    | **actionable** | Identifies a concrete action (repair the road).                                                                                                       |
+| _Hindi naman, kailangan nating ayusin ang kalsada para sa mga mag-aaral._ | no                     | **actionable** | Identifies an action (fix the road for students) even without a politeness marker.                                                                    |
+| _Sana i-improve na ng DepEd ang sistema ng enrollment._                   | yes (_sana_)           | **actionable** | Identifies an action (improve the enrollment system).                                                                                                 |
+| _Please vote for our team._                                               | yes                    | **other**      | A politeness marker is present, but the comment asks the reader to vote — it does not ask the agency to take an administrative/public-service action. |
+| _Salamat sa mga doctor, mabuting trabaho po._                             | yes (_mabuting_, _po_) | **other**      | Compliment/feedback, no action identified.                                                                                                            |
 
 ### 2.3 The three questions, in order
 
@@ -70,29 +70,29 @@ Then handle the tie-breakers in §6.
 
 A comment is `actionable` if it does **at least one** of the following:
 
-| Subtype | Description | Surface realization (examples, not criteria) |
-|---|---|---|
-| **A1 — Request for service/action** | Asks the agency to perform a specific service, fix, repair, provide, release, process, or attend to something. | "Please repair the road", "Kailangan namin ng birth certificate", "Palitan na po ang linya ng number" |
-| **A2 — Proposal / recommendation** | Proposes a specific course of action, policy, program, or improvement. | "Dapat magkaroon ng QR code ang payment", "Bakit hindi gawan ng app para sa schedule" |
-| **A3 — Conditional / contingent request** | States a need that becomes an action if the agency responds. | "Kung wala pa rin ang tubig, kailangan namin ng alternatibong supply" |
-| **A4 — Actionable need with implied target** | Identifies a gap or deficiency whose remedy is obvious from the context of the post. | Reply to "Magkano ang bayad sa ID?" → "Wala pa po ng schedule, kailangan po sana ng bagong slot" |
-| **A5 — Multi-action comment** | Proposes several actions. Still **one** label: `actionable`. | "Ayusin ang kalsada at maglagay ng streetlight" |
+| Subtype                                      | Description                                                                                                    | Surface realization (examples, not criteria)                                                          |
+| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **A1 — Request for service/action**          | Asks the agency to perform a specific service, fix, repair, provide, release, process, or attend to something. | "Please repair the road", "Kailangan namin ng birth certificate", "Palitan na po ang linya ng number" |
+| **A2 — Proposal / recommendation**           | Proposes a specific course of action, policy, program, or improvement.                                         | "Dapat magkaroon ng QR code ang payment", "Bakit hindi gawan ng app para sa schedule"                 |
+| **A3 — Conditional / contingent request**    | States a need that becomes an action if the agency responds.                                                   | "Kung wala pa rin ang tubig, kailangan namin ng alternatibong supply"                                 |
+| **A4 — Actionable need with implied target** | Identifies a gap or deficiency whose remedy is obvious from the context of the post.                           | Reply to "Magkano ang bayad sa ID?" → "Wala pa po ng schedule, kailangan po sana ng bagong slot"      |
+| **A5 — Multi-action comment**                | Proposes several actions. Still **one** label: `actionable`.                                                   | "Ayusin ang kalsada at maglagay ng streetlight"                                                       |
 
 ### 3.2 `other` (label = 0)
 
 A comment is `other` if it is any of the following:
 
-| Subtype | Description | Surface realization (examples, not criteria) |
-|---|---|---|
-| **O1 — Complaint without proposed action** | Reports or laments a problem but does not say what should be done about it. | "Ang pangit ng kalsada namin" (the paper's own example) |
-| **O2 — General wish without identifiable action** | Expresses hope/wish with no specific, actionable object. | "Sana maganda ang buhay natin", "Kaya lang sana" |
-| **O3 — Reaction / opinion / political commentary** | Supports, criticizes, praises, mocks, or analyzes; proposes no action. | "HAHAHA legit kayo", "This is the best agency", "Corrupt!" |
-| **O4 — Gratitude / praise** | Thanks or compliments. | "Maraming salamat sa tulong ninyo!" |
-| **O5 — Question about information** | Asks for a fact, an explanation, or a status, with **no** request for an action to be taken. | "Magkano ang bayarin?" "Kailan po release ang budget?" |
-| **O6 — Personal anecdote / story** | Shares an experience without asking for anything. | "Nung bata ako ganito ang kalsada sa amin" |
-| **O7 — Chitchat / social / banter** | Jokes, greetings, tag-along replies, emoji, religious/political remarks without any request. | "Amen!", "Good morning po", "HAHAHA" |
-| **O8 — Non-actionable information** | Gives information, news, or a link that is not a request. | "Check out this link" |
-| **O9 — Meta-discussion about the agency itself** | Praises/criticizes the agency's *performance or reputation* without an actionable ask. | "Galing ng inyo yung service" |
+| Subtype                                            | Description                                                                                  | Surface realization (examples, not criteria)               |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| **O1 — Complaint without proposed action**         | Reports or laments a problem but does not say what should be done about it.                  | "Ang pangit ng kalsada namin" (the paper's own example)    |
+| **O2 — General wish without identifiable action**  | Expresses hope/wish with no specific, actionable object.                                     | "Sana maganda ang buhay natin", "Kaya lang sana"           |
+| **O3 — Reaction / opinion / political commentary** | Supports, criticizes, praises, mocks, or analyzes; proposes no action.                       | "HAHAHA legit kayo", "This is the best agency", "Corrupt!" |
+| **O4 — Gratitude / praise**                        | Thanks or compliments.                                                                       | "Maraming salamat sa tulong ninyo!"                        |
+| **O5 — Question about information**                | Asks for a fact, an explanation, or a status, with **no** request for an action to be taken. | "Magkano ang bayarin?" "Kailan po release ang budget?"     |
+| **O6 — Personal anecdote / story**                 | Shares an experience without asking for anything.                                            | "Nung bata ako ganito ang kalsada sa amin"                 |
+| **O7 — Chitchat / social / banter**                | Jokes, greetings, tag-along replies, emoji, religious/political remarks without any request. | "Amen!", "Good morning po", "HAHAHA"                       |
+| **O8 — Non-actionable information**                | Gives information, news, or a link that is not a request.                                    | "Check out this link"                                      |
+| **O9 — Meta-discussion about the agency itself**   | Praises/criticizes the agency's _performance or reputation_ without an actionable ask.       | "Galing ng inyo yung service"                              |
 
 > **Note on O9 vs A1/A2.** "Galing ng inyo yung service" is `other`. "Please improve your service, it's always slow" is `actionable`. The difference is whether an action is identified, not whether the agency is mentioned.
 
@@ -126,77 +126,77 @@ The canonical bank. **Adjudicated disagreements are added here** (§10.4). Versi
 
 ### 5.1 Clear `actionable`
 
-| # | Comment | Language | Label | Rationale |
-|---|---|---|---|---|
-| 1 | Please repair the damaged road in our barangay. | eng | **1** | Specific action + target. (Paper's example.) |
-| 2 | Please po, clean the canal. | mixed | **1** | Specific action requested. (Paper's example.) |
-| 3 | Dapat ayusin ang drainage. | fil | **1** | Action (fix drainage) + should. (Paper's example.) |
-| 4 | Kailangan po namin ng birth certificate para sa school enrollment. | fil | **1** | Specific service requested. |
-| 5 | Hindi naman, kailangan nating ayusin ang kalsada para sa mga mag-aaral. | fil | **1** | Action identified, no politeness marker. |
-| 6 | Sana maayos na ang kalsada sa puro. | fil | **1** | Wish attached to an identifiable object (the road) → actionable object. |
-| 7 | Paki-release na po ang budget ng school. | fil | **1** | Specific action (release the budget). |
-| 8 | I suggest you add a QR code option for payment. | eng | **1** | Concrete proposal. |
-| 9 | Bakit walang ganitong option sa app? I suggest adding it. | mixed | **1** | Proposal with a specific change. |
-| 10 | Please make the schedule available online, lines are too long. | eng | **1** | Action + rationale. |
-| 11 | Kailangan po ng bagong bus route papuntang probinsya. | fil | **1** | Specific service requested. |
-| 12 | Please put more barangay health workers in our area. | eng | **1** | Specific staffing action. |
-| 13 | Can you please release the list of beneficiaries? | eng | **1** | Requests an action (release), not just information. |
-| 14 | Pagkatapos ng bagyo dapat linisin ang mga kanal bago mag-ulan. | fil | **1** | Proposal with a defined object. |
-| 15 | Sana magkaroon ng maaaring online appointment para sa DL renewal. | mixed | **1** | Specific service/proposal. |
-| 16 | I suggest that the agency publish flood maps in advance. | eng | **1** | Concrete policy proposal. |
-| 17 | Pagbigat ng problema, tulong sa pag-ayos ng signal sa amin. | fil | **1** | Implicit request with an identifiable object (signal). |
-| 18 | Please clarify and fix the confusing signage at the entrance. | eng | **1** | Two actions, still one comment → 1. |
+| #   | Comment                                                                 | Language | Label | Rationale                                                               |
+| --- | ----------------------------------------------------------------------- | -------- | ----- | ----------------------------------------------------------------------- |
+| 1   | Please repair the damaged road in our barangay.                         | eng      | **1** | Specific action + target. (Paper's example.)                            |
+| 2   | Please po, clean the canal.                                             | mixed    | **1** | Specific action requested. (Paper's example.)                           |
+| 3   | Dapat ayusin ang drainage.                                              | fil      | **1** | Action (fix drainage) + should. (Paper's example.)                      |
+| 4   | Kailangan po namin ng birth certificate para sa school enrollment.      | fil      | **1** | Specific service requested.                                             |
+| 5   | Hindi naman, kailangan nating ayusin ang kalsada para sa mga mag-aaral. | fil      | **1** | Action identified, no politeness marker.                                |
+| 6   | Sana maayos na ang kalsada sa puro.                                     | fil      | **1** | Wish attached to an identifiable object (the road) → actionable object. |
+| 7   | Paki-release na po ang budget ng school.                                | fil      | **1** | Specific action (release the budget).                                   |
+| 8   | I suggest you add a QR code option for payment.                         | eng      | **1** | Concrete proposal.                                                      |
+| 9   | Bakit walang ganitong option sa app? I suggest adding it.               | mixed    | **1** | Proposal with a specific change.                                        |
+| 10  | Please make the schedule available online, lines are too long.          | eng      | **1** | Action + rationale.                                                     |
+| 11  | Kailangan po ng bagong bus route papuntang probinsya.                   | fil      | **1** | Specific service requested.                                             |
+| 12  | Please put more barangay health workers in our area.                    | eng      | **1** | Specific staffing action.                                               |
+| 13  | Can you please release the list of beneficiaries?                       | eng      | **1** | Requests an action (release), not just information.                     |
+| 14  | Pagkatapos ng bagyo dapat linisin ang mga kanal bago mag-ulan.          | fil      | **1** | Proposal with a defined object.                                         |
+| 15  | Sana magkaroon ng maaaring online appointment para sa DL renewal.       | mixed    | **1** | Specific service/proposal.                                              |
+| 16  | I suggest that the agency publish flood maps in advance.                | eng      | **1** | Concrete policy proposal.                                               |
+| 17  | Pagbigat ng problema, tulong sa pag-ayos ng signal sa amin.             | fil      | **1** | Implicit request with an identifiable object (signal).                  |
+| 18  | Please clarify and fix the confusing signage at the entrance.           | eng      | **1** | Two actions, still one comment → 1.                                     |
 
 ### 5.2 Clear `other`
 
-| # | Comment | Language | Label | Rationale |
-|---|---|---|---|---|
-| 19 | Ang pangit ng kalsada namin. | fil | **0** | Complaint without a proposed action. (Paper's example.) |
-| 20 | Salamat sa mga doctor, mabuting trabaho po! | mixed | **0** | Gratitude. |
-| 21 | Magkano po ang bayarin sa pag-apply ng ID? | mixed | **0** | Information question, no action requested. |
-| 22 | HAHAHA legit kayo. | mixed | **0** | Reaction, no request. |
-| 23 | Amin is the best agency! God bless you all! | eng | **0** | Praise. |
-| 24 | Sana talaga maganda ang buhay natin. | fil | **0** | General wish, no identifiable object. |
-| 25 | Nung bata ako ganito pa rin ang kalsada sa amin. | fil | **0** | Anecdote. |
-| 26 | Please vote for our team on Sunday. | eng | **0** | Marker present, but no agency action identified. |
-| 27 | Kailan po magre-release ang budget ng ahencia? | mixed | **0** | Status/information question. |
-| 28 | Corrupt! Bayad kayo ng taxes tapos hindi niyo pinapalitan ang kalsada. | fil | **0** | Criticism without a proposed action. |
-| 29 | Check out this link guys. | eng | **0** | Purely informational. |
-| 30 | Grabe, sobrang dami nang lumagan na sa espya ngayon. | fil | **0** | Observation. |
-| 31 | Kung wala na kayo ng budget, huwag na kumuha ng donations. | fil | **0** | Conditional opinion, no request to the agency for an action on a citizen need. |
-| 32 | Amen! God bless po sa inyo lahat. | mixed | **0** | Religious remark, no request. |
+| #   | Comment                                                                | Language | Label | Rationale                                                                      |
+| --- | ---------------------------------------------------------------------- | -------- | ----- | ------------------------------------------------------------------------------ |
+| 19  | Ang pangit ng kalsada namin.                                           | fil      | **0** | Complaint without a proposed action. (Paper's example.)                        |
+| 20  | Salamat sa mga doctor, mabuting trabaho po!                            | mixed    | **0** | Gratitude.                                                                     |
+| 21  | Magkano po ang bayarin sa pag-apply ng ID?                             | mixed    | **0** | Information question, no action requested.                                     |
+| 22  | HAHAHA legit kayo.                                                     | mixed    | **0** | Reaction, no request.                                                          |
+| 23  | Amin is the best agency! God bless you all!                            | eng      | **0** | Praise.                                                                        |
+| 24  | Sana talaga maganda ang buhay natin.                                   | fil      | **0** | General wish, no identifiable object.                                          |
+| 25  | Nung bata ako ganito pa rin ang kalsada sa amin.                       | fil      | **0** | Anecdote.                                                                      |
+| 26  | Please vote for our team on Sunday.                                    | eng      | **0** | Marker present, but no agency action identified.                               |
+| 27  | Kailan po magre-release ang budget ng ahencia?                         | mixed    | **0** | Status/information question.                                                   |
+| 28  | Corrupt! Bayad kayo ng taxes tapos hindi niyo pinapalitan ang kalsada. | fil      | **0** | Criticism without a proposed action.                                           |
+| 29  | Check out this link guys.                                              | eng      | **0** | Purely informational.                                                          |
+| 30  | Grabe, sobrang dami nang lumagan na sa espya ngayon.                   | fil      | **0** | Observation.                                                                   |
+| 31  | Kung wala na kayo ng budget, huwag na kumuha ng donations.             | fil      | **0** | Conditional opinion, no request to the agency for an action on a citizen need. |
+| 32  | Amen! God bless po sa inyo lahat.                                      | mixed    | **0** | Religious remark, no request.                                                  |
 
 ### 5.3 Judgment calls (the hard ones)
 
 These are the cases that get disputed. Read them with the adjudicated label and rationale.
 
-| # | Comment | Language | Label | Rationale |
-|---|---|---|---|---|
-| 33 | *Aba! Tama yan.* (reply to a post about a broken drainage asking citizens to report) | fil | **0** | Agreement with the post; no action requested. |
-| 34 | *Same, please fix ours too.* (reply to a complaint post) | eng | **1** | Requests the same action for the commenter's area. |
-| 35 | *Sana maayos na ang kalsada.* (no post context) | fil | **1** | An identifiable object (the road) makes the wish actionable. Compare #24 where no object exists. |
-| 36 | *Sana maayos lahat.* (no post context) | fil | **0** | No identifiable object → general wish. |
-| 37 | *Pakisana pagbutas ng budget para sa libreng gamot.* | fil | **1** | Specific action (release of budget). |
-| 38 | *Pagkatapos ng lindol, sana may pangalawang round ng relief.* | fil | **1** | Identifies a needed action (another relief round). |
-| 39 | *Ang agency niyo bayad ng tax ng tao para sa isang trapo?* | fil | **0** | Rhetorical criticism, no action proposed. |
-| 40 | *Sana hindi na magbayag ng parking sa kalsada...* | mixed | **0** | Wish that a fee be removed — the fee is the object of complaint, but no action is proposed to the agency. *(Edge: annotators often disagree; adjudicated as 0.)* |
-| 41 | *I hope the agency prioritizes flood control over new road projects.* | eng | **1** | Specifies a prioritization decision to make. |
-| 42 | *Grabe, ang tanaw ng lugar na yan, ang ganda!* | fil | **0** | Compliment about a place. |
-| 43 | *Dapat mag-ingat na siya sa social media.* | fil | **0** | Advice directed at a person, not an action for the agency. |
-| 44 | *Pagkatapos ng lindol, dapat ayusin na ang daluyan para sa susunod.* | fil | **1** | Identifies an action for the agency. |
-| 45 | *Sana maging maayos ang traffic sa EDSA.* | fil | **1** | Identifiable object (traffic) → actionable. |
+| #   | Comment                                                                              | Language | Label | Rationale                                                                                                                                                        |
+| --- | ------------------------------------------------------------------------------------ | -------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 33  | _Aba! Tama yan._ (reply to a post about a broken drainage asking citizens to report) | fil      | **0** | Agreement with the post; no action requested.                                                                                                                    |
+| 34  | _Same, please fix ours too._ (reply to a complaint post)                             | eng      | **1** | Requests the same action for the commenter's area.                                                                                                               |
+| 35  | _Sana maayos na ang kalsada._ (no post context)                                      | fil      | **1** | An identifiable object (the road) makes the wish actionable. Compare #24 where no object exists.                                                                 |
+| 36  | _Sana maayos lahat._ (no post context)                                               | fil      | **0** | No identifiable object → general wish.                                                                                                                           |
+| 37  | _Pakisana pagbutas ng budget para sa libreng gamot._                                 | fil      | **1** | Specific action (release of budget).                                                                                                                             |
+| 38  | _Pagkatapos ng lindol, sana may pangalawang round ng relief._                        | fil      | **1** | Identifies a needed action (another relief round).                                                                                                               |
+| 39  | _Ang agency niyo bayad ng tax ng tao para sa isang trapo?_                           | fil      | **0** | Rhetorical criticism, no action proposed.                                                                                                                        |
+| 40  | _Sana hindi na magbayag ng parking sa kalsada..._                                    | mixed    | **0** | Wish that a fee be removed — the fee is the object of complaint, but no action is proposed to the agency. _(Edge: annotators often disagree; adjudicated as 0.)_ |
+| 41  | _I hope the agency prioritizes flood control over new road projects._                | eng      | **1** | Specifies a prioritization decision to make.                                                                                                                     |
+| 42  | _Grabe, ang tanaw ng lugar na yan, ang ganda!_                                       | fil      | **0** | Compliment about a place.                                                                                                                                        |
+| 43  | _Dapat mag-ingat na siya sa social media._                                           | fil      | **0** | Advice directed at a person, not an action for the agency.                                                                                                       |
+| 44  | _Pagkatapos ng lindol, dapat ayusin na ang daluyan para sa susunod._                 | fil      | **1** | Identifies an action for the agency.                                                                                                                             |
+| 45  | _Sana maging maayos ang traffic sa EDSA._                                            | fil      | **1** | Identifiable object (traffic) → actionable.                                                                                                                      |
 
-> **Important:** #35 vs #36 is the single most common dispute. The discriminator is **whether an identifiable object of action exists**. If you can point to *what* should be done or changed, it is `actionable`. If the wish is only about a general state of the world, it is `other`.
+> **Important:** #35 vs #36 is the single most common dispute. The discriminator is **whether an identifiable object of action exists**. If you can point to _what_ should be done or changed, it is `actionable`. If the wish is only about a general state of the world, it is `other`.
 
 ### 5.4 Code-switching cases
 
-| # | Comment | Language | Label | Rationale |
-|---|---|---|---|---|
-| 46 | *Please fix the damage road, ang pangit na!* | mixed | **1** | Action requested; the complaint clause doesn't change the label. |
-| 47 | *Grabe naman, bakit ganyan? So unfair!* | mixed | **0** | Reaction to a decision; no action proposed. |
-| 48 | *Sana maayos ang signal sa amin, please improve the tower.* | mixed | **1** | Two actions (fix signal, improve tower) → still one comment, label 1. |
-| 49 | *Ito ba ang sagot sa complaint namin?* | mixed | **0** | Sarcastic rhetorical question, no action. |
-| 50 | *Salamat, maging maayos ang inyong serbisyo.* | mixed | **0** | Gratitude + general wish, no identifiable action object. |
+| #   | Comment                                                     | Language | Label | Rationale                                                             |
+| --- | ----------------------------------------------------------- | -------- | ----- | --------------------------------------------------------------------- |
+| 46  | _Please fix the damage road, ang pangit na!_                | mixed    | **1** | Action requested; the complaint clause doesn't change the label.      |
+| 47  | _Grabe naman, bakit ganyan? So unfair!_                     | mixed    | **0** | Reaction to a decision; no action proposed.                           |
+| 48  | _Sana maayos ang signal sa amin, please improve the tower._ | mixed    | **1** | Two actions (fix signal, improve tower) → still one comment, label 1. |
+| 49  | _Ito ba ang sagot sa complaint namin?_                      | mixed    | **0** | Sarcastic rhetorical question, no action.                             |
+| 50  | _Salamat, maging maayos ang inyong serbisyo._               | mixed    | **0** | Gratitude + general wish, no identifiable action object.              |
 
 ---
 
@@ -208,13 +208,13 @@ Apply in order; the first matching rule wins.
 
 A question is `actionable` **only if** answering it requires the agency to **do something**, not to **tell something**.
 
-| Question | Label | Why |
-|---|---|---|
-| *Magkano po ang bayarin sa ID?* | **0** | Information only. |
-| *Kailan po magre-release ng budget?* | **0** | Status only. |
-| *Bakit hindi pa naaayos ang kalsada?* | **0** | Explanation sought. |
-| *Puwede bang pa-appointment online?* | **1** | Answering requires the agency to *provide an online appointment*. |
-| *Puwede bang mag-issue ng replacement certificate?* | **1** | Requires the agency to *issue*. |
+| Question                                            | Label | Why                                                               |
+| --------------------------------------------------- | ----- | ----------------------------------------------------------------- |
+| _Magkano po ang bayarin sa ID?_                     | **0** | Information only.                                                 |
+| _Kailan po magre-release ng budget?_                | **0** | Status only.                                                      |
+| _Bakit hindi pa naaayos ang kalsada?_               | **0** | Explanation sought.                                               |
+| _Puwede bang pa-appointment online?_                | **1** | Answering requires the agency to _provide an online appointment_. |
+| _Puwede bang mag-issue ng replacement certificate?_ | **1** | Requires the agency to _issue_.                                   |
 
 ### 6.2 Complaints
 
@@ -224,38 +224,38 @@ A question is `actionable` **only if** answering it requires the agency to **do 
 
 ### 6.3 Wishes and hopes
 
-- Wish with an **identifiable object of action** → `actionable` (e.g., *Sana maayos ang kalsada*, *Sana maging maayos ang signal*).
-- Wish with **no identifiable object** → `other` (e.g., *Sana maganda ang buhay natin*, *Sana masaya kayo*).
+- Wish with an **identifiable object of action** → `actionable` (e.g., _Sana maayos ang kalsada_, _Sana maging maayos ang signal_).
+- Wish with **no identifiable object** → `other` (e.g., _Sana maganda ang buhay natin_, _Sana masaya kayo_).
 
 ### 6.4 Sarcasm and irony
 
 Label the **literal propositional content** of the comment, not its tone. If the literal content contains a request, it is `actionable`.
 
-- *Legal naman pala yang kalsada, baka nga kayo ang may kasalanan.* → **0** (literal content is an accusation, no request).
-- *Sana talaga maayos na, kasi kapag maliit na lang kami.* → **0** (literal content: a general wish about roads with an identifiable object — hmm, this one gets flagged).
+- _Legal naman pala yang kalsada, baka nga kayo ang may kasalanan._ → **0** (literal content is an accusation, no request).
+- _Sana talaga maayos na, kasi kapag maliit na lang kami._ → **0** (literal content: a general wish about roads with an identifiable object — hmm, this one gets flagged).
 
 > **Flagging rule:** if a comment's tone is ambiguous and two annotators would reasonably differ, mark it `FLAG` in the tool's notes field rather than guessing. Flags are adjudicated centrally (§9). Do **not** resolve it alone, and do **not** leave it unlabeled.
 
 ### 6.5 Conditional requests
 
-*Kung wala pa rin ng tubig, kailangan namin ng alternatibong supply* → **actionable** (the condition plus the need point to a concrete remedy).
+_Kung wala pa rin ng tubig, kailangan namin ng alternatibong supply_ → **actionable** (the condition plus the need point to a concrete remedy).
 
 ### 6.6 Advice directed at a person vs. the agency
 
 - Directed at the agency or the government → judge under §2.1.
-- Directed at an individual (an official, a commenter, the public) → `other` (*Dapat mag-ingat na siya sa social media*).
+- Directed at an individual (an official, a commenter, the public) → `other` (_Dapat mag-ingat na siya sa social media_).
 
 ### 6.7 Replies and post context
 
 **Always read the post before labeling.** The post text is displayed in the labeling tool. Use it to resolve the referent, but **label the comment itself**, not the post. The corpus is top-level comments only; there is no parent comment.
 
-- If the comment refers to something in the post (e.g. *"Yung nasa post na 'schedule' ay dapat i-extend"*), the post context supplies the referent. The comment still needs to identify an action.
-- If the comment is pure reaction to the post (e.g. *"Aba! Tama yan."*) → `other`.
-- If the comment asks for information about the post (e.g., *"Magkano po ng fee na sinabi?"*) → `other`.
+- If the comment refers to something in the post (e.g. _"Yung nasa post na 'schedule' ay dapat i-extend"_), the post context supplies the referent. The comment still needs to identify an action.
+- If the comment is pure reaction to the post (e.g. _"Aba! Tama yan."_) → `other`.
+- If the comment asks for information about the post (e.g., _"Magkano po ng fee na sinabi?"_) → `other`.
 
 ### 6.8 Mentions, links, hashtags
 
-- A hashtag naming an issue without a request (*#FloodControl*) → `other`.
+- A hashtag naming an issue without a request (_#FloodControl_) → `other`.
 - A comment whose entire content is a URL → excluded at cleaning (`X_EMPTY`), not labeled.
 
 ### 6.9 Threats, abuse, and insults
@@ -281,13 +281,14 @@ A comment that is mostly Filipino/English with a small amount of another languag
 
 Alongside the label, set `language`:
 
-| Value | Meaning |
-|---|---|
-| `fil` | Predominantly Filipino / Tagalog. |
-| `eng` | Predominantly English. |
+| Value   | Meaning                                                      |
+| ------- | ------------------------------------------------------------ |
+| `fil`   | Predominantly Filipino / Tagalog.                            |
+| `eng`   | Predominantly English.                                       |
 | `mixed` | Both meaningfully present — **the study's core population.** |
 
 Guidance:
+
 - Tag the **predominant** language.
 - A single English clause inside an otherwise Filipino comment is usually `fil`, unless the English carries the action and the Filipino is incidental ("Ang kalsada namin please fix" → `mixed`).
 - Code-switching often shows as Filipino/English word pairs in one phrase ("dapat i-fix", "paki-install ng app") → that is `mixed`.
@@ -302,11 +303,11 @@ Guidance:
 The dataset is labeled by an **automated annotator** (`src/annotate/auto_annotator.py`)
 following this document, with LLM adjudication and **independent model-assisted verification**.
 
-| Role | Who | Scope |
-|---|---|---|
-| Annotator engine | `src/annotate/auto_annotator.py` — heuristic scoring | 100% of the dataset |
-| Adjudicator | An LLM working from this document's decision tree, resolving every row below 0.85 confidence plus a 10% audit sample | 100% of flagged cases |
-| Independent verifier | A separate model annotator, reviewing rows **without seeing the engine's label first** (recorded as `llm_verified`) | ≥ 100 random rows |
+| Role                 | Who                                                                                                                  | Scope                 |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| Annotator engine     | `src/annotate/auto_annotator.py` — heuristic scoring                                                                 | 100% of the dataset   |
+| Adjudicator          | An LLM working from this document's decision tree, resolving every row below 0.85 confidence plus a 10% audit sample | 100% of flagged cases |
+| Independent verifier | A separate model annotator, reviewing rows **without seeing the engine's label first** (recorded as `llm_verified`)  | ≥ 100 random rows     |
 
 The engine is **not** the rule. This document is the rule. The engine triages: it settles
 the obvious cases and hands everything it is not sure about to an adjudicator who reads the
@@ -319,7 +320,7 @@ inter-annotator agreement (§10.1).
 ### 8.2 Pass structure
 
 1. **Guideline calibration (before production).** Label a **30-row pilot batch**. For each
-   pilot row, write down *why* it got the label in the note field, then compare against the
+   pilot row, write down _why_ it got the label in the note field, then compare against the
    example bank in §5. If your reasoning contradicts the bank, the guideline is wrong — amend
    it and bump `guideline_version` before you go further.
 2. **Production pass.** Label **100%** of the pool. Work in batches of 50–100 with breaks
@@ -335,7 +336,7 @@ inter-annotator agreement (§10.1).
 6. **Resolve and re-check.** Read every disagreement, decide the correct label against the
    guidelines, and record it in `adjudicated_by` and `adjudication_note` with the rule that
    decided it. **Do not simply take the first-pass label.** Add each case to the example bank
-   (§10.4). If the disagreements reveal that the *guidelines* were unclear rather than that
+   (§10.4). If the disagreements reveal that the _guidelines_ were unclear rather than that
    you misapplied them, amend the guidelines, bump `guideline_version`, and re-label the
    affected rows — labels from different guideline versions are never mixed in one release.
 7. **Finalization.** `label` holds the final answer for every row, `label_2` holds the second
@@ -363,7 +364,6 @@ Recommended: Doccano or Label Studio (both open source, both support multi-annot
 - Do **not** consult the write-up, the paper, or your own earlier notes while labeling — only the comment and its context.
 - Log any suspected platform artifact or spam pattern in the note field rather than deleting the row yourself.
 
-
 ### 8.5 The automated annotation workflow
 
 This is the default path. It exists so the dataset does not depend on one person typing a
@@ -379,17 +379,17 @@ and refusals.
 **Stage 2 — Heuristic scoring.** Cues become a suggested label, a confidence, and the
 rule that fired.
 
-| Rule | Label | Confidence | Auto-decided? |
-|---|---|---|---|
-| `request_marker + action_verb` | actionable | 0.85–0.90 | yes |
-| `strong_frame + action_object` | actionable | 0.88 | yes |
-| `strong_frame_only` | actionable | 0.80 | no |
-| `request_marker + object_only` | actionable | 0.60 | **no — adjudicated** |
-| `action_verb_only` | actionable | 0.78 | no |
-| `gratitude_or_reaction` | other | 0.90 | yes |
-| `complaint_without_remedy` | other | 0.88 | yes |
-| `information_question` | other | 0.85 | yes |
-| `needs_adjudication` | — | 0.00 | **no — adjudicated** |
+| Rule                           | Label      | Confidence | Auto-decided?        |
+| ------------------------------ | ---------- | ---------- | -------------------- |
+| `request_marker + action_verb` | actionable | 0.85–0.90  | yes                  |
+| `strong_frame + action_object` | actionable | 0.88       | yes                  |
+| `strong_frame_only`            | actionable | 0.80       | no                   |
+| `request_marker + object_only` | actionable | 0.60       | **no — adjudicated** |
+| `action_verb_only`             | actionable | 0.78       | no                   |
+| `gratitude_or_reaction`        | other      | 0.90       | yes                  |
+| `complaint_without_remedy`     | other      | 0.88       | yes                  |
+| `information_question`         | other      | 0.85       | yes                  |
+| `needs_adjudication`           | —          | 0.00       | **no — adjudicated** |
 
 **Rows below 0.85 confidence are never auto-decided.** They go to adjudication.
 
@@ -397,7 +397,7 @@ rule that fired.
 to read and decide:
 
 1. Every row the heuristic could not decide.
-2. A **random 10% audit sample** of the rows it *could* decide, fixed seed `42`.
+2. A **random 10% audit sample** of the rows it _could_ decide, fixed seed `42`.
 
 The audit sample is what makes the heuristic's accuracy a measurement rather than an
 assumption. Every exported row carries the comment, the post context, the heuristic's
@@ -429,7 +429,7 @@ Full procedure in `src/annotate/README.md`.
 - **Do not anchor.** For an `audit` row, decide first, then compare. Overriding the
   heuristic is a legitimate outcome and is recorded as such.
 - Record a **one-line note** naming the rule that decided it (`§6.3 — identifiable
-  object of action`). This is what makes the label auditable.
+object of action`). This is what makes the label auditable.
 - Set `verification` on the row: `auto` for engine-only labels, `llm_verified` for rows an
   independent model annotator checked blind, `human_verified` for rows a person checked,
   `human_labeled` for rows a person labelled from scratch.
@@ -454,7 +454,7 @@ are in `data/provenance/adjudication_log.csv` and are excluded from the κ.
    this by never scoring on markers by themselves — a marker counts only alongside an
    action verb, a strong request frame, or an action object.
 2. **The most disputed class is never auto-decided.** `request_marker + object_only`
-   (*"Sana maayos ang kalsada"*) always routes to adjudication, because §5.3 #35 vs #36
+   (_"Sana maayos ang kalsada"_) always routes to adjudication, because §5.3 #35 vs #36
    is the most common dispute in this document.
 3. **Every row ends up with a decision.** Any row still below threshold at merge time is
    reported as a warning and blocks release.
@@ -507,36 +507,37 @@ This dataset is labeled by one annotator, so there is no inter-annotator agreeme
 The reliability statistic is **intra-annotator reliability**, measured by Cohen's kappa between
 the first pass and the **blinded re-label pass** (§8.2, step 4).
 
-| Item | Value |
-|---|---|
-| Metric | **Cohen's kappa** between `label` (pass 1) and `label_2` (blinded re-label) |
-| Subset | Random 20% of the primary corpus (**332 of 1,657 rows**) |
-| Washout | **0 days** (the two passes ran in the same session) — κ is therefore an **upper bound**, not a true test-retest estimate |
-| Interpretation (Landis & Koch 1977) | `< 0.20` slight · `0.21–0.40` fair · `0.41–0.60` moderate · `0.61–0.80` substantial · `0.81–1.00` almost perfect |
-| **Gate** | **κ ≥ 0.60** — below this, resolve the disagreements and re-measure |
-| Result | **κ = 0.72** (92.5% agreement); 25 rows disagreed and 24 were corrected during adjudication |
-| Report | κ, the disagreement breakdown (which error dominates — most commonly O1↔A1, "complaint with vs. without remedy"), and the count of resolved rows |
-| Also report | Independent verification of 120 rows: 93.3% agreement, **κ = 0.79**, method `llm_verified` (model-assisted, not human) |
+| Item                                | Value                                                                                                                                            |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Metric                              | **Cohen's kappa** between `label` (pass 1) and `label_2` (blinded re-label)                                                                      |
+| Subset                              | Random 20% of the primary corpus (**332 of 1,657 rows**)                                                                                         |
+| Washout                             | **0 days** (the two passes ran in the same session) — κ is therefore an **upper bound**, not a true test-retest estimate                         |
+| Interpretation (Landis & Koch 1977) | `< 0.20` slight · `0.21–0.40` fair · `0.41–0.60` moderate · `0.61–0.80` substantial · `0.81–1.00` almost perfect                                 |
+| **Gate**                            | **κ ≥ 0.60** — below this, resolve the disagreements and re-measure                                                                              |
+| Result                              | **κ = 0.72** (92.5% agreement); 25 rows disagreed and 24 were corrected during adjudication                                                      |
+| Report                              | κ, the disagreement breakdown (which error dominates — most commonly O1↔A1, "complaint with vs. without remedy"), and the count of resolved rows |
+| Also report                         | Independent verification of 120 rows: 93.3% agreement, **κ = 0.79**, method `llm_verified` (model-assisted, not human)                           |
 
-**How to describe it in the write-up.** Call it *intra-rater reliability* or *intra-annotator
-agreement* from a blinded re-annotation pass. **Do not call it inter-annotator agreement** —
+**How to describe it in the write-up.** Call it _intra-rater reliability_ or _intra-annotator
+agreement_ from a blinded re-annotation pass. **Do not call it inter-annotator agreement** —
 there is only one annotator, and claiming otherwise is a misreport. Because the re-label ran
 without a washout, report κ as an upper bound and say so.
 
 ### 10.2 Common error patterns to watch for
 
-| Pattern | Symptom | Fix |
-|---|---|---|
-| **Marker bias** | Labeling `actionable` because the comment contains *please*/*dapat* | Re-read §2.2. Cross-check the `actionable` set for a sample of marker-free comments. |
-| **Sentiment drift** | Treating "ang galit ng tao, ang lupit" as actionable because the tone is urgent | Re-read §2.1: tone is never the label. |
-| **Wish/object confusion** | Labeling every *sana* sentence as actionable | Apply §6.3 — is there an identifiable object of action? |
-| **Over-labeling** | `actionable` rate climbing far above the natural prior in the collection | Check the class distribution; recompute κ on a fresh double-annotated batch. |
-| **Question confusion** | Labeling all questions as actionable | Apply §6.1. |
-| **Context neglect** | Labeling replies without reading the post | Apply §6.7. |
+| Pattern                   | Symptom                                                                         | Fix                                                                                  |
+| ------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **Marker bias**           | Labeling `actionable` because the comment contains _please_/_dapat_             | Re-read §2.2. Cross-check the `actionable` set for a sample of marker-free comments. |
+| **Sentiment drift**       | Treating "ang galit ng tao, ang lupit" as actionable because the tone is urgent | Re-read §2.1: tone is never the label.                                               |
+| **Wish/object confusion** | Labeling every _sana_ sentence as actionable                                    | Apply §6.3 — is there an identifiable object of action?                              |
+| **Over-labeling**         | `actionable` rate climbing far above the natural prior in the collection        | Check the class distribution; recompute κ on a fresh double-annotated batch.         |
+| **Question confusion**    | Labeling all questions as actionable                                            | Apply §6.1.                                                                          |
+| **Context neglect**       | Labeling replies without reading the post                                       | Apply §6.7.                                                                          |
 
 ### 10.3 In-run monitoring
 
 Every ~200 rows, the adjudicator reviews:
+
 - the running class distribution,
 - a random 20-row sample of your own labels, re-checked against the guidelines blind,
 - all FLAGs,
@@ -552,7 +553,7 @@ An automated assistant may pre-label rows to speed up triage, but **only** after
 
 **Annotator obligations when pre-labeled rows are shown:**
 
-- **Every pre-labeled row must be individually confirmed or corrected.** Do not accept a batch uncritically. Assisting means *checking*, not *approving*.
+- **Every pre-labeled row must be individually confirmed or corrected.** Do not accept a batch uncritically. Assisting means _checking_, not _approving_.
 - **Do not anchor on the draft label.** Read the comment and decide first; the assistant's guess is a hypothesis, not an answer.
 - **Keep your pass-1 labels away from the assistant's drafts.** Label the pool yourself first; use the assistant only for rows you have not yet reached.
 - **Report the assistant's wrong suggestions.** If you change a draft label, note why — these corrections are the most valuable signal about where the assistant fails, and the class distribution of corrections gets reported in the paper.
@@ -563,11 +564,11 @@ verification method is recorded as `llm_verified`, not `human_verified`.
 
 ### 10.6 Guideline version history
 
-| Version | Date | Author | Change |
-|---|---|---|---|
-| `v1.0-draft` | 2026-10-20 | M4 (MALASAN) | Two-label taxonomy from the paper's Scope; core action-based rule; language-neutrality rule; decision tree; 50-example bank; edge-case tie-breakers; workflow and QC. |
-| `v1.0-draft` (annot. engine) | 2026-10-20 | M4 (MALASAN) | Added §8.5, the automated annotation workflow: cue extraction, heuristic scoring with confidence thresholds, adjudication of every low-confidence row plus a 10% audit sample, and independent verification of ≥ 100 rows. |
-| `v1.0` | 2026-10-23 | M4 (MALASAN) | **Released.** Applied to all 1,657 primary rows. Verification recorded as `llm_verified` (model-assisted, 120 rows, κ = 0.79); blinded re-label 332 rows, κ = 0.72 with no washout (upper bound); 24 labels corrected against the blind pass. Top-level comments only. |
+| Version                      | Date       | Author       | Change                                                                                                                                                                                                                                                                 |
+| ---------------------------- | ---------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `v1.0-draft`                 | 2026-10-20 | M4 (MALASAN) | Two-label taxonomy from the paper's Scope; core action-based rule; language-neutrality rule; decision tree; 50-example bank; edge-case tie-breakers; workflow and QC.                                                                                                  |
+| `v1.0-draft` (annot. engine) | 2026-10-20 | M4 (MALASAN) | Added §8.5, the automated annotation workflow: cue extraction, heuristic scoring with confidence thresholds, adjudication of every low-confidence row plus a 10% audit sample, and independent verification of ≥ 100 rows.                                             |
+| `v1.0`                       | 2026-10-23 | M4 (MALASAN) | **Released.** Applied to all 1,657 primary rows. Verification recorded as `llm_verified` (model-assisted, 120 rows, κ = 0.79); blinded re-label 332 rows, κ = 0.72 with no washout (upper bound); 24 labels corrected against the blind pass. Top-level comments only. |
 
 > **Every label in the dataset carries the `guideline_version` it was produced under** (`DATA_CONTRACT.md` §5.2, column 29). Labels from different guideline versions are never mixed in one release.
 
@@ -588,16 +589,16 @@ verification method is recorded as `llm_verified`, not `human_verified`.
 
 ## 12. Glossary
 
-| Term | Meaning in this project |
-|---|---|
-| **Actionable** | Label 1 — the comment identifies a concrete action for the agency. |
-| **Other** | Label 0 — the comment does not. |
-| **Action object** | The thing that should be changed, fixed, provided, or done. Its presence distinguishes an actionable wish from a general one. |
-| **Marker** | A surface request/politeness word (*please, dapat, sana, paki-*). Evidence, never the definition. |
-| **Post context** | The source post's text, date, and agency. The corpus is top-level comments only, so no parent comment is shown. |
-| **Flag** | A row an annotator could not confidently label; routed to the adjudicator. |
-| **Blinded re-label pass** | The same annotator re-labeling a subset after a washout, without seeing the first pass. The basis of the κ figure. |
-| **Resolution** | Deciding a pass-1 vs pass-2 disagreement against the guidelines, with a written rule reference. |
-| **Gold set** | 120 self-labeled rows used to evaluate the auto-annotator and to check κ before production labeling. |
-| **Prior** | The natural fraction of `actionable` comments in collected data, before any balancing. |
-| **Mixed / code-switched** | A comment containing both Filipino and English in meaningful proportion. |
+| Term                      | Meaning in this project                                                                                                       |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| **Actionable**            | Label 1 — the comment identifies a concrete action for the agency.                                                            |
+| **Other**                 | Label 0 — the comment does not.                                                                                               |
+| **Action object**         | The thing that should be changed, fixed, provided, or done. Its presence distinguishes an actionable wish from a general one. |
+| **Marker**                | A surface request/politeness word (_please, dapat, sana, paki-_). Evidence, never the definition.                             |
+| **Post context**          | The source post's text, date, and agency. The corpus is top-level comments only, so no parent comment is shown.               |
+| **Flag**                  | A row an annotator could not confidently label; routed to the adjudicator.                                                    |
+| **Blinded re-label pass** | The same annotator re-labeling a subset after a washout, without seeing the first pass. The basis of the κ figure.            |
+| **Resolution**            | Deciding a pass-1 vs pass-2 disagreement against the guidelines, with a written rule reference.                               |
+| **Gold set**              | 120 self-labeled rows used to evaluate the auto-annotator and to check κ before production labeling.                          |
+| **Prior**                 | The natural fraction of `actionable` comments in collected data, before any balancing.                                        |
+| **Mixed / code-switched** | A comment containing both Filipino and English in meaningful proportion.                                                      |
