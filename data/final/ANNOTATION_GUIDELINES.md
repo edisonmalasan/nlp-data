@@ -2,16 +2,16 @@
 
 **Labeling rules for the "actionable suggestion / request" dataset**
 
-| Field | Value |
-|---|---|
-| Guideline version | `v1.0` |
-| Status | **FINAL — applied to the released dataset** |
-| Created | 2026-10-20 |
-| Owner | Member 4 — **Edison Yin Malasan** (dataset producer, adjudicator) |
-| Annotator | `A1` — the annotator engine (`src/annotate/auto_annotator.py`), with LLM adjudication and independent model-assisted verification (see §8.5) |
-| Dataset | `data/processed/dataset_v1.csv` |
-| Governing contract | `DATA_CONTRACT.md` |
-| Task definition source | `docs/NLP-Final-Paper.pdf` §II (Problem Statement) and §II (Scope) |
+| Field                  | Value                                                                                                                                        |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Guideline version      | `v1.0`                                                                                                                                       |
+| Status                 | **FINAL — applied to the released dataset**                                                                                                  |
+| Created                | 2026-10-20                                                                                                                                   |
+| Owner                  | Member 4 — **Edison Malasan** (dataset producer, adjudicator)                                                                                |
+| Annotator              | `A1` — the annotator engine (`src/annotate/auto_annotator.py`), with LLM adjudication and independent model-assisted verification (see §8.5) |
+| Dataset                | `data/processed/dataset_v1.csv`                                                                                                              |
+| Governing contract     | `DATA_CONTRACT.md`                                                                                                                           |
+| Task definition source | `docs/NLP-Final-Paper.pdf` §II (Problem Statement) and §II (Scope)                                                                           |
 
 ---
 
